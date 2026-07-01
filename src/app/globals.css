@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+/* Modo oscuro por clase (lo controla next-themes con class="dark"). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Paleta semántica de SkillTree.
+ * - Azul = color principal (marca, acciones).
+ * - Verde = SOLO crecimiento (progreso, logros). Se usa con moderación.
+ * Los valores se definen como variables y el modo oscuro los redefine.
+ */
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a;
+
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #2563eb;
+
+  /* Azul — principal */
+  --primary: #2563eb;
+  --primary-foreground: #f8fafc;
+
+  /* Verde — crecimiento (uso puntual) */
+  --growth: #16a34a;
+  --growth-foreground: #f0fdf4;
+
+  --destructive: #dc2626;
+  --destructive-foreground: #fef2f2;
+
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: #0b1220;
+  --foreground: #e2e8f0;
+
+  --card: #0f172a;
+  --card-foreground: #e2e8f0;
+
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+
+  --border: #1e293b;
+  --input: #1e293b;
+  --ring: #3b82f6;
+
+  --primary: #3b82f6;
+  --primary-foreground: #0b1220;
+
+  --growth: #22c55e;
+  --growth-foreground: #052e16;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #450a0a;
+}
+
+/* Expone las variables como tokens de Tailwind (bg-background, text-primary…). */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-growth: var(--growth);
+  --color-growth-foreground: var(--growth-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 0.25rem);
+  --radius-sm: calc(var(--radius) - 0.5rem);
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+}
