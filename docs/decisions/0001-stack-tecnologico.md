@@ -106,7 +106,7 @@ exclusivos.
   - Curva de aprendizaje del App Router y los Server Components.
 
 - **Riesgos y mitigaciones:**
-  - *Vendor lock-in* → se eligen piezas portables y estándares abiertos.
+  - _Vendor lock-in_ → se eligen piezas portables y estándares abiertos.
   - Decisiones de auth/pagos dependientes del negocio → se confirmarán al
     definir el producto, sin bloquear la base.
 

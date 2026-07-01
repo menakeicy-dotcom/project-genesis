@@ -25,6 +25,7 @@ técnicamente lo modelamos como un **grafo dirigido acíclico (DAG)**:
 ```
 
 ### Representación en datos
+
 - **Nodos** = `Skill`.
 - **Aristas** = filas en `SkillPrerequisite` (`skillId` depende de
   `prerequisiteSkillId`).
@@ -45,12 +46,12 @@ Ejemplo: "Habilidad X requiere (A **o** B) **y** C" →
 
 **Estados de un nodo (calculados, no almacenados):**
 
-| Estado | Condición |
-|--------|-----------|
-| `completed` | Existe `UserSkillProgress` completado para el usuario. |
-| `in_progress` | Existe progreso iniciado y no completado. |
-| `available` | No completado, pero **todos** sus prerrequisitos (según AND/OR) están completados. |
-| `locked` | No completado y con prerrequisitos sin cumplir. |
+| Estado        | Condición                                                                          |
+| ------------- | ---------------------------------------------------------------------------------- |
+| `completed`   | Existe `UserSkillProgress` completado para el usuario.                             |
+| `in_progress` | Existe progreso iniciado y no completado.                                          |
+| `available`   | No completado, pero **todos** sus prerrequisitos (según AND/OR) están completados. |
+| `locked`      | No completado y con prerrequisitos sin cumplir.                                    |
 
 Los nodos `isRoot` (sin prerrequisitos) están **siempre disponibles**.
 

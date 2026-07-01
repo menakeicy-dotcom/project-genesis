@@ -4,7 +4,7 @@ Esta carpeta centraliza la documentación técnica del proyecto.
 
 ## Estructura
 
-- **`decisions/`** — *Architecture Decision Records* (ADR). Cada decisión
+- **`decisions/`** — _Architecture Decision Records_ (ADR). Cada decisión
   técnica importante se registra como un documento numerado e inmutable, para
   conservar el **porqué** de cada elección, no solo el resultado.
 

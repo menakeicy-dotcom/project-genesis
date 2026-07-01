@@ -24,7 +24,7 @@ Léela en orden:
   microservicios prematuros.
 - **La UX manda.** Las decisiones técnicas sirven a una experiencia fluida y
   motivadora.
-- **Modular y por dominios.** El código se organiza por *features*, con fronteras
+- **Modular y por dominios.** El código se organiza por _features_, con fronteras
   claras y reemplazables.
 - **Preparado para crecer.** UGC, evaluación real, i18n y monetización están
   previstos en el diseño aunque no se construyan en el MVP.

@@ -25,8 +25,8 @@ regulatorio + datos**.
   con **>70% de margen** e **infraestructura por <$100/mes**.
 - La ventaja del **"boring software"** es real: los fundadores ambiciosos evitan
   nichos aburridos → poca competencia + alta disposición a pagar.
-- **Regulación = urgencia y disposición a pagar.** El *European Accessibility
-  Act* entró en vigor el **28 de junio de 2025**, exige **WCAG 2.1 AA**, con
+- **Regulación = urgencia y disposición a pagar.** El _European Accessibility
+  Act_ entró en vigor el **28 de junio de 2025**, exige **WCAG 2.1 AA**, con
   **multas de hasta €100.000** por infracción y demandas ya activas en la UE.
 
 ---
@@ -34,6 +34,7 @@ regulatorio + datos**.
 ## Las 10 ideas
 
 ### 1. Monitor de cumplimiento de accesibilidad web (EAA/WCAG) para pymes de la UE
+
 - **Problema:** desde junio 2025 toda web/servicio digital que venda en la UE
   debe cumplir WCAG 2.1 AA; multas de hasta €100k. La mayoría de pymes no sabe
   ni por dónde empezar.
@@ -51,6 +52,7 @@ regulatorio + datos**.
   justifica la suscripción.
 
 ### 2. Gestor de Certificados de Seguro (COI) para administradores de fincas y constructoras
+
 - **Problema:** propietarios/contratistas deben recolectar y vigilar la
   caducidad de los seguros de cada proveedor/subcontratista. Hoy con Excel y
   emails; un certificado vencido = riesgo legal enorme.
@@ -64,6 +66,7 @@ regulatorio + datos**.
   resolverlo → disposición a pagar alta y baja rotación.
 
 ### 3. Rastreador de fechas críticas de contratos de alquiler comercial
+
 - **Problema:** los arrendamientos comerciales tienen fechas que cuestan dinero
   si se olvidan (renovaciones, escalados de renta, ventanas de opción).
 - **Cliente ideal:** pequeñas cadenas con varios locales, pequeños landlords,
@@ -75,6 +78,7 @@ regulatorio + datos**.
 - **Por qué puede ser grande:** cada fecha olvidada cuesta miles → ROI evidente.
 
 ### 4. Control de renovación de licencias, permisos y certificaciones
+
 - **Problema:** restaurantes, clínicas, gremios deben renovar
   licencias/permisos/seguros en fechas dispersas; olvidarlo = multas o cierre.
 - **Cliente ideal:** negocios locales multi-licencia y franquicias.
@@ -87,6 +91,7 @@ regulatorio + datos**.
   sectores, fácil de empaquetar por vertical.
 
 ### 5. Generador de etiquetas de alérgenos y cumplimiento de etiquetado alimentario
+
 - **Problema:** pequeños productores deben cumplir normativa de etiquetado
   (alérgenos, info nutricional, "Natasha's Law" UK, FIC en la UE).
 - **Cliente ideal:** pequeñas marcas de alimentación, obradores, dark kitchens.
@@ -98,6 +103,7 @@ regulatorio + datos**.
   recurrente al cambiar recetas/productos.
 
 ### 6. Monitor de precios MAP para marcas D2C y distribuidores
+
 - **Problema:** revendedores que rompen el precio mínimo (MAP) erosionan margen
   y marca. Detectarlo manualmente es imposible.
 - **Cliente ideal:** marcas con red de distribución, fabricantes en marketplaces.
@@ -109,6 +115,7 @@ regulatorio + datos**.
   altos y sticky.
 
 ### 7. Plataforma de administración para comunidades/HOA autogestionadas
+
 - **Problema:** comunidades de vecinos sin administrador gestionan cuotas,
   incidencias, actas y votaciones con WhatsApp y papel.
 - **Cliente ideal:** juntas de vecinos voluntarias, pequeñas comunidades.
@@ -120,6 +127,7 @@ regulatorio + datos**.
   competencia local, expandible a pagos online.
 
 ### 8. Registro digital de turnos/cuidados con auditoría para residencias y clínicas
+
 - **Problema:** centros de cuidado pequeños llevan registros en papel; las
   inspecciones exigen trazabilidad. El papel falla auditorías.
 - **Cliente ideal:** residencias pequeñas, centros de día, clínicas.
@@ -132,6 +140,7 @@ regulatorio + datos**.
   expandible a más documentación de compliance.
 
 ### 9. Recordkeeping de reparto de propinas y cumplimiento laboral para hostelería
+
 - **Problema:** repartir propinas legalmente y dejar registro auditable es un
   lío; errores = reclamaciones y sanciones laborales.
 - **Cliente ideal:** restaurantes/bares independientes.
@@ -143,6 +152,7 @@ regulatorio + datos**.
   con nómina (upsell).
 
 ### 10. Monitor de umbrales de IVA/sales-tax (nexus) para e-commerce pequeño
+
 - **Problema:** al crecer, los vendedores cruzan umbrales de registro fiscal sin
   enterarse → deudas y multas. Las soluciones (Avalara) son caras.
 - **Cliente ideal:** sellers de Shopify/Amazon en expansión.
@@ -160,15 +170,16 @@ regulatorio + datos**.
 Prioridad: mejor equilibrio entre potencial, velocidad de desarrollo y rapidez
 para conseguir los primeros clientes (no solo rentabilidad).
 
-| Idea | Potencial | Velocidad build | Coste | Rapidez de clientes | Balance |
-|---|:--:|:--:|:--:|:--:|:--:|
-| #1 Accesibilidad (EAA/WCAG) | 9 | 8 | 9 | 9 | **8.7 🥇** |
-| #5 Etiquetado de alérgenos | 7 | 7 | 9 | 7 | 7.2 🥈 |
-| #4 Renovación de licencias | 7 | 9 | 9 | 6 | 7.1 🥉 |
-| #2 COI | 8 | 7 | 8 | 4 | 6.4 |
-| #6 MAP price monitor | 8 | 5 | 5 | 4 | 5.6 |
+| Idea                        | Potencial | Velocidad build | Coste | Rapidez de clientes |  Balance   |
+| --------------------------- | :-------: | :-------------: | :---: | :-----------------: | :--------: |
+| #1 Accesibilidad (EAA/WCAG) |     9     |        8        |   9   |          9          | **8.7 🥇** |
+| #5 Etiquetado de alérgenos  |     7     |        7        |   9   |          7          |   7.2 🥈   |
+| #4 Renovación de licencias  |     7     |        9        |   9   |          6          |   7.1 🥉   |
+| #2 COI                      |     8     |        7        |   8   |          4          |    6.4     |
+| #6 MAP price monitor        |     8     |        5        |   5   |          4          |    5.6     |
 
 **Cambios respecto a la primera ronda (por investigación):**
+
 - **#10 (nexus fiscal) descartada:** ya existe `NexusMonitor` en el Shopify App
   Store, más Kintsugi, Sidr y TaxCloud.
 - **#2 (COI) baja para un solista:** TrustLayer regala hasta 50 proveedores
@@ -181,6 +192,7 @@ para conseguir los primeros clientes (no solo rentabilidad).
 ### 🥇 Finalista 1 — Monitor de accesibilidad EAA/WCAG para pymes UE
 
 **La investigación la REFUERZA:**
+
 - La FTC multó a **accessiBe con $1M en abril 2025** por afirmar en falso que su
   widget hacía cumplir WCAG.
 - **~40% de las empresas demandadas en 2025 ya tenían un "overlay" instalado.**
@@ -247,6 +259,7 @@ en el que más importa ahora: **conseguir clientes rápido**.
 **Razón decisiva:** en las otras dos, producto y captación son cosas separadas.
 En accesibilidad, **el producto ES el canal de adquisición**. Un escaneo gratuito
 instantáneo:
+
 1. Es un lead magnet que se comparte solo (PLG).
 2. Convierte el outreach en frío en algo hiper-relevante ("tu web tiene 47
    errores sancionables").

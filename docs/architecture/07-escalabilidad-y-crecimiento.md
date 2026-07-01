@@ -17,6 +17,7 @@ Cómo está pensado SkillTree para crecer **sin reescrituras traumáticas**.
 ## 2. Crecimiento del contenido (de curado a comunidad)
 
 El modelo de datos ya contempla la transición a **UGC**:
+
 - `Tree.authorId`, `status` (borrador/publicado) y `visibility` existen desde el
   día 1.
 - **Roles** (usuario, autor, moderador, admin) se añaden sin rediseñar.
@@ -49,7 +50,7 @@ El modelo de datos ya contempla la transición a **UGC**:
 
 - Módulo `billing` aislado; integrar **Stripe** (Premium) no toca la lógica de
   aprendizaje.
-- Los rollups y eventos ya dan la base para *paywalls* por árbol o por función
+- Los rollups y eventos ya dan la base para _paywalls_ por árbol o por función
   (analíticas avanzadas, árboles premium).
 
 ## Qué evitamos deliberadamente al inicio (para no sobre-diseñar)

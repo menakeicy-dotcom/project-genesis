@@ -1,7 +1,7 @@
 # Architecture Decision Records (ADR)
 
 Un **ADR** documenta una decisión arquitectónica importante junto con su
-contexto y consecuencias. Responde a la pregunta *"¿por qué se hizo así?"*
+contexto y consecuencias. Responde a la pregunta _"¿por qué se hizo así?"_
 meses o años después.
 
 ## Reglas
@@ -13,10 +13,10 @@ meses o años después.
 
 ## Índice
 
-| ADR | Título | Estado |
-|------|--------------------------------------|-----------|
-| [0001](./0001-stack-tecnologico.md) | Stack tecnológico | Propuesta |
-| [0002](./0002-definicion-producto-skilltree.md) | Definición de producto — SkillTree | Aceptada |
+| ADR                                             | Título                             | Estado    |
+| ----------------------------------------------- | ---------------------------------- | --------- |
+| [0001](./0001-stack-tecnologico.md)             | Stack tecnológico                  | Propuesta |
+| [0002](./0002-definicion-producto-skilltree.md) | Definición de producto — SkillTree | Aceptada  |
 
 ## Crear un ADR nuevo
 

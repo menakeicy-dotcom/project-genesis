@@ -6,10 +6,10 @@ El progreso es lo que hace que SkillTree "enganche". Diseño pensado para ser
 ## Qué guardamos (y qué no)
 
 - **Fuente de verdad:** `UserSkillProgress` — solo hechos: una habilidad está
-  *en progreso* o *completada*, con marcas de tiempo.
+  _en progreso_ o _completada_, con marcas de tiempo.
 - **No guardamos** "bloqueado" ni "disponible": se **derivan** de los
-  prerrequisitos + lo completado (ver doc 04). Regla: *nunca almacenar lo que se
-  puede calcular de forma barata y sin ambigüedad.*
+  prerrequisitos + lo completado (ver doc 04). Regla: _nunca almacenar lo que se
+  puede calcular de forma barata y sin ambigüedad._
 - **Rollups** (`UserTreeEnrollment`): contadores por árbol (habilidades
   completadas, XP, nivel, última actividad) para pintar paneles sin recorrer todo.
 - **Eventos** (`ActivityEvent`): log append-only de lo que ocurre; base de rachas

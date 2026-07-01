@@ -14,7 +14,8 @@ silencio.
 
 ## Decisiones de producto
 
-### D1. Autoría de los árboles — *Curado por el equipo (MVP)*
+### D1. Autoría de los árboles — _Curado por el equipo (MVP)_
+
 - **Opciones:** (A) curado por el equipo/expertos; (B) UGC desde el día 1;
   (C) híbrido.
 - **Decisión:** empezar **curado** (A) para garantizar calidad y simplificar el
@@ -23,7 +24,8 @@ silencio.
 - **Por qué:** la calidad del contenido es el corazón del producto; UGC exige
   moderación y editor, que no deben bloquear el lanzamiento.
 
-### D2. Contenido de cada habilidad — *Curación de recursos externos*
+### D2. Contenido de cada habilidad — _Curación de recursos externos_
+
 - **Opciones:** (A) enlazar recursos externos (vídeos, artículos, ejercicios) +
   descripción propia; (B) contenido propio alojado; (C) mixto.
 - **Decisión:** (A) para el MVP. Cada habilidad tiene una descripción breve
@@ -31,7 +33,8 @@ silencio.
 - **Por qué:** coste casi nulo, sin alojar vídeo caro, y foco en lo que
   diferencia (la estructura del árbol y la experiencia), no en producir contenido.
 
-### D3. Validación de desbloqueo — *Autoevaluación (MVP)*
+### D3. Validación de desbloqueo — _Autoevaluación (MVP)_
+
 - **Opciones:** (A) el usuario marca "completado"; (B) quizzes/retos automáticos;
   (C) evidencias/proyectos revisados.
 - **Decisión:** (A) para el MVP; la arquitectura deja el punto de extensión para
@@ -39,12 +42,14 @@ silencio.
 - **Por qué:** desbloquea la experiencia completa (árbol + progreso + motivación)
   con mínimo esfuerzo; la evaluación real se añade donde aporte valor.
 
-### D4. Monetización — *Freemium*
+### D4. Monetización — _Freemium_
+
 - Árboles gratuitos + suscripción **Premium** (árboles avanzados, analíticas de
   progreso, sin límites). No condiciona la arquitectura central; se integra
   (Stripe) cuando haya tracción.
 
-### D5. Plataforma — *Web responsive, mobile-first, PWA-ready*
+### D5. Plataforma — _Web responsive, mobile-first, PWA-ready_
+
 - Una web excelente en móvil y escritorio antes que apps nativas.
 
 ## Alcance del MVP

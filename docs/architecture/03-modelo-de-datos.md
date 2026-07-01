@@ -16,10 +16,12 @@ User 1───* ActivityEvent                          (log append-only: XP, ra
 ```
 
 ### Category (categoría)
+
 Agrupa árboles: Idiomas, Cocina, Música…
 `id · slug · name · description · icon · color · order · createdAt`
 
 ### Tree (árbol de aprendizaje)
+
 Una ruta de aprendizaje dentro de una categoría.
 `id · categoryId · slug · title · description · difficulty · coverImage`
 `· status(draft|published|archived) · visibility(public|private)`
@@ -29,6 +31,7 @@ Una ruta de aprendizaje dentro de una categoría.
 > soportar UGC y evolución sin migración traumática (ver ADR-0002).
 
 ### Skill (habilidad / nodo)
+
 Cada nodo del árbol.
 `id · treeId · slug · title · description · icon`
 `· xpReward · estimatedMinutes · tier · positionX · positionY`
@@ -40,7 +43,8 @@ Cada nodo del árbol.
 - `isRoot`: nodos de entrada (sin prerrequisitos).
 
 ### SkillPrerequisite (aristas del grafo)
-Relación *muchos-a-muchos* de Skill consigo misma. Define las **dependencias**.
+
+Relación _muchos-a-muchos_ de Skill consigo misma. Define las **dependencias**.
 `skillId · prerequisiteSkillId · group(nullable)`
 
 - El `group` permite reglas **AND / OR**: prerrequisitos del mismo grupo se
@@ -50,22 +54,26 @@ Relación *muchos-a-muchos* de Skill consigo misma. Define las **dependencias**.
   editar). Sin ciclos = siempre existe un orden de desbloqueo.
 
 ### Resource (recurso externo curado)
+
 Lo que el usuario consume para aprender la habilidad.
 `id · skillId · type(video|article|exercise|book|other) · title · url`
 `· provider · durationMinutes · order · isOptional`
 
 ### User (usuario)
+
 `id · email · name · avatarUrl · createdAt` (+ campos de Auth.js).
 
 ### UserSkillProgress (progreso por habilidad) — fuente de verdad
+
 `id · userId · skillId · status(in_progress|completed) · startedAt · completedAt`
 
-- **Solo guardamos hechos:** que una habilidad está *en progreso* o *completada*.
+- **Solo guardamos hechos:** que una habilidad está _en progreso_ o _completada_.
 - Los estados **bloqueado** y **disponible** **NO se almacenan**: se **calculan**
   a partir de los prerrequisitos + lo completado. Esto evita estados obsoletos y
   simplifica el modelo (ver [05-progreso](./05-progreso-y-gamificacion.md)).
 
 ### UserTreeEnrollment (inscripción + rollup)
+
 Denormalización para rendimiento: evita recalcular todo en cada pantalla.
 `id · userId · treeId · enrolledAt · completedSkills · totalSkills`
 `· earnedXp · level · lastActivityAt`
@@ -73,6 +81,7 @@ Denormalización para rendimiento: evita recalcular todo en cada pantalla.
 - Se actualiza **transaccionalmente** al completar una habilidad.
 
 ### ActivityEvent (registro de actividad) — append-only
+
 `id · userId · type(skill_completed|tree_started|level_up|…) · payload(json)`
 `· createdAt`
 

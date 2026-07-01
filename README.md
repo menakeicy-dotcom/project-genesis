@@ -33,15 +33,15 @@ Fotografía · Negocios · Desarrollo personal.
 
 La base del proyecto está documentada **antes de escribir código**:
 
-| Documento | Contenido |
-|---|---|
-| [Arquitectura general](./docs/architecture/01-arquitectura-general.md) | Estilo arquitectónico, capas y flujo de datos. |
-| [Stack tecnológico](./docs/architecture/02-stack-tecnologico.md) | Tecnologías recomendadas y su justificación. |
-| [Modelo de datos](./docs/architecture/03-modelo-de-datos.md) | Entidades, relaciones y esquema de la BD. |
-| [Árbol de habilidades](./docs/architecture/04-arbol-de-habilidades.md) | Cómo representamos y renderizamos el árbol. |
-| [Progreso y gamificación](./docs/architecture/05-progreso-y-gamificacion.md) | Cómo guardamos el progreso, XP, niveles y rachas. |
-| [Estructura de carpetas](./docs/architecture/06-estructura-de-carpetas.md) | Organización del código. |
-| [Escalabilidad y crecimiento](./docs/architecture/07-escalabilidad-y-crecimiento.md) | Cómo crecer durante años sin reescrituras. |
+| Documento                                                                            | Contenido                                         |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------- |
+| [Arquitectura general](./docs/architecture/01-arquitectura-general.md)               | Estilo arquitectónico, capas y flujo de datos.    |
+| [Stack tecnológico](./docs/architecture/02-stack-tecnologico.md)                     | Tecnologías recomendadas y su justificación.      |
+| [Modelo de datos](./docs/architecture/03-modelo-de-datos.md)                         | Entidades, relaciones y esquema de la BD.         |
+| [Árbol de habilidades](./docs/architecture/04-arbol-de-habilidades.md)               | Cómo representamos y renderizamos el árbol.       |
+| [Progreso y gamificación](./docs/architecture/05-progreso-y-gamificacion.md)         | Cómo guardamos el progreso, XP, niveles y rachas. |
+| [Estructura de carpetas](./docs/architecture/06-estructura-de-carpetas.md)           | Organización del código.                          |
+| [Escalabilidad y crecimiento](./docs/architecture/07-escalabilidad-y-crecimiento.md) | Cómo crecer durante años sin reescrituras.        |
 
 Decisiones de producto y arquitectura: [`docs/decisions/`](./docs/decisions/)
 (ADR). Bitácora y progreso: [`PROJECT.md`](./PROJECT.md). Tareas:

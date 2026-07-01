@@ -8,7 +8,7 @@
 ## Hallazgos que guían el enfoque
 
 - **La viralidad de consumo se diseña, no se reza.** Las que funcionan tienen el
-  *loop* incrustado en el producto: el output se comparte solo, o cada uso
+  _loop_ incrustado en el producto: el output se comparte solo, o cada uso
   recluta a nuevos usuarios (códigos de sala, invitaciones, embeds). La
   distribución importa más que construir.
 - **Dos nichos "obvios" ya están saturados:** el **muro de fotos QR para
@@ -24,6 +24,7 @@ como moat + construible por 1 persona.**
 ## Las 10 ideas
 
 ### 1. Juegos de fiesta en el navegador (estilo Jackbox, sin instalar nada)
+
 - **Problema:** reunir a un grupo a jugar requiere instalar apps o comprar
   consolas. La fricción mata la diversión.
 - **Cliente:** grupos de amigos, familias, eventos de empresa, profes.
@@ -38,6 +39,7 @@ como moat + construible por 1 persona.**
   (K-factor >1 posible); Jackbox demostró el mercado pero es de pago/escritorio.
 
 ### 2. Creador de tier-lists / rankings bonitos y embebibles
+
 - **Problema:** hacer y compartir un ranking ("mejores X") es superviral, pero la
   herramienta dominante (TierMaker) es fea, lenta y llena de ads.
 - **Cliente:** creators, comunidades de nicho, profes, marcas.
@@ -53,6 +55,7 @@ como moat + construible por 1 persona.**
   "crecer por UX".
 
 ### 3. "Vaquita" digital — bote grupal para regalos
+
 - **Problema:** juntar dinero entre amigos/compañeros para un regalo es un caos
   de transferencias y Excel.
 - **Cliente:** grupos de amigos, oficinas, familias.
@@ -67,6 +70,7 @@ como moat + construible por 1 persona.**
   en mercados hispanos ("hacer una vaca") está poco atendido.
 
 ### 4. Muro de fotos/vídeo en vivo para eventos (QR) — nicho saturado
+
 - **Problema:** las fotos de los invitados se pierden en 20 móviles distintos.
 - **Cliente:** parejas, anfitriones, y sobre todo profesionales del evento
   (venues, planners, fotógrafos).
@@ -81,6 +85,7 @@ como moat + construible por 1 persona.**
   está en el B2B (venues/planners).
 
 ### 5. Constructor de calendarios de adviento / cuenta atrás interactivos para marcas y creators
+
 - **Problema:** marcas y creators quieren campañas de "sorpresa diaria" (Navidad,
   lanzamientos, sorteos) pero montarlas es caro/técnico.
 - **Cliente:** pequeñas marcas D2C, creators, e-commerce.
@@ -93,6 +98,7 @@ como moat + construible por 1 persona.**
   lo B2C viral) y poca competencia especializada.
 
 ### 6. Juegos sociales de predicciones / quinielas entre amigos
+
 - **Problema:** predecir en grupo (Oscars, Mundial, realities, quién tendrá el
   bebé antes) se hace por WhatsApp, sin marcador.
 - **Cliente:** grupos de amigos, comunidades de fans.
@@ -106,6 +112,7 @@ como moat + construible por 1 persona.**
   recurrentes = olas de crecimiento gratis.
 
 ### 7. Cápsula del tiempo / cartas al futuro colaborativas
+
 - **Problema:** graduaciones, bodas, equipos… quieren capturar mensajes y abrirlos
   en el futuro. Hoy no hay una experiencia bonita para grupos.
 - **Cliente:** grupos de graduación, parejas, equipos, profes.
@@ -120,6 +127,7 @@ como moat + construible por 1 persona.**
   expandible a colegios/empresas.
 
 ### 8. "Wrapped as a service" — resumen anual personalizado para clientes/seguidores
+
 - **Problema:** el "Spotify Wrapped" es el contenido más compartido del año, pero
   solo las megaempresas pueden hacerlo.
 - **Cliente:** pequeños negocios, gimnasios, cafeterías, creators, apps pequeñas.
@@ -134,6 +142,7 @@ como moat + construible por 1 persona.**
   competencia especializada, output ultra-compartible.
 
 ### 9. Anuncios/reveals interactivos (embarazo, mudanza, compromiso, "baby pool")
+
 - **Problema:** la gente quiere anunciar momentos vitales de forma especial y
   jugar con ellos (adivina fecha/peso/nombre del bebé).
 - **Cliente:** particulares en momentos vitales; expandible a party planners.
@@ -147,6 +156,7 @@ como moat + construible por 1 persona.**
   nichos (baby pools) casi sin herramientas bonitas.
 
 ### 10. Retos con tabla de clasificación entre amigos (hábitos, lectura, pasos)
+
 - **Problema:** los propósitos personales fracasan solos; en grupo con marcador y
   piques, funcionan.
 - **Cliente:** grupos de amigos, comunidades, pequeños coaches.
@@ -164,13 +174,13 @@ como moat + construible por 1 persona.**
 
 ## Puntuación (lente: viralidad + UX + coste + velocidad)
 
-| Idea | Viralidad | UX moat | Coste | Velocidad build | Monetización |
-|---|:--:|:--:|:--:|:--:|:--:|
-| #2 Tier-lists/rankings | 🔥🔥🔥 | Alto | 9 | 9 | Clara (freemium) |
-| #1 Juegos de fiesta | 🔥🔥🔥 | Alto | 8 | 5 | Media |
-| #8 Wrapped as a service | 🔥🔥🔥 | Medio | 8 | 6 | Clara (B2B) |
-| #6 Predicciones/quinielas | 🔥🔥🔥 | Medio | 9 | 6 | Media |
-| #3 Vaquita digital | 🔥🔥 | Medio | 7 | 5 | Clara (comisión) |
+| Idea                      | Viralidad | UX moat | Coste | Velocidad build |   Monetización   |
+| ------------------------- | :-------: | :-----: | :---: | :-------------: | :--------------: |
+| #2 Tier-lists/rankings    |  🔥🔥🔥   |  Alto   |   9   |        9        | Clara (freemium) |
+| #1 Juegos de fiesta       |  🔥🔥🔥   |  Alto   |   8   |        5        |      Media       |
+| #8 Wrapped as a service   |  🔥🔥🔥   |  Medio  |   8   |        6        |   Clara (B2B)    |
+| #6 Predicciones/quinielas |  🔥🔥🔥   |  Medio  |   9   |        6        |      Media       |
+| #3 Vaquita digital        |   🔥🔥    |  Medio  |   7   |        5        | Clara (comisión) |
 
 ---
 

@@ -38,6 +38,7 @@ la capa de servicios del módulo correspondiente, que aplica reglas y validació
 ## Flujo de una petición típica
 
 **Lectura — ver un árbol (Server Component):**
+
 1. La ruta `(/trees/[slug])` es un Server Component.
 2. Llama a `catalog.getTreeBySlug()` y `progress.getUserTreeState()`.
 3. El servicio de `skill-tree` **calcula el estado de cada nodo**
@@ -47,7 +48,8 @@ la capa de servicios del módulo correspondiente, que aplica reglas y validació
    pinta.
 
 **Escritura — completar una habilidad (Server Action):**
-1. El cliente invoca una *Server Action* `progress.completeSkill(skillId)`.
+
+1. El cliente invoca una _Server Action_ `progress.completeSkill(skillId)`.
 2. Se valida la entrada (Zod) y la autorización (sesión del usuario).
 3. En una **transacción**: se registra la completitud, se otorga XP, se
    actualiza el rollup del árbol y se anota el evento de actividad.
@@ -65,7 +67,7 @@ la capa de servicios del módulo correspondiente, que aplica reglas y validació
 - **Validación:** Zod en toda entrada externa (formularios, Server Actions, route
   handlers).
 - **Seguridad:** autenticación en todas las rutas de la app; autorización en la
-  capa de servicios; *rate limiting* en mutaciones; nunca confiar en el cliente
+  capa de servicios; _rate limiting_ en mutaciones; nunca confiar en el cliente
   para decidir qué está desbloqueado.
 - **Observabilidad:** registro estructurado de errores y de eventos de
   aprendizaje desde el inicio (aunque simple).
