@@ -16,6 +16,7 @@ meses o años después.
 | ADR | Título | Estado |
 |------|--------------------------------------|-----------|
 | [0001](./0001-stack-tecnologico.md) | Stack tecnológico | Propuesta |
+| [0002](./0002-definicion-producto-skilltree.md) | Definición de producto — SkillTree | Aceptada |
 
 ## Crear un ADR nuevo
 
