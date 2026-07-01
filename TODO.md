@@ -1,57 +1,54 @@
 # TODO — Tareas pendientes
 
-Lista priorizada. Convención de estado: `[ ]` pendiente · `[~]` en curso ·
-`[x]` hecho · `[!]` bloqueado.
+Estado: `[ ]` pendiente · `[~]` en curso · `[x]` hecho · `[!]` bloqueado.
 
 ---
 
-## 🔥 Prioridad 0 — Desbloquear el proyecto
+## 🔥 Prioridad 0 — Diseño (fase actual)
 
-- [!] **Definir el producto** — elegir opción A, B o C (ver `PROJECT.md` §1).
-      *Bloquea todo lo demás.*
-
----
-
-## 🟠 Prioridad 1 — Fundación técnica
-
-- [x] Analizar el estado del repositorio.
-- [x] Crear estructura profesional de documentación.
-- [x] `README.md` con propósito y visión general.
-- [x] `PROJECT.md` (bitácora de decisiones y progreso).
-- [x] `TODO.md` (este archivo).
-- [x] `.gitignore` adecuado para Node/TypeScript.
-- [x] `.editorconfig` para estilo coherente.
-- [x] Recomendación de stack justificada (ADR-0001).
-- [ ] Confirmar el stack con la fundadora.
+- [x] Definir el producto (SkillTree).
+- [~] Documentación técnica de arquitectura.
+  - [x] Arquitectura general
+  - [x] Stack tecnológico
+  - [x] Modelo de datos
+  - [x] Representación del árbol de habilidades
+  - [x] Progreso y gamificación
+  - [x] Estructura de carpetas
+  - [x] Escalabilidad y crecimiento
+- [ ] Confirmar con la fundadora las decisiones de producto (PROJECT.md §2).
 
 ---
 
-## 🟡 Prioridad 2 — Inicialización del stack (tras definir producto)
+## 🟠 Prioridad 1 — Inicialización (tras aprobar el diseño)
 
-- [ ] Generar scaffold de Next.js + TypeScript.
-- [ ] Configurar Tailwind CSS + shadcn/ui.
-- [ ] Configurar ESLint + Prettier.
-- [ ] Configurar Husky + lint-staged (calidad en pre-commit).
-- [ ] Configurar Vitest (unitarios) y Playwright (e2e).
-- [ ] Crear `.env.example` con las variables necesarias.
-- [ ] Configurar GitHub Actions (lint + test + build).
-
----
-
-## 🟢 Prioridad 3 — Arquitectura del MVP
-
-- [ ] Definir el modelo de datos inicial (Prisma schema).
-- [ ] Diseñar la estructura de carpetas de `src/`.
-- [ ] Integrar autenticación (Auth.js).
-- [ ] Integrar pagos/suscripciones (Stripe) si aplica al modelo de negocio.
-- [ ] Implementar el primer flujo end-to-end de la funcionalidad principal.
-- [ ] Documentar cómo levantar el proyecto en local (`docs/`).
+- [ ] Scaffold Next.js + TypeScript.
+- [ ] Tailwind CSS + shadcn/ui (design system base).
+- [ ] Prisma + PostgreSQL; primera migración del esquema.
+- [ ] ESLint + Prettier + Husky + lint-staged.
+- [ ] Vitest + Playwright.
+- [ ] `.env.example` y configuración de entornos.
+- [ ] GitHub Actions (lint + test + build).
 
 ---
 
-## 🔵 Prioridad 4 — Preparación para producción
+## 🟡 Prioridad 2 — Módulos del MVP (uno por uno)
 
-- [ ] Revisión de seguridad (secretos, validación de entradas, cabeceras).
-- [ ] Observabilidad: logs y monitorización de errores.
-- [ ] Estrategia de despliegue y entornos (dev/staging/prod).
+- [ ] **Módulo `auth`** — registro/login (Auth.js).
+- [ ] **Módulo `catalog`** — categorías y árboles (listado + detalle).
+- [ ] **Módulo `skill-tree`** — render interactivo del árbol (React Flow),
+      estados de nodo (bloqueado/disponible/completado).
+- [ ] **Módulo `progress`** — marcar habilidades, XP, niveles, rachas.
+- [ ] **Módulo `users`** — perfil y panel de progreso.
+- [ ] Seed de datos: 1 categoría + 1 árbol de ejemplo bien diseñado.
+
+---
+
+## 🟢 Prioridad 3 — Producción y crecimiento
+
+- [ ] Panel de administración/curación de árboles.
+- [ ] Internacionalización (i18n).
+- [ ] Monetización (Stripe) — plan Premium.
+- [ ] Observabilidad (logs, errores) y analítica de aprendizaje.
+- [ ] Preparación para UGC (roles de autor, moderación, versionado de árboles).
+- [ ] Revisión de seguridad y accesibilidad.
 - [ ] Definir la licencia del proyecto.

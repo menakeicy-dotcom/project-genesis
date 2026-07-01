@@ -1,98 +1,55 @@
-# Project Genesis
+# SkillTree 🌳
 
-> Base profesional para construir un producto web moderno, escalable y mantenible.
+> Aprende cualquier habilidad a través de **árboles de aprendizaje visuales**,
+> inspirados en los árboles de habilidades de los videojuegos.
 
-[![Estado](https://img.shields.io/badge/estado-fundaci%C3%B3n-blue)]()
+[![Estado](https://img.shields.io/badge/estado-dise%C3%B1o-blue)]()
 [![Licencia](https://img.shields.io/badge/licencia-pendiente-lightgrey)]()
 
 ---
 
-## 🎯 Propósito
+## 🎯 Qué es SkillTree
 
-Este repositorio es la **fundación técnica** de un producto digital pensado para
-ser usado por personas reales y monetizado de forma sostenible.
+SkillTree es una plataforma donde cualquier persona puede aprender una habilidad
+avanzando por un **árbol interactivo**: cada nodo es una micro-habilidad que se
+**desbloquea** al completar las anteriores. Aprender debe sentirse **divertido,
+visual y motivador** — como subir de nivel en un juego, no como un curso
+tradicional.
 
-> **⚠️ Decisión pendiente — Definición del producto.**
-> La visión de producto (qué problema resuelve, para quién y cómo se monetiza)
-> aún **no está definida**. Es la **decisión inmediata** antes de escribir
-> funcionalidad. Las opciones se detallan en [`PROJECT.md`](./PROJECT.md).
->
-> Esta base se ha diseñado de forma **agnóstica al producto**: sirve como punto
-> de partida sólido sea cual sea la dirección que se elija, sin comprometer
-> decisiones de negocio por adelantado.
+**Categorías de ejemplo:** Idiomas · Cocina · Música · Programación · Arte ·
+Fotografía · Negocios · Desarrollo personal.
 
----
+## 💡 Filosofía de producto
 
-## 🏗️ Estado actual
-
-| Fase | Estado |
-|------|--------|
-| Fundación del repositorio (docs, git, convenciones) | ✅ Completada |
-| Definición del producto | ⏳ Pendiente (tu decisión) |
-| Inicialización del stack (scaffold) | ⏳ Bloqueada por la anterior |
-| Desarrollo del MVP | ⏳ Pendiente |
+- Aprender debe sentirse como **desbloquear habilidades** en un videojuego.
+- Todo debe ser **intuitivo**.
+- La **experiencia de usuario** es prioridad número uno.
+- Diseño **limpio, moderno y profesional**.
+- El proyecto crece **por módulos**.
 
 ---
 
-## 🧱 Stack tecnológico recomendado
+## 📚 Documentación técnica
 
-El stack propuesto y su justificación completa están documentados como
-decisión de arquitectura en
-[`docs/decisions/0001-stack-tecnologico.md`](./docs/decisions/0001-stack-tecnologico.md).
+La base del proyecto está documentada **antes de escribir código**:
 
-Resumen:
+| Documento | Contenido |
+|---|---|
+| [Arquitectura general](./docs/architecture/01-arquitectura-general.md) | Estilo arquitectónico, capas y flujo de datos. |
+| [Stack tecnológico](./docs/architecture/02-stack-tecnologico.md) | Tecnologías recomendadas y su justificación. |
+| [Modelo de datos](./docs/architecture/03-modelo-de-datos.md) | Entidades, relaciones y esquema de la BD. |
+| [Árbol de habilidades](./docs/architecture/04-arbol-de-habilidades.md) | Cómo representamos y renderizamos el árbol. |
+| [Progreso y gamificación](./docs/architecture/05-progreso-y-gamificacion.md) | Cómo guardamos el progreso, XP, niveles y rachas. |
+| [Estructura de carpetas](./docs/architecture/06-estructura-de-carpetas.md) | Organización del código. |
+| [Escalabilidad y crecimiento](./docs/architecture/07-escalabilidad-y-crecimiento.md) | Cómo crecer durante años sin reescrituras. |
 
-| Capa | Tecnología | Por qué |
-|------|------------|---------|
-| Lenguaje | **TypeScript** | Tipado estático de extremo a extremo; menos errores en runtime. |
-| Framework | **Next.js (App Router)** | Full-stack React: frontend + API en un solo proyecto. |
-| Estilos | **Tailwind CSS + shadcn/ui** | UI rápida, consistente y accesible. |
-| Base de datos | **PostgreSQL** | Relacional, robusta y escalable. |
-| ORM | **Prisma** | Acceso a datos tipado, con migraciones versionadas. |
-| Autenticación | **Auth.js** | Estándar, flexible, integrable con múltiples proveedores. |
-| Pagos | **Stripe** | Estándar de la industria para suscripciones. |
-| Tests | **Vitest + Playwright** | Unitarios/integración + end-to-end. |
-| Calidad | **ESLint + Prettier + Husky** | Estilo y calidad automáticos antes de cada commit. |
-| Hosting | **Vercel + Postgres gestionado** | Despliegue continuo y mínima fricción. |
-
-> El scaffold con este stack se generará **después** de definir el producto,
-> para evitar estructura desechable.
+Decisiones de producto y arquitectura: [`docs/decisions/`](./docs/decisions/)
+(ADR). Bitácora y progreso: [`PROJECT.md`](./PROJECT.md). Tareas:
+[`TODO.md`](./TODO.md).
 
 ---
 
-## 📂 Estructura del repositorio
+## 🚦 Estado actual
 
-```
-project-genesis/
-├── README.md                 # Este archivo: visión general
-├── PROJECT.md                # Bitácora viva: decisiones, progreso, próximos pasos
-├── TODO.md                   # Tareas pendientes priorizadas
-├── .gitignore                # Archivos excluidos del control de versiones
-├── .editorconfig             # Estilo de código coherente entre editores
-└── docs/
-    ├── README.md             # Cómo está organizada la documentación
-    └── decisions/            # ADR — Architecture Decision Records
-        ├── README.md         # Qué es un ADR y cómo se usa
-        ├── 0000-plantilla.md # Plantilla para nuevas decisiones
-        └── 0001-stack-tecnologico.md
-```
-
-> La estructura de la aplicación (`src/`, `tests/`, etc.) se creará al
-> inicializar el stack, evitando carpetas vacías que no aportan valor todavía.
-
----
-
-## 🚀 Próximos pasos
-
-1. **Definir el producto** (ver `PROJECT.md`).
-2. Inicializar el stack y el scaffold del proyecto.
-3. Configurar CI/CD, linters y hooks de pre-commit.
-4. Desarrollar el primer MVP enfocado en un único problema.
-
----
-
-## 🤝 Convenciones
-
-- **Commits:** [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `docs:`, `chore:`…).
-- **Documentación:** toda decisión relevante se registra como ADR en `docs/decisions/`.
-- **Calidad:** nada de código apresurado; cada función documentada y probada.
+Fase de **diseño**: documentación técnica en curso. **Aún no se escribe código**;
+primero construimos una base sólida. Después, desarrollo por módulos.
