@@ -1,0 +1,102 @@
+// Esquema de Prisma — SkillTree
+// Sprint 1: solo autenticación. El modelo de dominio (categorías, árboles,
+// habilidades, progreso) se añadirá en sprints posteriores sin romper esto.
+//
+// Diseño alineado con docs/architecture/03-modelo-de-datos.md.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Rol del usuario. Preparado desde el día 1 para módulos futuros
+/// (creadores, empresas, administración) sin migraciones traumáticas.
+enum Role {
+  USER
+  CREATOR
+  ADMIN
+}
+
+/// Usuario de la plataforma.
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  /// Hash de la contraseña (bcrypt). Nulo si el usuario usa solo OAuth.
+  passwordHash  String?
+  role          Role      @default(USER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relaciones de Auth.js (preparadas para OAuth futuro).
+  accounts            Account[]
+  sessions            Session[]
+  passwordResetTokens PasswordResetToken[]
+
+  @@index([email])
+}
+
+/// Cuenta de un proveedor externo (OAuth). Sin uso en el Sprint 1, pero el
+/// modelo existe para habilitar "Iniciar sesión con Google/GitHub" sin rediseño.
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+/// Sesión persistida (para estrategia de sesión en BD si se adopta a futuro).
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// Token de verificación (email) usado por Auth.js.
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+/// Token de recuperación de contraseña. Se guarda el HASH del token, nunca el
+/// token en claro. De un solo uso y con expiración.
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expires   DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
