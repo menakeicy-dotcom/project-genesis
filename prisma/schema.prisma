@@ -1,8 +1,6 @@
 // Esquema de Prisma — SkillTree
-// Sprint 1: solo autenticación. El modelo de dominio (categorías, árboles,
-// habilidades, progreso) se añadirá en sprints posteriores sin romper esto.
-//
-// Diseño alineado con docs/architecture/03-modelo-de-datos.md.
+// Autenticación + modelo de dominio del MVP navegable (catálogo, árboles DAG,
+// progreso). Diseño alineado con docs/architecture/03-modelo-de-datos.md.
 
 generator client {
   provider = "prisma-client-js"
@@ -40,7 +38,180 @@ model User {
   sessions            Session[]
   passwordResetTokens PasswordResetToken[]
 
+  // Dominio de aprendizaje.
+  skillProgress   UserSkillProgress[]
+  treeEnrollments UserTreeEnrollment[]
+  activityEvents  ActivityEvent[]
+
   @@index([email])
+}
+
+// ─────────────────────────────────────────────────────────────
+//  Dominio de aprendizaje (catálogo + árboles DAG + progreso)
+// ─────────────────────────────────────────────────────────────
+
+enum TreeStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ResourceType {
+  VIDEO
+  ARTICLE
+  EXERCISE
+  BOOK
+  OTHER
+}
+
+enum SkillProgressStatus {
+  IN_PROGRESS
+  COMPLETED
+}
+
+/// Categoría: agrupa árboles (Idiomas, Cocina, Música…).
+model Category {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  name        String
+  description String
+  icon        String? // emoji o nombre de icono
+  color       String? // acento opcional
+  order       Int     @default(0)
+
+  trees Tree[]
+
+  createdAt DateTime @default(now())
+}
+
+/// Árbol de aprendizaje dentro de una categoría.
+model Tree {
+  id          String     @id @default(cuid())
+  categoryId  String
+  slug        String     @unique
+  title       String
+  description String
+  difficulty  String     @default("beginner") // beginner | intermediate | advanced
+  status      TreeStatus @default(PUBLISHED)
+  authorId    String? // preparado para UGC
+  version     Int        @default(1)
+
+  category    Category             @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  skills      Skill[]
+  enrollments UserTreeEnrollment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+}
+
+/// Habilidad = nodo del árbol.
+model Skill {
+  id          String  @id @default(cuid())
+  treeId      String
+  slug        String
+  title       String
+  description String
+  icon        String?
+  xpReward    Int     @default(10)
+  estimatedMinutes Int @default(20)
+  tier        Int     @default(0) // profundidad orientativa
+  positionX   Float   @default(0)
+  positionY   Float   @default(0)
+  isRoot      Boolean @default(false)
+  order       Int     @default(0)
+
+  tree          Tree                 @relation(fields: [treeId], references: [id], onDelete: Cascade)
+  resources     Resource[]
+  // Aristas del DAG: prerrequisitos de esta habilidad.
+  prerequisites SkillPrerequisite[]  @relation("SkillToPrereq")
+  requiredBy    SkillPrerequisite[]  @relation("PrereqToSkill")
+  progress      UserSkillProgress[]
+
+  createdAt DateTime @default(now())
+
+  @@unique([treeId, slug])
+  @@index([treeId])
+}
+
+/// Arista del grafo: `skill` depende de `prerequisite`.
+model SkillPrerequisite {
+  id             String  @id @default(cuid())
+  skillId        String
+  prerequisiteId String
+  group          String? // reglas AND/OR (ver doc 04)
+
+  skill        Skill @relation("SkillToPrereq", fields: [skillId], references: [id], onDelete: Cascade)
+  prerequisite Skill @relation("PrereqToSkill", fields: [prerequisiteId], references: [id], onDelete: Cascade)
+
+  @@unique([skillId, prerequisiteId])
+  @@index([skillId])
+  @@index([prerequisiteId])
+}
+
+/// Recurso externo curado asociado a una habilidad.
+model Resource {
+  id              String       @id @default(cuid())
+  skillId         String
+  type            ResourceType @default(ARTICLE)
+  title           String
+  url             String
+  provider        String?
+  durationMinutes Int?
+  order           Int          @default(0)
+  isOptional      Boolean      @default(false)
+
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@index([skillId])
+}
+
+/// Progreso de un usuario en una habilidad (fuente de verdad).
+model UserSkillProgress {
+  id          String              @id @default(cuid())
+  userId      String
+  skillId     String
+  status      SkillProgressStatus @default(IN_PROGRESS)
+  startedAt   DateTime            @default(now())
+  completedAt DateTime?
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, skillId])
+  @@index([userId])
+}
+
+/// Inscripción a un árbol + rollup denormalizado para leer paneles rápido.
+model UserTreeEnrollment {
+  id              String   @id @default(cuid())
+  userId          String
+  treeId          String
+  enrolledAt      DateTime @default(now())
+  completedSkills Int      @default(0)
+  totalSkills     Int      @default(0)
+  earnedXp        Int      @default(0)
+  lastActivityAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tree Tree @relation(fields: [treeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, treeId])
+  @@index([userId])
+}
+
+/// Registro de actividad append-only (base de XP, rachas y analítica).
+model ActivityEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  payload   Json?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
 }
 
 /// Cuenta de un proveedor externo (OAuth). Sin uso en el Sprint 1, pero el
