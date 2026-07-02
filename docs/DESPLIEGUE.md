@@ -27,7 +27,7 @@ Necesitas dos cuentas gratuitas: **Neon** (base de datos) y **Vercel** (hosting)
 
    | Nombre | Valor |
    |--------|-------|
-   | `DATABASE_URL` | *(la cadena de conexión de Neon del paso 1)* |
+   | `DATABASE_URL` | *(la cadena DIRECTA de Neon — sin `-pooler`)* |
    | `AUTH_SECRET` | *(genera el tuyo — ver más abajo)* |
    | `SEED_SECRET` | *(genera el tuyo — ver más abajo)* |
    | `NEXT_PUBLIC_APP_URL` | *(se rellena tras el primer deploy; ver paso 4)* |
