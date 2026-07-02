@@ -28,11 +28,21 @@ Necesitas dos cuentas gratuitas: **Neon** (base de datos) y **Vercel** (hosting)
    | Nombre | Valor |
    |--------|-------|
    | `DATABASE_URL` | *(la cadena de conexión de Neon del paso 1)* |
-   | `AUTH_SECRET` | `SPDv+TwFS0UlpT80YSCspKXdwtumWiPCb6XGjpZbGkg=` |
-   | `SEED_SECRET` | `d6155cacb395c59d2d52e1ada1653857` |
+   | `AUTH_SECRET` | *(genera el tuyo — ver más abajo)* |
+   | `SEED_SECRET` | *(genera el tuyo — ver más abajo)* |
    | `NEXT_PUBLIC_APP_URL` | *(se rellena tras el primer deploy; ver paso 4)* |
 
-   > Estos secretos son solo para empezar; puedes regenerarlos cuando quieras.
+   > ⚠️ **Nunca escribas estos secretos en el código ni en la documentación.**
+   > Solo deben vivir en las variables de entorno de Vercel (y en tu `.env`
+   > local, que está en `.gitignore`).
+
+   **Cómo generar cada secreto** (elige una opción):
+   - En una terminal: `openssl rand -base64 32` (para `AUTH_SECRET`) y
+     `openssl rand -hex 16` (para `SEED_SECRET`).
+   - Para `AUTH_SECRET` también sirve: `npx auth secret`.
+   - Sin terminal: usa un generador de contraseñas de confianza (mínimo 32
+     caracteres aleatorios) o pídeselos a tu equipo técnico.
+   - Genera **valores distintos** para cada entorno (producción, pruebas).
 
 5. Pulsa **Deploy**. El propio despliegue **crea las tablas** automáticamente
    (`prisma migrate deploy`).
@@ -41,8 +51,9 @@ Necesitas dos cuentas gratuitas: **Neon** (base de datos) y **Vercel** (hosting)
 
 Cuando el deploy termine, tendrás una URL (ej. `https://skilltree-xxx.vercel.app`).
 
-1. Abre en el navegador (¡vale el del móvil!):
-   `https://TU-URL.vercel.app/api/seed?key=d6155cacb395c59d2d52e1ada1653857`
+1. Abre en el navegador (¡vale el del móvil!), sustituyendo `TU_SEED_SECRET`
+   por el valor que pusiste en Vercel:
+   `https://TU-URL.vercel.app/api/seed?key=TU_SEED_SECRET`
 2. Verás `"Contenido de demostración cargado."`. (Si lo repites, dirá que ya
    había contenido: es seguro.)
 
