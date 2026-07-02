@@ -14,7 +14,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { getUserDashboard } from "@/modules/progress/services";
-import { OnboardingDialog } from "@/modules/onboarding/onboarding-dialog";
+import { hasSeenWelcome } from "@/modules/onboarding/services";
+import { WelcomeIntro } from "@/modules/onboarding/welcome-intro";
 
 export const metadata: Metadata = { title: "Panel" };
 
@@ -22,11 +23,14 @@ export default async function DashboardPage() {
   const session = await auth();
   const userId = session!.user.id;
   const name = session?.user?.name ?? "de nuevo";
-  const data = await getUserDashboard(userId);
+  const [data, seenWelcome] = await Promise.all([
+    getUserDashboard(userId),
+    hasSeenWelcome(userId),
+  ]);
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10">
-      <OnboardingDialog />
+      {!seenWelcome && <WelcomeIntro />}
 
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>

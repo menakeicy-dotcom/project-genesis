@@ -32,6 +32,8 @@ model User {
   /// Hash de la contraseña (bcrypt). Nulo si el usuario usa solo OAuth.
   passwordHash  String?
   role          Role      @default(USER)
+  /// Si el usuario ya vio la animación de bienvenida (se muestra una sola vez).
+  hasSeenWelcome Boolean  @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
