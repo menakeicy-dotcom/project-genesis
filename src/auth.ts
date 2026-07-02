@@ -13,6 +13,9 @@ import { verifyPassword } from "@/modules/auth/services/password";
  */
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  // Confía en el host de la petición. En Vercel se detecta solo, pero al
+  // autoalojar (local, otros hosts) es necesario para evitar "UntrustedHost".
+  trustHost: true,
   session: { strategy: "jwt" },
   providers: [
     Credentials({
