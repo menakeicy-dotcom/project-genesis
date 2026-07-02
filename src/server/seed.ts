@@ -1,13 +1,12 @@
-// Seed de CONTENIDO DE DEMOSTRACIÓN para el MVP navegable.
-// ⚠️ Placeholder: no es un currículo curado ni aprobado (ver regla 10 / ADR-0002).
-// Sirve para poder recorrer la experiencia de principio a fin.
-//
-// Ejecutar:  node prisma/seed.mjs   (con PRISMA_QUERY_ENGINE_LIBRARY apuntando
-// al motor si el entorno no permite descargarlo).
+import "server-only";
 
-import { PrismaClient } from "@prisma/client";
+import type { PrismaClient } from "@prisma/client";
 
-const db = new PrismaClient();
+/**
+ * Datos de CONTENIDO DE DEMOSTRACIÓN (placeholder, ver regla 10 / ADR-0002) y
+ * función de siembra IDEMPOTENTE: solo inserta si el catálogo está vacío, así
+ * es seguro invocarla varias veces sin borrar el progreso de nadie.
+ */
 
 const categories = [
   {
@@ -68,8 +67,30 @@ const categories = [
   },
 ];
 
-// Cada árbol: skills con posición (x,y), prerrequisitos (por slug) y recursos.
-const trees = [
+type SeedSkill = {
+  slug: string;
+  title: string;
+  desc: string;
+  xp: number;
+  min: number;
+  tier: number;
+  x: number;
+  y: number;
+  root?: boolean;
+  pre: string[];
+  res: { t: string; title: string; url: string; p?: string }[];
+};
+
+type SeedTree = {
+  categorySlug: string;
+  slug: string;
+  title: string;
+  description: string;
+  difficulty: string;
+  skills: SeedSkill[];
+};
+
+const trees: SeedTree[] = [
   {
     categorySlug: "programacion",
     slug: "javascript-desde-cero",
@@ -627,27 +648,26 @@ const trees = [
   },
 ];
 
-async function main() {
-  console.log("🌱 Seed: limpiando dominio…");
-  await db.skillPrerequisite.deleteMany();
-  await db.resource.deleteMany();
-  await db.userSkillProgress.deleteMany();
-  await db.userTreeEnrollment.deleteMany();
-  await db.skill.deleteMany();
-  await db.tree.deleteMany();
-  await db.category.deleteMany();
+/**
+ * Siembra el catálogo si aún no existe ninguna categoría. Idempotente.
+ * Devuelve cuántas categorías/árboles creó (0 si ya había datos).
+ */
+export async function seedIfEmpty(
+  db: PrismaClient,
+): Promise<{ seeded: boolean; categories: number; trees: number }> {
+  const existing = await db.category.count();
+  if (existing > 0) return { seeded: false, categories: 0, trees: 0 };
 
-  const catId = {};
+  const catId: Record<string, string> = {};
   for (const c of categories) {
     const created = await db.category.create({ data: c });
     catId[c.slug] = created.id;
   }
-  console.log(`🌱 ${categories.length} categorías.`);
 
   for (const t of trees) {
     const tree = await db.tree.create({
       data: {
-        categoryId: catId[t.categorySlug],
+        categoryId: catId[t.categorySlug]!,
         slug: t.slug,
         title: t.title,
         description: t.description,
@@ -656,7 +676,7 @@ async function main() {
       },
     });
 
-    const skillId = {};
+    const skillId: Record<string, string> = {};
     let order = 0;
     for (const s of t.skills) {
       const created = await db.skill.create({
@@ -673,8 +693,9 @@ async function main() {
           isRoot: !!s.root,
           order: order++,
           resources: {
-            create: (s.res ?? []).map((r, i) => ({
-              type: r.t,
+            create: s.res.map((r, i) => ({
+              // Enum ResourceType (validado por Prisma).
+              type: r.t as "VIDEO" | "ARTICLE" | "EXERCISE" | "BOOK" | "OTHER",
               title: r.title,
               url: r.url,
               provider: r.p ?? null,
@@ -689,19 +710,11 @@ async function main() {
     for (const s of t.skills) {
       for (const pre of s.pre) {
         await db.skillPrerequisite.create({
-          data: { skillId: skillId[s.slug], prerequisiteId: skillId[pre] },
+          data: { skillId: skillId[s.slug]!, prerequisiteId: skillId[pre]! },
         });
       }
     }
-    console.log(`🌳 Árbol "${t.title}" (${t.skills.length} habilidades).`);
   }
 
-  console.log("✅ Seed completado.");
+  return { seeded: true, categories: categories.length, trees: trees.length };
 }
-
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(() => db.$disconnect());

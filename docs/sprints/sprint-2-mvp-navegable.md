@@ -31,7 +31,7 @@ Estados de nodo **derivados**, no almacenados (docs 04/05).
 
 ## Decisiones y notas
 
-- **Contenido de demostración** (regla 10): el seed es *placeholder* para poder
+- **Contenido de demostración** (regla 10): el seed es _placeholder_ para poder
   navegar; los currículos reales se investigarán y propondrán para aprobación.
 - **PostgreSQL real** usado en el entorno (arrancado localmente) para verificar
   el flujo completo, no solo compilar.
