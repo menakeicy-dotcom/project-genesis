@@ -93,3 +93,27 @@ body {
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
 }
+
+/*
+ * Aleteo sutil de las hojas del follaje en la animación de bienvenida.
+ * Solo rotación (transform, acelerado por GPU). Cada hoja usa duración y
+ * desfase propios, así que la copa nunca se mueve sincronizada.
+ */
+@keyframes stLeafFlutter {
+  0% {
+    transform: rotate(-3.5deg);
+  }
+  50% {
+    transform: rotate(3.5deg);
+  }
+  100% {
+    transform: rotate(-3.5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

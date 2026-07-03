@@ -201,11 +201,16 @@ export function TreeAnimation({ step, reduced = false }: TreeAnimationProps) {
             );
           })}
 
-          {/* Follaje: hojas que brotan por pasos y forman la copa. */}
+          {/* Follaje: hojas que brotan por pasos y forman la copa. Cada hoja
+              tiene un aleteo propio y desincronizado (rotación mínima), para que
+              toda la copa se sienta viva, como mecida por la brisa. */}
           <g>
             {FOLIAGE.map((leaf, i) => {
               const shown = step >= leaf.step;
-              const delay = reduced ? 0 : (i % 6) * 0.05;
+              const bornDelay = reduced ? 0 : (i % 6) * 0.05;
+              // Aleteo continuo, desincronizado por hoja.
+              const flutterDur = 3.6 + (i % 5) * 0.7; // 3.6–6.4 s
+              const flutterDelay = -((i % 9) * 0.6); // fase distinta
               return (
                 <g
                   key={i}
@@ -219,23 +224,34 @@ export function TreeAnimation({ step, reduced = false }: TreeAnimationProps) {
                       opacity: shown ? 0.96 : 0,
                       transition: reduced
                         ? "none"
-                        : `transform 0.6s cubic-bezier(0.34,1.4,0.64,1) ${delay}s, opacity 0.5s ease ${delay}s`,
+                        : `transform 0.6s cubic-bezier(0.34,1.4,0.64,1) ${bornDelay}s, opacity 0.5s ease ${bornDelay}s`,
                     }}
                   >
-                    <path
-                      d="M0,-11 C5.6,-7 5.6,5 0,11 C-5.6,5 -5.6,-7 0,-11 Z"
-                      fill={
-                        leaf.tint > 0.6
-                          ? "url(#leafGradientLight)"
-                          : "url(#leafGradient)"
-                      }
-                    />
-                    <path
-                      d="M0,-8.5 L0,8.5"
-                      stroke="rgba(6,60,30,0.35)"
-                      strokeWidth="0.8"
-                      strokeLinecap="round"
-                    />
+                    <g
+                      style={{
+                        transformBox: "fill-box",
+                        transformOrigin: "50% 90%",
+                        animation:
+                          reduced || !shown
+                            ? undefined
+                            : `stLeafFlutter ${flutterDur}s ease-in-out ${flutterDelay}s infinite`,
+                      }}
+                    >
+                      <path
+                        d="M0,-11 C5.6,-7 5.6,5 0,11 C-5.6,5 -5.6,-7 0,-11 Z"
+                        fill={
+                          leaf.tint > 0.6
+                            ? "url(#leafGradientLight)"
+                            : "url(#leafGradient)"
+                        }
+                      />
+                      <path
+                        d="M0,-8.5 L0,8.5"
+                        stroke="rgba(6,60,30,0.35)"
+                        strokeWidth="0.8"
+                        strokeLinecap="round"
+                      />
+                    </g>
                   </g>
                 </g>
               );
