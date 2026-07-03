@@ -15,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { getUserDashboard } from "@/modules/progress/services";
 import { hasSeenWelcome } from "@/modules/onboarding/services";
-import { WelcomeIntro } from "@/modules/onboarding/welcome-intro";
+import { WelcomeGate } from "@/modules/onboarding/welcome";
 
 export const metadata: Metadata = { title: "Panel" };
 
@@ -30,7 +30,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10">
-      {!seenWelcome && <WelcomeIntro />}
+      {!seenWelcome && <WelcomeGate />}
 
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
