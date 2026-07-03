@@ -7,6 +7,8 @@ import { markWelcomeSeenAction } from "@/modules/onboarding/actions";
 import { WELCOME_CATEGORIES } from "./categories";
 import { IntroStep } from "./intro-step";
 import { EASE_SOFT, IntroText } from "./intro-text";
+import { MacroSeed } from "./macro-seed";
+import { Particles } from "./particles";
 import { TreeAnimation } from "./tree-animation";
 import { activeCategoryIndex, FINAL_STEP, STEP, STEP_DURATIONS } from "./steps";
 
@@ -77,14 +79,36 @@ export function OnboardingScreen() {
           aria-label="Bienvenida a SkillTree"
           className="fixed inset-0 z-[60] flex items-center justify-center overflow-hidden"
           style={{
+            // Ambiente de bosque al amanecer: un halo cálido de luz arriba y una
+            // profundidad verde-oscura abajo, para que el árbol verde respire.
             background:
-              "radial-gradient(ellipse at 50% 28%, #12294a 0%, #0a1626 46%, #050b15 100%)",
+              "radial-gradient(120% 80% at 50% 6%, rgba(253,230,138,0.10) 0%, rgba(253,230,138,0) 40%), radial-gradient(ellipse at 50% 32%, #143128 0%, #0b1c17 48%, #050f0b 100%)",
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: closing ? 0 : 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7, ease: EASE_SOFT }}
         >
+          {/* Profundidad: motas de luz que ascienden. */}
+          <Particles reduced={reduced} />
+          {/* Viñeta suave para enfocar el centro. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0,0,0,0.45) 100%)",
+            }}
+          />
+          {/* Difuminado inferior: da legibilidad a los textos sobre el árbol. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[38%]"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(5,15,11,0.85) 0%, rgba(5,15,11,0.5) 40%, transparent 100%)",
+            }}
+          />
           {/* Omitir, discreto, durante las escenas previas a la final. */}
           {!finalScene && (
             <button
@@ -97,13 +121,26 @@ export function OnboardingScreen() {
           )}
 
           <div className="relative flex h-full w-full max-w-[540px] flex-col items-center justify-center px-6">
-            {/* El árbol. */}
+            {/* El árbol (aparece al germinar). */}
             <TreeAnimation step={step} reduced={reduced} />
 
-            {/* Escena 1: título de bienvenida. */}
+            {/* Escena 1: primer plano de la semilla, centrado. */}
+            <IntroStep
+              active={step < STEP.GERMINATE}
+              className="pointer-events-none absolute inset-0 flex items-center justify-center"
+            >
+              <div style={{ transform: "translateY(-24px)" }}>
+                <MacroSeed
+                  glowing={step >= STEP.WELCOME && step < STEP.GERMINATE}
+                  reduced={reduced}
+                />
+              </div>
+            </IntroStep>
+
+            {/* Título de bienvenida, bajo la semilla. */}
             <IntroStep
               active={step === STEP.WELCOME}
-              className="pointer-events-none absolute inset-x-0 top-[28%] px-8 text-center"
+              className="pointer-events-none absolute inset-x-0 top-[62%] px-8 text-center"
             >
               <IntroText>
                 <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
@@ -113,7 +150,7 @@ export function OnboardingScreen() {
             </IntroStep>
 
             {/* Escenas 2-3: nombre + descripción de la categoría activa. */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-[16%] px-8 text-center">
+            <div className="pointer-events-none absolute inset-x-0 bottom-[30%] px-8 text-center">
               <AnimatePresence mode="wait">
                 {activeCategory && (
                   <IntroText key={activeCategory.id} duration={0.6}>

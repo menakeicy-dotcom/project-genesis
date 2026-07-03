@@ -18,14 +18,15 @@ interface CategoryLeafProps {
 }
 
 /**
- * El icono de una categoría, que nace como una hoja: brota desde la rama,
- * crece con un pequeño rebote, emite un brillo y luego queda flotando y
- * "respirando" muy suavemente. Todo se anima con transform/opacity para
- * mantener 60 FPS.
+ * El icono de una categoría, presentado como una hoja destacada: brota desde su
+ * rama con un pequeño rebote (spring), proyecta una sombra suave (tacto) y un
+ * halo verde de "vida", y luego queda flotando y respirando muy despacio.
  *
- * Estructura en capas para poder combinar una animación de nacimiento (una
- * sola vez) con una de flotación (en bucle) sin que se pisen:
- *   posición → nacimiento → flotación → respiración → [glow + icono]
+ * El brillo verde es intencional: el verde representa vida y crecimiento, y
+ * estas hojas son justo eso. El icono en sí es un SVG propio (ver `icons.tsx`).
+ *
+ * Capas: posición → nacimiento (rebote) → flotación → respiración → glow+icono.
+ * Todo se anima con transform/opacity para mantener 60 FPS.
  */
 export function CategoryLeaf({
   category,
@@ -35,6 +36,8 @@ export function CategoryLeaf({
   active,
   reduced = false,
 }: CategoryLeafProps) {
+  const isFlag = category.id === "idiomas";
+
   return (
     <div
       className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2"
@@ -42,27 +45,29 @@ export function CategoryLeaf({
     >
       {/* Nacimiento: brota desde la rama con un leve rebote. */}
       <motion.div
-        initial={{ scale: 0, opacity: 0, y: 8 }}
+        initial={{ scale: 0, opacity: 0, y: 10 }}
         animate={
-          born ? { scale: 1, opacity: 1, y: 0 } : { scale: 0, opacity: 0, y: 8 }
+          born
+            ? { scale: 1, opacity: 1, y: 0 }
+            : { scale: 0, opacity: 0, y: 10 }
         }
         transition={{
           type: reduced ? "tween" : "spring",
           duration: reduced ? 0 : undefined,
-          stiffness: 180,
-          damping: 15,
+          stiffness: 200,
+          damping: 14,
         }}
       >
-        {/* Flotación: sube y baja despacio, como suspendida en el aire. */}
+        {/* Flotación suave. */}
         <motion.div
-          animate={born && !reduced ? { y: [0, -6, 0] } : { y: 0 }}
+          animate={born && !reduced ? { y: [0, -5, 0] } : { y: 0 }}
           transition={{
             duration: 5,
             repeat: born && !reduced ? Infinity : 0,
             ease: "easeInOut",
           }}
         >
-          {/* Respiración: escala muy sutil. */}
+          {/* Respiración muy sutil. */}
           <motion.div
             className="relative flex items-center justify-center"
             animate={born && !reduced ? { scale: [1, 1.05, 1] } : { scale: 1 }}
@@ -72,25 +77,24 @@ export function CategoryLeaf({
               ease: "easeInOut",
             }}
           >
-            {/* Glow: halo detrás del icono. Anima opacidad (barato) en vez de
-                box-shadow. Brilla más cuando la categoría está activa. */}
+            {/* Halo de vida (verde). Anima opacidad (barato). */}
             <motion.span
               aria-hidden="true"
               className="absolute rounded-full"
               style={{
-                width: 78,
-                height: 78,
+                width: 76,
+                height: 76,
                 background:
-                  "radial-gradient(circle, rgba(96,165,250,0.55) 0%, rgba(96,165,250,0) 70%)",
+                  "radial-gradient(circle, rgba(34,197,94,0.6) 0%, rgba(34,197,94,0) 70%)",
               }}
               animate={{
                 opacity: reduced
                   ? active
                     ? 0.6
-                    : 0.3
+                    : 0.32
                   : active
-                    ? [0.45, 0.75, 0.45]
-                    : [0.2, 0.35, 0.2],
+                    ? [0.5, 0.8, 0.5]
+                    : [0.24, 0.4, 0.24],
               }}
               transition={{
                 duration: 3.5,
@@ -99,22 +103,27 @@ export function CategoryLeaf({
               }}
             />
 
-            {/* La hoja: un disco de vidrio con el icono (hoy emoji, mañana
-                ilustración propia). */}
+            {/* La hoja/insignia con el icono propio. */}
             <span
-              className="relative flex items-center justify-center rounded-full border"
+              className="relative flex items-center justify-center rounded-full"
               style={{
-                width: 52,
-                height: 52,
-                fontSize: 24,
-                background: "rgba(255,255,255,0.07)",
-                borderColor: active
-                  ? "rgba(147,197,253,0.55)"
-                  : "rgba(255,255,255,0.14)",
+                width: 50,
+                height: 50,
+                padding: isFlag ? 0 : 12,
+                color: "#ecfdf5",
+                background:
+                  "linear-gradient(150deg, rgba(22,163,74,0.32), rgba(6,78,59,0.5))",
+                border: active
+                  ? "1px solid rgba(134,239,172,0.7)"
+                  : "1px solid rgba(134,239,172,0.28)",
+                boxShadow:
+                  "0 6px 16px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.14)",
                 backdropFilter: "blur(2px)",
               }}
             >
-              {category.icon}
+              <span className="flex h-full w-full items-center justify-center">
+                {category.icon}
+              </span>
             </span>
           </motion.div>
         </motion.div>

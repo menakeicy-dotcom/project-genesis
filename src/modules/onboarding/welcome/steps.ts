@@ -30,13 +30,13 @@ export const FINAL_STEP = STEP.CATEGORY + WELCOME_CATEGORIES.length;
  * paso de origen. El paso final no avanza solo (espera al usuario).
  */
 export const STEP_DURATIONS: readonly number[] = [
-  1200, // 0 → 1  la semilla se asienta
-  2600, // 1 → 2  se lee el título y la semilla brilla
-  2400, // 2 → 3  crece el tronco antes de la primera rama
-  3000, // 3 → 4  categoría 1
-  3000, // 4 → 5  categoría 2
-  3000, // 5 → 6  categoría 3
-  3000, // 6 → 7  categoría 4 → escena final
+  1300, // 0 → 1  la semilla (macro) se asienta y late
+  1900, // 1 → 2  se lee el título y la semilla se abre
+  1600, // 2 → 3  brota el tronco; la cámara empieza a subir
+  1600, // 3 → 4  categoría 1 (Música)
+  1600, // 4 → 5  categoría 2 (Cocina)
+  1600, // 5 → 6  categoría 3 (Programación)
+  1600, // 6 → 7  categoría 4 (Idiomas) → escena final
 ];
 
 /** Índice de la categoría activa en un paso dado, o -1 si no hay ninguna. */
