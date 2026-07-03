@@ -6,30 +6,33 @@ import type { WelcomeCategory } from "./categories";
 
 interface CategoryLeafProps {
   category: WelcomeCategory;
-  /** Posición del centro de la hoja, en % del contenedor (0-100). */
+  /** Índice de la categoría (0-3): desincroniza el movimiento entre burbujas. */
+  index: number;
+  /** Posición del centro de la burbuja, en % del contenedor (0-100). */
   xPct: number;
   yPct: number;
-  /** Si la hoja ya "nació" desde su rama. */
+  /** Si la burbuja ya "nació" desde su rama. */
   born: boolean;
   /** Si es la categoría que se está presentando ahora (brilla más). */
   active: boolean;
-  /** Sin movimiento: aparece estática, sin flotar ni respirar. */
+  /** Sin movimiento: aparece estática, sin flotar. */
   reduced?: boolean;
 }
 
 /**
- * El icono de una categoría, presentado como una hoja destacada: brota desde su
- * rama con un pequeño rebote (spring), proyecta una sombra suave (tacto) y un
- * halo verde de "vida", y luego queda flotando y respirando muy despacio.
+ * Nodo de habilidad dentro de una burbuja circular.
  *
- * El brillo verde es intencional: el verde representa vida y crecimiento, y
- * estas hojas son justo eso. El icono en sí es un SVG propio (ver `icons.tsx`).
+ * La burbuja NUNCA queda quieta: en cuanto nace empieza un movimiento flotante
+ * muy sutil (2–5 px), lento y con una levísima rotación, como una hoja mecida
+ * por la brisa. Cada burbuja usa parámetros distintos según su índice, así que
+ * nunca están sincronizadas.
  *
- * Capas: posición → nacimiento (rebote) → flotación → respiración → glow+icono.
- * Todo se anima con transform/opacity para mantener 60 FPS.
+ * Capas (todas con transform/opacity, para 60 FPS):
+ *   posición → nacimiento (aparición suave) → deriva flotante → glow + icono.
  */
 export function CategoryLeaf({
   category,
+  index,
   xPct,
   yPct,
   born,
@@ -38,46 +41,52 @@ export function CategoryLeaf({
 }: CategoryLeafProps) {
   const isFlag = category.id === "idiomas";
 
+  // Parámetros de deriva propios de cada burbuja (desfasados entre sí).
+  const ampY = 3 + (index % 3); // 3–5 px
+  const ampX = 2 + (index % 2); // 2–3 px
+  const rot = 1.4 + (index % 2) * 0.8; // grados
+  const floatDur = 6 + (index % 4) * 0.9; // 6–8.7 s
+  const floatDelay = -(index * 1.7); // fase distinta desde el inicio
+  const glowDur = 3.4 + (index % 3) * 0.7;
+
   return (
     <div
       className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2"
       style={{ left: `${xPct}%`, top: `${yPct}%` }}
     >
-      {/* Nacimiento: brota desde la rama con un leve rebote. */}
+      {/* Nacimiento: aparición suave con un mínimo sobreimpulso (sin rebote). */}
       <motion.div
-        initial={{ scale: 0, opacity: 0, y: 10 }}
-        animate={
-          born
-            ? { scale: 1, opacity: 1, y: 0 }
-            : { scale: 0, opacity: 0, y: 10 }
-        }
+        initial={{ scale: 0, opacity: 0 }}
+        animate={born ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
         transition={{
-          type: reduced ? "tween" : "spring",
-          duration: reduced ? 0 : undefined,
-          stiffness: 200,
-          damping: 14,
+          duration: reduced ? 0 : 0.7,
+          ease: [0.22, 1, 0.36, 1],
+          scale: reduced
+            ? { duration: 0 }
+            : { duration: 0.7, ease: [0.34, 1.4, 0.64, 1] },
         }}
       >
-        {/* Flotación suave. */}
+        {/* Deriva flotante continua y desincronizada. */}
         <motion.div
-          animate={born && !reduced ? { y: [0, -5, 0] } : { y: 0 }}
+          animate={
+            born && !reduced
+              ? {
+                  x: [0, ampX, 0, -ampX, 0],
+                  y: [0, -ampY, 0, ampY * 0.6, 0],
+                  rotate: [0, rot, 0, -rot, 0],
+                }
+              : { x: 0, y: 0, rotate: 0 }
+          }
           transition={{
-            duration: 5,
+            duration: floatDur,
+            delay: floatDelay,
             repeat: born && !reduced ? Infinity : 0,
             ease: "easeInOut",
+            times: [0, 0.25, 0.5, 0.75, 1],
           }}
         >
-          {/* Respiración muy sutil. */}
-          <motion.div
-            className="relative flex items-center justify-center"
-            animate={born && !reduced ? { scale: [1, 1.05, 1] } : { scale: 1 }}
-            transition={{
-              duration: 4,
-              repeat: born && !reduced ? Infinity : 0,
-              ease: "easeInOut",
-            }}
-          >
-            {/* Halo de vida (verde). Anima opacidad (barato). */}
+          <div className="relative flex items-center justify-center">
+            {/* Halo de vida (verde). Desincronizado también. */}
             <motion.span
               aria-hidden="true"
               className="absolute rounded-full"
@@ -94,16 +103,17 @@ export function CategoryLeaf({
                     : 0.32
                   : active
                     ? [0.5, 0.8, 0.5]
-                    : [0.24, 0.4, 0.24],
+                    : [0.22, 0.4, 0.22],
               }}
               transition={{
-                duration: 3.5,
+                duration: glowDur,
+                delay: floatDelay,
                 repeat: reduced ? 0 : Infinity,
                 ease: "easeInOut",
               }}
             />
 
-            {/* La hoja/insignia con el icono propio. */}
+            {/* La burbuja de vidrio con el icono propio. */}
             <span
               className="relative flex items-center justify-center rounded-full"
               style={{
@@ -112,7 +122,7 @@ export function CategoryLeaf({
                 padding: isFlag ? 0 : 12,
                 color: "#ecfdf5",
                 background:
-                  "linear-gradient(150deg, rgba(22,163,74,0.32), rgba(6,78,59,0.5))",
+                  "linear-gradient(150deg, rgba(22,163,74,0.34), rgba(6,78,59,0.52))",
                 border: active
                   ? "1px solid rgba(134,239,172,0.7)"
                   : "1px solid rgba(134,239,172,0.28)",
@@ -125,7 +135,7 @@ export function CategoryLeaf({
                 {category.icon}
               </span>
             </span>
-          </motion.div>
+          </div>
         </motion.div>
       </motion.div>
     </div>

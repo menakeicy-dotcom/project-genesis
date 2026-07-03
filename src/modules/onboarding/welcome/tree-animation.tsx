@@ -14,30 +14,42 @@ const VIEW_H = 640;
 const TRUNK_D =
   "M136,604 C133,540 145,472 144,402 C143,342 146,300 148,256 L152,256 C154,300 157,342 156,402 C155,472 167,540 164,604 Z";
 
-/** Ramas rellenas y afiladas (nacen gruesas del tronco y terminan en punta). */
-const BRANCHES_D: readonly string[] = [
-  // Música (baja izquierda)
-  "M146,392 C120,386 96,378 78,356 C98,372 122,380 150,376 Z",
-  // Cocina (baja derecha)
-  "M154,388 C184,382 208,368 224,336 C206,360 178,376 150,372 Z",
-  // Programación (alta izquierda)
-  "M150,336 C126,308 108,280 96,246 C116,282 134,306 152,320 Z",
-  // Idiomas (alta derecha)
-  "M150,332 C176,302 192,270 208,230 C196,272 176,306 150,316 Z",
-  // Copa central (prolongación del tronco)
-  "M147,262 C148,238 149,222 150,204 C151,222 152,238 153,262 Z",
-];
-
-const SPROUT_D = "M150,602 C150,588 150,576 150,562";
-
-/** Borde superior del rectángulo de revelado por paso (crece de abajo arriba). */
-const REVEAL_TOP: readonly number[] = [560, 560, 470, 380, 320, 250, 195, 120];
+/** Copa central (prolongación del tronco); crece junto al tronco. */
+const CROWN = {
+  d: "M147,262 C148,238 149,222 150,204 C151,222 152,238 153,262 Z",
+  ox: 150,
+  oy: 262,
+};
 
 /**
- * Encuadre de "cámara" por paso. El árbol aparece al germinar (paso 2) con un
- * leve acercamiento en la base y, a medida que crece, la cámara se aleja para
- * encuadrar el árbol completo. Movimiento suave, sin saltos.
+ * Ramas de categoría (mismo orden que WELCOME_CATEGORIES). Cada una crece por
+ * separado escalando desde su punto de unión al tronco (`ox,oy`), de modo que
+ * parece extenderse hacia afuera, una tras otra.
  */
+const BRANCHES: readonly { d: string; ox: number; oy: number }[] = [
+  {
+    d: "M146,392 C120,386 96,378 78,356 C98,372 122,380 150,376 Z",
+    ox: 148,
+    oy: 386,
+  },
+  {
+    d: "M154,388 C184,382 208,368 224,336 C206,360 178,376 150,372 Z",
+    ox: 152,
+    oy: 384,
+  },
+  {
+    d: "M150,336 C126,308 108,280 96,246 C116,282 134,306 152,320 Z",
+    ox: 150,
+    oy: 332,
+  },
+  {
+    d: "M150,332 C176,302 192,270 208,230 C196,272 176,306 150,316 Z",
+    ox: 150,
+    oy: 328,
+  },
+];
+
+/** Encuadre de "cámara" por paso: se aleja al final para ver el árbol entero. */
 const CAMERA: readonly { scale: number; y: number }[] = [
   { scale: 1.16, y: 0 },
   { scale: 1.16, y: 0 },
@@ -59,22 +71,26 @@ interface TreeAnimationProps {
 }
 
 /**
- * El árbol de SkillTree: semilla → brote → tronco y ramas (que crecen de abajo
- * arriba) → follaje verde que va llenando la copa hasta formar un árbol
- * frondoso. La "cámara" acompaña el crecimiento subiendo y, al final, se aleja
- * para encuadrar el árbol completo.
+ * El árbol de SkillTree, vivo y en crecimiento. El tronco brota y crece, cada
+ * rama se extiende una tras otra (con su hoja y su burbuja), y al final la
+ * cámara se aleja para encuadrar el árbol completo. Todo el árbol se flexiona
+ * apenas, como mecido por una brisa, y las burbujas acompañan ese movimiento
+ * además de su propia deriva.
  *
- * Verde = vida/crecimiento: por eso las hojas y los halos son verdes. El tronco
- * es de color corteza para que el verde resalte.
+ * Verde = vida/crecimiento; el tronco es color corteza para que resalte.
  */
 export function TreeAnimation({ step, reduced = false }: TreeAnimationProps) {
   const trunkGrown = step >= STEP.GERMINATE;
   const seedVisible = step >= STEP.SEED;
-  const seedGlowing = step >= STEP.WELCOME && step < STEP.GERMINATE;
   const activeIndex = activeCategoryIndex(step);
 
   const cam = at(CAMERA, step);
-  const revealTop = at(REVEAL_TOP, step);
+
+  const grow = { duration: reduced ? 0 : 2, ease: [0.22, 1, 0.36, 1] as const };
+  const branchGrow = {
+    duration: reduced ? 0 : 1,
+    ease: [0.22, 1, 0.36, 1] as const,
+  };
 
   return (
     <motion.div
@@ -82,14 +98,22 @@ export function TreeAnimation({ step, reduced = false }: TreeAnimationProps) {
       style={{ transformOrigin: "50% 92%" }}
       animate={{ scale: cam.scale, y: cam.y, opacity: trunkGrown ? 1 : 0 }}
       transition={{
-        scale: { duration: reduced ? 0 : 2, ease: [0.22, 1, 0.36, 1] },
-        y: { duration: reduced ? 0 : 2, ease: [0.22, 1, 0.36, 1] },
+        scale: grow,
+        y: grow,
         opacity: { duration: reduced ? 0 : 1 },
       }}
     >
-      {/* Caja que se ajusta al SVG para que las insignias se posicionen en % del
-          propio árbol (no del contenedor a pantalla completa). */}
-      <div className="relative h-[92vh] w-fit">
+      {/* Flexión suave del árbol completo (ramas + burbujas acompañan). */}
+      <motion.div
+        className="relative h-[92vh] w-fit"
+        style={{ transformOrigin: "50% 100%" }}
+        animate={reduced ? { rotate: 0 } : { rotate: [-0.6, 0.7, -0.6] }}
+        transition={{
+          duration: 10,
+          repeat: reduced ? 0 : Infinity,
+          ease: "easeInOut",
+        }}
+      >
         <svg
           viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
           className="block h-full w-auto"
@@ -109,18 +133,6 @@ export function TreeAnimation({ step, reduced = false }: TreeAnimationProps) {
               <stop offset="0%" stopColor="#22c55e" />
               <stop offset="100%" stopColor="#4ade80" />
             </linearGradient>
-            <clipPath id="treeReveal">
-              <motion.rect
-                x="0"
-                width={VIEW_W}
-                initial={false}
-                animate={{ y: revealTop, height: VIEW_H - revealTop }}
-                transition={{
-                  duration: reduced ? 0 : 1.7,
-                  ease: [0.4, 0, 0.2, 1],
-                }}
-              />
-            </clipPath>
           </defs>
 
           {/* Suelo: halo verde muy tenue (vida). */}
@@ -135,38 +147,62 @@ export function TreeAnimation({ step, reduced = false }: TreeAnimationProps) {
             transition={{ duration: reduced ? 0 : 1.2 }}
           />
 
-          {/* Tronco + ramas: se revelan de abajo arriba (crecen). */}
-          <g clipPath="url(#treeReveal)">
-            <path d={TRUNK_D} fill="url(#barkGradient)" />
-            {BRANCHES_D.map((d, i) => (
-              <path key={i} d={d} fill="url(#barkGradient)" />
-            ))}
-          </g>
-
-          {/* Brote verde inicial que asoma de la semilla antes del tronco. */}
-          <motion.path
-            d={SPROUT_D}
-            stroke="#22c55e"
-            strokeWidth={4}
-            strokeLinecap="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{
-              pathLength: seedGlowing ? 1 : 0,
-              opacity: trunkGrown ? 0 : seedGlowing ? 1 : 0,
-            }}
-            transition={{ duration: reduced ? 0 : 1 }}
-          />
-
-          {/* Follaje: hojas que brotan por pasos y forman la copa. */}
+          {/* Tronco: brota y crece hacia arriba (escala desde la base). */}
           <motion.g
-            style={{ transformBox: "fill-box", transformOrigin: "center" }}
-            animate={reduced ? { rotate: 0 } : { rotate: [-1.2, 1.2, -1.2] }}
+            style={{ transformBox: "view-box", transformOrigin: "150px 604px" }}
+            initial={{ scaleY: 0, opacity: 0 }}
+            animate={{
+              scaleY: trunkGrown ? 1 : 0,
+              opacity: trunkGrown ? 1 : 0,
+            }}
             transition={{
-              duration: 9,
-              repeat: reduced ? 0 : Infinity,
-              ease: "easeInOut",
+              scaleY: grow,
+              opacity: { duration: reduced ? 0 : 0.4 },
             }}
           >
+            <path d={TRUNK_D} fill="url(#barkGradient)" />
+          </motion.g>
+
+          {/* Copa central: crece con el tronco. */}
+          <motion.g
+            style={{
+              transformBox: "view-box",
+              transformOrigin: `${CROWN.ox}px ${CROWN.oy}px`,
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: trunkGrown ? 1 : 0, opacity: trunkGrown ? 1 : 0 }}
+            transition={{
+              scale: branchGrow,
+              opacity: { duration: reduced ? 0 : 0.4 },
+            }}
+          >
+            <path d={CROWN.d} fill="url(#barkGradient)" />
+          </motion.g>
+
+          {/* Ramas de categoría: cada una crece por separado, una tras otra. */}
+          {BRANCHES.map((b, i) => {
+            const grown = step >= STEP.CATEGORY + i;
+            return (
+              <motion.g
+                key={i}
+                style={{
+                  transformBox: "view-box",
+                  transformOrigin: `${b.ox}px ${b.oy}px`,
+                }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: grown ? 1 : 0, opacity: grown ? 1 : 0 }}
+                transition={{
+                  scale: branchGrow,
+                  opacity: { duration: reduced ? 0 : 0.4 },
+                }}
+              >
+                <path d={b.d} fill="url(#barkGradient)" />
+              </motion.g>
+            );
+          })}
+
+          {/* Follaje: hojas que brotan por pasos y forman la copa. */}
+          <g>
             {FOLIAGE.map((leaf, i) => {
               const shown = step >= leaf.step;
               const delay = reduced ? 0 : (i % 6) * 0.05;
@@ -183,7 +219,7 @@ export function TreeAnimation({ step, reduced = false }: TreeAnimationProps) {
                       opacity: shown ? 0.96 : 0,
                       transition: reduced
                         ? "none"
-                        : `transform 0.6s cubic-bezier(0.34,1.56,0.64,1) ${delay}s, opacity 0.5s ease ${delay}s`,
+                        : `transform 0.6s cubic-bezier(0.34,1.4,0.64,1) ${delay}s, opacity 0.5s ease ${delay}s`,
                     }}
                   >
                     <path
@@ -204,46 +240,16 @@ export function TreeAnimation({ step, reduced = false }: TreeAnimationProps) {
                 </g>
               );
             })}
-          </motion.g>
-
-          {/* Semilla en la base. */}
-          <motion.circle
-            cx="150"
-            cy="602"
-            r="8"
-            fill="#a9764a"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{
-              scale: seedVisible && !trunkGrown ? 1 : 0.4,
-              opacity: seedVisible && !trunkGrown ? 1 : 0,
-            }}
-            transition={{
-              duration: reduced ? 0 : 0.9,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            style={{ transformOrigin: "150px 602px" }}
-          />
-          {/* Brillo cálido de la semilla al germinar. */}
-          <motion.circle
-            cx="150"
-            cy="602"
-            r="18"
-            fill="#fde68a"
-            animate={{ opacity: seedGlowing ? [0.15, 0.45, 0.15] : 0 }}
-            transition={{
-              duration: 2.4,
-              repeat: seedGlowing && !reduced ? Infinity : 0,
-              ease: "easeInOut",
-            }}
-            style={{ filter: "blur(4px)" }}
-          />
+          </g>
         </svg>
 
-        {/* Insignias de categoría (icono propio) sobre las puntas de las ramas. */}
+        {/* Burbujas de categoría (nodos) sobre las puntas de las ramas.
+            Acompañan la flexión del árbol (van dentro del mismo contenedor). */}
         {WELCOME_CATEGORIES.map((c, i) => (
           <CategoryLeaf
             key={c.id}
             category={c}
+            index={i}
             xPct={(c.tip.x / VIEW_W) * 100}
             yPct={(c.tip.y / VIEW_H) * 100}
             born={step >= STEP.CATEGORY + i}
@@ -251,7 +257,7 @@ export function TreeAnimation({ step, reduced = false }: TreeAnimationProps) {
             reduced={reduced}
           />
         ))}
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
