@@ -36,7 +36,12 @@ function wrap(title: string): string[] {
   return lines.slice(0, 2);
 }
 
-const LEAF_D = "M0,-15 C8,-10 8,8 0,15 C-8,8 -8,-10 0,-15 Z";
+// Hoja realista: punta arriba, cuerpo redondeado, con nervadura.
+const LEAF_BODY = "M0,-20 C12,-14 13,8 0,20 C-13,8 -12,-14 0,-20 Z";
+const LEAF_VEINS =
+  "M0,-16 L0,17 M0,-8 L8.5,-13 M0,-8 L-8.5,-13 M0,1 L8,-3 M0,1 L-8,-3 M0,9 L6.5,6 M0,9 L-6.5,6";
+// Brote cerrado para las habilidades aún bloqueadas.
+const BUD_D = "M0,-11 C5.5,-7 5.5,5 0,11 C-5.5,5 -5.5,-7 0,-11 Z";
 
 function Leaf({
   node,
@@ -54,9 +59,8 @@ function Leaf({
       : state === "available"
         ? "url(#leafOpen)"
         : "var(--lt-leaf-dim)";
-  const opacity = state === "locked" ? 0.45 : 1;
-  const scale = state === "locked" ? 0.62 : 1;
   const lines = state === "locked" ? ["Por descubrir"] : wrap(node.title);
+  const labelY = state === "locked" ? 24 : 46;
 
   return (
     <g
@@ -69,12 +73,21 @@ function Leaf({
         if (e.key === "Enter" || e.key === " ") onOpen(node.slug);
       }}
     >
-      {/* Halo de vida en las completadas. */}
-      {state === "completed" && (
+      {/* Halo de vida: intenso en completadas, tenue e invitador en disponibles. */}
+      {state !== "locked" && (
         <motion.circle
-          r="26"
+          r={state === "completed" ? 34 : 27}
           fill="var(--lt-glow)"
-          animate={reduced ? { opacity: 0.5 } : { opacity: [0.35, 0.6, 0.35] }}
+          animate={
+            reduced
+              ? { opacity: state === "completed" ? 0.65 : 0.3 }
+              : {
+                  opacity:
+                    state === "completed"
+                      ? [0.42, 0.72, 0.42]
+                      : [0.16, 0.34, 0.16],
+                }
+          }
           transition={{
             duration: 4,
             repeat: reduced ? 0 : Infinity,
@@ -82,11 +95,11 @@ function Leaf({
           }}
         />
       )}
-      {/* La hoja (aletea sutilmente). */}
+      {/* La hoja / brote (aletea sutilmente). */}
       <g
         style={{
           transformBox: "fill-box",
-          transformOrigin: "50% 90%",
+          transformOrigin: "50% 92%",
           animation: reduced
             ? undefined
             : `stLeafFlutter ${4 + (node.tier % 4) * 0.7}s ease-in-out ${-(node.tier % 5) * 0.6}s infinite`,
@@ -96,7 +109,7 @@ function Leaf({
           initial={false}
           animate={
             state === "available" && !reduced
-              ? { scale: [1, 1.08, 1] }
+              ? { scale: [1, 1.09, 1] }
               : { scale: 1 }
           }
           transition={{
@@ -104,31 +117,34 @@ function Leaf({
             repeat: state === "available" && !reduced ? Infinity : 0,
             ease: "easeInOut",
           }}
-          style={{ transformBox: "fill-box", transformOrigin: "center" }}
+          style={{ transformBox: "fill-box", transformOrigin: "50% 92%" }}
         >
-          <path
-            d={LEAF_D}
-            fill={fill}
-            opacity={opacity}
-            transform={`scale(${scale})`}
-            stroke={
-              state === "available" ? "var(--lt-leaf-light)" : "transparent"
-            }
-            strokeWidth={state === "available" ? 1.5 : 0}
-          />
-          <path
-            d="M0,-11 L0,11"
-            stroke="rgba(6,50,26,0.35)"
-            strokeWidth="0.9"
-            strokeLinecap="round"
-            opacity={opacity}
-            transform={`scale(${scale})`}
-          />
+          {state === "locked" ? (
+            <path d={BUD_D} fill="var(--lt-leaf-dim)" opacity={0.55} />
+          ) : (
+            <>
+              <path
+                d={LEAF_BODY}
+                fill={fill}
+                stroke={
+                  state === "available" ? "var(--lt-leaf-light)" : "transparent"
+                }
+                strokeWidth={state === "available" ? 1.6 : 0}
+              />
+              <path
+                d={LEAF_VEINS}
+                fill="none"
+                stroke="var(--lt-vein)"
+                strokeWidth="1"
+                strokeLinecap="round"
+              />
+            </>
+          )}
         </motion.g>
       </g>
       {/* Etiqueta. */}
       <text
-        y={34}
+        y={labelY}
         textAnchor="middle"
         style={{
           fontSize: 15,
@@ -145,7 +161,7 @@ function Leaf({
       </text>
       {state !== "locked" && (
         <text
-          y={34 + lines.length * 17}
+          y={labelY + lines.length * 17}
           textAnchor="middle"
           style={{ fontSize: 12, fill: "var(--lt-text)", opacity: 0.55 }}
         >
