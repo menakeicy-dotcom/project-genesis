@@ -1,6 +1,12 @@
 # Dossier de investigación y diseño — Árbol de aprendizaje de **Idiomas**
 
-> **Estado:** BORRADOR v1 para revisión. **No implementado en código.**
+> **Actualización v2 (revisión pedagógica profunda):** el árbol se reorganizó
+> **por competencias que evolucionan** de A1 a C2 (no “una vez por nivel”), y la
+> **cultura se adelantó a A1** como hilo continuo. Ver **§11** (cambios +
+> justificación + árbol actualizado). Las secciones §1–§10 son la base v1; **§11
+> es la estructura vigente para aprobación.**
+
+> **Estado:** BORRADOR v2 para revisión. **No implementado en código.**
 > Este documento es el **estándar de calidad** para el diseño de todas las
 > categorías de SkillTree. Primero se aprueba; luego se implementa en el `seed`.
 >
@@ -899,3 +905,278 @@ para aprobación.
 
 > **Nota:** las equivalencias entre exámenes son aproximadas (los tests miden cosas
 > algo distintas); se usan solo para anclar niveles.
+
+**Fuentes añadidas en v2**
+- Byram — *Teaching and Assessing Intercultural Communicative Competence* (modelo y “cinco savoirs”): https://www.multilingual-matters.com/page/detail/Teaching-and-Assessing-Intercultural-Communicative-Competence/?k=9781800410237 · resumen: https://jaimeellenberger.com/academic-blog/2023-06-01-byrams-model-of-intercultural-communicative-competence/
+- Levis — *Intelligibility, Oral Communication, and the Teaching of Pronunciation* (principio de inteligibilidad; “Word Stress and Intelligibility”): https://www.cambridge.org/core/books/abs/intelligibility-oral-communication-and-the-teaching-of-pronunciation/word-stress-and-intelligibility/934D046D415687E00B66FCE2E4CC0A61
+- Jenkins — *The Phonology of English as an International Language* (prominencia como rasgo suprasegmental clave): resumen en Levis (2018), citado arriba.
+
+---
+
+## 11. Revisión pedagógica profunda (v2) — árbol por competencias que evolucionan
+
+Reanalicé el árbol **desde cero** aplicando a cada nodo las seis preguntas
+(¿pertenece a este nivel? ¿falta un prerrequisito? ¿está adelantado? ¿atrasado?
+¿hay forma más natural? ¿aporta valor o es redundante?). El hallazgo central:
+**varias competencias estaban “fotografiadas” una vez por nivel** cuando en la
+realidad **evolucionan de forma continua**. Reorganizo el árbol en **hilos
+verticales por competencia** (que crecen A1→C2) cruzados por **compuertas de
+nivel**. Esta es también la mejor representación visual del aprendizaje (filosofía
+de SkillTree): el usuario *ve crecer cada habilidad*.
+
+### 11.1 Cambios realizados + justificación pedagógica
+
+**C1 · Pronunciación: de 3 nodos a un hilo de 7 que llega hasta C2.**
+`Percepción → Producción inteligible → Acentuación → Ritmo/encadenamiento →
+Entonación → Naturalidad (habla conectada) → Casi nativo`.
+*Justificación:* el **principio de inteligibilidad** (Levis) y la investigación de
+**Jenkins** muestran que el **acento léxico** y la **prosodia** son decisivos para
+que te entiendan y se **afinan progresivamente**, no en un único nodo B2. Un
+“acento” cercano al nativo es un objetivo de C2, no de B2. La **percepción sigue
+primero** (HVPT). *(Antes: FON‑1/2/3; el viejo FON‑3 “prosodia” en B2 mezclaba
+acentuación, ritmo y entonación → habilidades comprimidas.)*
+
+**C2 · Comprensión auditiva: objetivos concretos, no “Escucha A1/A2”.**
+`Instrucciones → conversaciones lentas → podcasts/audio graduado → contenido
+nativo → conferencias/discurso académico → cualquier acento y registro`.
+*Justificación:* “Escucha A2” es una etiqueta, no una habilidad verificable. Los
+objetivos concretos son **can‑do** medibles y hacen visible la evolución. Se
+**añade “conferencias/discurso académico”** (vacío en C1) y “cualquier registro/
+implícito” en C2.
+
+**C3 · Conversación/habla: progresión explícita.**
+`Responder/preguntar simple → conversaciones cotidianas → narrar experiencias →
+debatir opiniones → persuadir/exponer → adaptar el lenguaje al contexto`.
+*Justificación:* alinea con la escala **funcional de ACTFL** (Novice→Distinguished);
+antes “persuadir” y “adaptar registro” quedaban difusos. Cada peldaño es un salto
+funcional real.
+
+**C4 · Escritura: se añade el peldaño A1 que faltaba.**
+`Frases/datos simples (A1) → mensajes y correos (A2) → textos conectados (B1) →
+argumentativos (B2) → complejos estructurados (C1) → con estilo y registro (C2)`.
+*Justificación:* la escritura empezaba en A2; **rellenar formularios y escribir
+frases simples es A1** (prerrequisito omitido). El extremo C2 añade **variación de
+estilo/género**.
+
+**C5 · Cultura: adelantada a A1 y convertida en hilo continuo (lo más importante).**
+`Cortesía/saludos/tabúes (A1) → normas sociales y pragmática (A2) → registro y
+adecuación (B1) → humor/ironía (B2) → referentes culturales e historia (C1) →
+competencia intercultural crítica y variación dialectal (C2)`.
+*Justificación:* **Byram (competencia comunicativa intercultural, “cinco
+savoirs”)**: la cultura es **parte de la competencia comunicativa desde el primer
+día** —saludar, la cortesía, los tabúes, el trato tú/usted **son** cultura y son de
+nivel A1—. Retrasar la cultura a A2/B2/C2 (como en v1) era el error más grave.
+Ahora se integra la vieja rama “sociolingüística” dentro de este hilo cultural.
+
+**C6 · Estrategias tempranas: “tolerancia a la ambigüedad / no traducir”.**
+Se añade en A1–A2 (antes la primera estrategia era B1).
+*Justificación:* baja el **filtro afectivo** (Krashen) —no hay que entender el
+100%— y previene el hábito de **traducir palabra por palabra**, una fuente típica
+de **fosilización**. Es una destreza temprana, no intermedia.
+
+**C7 · Fluidez: hilo de 3 nodos (antes 1).**
+`Automatizar frases/shadowing (A2) → fluidez conversacional (B1–B2) → pensar en el
+idioma (C1)`.
+*Justificación:* la **hebra de fluidez** de Nation debe **crecer**; la
+automatización es progresiva hasta la producción sin traducción mental.
+
+**C8 · Reubicaciones puntuales (adelantos/atrasos corregidos).**
+- **Acentuación (acento léxico) → A2** (antes implícita en B2): altísimo impacto en
+  inteligibilidad temprana (Levis).
+- **Ritmo/encadenamiento → B1**; **entonación → B2** (requiere input previo para
+  afinarse); **reducciones/habla conectada → C1**.
+- **Escritura simple → A1** (ver C4). **Cultura básica → A1** (ver C5).
+
+**C9 · Reorganización estructural (presentación).** El árbol se ordena ahora **por
+competencias (hilos que evolucionan)** cruzadas por **compuertas de nivel**, en vez
+de “bloques por nivel”. Responde directamente a tu petición y es la representación
+más fiel de cómo se aprende.
+
+**C10 · Validación de redundancia y prerrequisitos.** Confirmado: los **hitos** son
+compuertas visuales (no duplican contenido); **vocabulario** por umbrales de
+cobertura; **gramática** como hebra de apoyo (~25%, Nation), que **gatea el output
+pero no la comprensión** (el input fluye sin esperar a la gramática). Sin ciclos
+(DAG válido).
+
+> Los nodos **no listados como cambiados** se validaron con las seis preguntas y se
+> **conservan en su nivel** (p. ej. subjuntivo en B2, mediación en C1, umbrales de
+> vocabulario). Se conservan por su **razón pedagógica**, no por aparecer en un
+> temario.
+
+### 11.2 El árbol actualizado (por competencias · A1→C2)
+
+Notación: `ID · nivel · objetivo — prereqs`. 🆕 nuevo · 🔀 movido/redefinido.
+
+**🌱 Fundación (Pre‑A1)**
+- `RAIZ‑1 · Pre‑A1 · Cómo aprender un idioma — (raíz)`
+- `FON‑1 · Pre‑A1 · Oído fonológico (percepción) — RAIZ‑1`
+- `ESC‑0 · Pre‑A1 · Sistema de escritura — RAIZ‑1, FON‑1`
+- `VOC‑1 · Pre‑A1 · 100 palabras y fórmulas de supervivencia — RAIZ‑1, FON‑1`
+- `CUL‑1 · A1 · 🆕 Cortesía, saludos y tabúes básicos — VOC‑1`
+
+**🔊 Pronunciación** (hilo continuo)
+- `FON‑2 · A1 · Producción de sonidos inteligible — FON‑1`
+- `FON‑3 · A2 · 🆕 Acentuación (acento léxico) — FON‑2, AUD‑2`
+- `FON‑4 · B1 · 🆕 Ritmo y encadenamiento — FON‑3, FLU‑1`
+- `FON‑5 · B2 · 🔀 Entonación — FON‑4, AUD‑4`
+- `FON‑6 · C1 · 🆕 Naturalidad: habla conectada y reducciones — FON‑5, AUD‑5`
+- `FON‑7 · C2 · 🆕 Pronunciación cercana a hablante competente — FON‑6, ORA‑6`
+
+**📚 Vocabulario** (por umbrales de cobertura)
+- `VOC‑2 · A1 · Núcleo I ~500–800 — VOC‑1, EST‑1`
+- `VOC‑3 · A2 · Núcleo II ~2000 (95% oral) — VOC‑2`
+- `VOC‑4 · B1 · ~3–4k + colocaciones — VOC‑3`
+- `VOC‑5 · B2 · ~5k + expresiones idiomáticas (95% lectura) — VOC‑4`
+- `VOC‑6 · C1 · ~8k + jerga (98% lectura) — VOC‑5`
+- `VOC‑7 · C2 · Léxico casi nativo (matiz/connotación) — VOC‑6`
+
+**🧩 Gramática** (hebra de apoyo; gatea output, no comprensión)
+- `GRA‑1 · A1 · Estructura de la oración — VOC‑1`
+- `GRA‑2 · A1 · Preguntas — GRA‑1`
+- `GRA‑3 · A1 · Presente/tiempo por defecto — GRA‑1`
+- `GRA‑4 · A2 · Pasado — GRA‑3`
+- `GRA‑5 · A2 · Futuro y planes — GRA‑3`
+- `GRA‑6 · A2 · Conectores básicos — GRA‑3`
+- `GRA‑7 · B1 · Aspecto (pasados en contraste) — GRA‑4`
+- `GRA‑8 · B1 · Condicional e hipótesis — GRA‑4, GRA‑5`
+- `GRA‑9 · B1 · Subordinación/oraciones complejas — GRA‑6`
+- `GRA‑10 · B2 · Modo/subjuntivo y matices — GRA‑8, GRA‑9`
+
+**👂 Comprensión auditiva** (objetivos concretos)
+- `AUD‑1 · A1 · Comprender instrucciones y frases cotidianas — FON‑1, VOC‑2`
+- `AUD‑2 · A2 · Comprender conversaciones lentas y claras — AUD‑1, VOC‑3`
+- `AUD‑3 · B1 · Comprender audio graduado y podcasts — AUD‑2, VOC‑4`
+- `AUD‑4 · B2 · Comprender contenido nativo (series, noticias) — AUD‑3, VOC‑5`
+- `AUD‑5 · C1 · 🆕 Comprender conferencias y discurso académico/rápido — AUD‑4, VOC‑6`
+- `AUD‑6 · C2 · Comprender cualquier acento, registro e implícito — AUD‑5`
+
+**📖 Lectura** (objetivos concretos)
+- `LEC‑1 · A1 · Leer palabras, frases y señales — ESC‑0, VOC‑2`
+- `LEC‑2 · A2 · Leer textos cotidianos cortos — LEC‑1, VOC‑3`
+- `LEC‑3 · B1 · Lectura extensiva (graded readers) — LEC‑2, VOC‑4`
+- `LEC‑4 · B2 · Leer prosa nativa (novela/prensa) — LEC‑3, VOC‑5`
+- `LEC‑5 · C1 · Leer textos especializados/análisis — LEC‑4, VOC‑6`
+- `LEC‑6 · C2 · Leer cualquier texto (literario/abstracto) — LEC‑5`
+
+**🗣️ Conversación/habla** (progresión funcional)
+- `ORA‑1 · A1 · Responder y hacer preguntas simples (fórmulas) — VOC‑2, FON‑2, GRA‑2, CUL‑1`
+- `ORA‑2 · A2 · Conversaciones cotidianas — ORA‑1, VOC‑3, GRA‑4, GRA‑5, AUD‑2, CUL‑2`
+- `ORA‑3 · B1 · Narrar experiencias y desenvolverse — ORA‑2, GRA‑7, GRA‑8, VOC‑4, EST‑3`
+- `ORA‑4 · B2 · Debatir y argumentar opiniones — ORA‑3, GRA‑10, AUD‑4, VOC‑5, FON‑5`
+- `ORA‑5 · C1 · 🔀 Persuadir y exponer con eficacia — ORA‑4, VOC‑6, CUL‑5, FLU‑3`
+- `ORA‑6 · C2 · Adaptar el lenguaje al contexto (sutileza casi nativa) — ORA‑5, VOC‑7, CUL‑6`
+
+**✍️ Escritura** (progresión de complejidad y estilo)
+- `ESC‑1 · A1 · 🆕 Escribir datos y frases simples — ESC‑0, GRA‑1`
+- `ESC‑2 · A2 · Mensajes y correos simples — ESC‑1, LEC‑2, GRA‑4`
+- `ESC‑3 · B1 · Textos conectados (opinión, carta) — ESC‑2, GRA‑9`
+- `ESC‑4 · B2 · Textos argumentativos/detallados — ESC‑3, GRA‑10`
+- `ESC‑5 · C1 · Textos complejos estructurados — ESC‑4, VOC‑6`
+- `ESC‑6 · C2 · Escritura con estilo y registro (géneros) — ESC‑5, EST‑4, CUL‑6`
+
+**🌍 Cultura e interacción intercultural** (hilo continuo desde A1)
+- `CUL‑1 · A1 · 🆕 Cortesía, saludos y tabúes básicos — VOC‑1`
+- `CUL‑2 · A2 · 🆕 Normas sociales y pragmática (pedir, agradecer, rechazar) — CUL‑1, ORA‑1`
+- `CUL‑3 · B1 · 🔀 Registro y adecuación al contexto (formal/informal) — CUL‑2, ORA‑2`
+- `CUL‑4 · B2 · Humor, ironía y matices de registro — CUL‑3, AUD‑4`
+- `CUL‑5 · C1 · 🆕 Referentes culturales, historia y actualidad — CUL‑4, LEC‑5`
+- `CUL‑6 · C2 · Competencia intercultural crítica y variación dialectal — CUL‑5, AUD‑6`
+
+**🧭 Estrategias y autonomía**
+- `EST‑1 · A1 · SRS / repetición espaciada (hábito) — RAIZ‑1, VOC‑1`
+- `EST‑2 · A2 · 🆕 Tolerancia a la ambigüedad / no traducir — AUD‑1, LEC‑1`
+- `EST‑3 · B1 · Estrategias de compensación (parafrasear, inferir) — ORA‑2`
+- `EST‑4 · C1 · Mediación (CEFR 2020) — ORA‑4, ESC‑4`
+
+**⚡ Fluidez** (hilo continuo)
+- `FLU‑1 · A2 · Automatizar frases (shadowing) — ORA‑1, AUD‑2`
+- `FLU‑2 · B1 · 🆕 Fluidez conversacional (menos pausas, chunks) — FLU‑1, ORA‑3`
+- `FLU‑3 · C1 · 🆕 Pensar en el idioma (automatización avanzada) — FLU‑2, ORA‑4`
+
+**⛳ Compuertas de nivel (hitos)** — agrupan las cuatro destrezas + cultura:
+- `A1 “Superviviencia”` — AUD‑1, LEC‑1, ORA‑1, ESC‑1, CUL‑1, GRA‑3
+- `A2 “Conversación básica”` — AUD‑2, LEC‑2, ORA‑2, ESC‑2, CUL‑2, FLU‑1
+- `B1 “Independencia”` — AUD‑3, LEC‑3, ORA‑3, ESC‑3, CUL‑3
+- `B2 “Fluidez funcional”` — AUD‑4, LEC‑4, ORA‑4, ESC‑4, CUL‑4, FON‑5
+- `C1 “Dominio operativo”` — AUD‑5, LEC‑5, ORA‑5, ESC‑5, CUL‑5, EST‑4
+- `C2 “Maestría”` — AUD‑6, LEC‑6, ORA‑6, ESC‑6, CUL‑6, FON‑7
+
+### 11.3 Fichas completas de los nodos nuevos (12 campos)
+
+*(Los nodos conservados mantienen la ficha de §5. Aquí se detallan los nuevos/
+redefinidos representativos; el resto sigue el mismo esquema y se completará al
+aprobar la estructura.)*
+
+**CUL‑1 · Cortesía, saludos y tabúes básicos**
+- *Descripción:* fórmulas de saludo/despedida, cortesía, gestos y 2–3 tabúes
+  culturales clave; trato tú/usted si aplica.
+- *Objetivo:* interactuar sin ofender y con las convenciones básicas del primer
+  contacto.
+- *Prerrequisitos:* VOC‑1. *Nivel:* A1 · *Tiempo:* 4–6 h · *Dificultad:* 🟢
+- *Competencias:* sociolingüística/intercultural (Byram: actitudes + conocimiento).
+- *Errores frecuentes:* trasladar la cortesía de la L1; tuteo/ustedeo indebido;
+  gestos ofensivos por desconocimiento.
+- *Recursos:* vídeos culturales de saludo/cortesía, guías de etiqueta, cápsulas de
+  “qué no hacer”.
+- *Proyecto:* grabar un saludo y presentación adecuados a un contexto formal y a uno
+  informal.
+- *Razón pedagógica:* Byram — la competencia intercultural es parte de la
+  comunicativa **desde el día 1**; saludar y la cortesía **son** contenido A1.
+
+**FON‑3 · Acentuación (acento léxico)**
+- *Descripción:* colocar la sílaba tónica correcta y percibir su efecto en el
+  significado.
+- *Objetivo:* que el acento de palabra no impida la comprensión.
+- *Prerrequisitos:* FON‑2, AUD‑2. *Nivel:* A2 · *Tiempo:* 6–10 h · *Dificultad:* 🟡
+- *Competencias:* fonológica.
+- *Errores frecuentes:* acentuar como en la L1; el acento erróneo hace que el oyente
+  “busque otra palabra”.
+- *Recursos:* pares de acentuación, marcado de tónica, shadowing enfocado.
+- *Proyecto:* leer 20 palabras nuevas con acentuación correcta verificada.
+- *Razón pedagógica:* Levis — el acento léxico es de los rasgos con **mayor impacto
+  en la inteligibilidad** y es enseñable pronto; por eso sube a A2.
+
+**EST‑2 · Tolerancia a la ambigüedad / no traducir**
+- *Descripción:* aprender a comprender sin traducir y sin necesitar el 100% del
+  mensaje.
+- *Objetivo:* sostener el input y bajar la ansiedad.
+- *Prerrequisitos:* AUD‑1, LEC‑1. *Nivel:* A2 · *Tiempo:* continuo · *Dificultad:* 🟢
+- *Competencias:* estratégica/metacognitiva.
+- *Errores frecuentes:* traducir palabra por palabra (fosilización); frustrarse por
+  no entender todo.
+- *Recursos:* técnicas de inferencia por contexto, input comprensible graduado.
+- *Proyecto:* ver/leer algo entendiendo solo lo esencial y resumir la idea global.
+- *Razón pedagógica:* Krashen (filtro afectivo) + prevención de fosilización; es una
+  destreza **temprana**, no intermedia.
+
+**FLU‑2 · Fluidez conversacional**
+- *Descripción:* reducir pausas, usar “muletillas” útiles y producir bloques más
+  largos sin traducir.
+- *Objetivo:* hablar de forma más continua y natural sobre lo conocido.
+- *Prerrequisitos:* FLU‑1, ORA‑3. *Nivel:* B1 · *Tiempo:* continuo · *Dificultad:* 🟡
+- *Competencias:* fluidez, estratégica.
+- *Errores frecuentes:* pararse a buscar la palabra “perfecta”; silencios largos.
+- *Recursos:* técnica 4/3/2, frases de gestión conversacional, shadowing.
+- *Proyecto:* monólogo de 2 min sobre un tema conocido sin pausas largas.
+- *Razón pedagógica:* la hebra de fluidez de Nation debe **crecer** entre A2 y C1.
+
+### 11.4 Cómo se ve la evolución (ejemplo visual de un hilo)
+
+```
+Pronunciación
+  Pre-A1  Percepción de sonidos        (oír los contrastes)
+    A1    Producción inteligible       (que me entiendan)
+    A2    Acentuación                  (sílaba tónica correcta)
+    B1    Ritmo y encadenamiento       (fluye, no “robótico”)
+    B2    Entonación                   (melodía y prominencia)
+    C1    Naturalidad / reducciones    (habla conectada real)
+    C2    Casi nativo                  (matiz de acento)
+```
+
+El mismo patrón aplica a Conversación, Escucha, Lectura, Escritura, Vocabulario,
+Gramática, Cultura y Fluidez: **cada competencia es una rama que crece a lo largo
+de todo el árbol**, y las **compuertas de nivel** confirman que las ramas avanzan
+de forma equilibrada.
+
+> **Pendiente de tu aprobación.** Cuando valides esta estructura, completo las
+> fichas de 12 campos de todos los nodos y solo entonces implementamos en el `seed`.
