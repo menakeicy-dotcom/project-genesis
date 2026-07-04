@@ -8,7 +8,7 @@ import { ProgressBar } from "@/components/ui/progress-bar";
 import { getTreeBySlug } from "@/modules/catalog/services";
 import { getEnrollment, getTreeNodeStates } from "@/modules/progress/services";
 import { EnrollButton } from "@/modules/progress/components/enroll-button";
-import { SkillTreeCanvas } from "@/modules/skill-tree/components/skill-tree-canvas";
+import { LivingTree } from "@/modules/skill-tree/living-tree";
 
 export async function generateMetadata({
   params,
@@ -50,17 +50,10 @@ export default async function TreePage({
     xp: s.xpReward,
     state: states.get(s.id) ?? "locked",
     slug: s.slug,
+    tier: s.tier,
     x: s.positionX,
-    y: s.positionY,
+    parents: s.prerequisites.map((p) => p.prerequisiteId),
   }));
-
-  const edges = tree.skills.flatMap((s) =>
-    s.prerequisites.map((p) => ({
-      id: p.id,
-      source: p.prerequisiteId,
-      target: s.id,
-    })),
-  );
 
   const total = tree.skills.length;
   const completed = nodes.filter((n) => n.state === "completed").length;
@@ -97,12 +90,12 @@ export default async function TreePage({
         <ProgressBar value={pct} tone={pct === 100 ? "growth" : "primary"} />
       </div>
 
-      <p className="text-muted-foreground mt-6 mb-2 text-sm">
-        Haz clic en una habilidad para abrirla. Las habilidades bloqueadas se
-        desbloquean al completar sus requisitos.
+      <p className="text-muted-foreground mt-6 mb-3 text-sm">
+        Toca una hoja para abrir esa habilidad. Tu árbol crece a medida que
+        completas nuevas ramas.
       </p>
 
-      <SkillTreeCanvas nodes={nodes} edges={edges} treeSlug={tree.slug} />
+      <LivingTree nodes={nodes} treeSlug={tree.slug} />
     </div>
   );
 }

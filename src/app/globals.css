@@ -84,6 +84,44 @@
   --radius-sm: calc(var(--radius) - 0.5rem);
 }
 
+/*
+ * Paleta "naturaleza" del árbol vivo (LivingTree). Dos temas DISEÑADOS, no
+ * invertidos: claro = naturaleza iluminada; oscuro = bosque nocturno. El verde
+ * representa solo la vida; los troncos usan marrones reales; nada fluorescente.
+ */
+:root {
+  --lt-bg-1: #eef6ea; /* naturaleza iluminada */
+  --lt-bg-2: #f7fbf4;
+  --lt-bg-glow: rgba(180, 220, 170, 0.5);
+  --lt-bark: #6b4a34;
+  --lt-bark-light: #8a6647;
+  --lt-bark-dim: #b7a48f;
+  --lt-leaf: #3f8f55;
+  --lt-leaf-light: #6bbd81;
+  --lt-leaf-open-1: #cfe8d0; /* disponible: brote claro */
+  --lt-leaf-open-2: #9ccda6;
+  --lt-leaf-dim: #b9c9bc; /* bloqueada: brote apagado */
+  --lt-glow: rgba(63, 143, 85, 0.35);
+  --lt-mote: rgba(90, 160, 100, 0.55);
+  --lt-text: #16261c;
+}
+.dark {
+  --lt-bg-1: #05100b; /* bosque nocturno */
+  --lt-bg-2: #0a1a12;
+  --lt-bg-glow: rgba(244, 224, 161, 0.1); /* luz cálida tenue arriba */
+  --lt-bark: #5b3f2a;
+  --lt-bark-light: #7a5636;
+  --lt-bark-dim: #3d3327;
+  --lt-leaf: #3f9b57;
+  --lt-leaf-light: #66c47e;
+  --lt-leaf-open-1: #2f5e42;
+  --lt-leaf-open-2: #3f8f5a;
+  --lt-leaf-dim: #33453a;
+  --lt-glow: rgba(52, 197, 122, 0.4);
+  --lt-mote: rgba(120, 200, 140, 0.5);
+  --lt-text: #e7f0ec;
+}
+
 * {
   border-color: var(--border);
 }
