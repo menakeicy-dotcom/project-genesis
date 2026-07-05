@@ -46,13 +46,36 @@ const BUD_D = "M0,-11 C5.5,-7 5.5,5 0,11 C-5.5,5 -5.5,-7 0,-11 Z";
 function Leaf({
   node,
   reduced,
+  far,
   onOpen,
 }: {
   node: { px: number; py: number } & LivingTreeNode;
   reduced: boolean;
+  /** Zona futura lejana: se muestra como brote diminuto, atenuado y sin etiqueta. */
+  far: boolean;
   onOpen: (slug: string) => void;
 }) {
   const { state } = node;
+
+  // Revelado progresivo: las zonas lejanas son solo un brote tenue.
+  if (far) {
+    return (
+      <g
+        transform={`translate(${node.px} ${node.py})`}
+        style={{ cursor: "pointer" }}
+        onClick={() => onOpen(node.slug)}
+      >
+        <title>{node.title}</title>
+        <path
+          d={BUD_D}
+          fill="var(--lt-leaf-dim)"
+          opacity={0.28}
+          transform="scale(0.55)"
+        />
+      </g>
+    );
+  }
+
   const fill =
     state === "completed"
       ? "url(#leafFull)"
@@ -221,6 +244,19 @@ export function LivingTree({
   const open = (slug: string) =>
     router.push(`/trees/${treeSlug}/skills/${slug}`);
 
+  // Revelado progresivo: una habilidad es "lejana" si está bloqueada y ninguno
+  // de sus prerrequisitos se ha completado/desbloqueado (no es la frontera
+  // inmediata). Se muestra solo lo cercano; el resto queda como brotes tenues.
+  const { isFar, byId } = useMemo(() => {
+    const s: Record<string, NodeState> = {};
+    for (const n of nodes) s[n.id] = n.state;
+    const far = (n: { state: NodeState; parents: string[] }) =>
+      n.state === "locked" &&
+      !n.parents.some((p) => s[p] === "completed" || s[p] === "available");
+    const map = new Map(layout.leaves.map((l) => [l.id, l]));
+    return { isFar: far, byId: map };
+  }, [nodes, layout]);
+
   const branchColor = (s: NodeState) =>
     s === "locked" ? "var(--lt-bark-dim)" : "url(#bark)";
 
@@ -284,22 +320,33 @@ export function LivingTree({
           {/* Tronco. */}
           <path d={layout.trunk} fill="url(#bark)" />
 
-          {/* Ramas (padre → hoja). Grosor decrece con la profundidad. */}
-          {layout.branches.map((b) => (
-            <path
-              key={b.id}
-              d={b.d}
-              fill="none"
-              stroke={branchColor(b.state)}
-              strokeWidth={Math.max(2.5, 9 - b.tier * 1.4)}
-              strokeLinecap="round"
-              opacity={b.state === "locked" ? 0.4 : 1}
-            />
-          ))}
+          {/* Ramas (padre → hoja). Grosor decrece con la profundidad; las
+              ramas hacia zonas lejanas quedan muy atenuadas (revelado progresivo). */}
+          {layout.branches.map((b) => {
+            const leaf = byId.get(b.id);
+            const far = leaf ? isFar(leaf) : false;
+            return (
+              <path
+                key={b.id}
+                d={b.d}
+                fill="none"
+                stroke={branchColor(b.state)}
+                strokeWidth={Math.max(2.5, 9 - b.tier * 1.4)}
+                strokeLinecap="round"
+                opacity={far ? 0.12 : b.state === "locked" ? 0.4 : 1}
+              />
+            );
+          })}
 
           {/* Hojas (habilidades). */}
           {layout.leaves.map((leaf) => (
-            <Leaf key={leaf.id} node={leaf} reduced={reduced} onOpen={open} />
+            <Leaf
+              key={leaf.id}
+              node={leaf}
+              reduced={reduced}
+              far={isFar(leaf)}
+              onOpen={open}
+            />
           ))}
         </motion.g>
       </svg>

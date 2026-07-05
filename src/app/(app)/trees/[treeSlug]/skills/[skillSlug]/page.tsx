@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BookOpen, Clock, ExternalLink, Sparkles } from "lucide-react";
@@ -29,6 +30,37 @@ const RESOURCE_LABEL: Record<string, string> = {
   BOOK: "Libro",
   OTHER: "Recurso",
 };
+
+const CEFR = ["Pre-A1", "A1", "A2", "B1", "B2", "C1", "C2"];
+const DIFFICULTY_LABEL: Record<string, string> = {
+  easy: "Dificultad baja",
+  medium: "Dificultad media",
+  hard: "Dificultad alta",
+  expert: "Dificultad muy alta",
+};
+const BRANCH_LABEL: Record<string, string> = {
+  estrategias: "Estrategias",
+  pronunciacion: "Pronunciación",
+  vocabulario: "Vocabulario",
+  gramatica: "Gramática",
+  escucha: "Comprensión auditiva",
+  lectura: "Lectura",
+  conversacion: "Conversación",
+  escritura: "Escritura",
+  cultura: "Cultura",
+  fluidez: "Fluidez",
+  hito: "Hito de nivel",
+};
+
+/** Contenido pedagógico enriquecido guardado en Skill.content (JSON). */
+interface SkillContent {
+  competency?: string;
+  rationale?: string;
+  commonErrors?: string[];
+  masteryCriteria?: string[];
+  exercises?: string[];
+  assessments?: string[];
+}
 
 export default async function SkillPage({
   params,
@@ -78,6 +110,17 @@ export default async function SkillPage({
       <h1 className="mt-1 text-2xl font-bold tracking-tight">{skill.title}</h1>
 
       <div className="mt-3 flex flex-wrap gap-2">
+        {skill.branch && (
+          <Badge variant="outline">
+            {BRANCH_LABEL[skill.branch] ?? skill.branch}
+          </Badge>
+        )}
+        <Badge variant="neutral">Nivel {CEFR[skill.tier] ?? skill.tier}</Badge>
+        {skill.difficulty && (
+          <Badge variant="neutral">
+            {DIFFICULTY_LABEL[skill.difficulty] ?? skill.difficulty}
+          </Badge>
+        )}
         <Badge variant="primary">
           <Sparkles className="size-3.5" /> {skill.xpReward} XP
         </Badge>
@@ -88,6 +131,49 @@ export default async function SkillPage({
       </div>
 
       <p className="text-muted-foreground mt-5">{skill.description}</p>
+
+      {(() => {
+        const c = (skill.content ?? {}) as SkillContent;
+        const list = (items?: string[]) =>
+          items && items.length ? (
+            <ul className="list-disc space-y-1 pl-5">
+              {items.map((x, i) => (
+                <li key={i}>{x}</li>
+              ))}
+            </ul>
+          ) : null;
+        const rows: { h: string; body: ReactNode }[] = [];
+        if (skill.objective)
+          rows.push({ h: "Objetivo de aprendizaje", body: skill.objective });
+        if (c.competency)
+          rows.push({ h: "Competencia que adquieres", body: c.competency });
+        if (c.rationale)
+          rows.push({ h: "Por qué existe (y aquí)", body: c.rationale });
+        if (c.masteryCriteria?.length)
+          rows.push({
+            h: "Criterios de dominio",
+            body: list(c.masteryCriteria),
+          });
+        if (c.commonErrors?.length)
+          rows.push({ h: "Errores frecuentes", body: list(c.commonErrors) });
+        if (c.exercises?.length)
+          rows.push({ h: "Ejercicios sugeridos", body: list(c.exercises) });
+        if (c.assessments?.length)
+          rows.push({ h: "Cómo se evalúa", body: list(c.assessments) });
+        if (rows.length === 0) return null;
+        return (
+          <div className="mt-6 space-y-4">
+            {rows.map((r, i) => (
+              <div key={i}>
+                <h3 className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+                  {r.h}
+                </h3>
+                <div className="mt-1 text-sm">{r.body}</div>
+              </div>
+            ))}
+          </div>
+        );
+      })()}
 
       {/* Recursos */}
       <h2 className="mt-8 mb-3 flex items-center gap-2 text-lg font-semibold">

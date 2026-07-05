@@ -127,6 +127,19 @@ model Skill {
   isRoot      Boolean @default(false)
   order       Int     @default(0)
 
+  /// Rama / hebra de competencia a la que pertenece (p. ej. "pronunciacion",
+  /// "vocabulario"). Permite agrupar y visualizar por especialización.
+  branch      String?
+  /// Dificultad orientativa: easy | medium | hard | expert.
+  difficulty  String?
+  /// Objetivo de aprendizaje "can-do" que se muestra al usuario.
+  objective   String?
+  /// Contenido pedagógico enriquecido (competencia, justificación, razón de su
+  /// posición, errores frecuentes, criterios de dominio, ejercicios y
+  /// evaluaciones sugeridas). Se guarda como JSON flexible para no acoplar el
+  /// esquema a un formato que seguirá evolucionando por iteraciones.
+  content     Json?
+
   tree          Tree                 @relation(fields: [treeId], references: [id], onDelete: Cascade)
   resources     Resource[]
   // Aristas del DAG: prerrequisitos de esta habilidad.
