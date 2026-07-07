@@ -15,7 +15,9 @@
  * ejercicios y evaluaciones sugeridas.
  */
 
-import type { PrismaClient } from "@prisma/client";
+import type { Prisma, PrismaClient } from "@prisma/client";
+
+import { EN_LESSONS } from "./ingles-lessons";
 
 type Res = {
   t: "VIDEO" | "ARTICLE" | "EXERCISE" | "BOOK" | "OTHER";
@@ -1776,7 +1778,8 @@ export async function upsertEnglishTree(
           masteryCriteria: n.cr,
           exercises: n.ex,
           assessments: n.ev,
-        },
+          ...(EN_LESSONS[n.s] ? { lesson: EN_LESSONS[n.s] } : {}),
+        } as unknown as Prisma.InputJsonValue,
         resources: {
           create: n.r.map((res, i) => ({
             type: res.t,

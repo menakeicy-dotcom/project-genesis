@@ -12,6 +12,7 @@ import { getSkill } from "@/modules/catalog/services";
 import { getCompletedSkillIds } from "@/modules/progress/services";
 import { isUnlocked } from "@/modules/skill-tree/state";
 import { CompleteSkillButton } from "@/modules/progress/components/complete-skill-button";
+import { SkillLesson, type Lesson } from "@/modules/skill-tree/lesson";
 
 export async function generateMetadata({
   params,
@@ -60,6 +61,7 @@ interface SkillContent {
   masteryCriteria?: string[];
   exercises?: string[];
   assessments?: string[];
+  lesson?: Lesson;
 }
 
 export default async function SkillPage({
@@ -94,6 +96,8 @@ export default async function SkillPage({
     .filter((p) => !completed.has(p.prerequisiteId))
     .map((p) => p.prerequisite.title);
 
+  const content = (skill.content ?? {}) as SkillContent;
+
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-10">
       <Link
@@ -127,13 +131,24 @@ export default async function SkillPage({
         <Badge variant="neutral">
           <Clock className="size-3.5" /> {skill.estimatedMinutes} min
         </Badge>
+        {content.lesson && <Badge variant="growth">Lección interactiva</Badge>}
         {state === "completed" && <Badge variant="growth">Completada ✓</Badge>}
       </div>
 
       <p className="text-muted-foreground mt-5">{skill.description}</p>
 
+      {content.lesson ? (
+        <SkillLesson lesson={content.lesson} />
+      ) : (
+        <Alert variant="info" className="mt-6">
+          El contenido interactivo de esta habilidad está en preparación.
+          Debajo tienes su ficha pedagógica y recursos para empezar a trabajarla.
+        </Alert>
+      )}
+
       {(() => {
-        const c = (skill.content ?? {}) as SkillContent;
+        const c = content;
+        const hasLesson = !!c.lesson;
         const list = (items?: string[]) =>
           items && items.length ? (
             <ul className="list-disc space-y-1 pl-5">
@@ -156,21 +171,25 @@ export default async function SkillPage({
           });
         if (c.commonErrors?.length)
           rows.push({ h: "Errores frecuentes", body: list(c.commonErrors) });
-        if (c.exercises?.length)
+        // Cuando hay lección, sus ejercicios/actividad sustituyen a las sugerencias.
+        if (!hasLesson && c.exercises?.length)
           rows.push({ h: "Ejercicios sugeridos", body: list(c.exercises) });
-        if (c.assessments?.length)
+        if (!hasLesson && c.assessments?.length)
           rows.push({ h: "Cómo se evalúa", body: list(c.assessments) });
         if (rows.length === 0) return null;
         return (
-          <div className="mt-6 space-y-4">
-            {rows.map((r, i) => (
-              <div key={i}>
-                <h3 className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
-                  {r.h}
-                </h3>
-                <div className="mt-1 text-sm">{r.body}</div>
-              </div>
-            ))}
+          <div className="mt-8">
+            <h2 className="mb-3 text-lg font-semibold">Ficha pedagógica</h2>
+            <div className="space-y-4">
+              {rows.map((r, i) => (
+                <div key={i}>
+                  <h3 className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+                    {r.h}
+                  </h3>
+                  <div className="mt-1 text-sm">{r.body}</div>
+                </div>
+              ))}
+            </div>
           </div>
         );
       })()}
