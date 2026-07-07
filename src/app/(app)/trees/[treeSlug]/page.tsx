@@ -8,7 +8,7 @@ import { ProgressBar } from "@/components/ui/progress-bar";
 import { getTreeBySlug } from "@/modules/catalog/services";
 import { getEnrollment, getTreeNodeStates } from "@/modules/progress/services";
 import { EnrollButton } from "@/modules/progress/components/enroll-button";
-import { LivingTree } from "@/modules/skill-tree/living-tree";
+import { OrganicTree } from "@/modules/skill-tree/organic-tree";
 
 export async function generateMetadata({
   params,
@@ -47,12 +47,9 @@ export default async function TreePage({
   const nodes = tree.skills.map((s) => ({
     id: s.id,
     title: s.title,
-    xp: s.xpReward,
     state: states.get(s.id) ?? "locked",
     slug: s.slug,
     tier: s.tier,
-    x: s.positionX,
-    parents: s.prerequisites.map((p) => p.prerequisiteId),
   }));
 
   const total = tree.skills.length;
@@ -95,7 +92,7 @@ export default async function TreePage({
         completas nuevas ramas.
       </p>
 
-      <LivingTree nodes={nodes} treeSlug={tree.slug} />
+      <OrganicTree nodes={nodes} treeSlug={tree.slug} />
     </div>
   );
 }
