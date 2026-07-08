@@ -3,6 +3,7 @@ export type {
   Lesson,
   LessonSection,
   LessonExample,
+  LessonCompare,
   LessonActivity,
   PracticeItem,
 } from "./types";

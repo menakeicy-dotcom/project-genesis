@@ -679,30 +679,60 @@ export const EN_LESSONS: Record<string, Lesson> = {
 
   "gra-presente": {
     intro:
-      "El presente en inglés tiene DOS formas y no son intercambiables: el presente simple (rutinas y hechos) y el presente continuo (lo que ocurre ahora). Confundirlos es el error clásico de principiante.",
+      "El presente en inglés tiene DOS formas y no significan lo mismo. Elegir mal es el error clásico de principiante… y es facilísimo de arreglar con una regla visual.",
+    goal: "decidir entre presente simple y continuo sin dudar.",
     sections: [
       {
-        h: "Presente simple: rutinas, hechos, verdades",
+        h: "Presente simple",
+        tldr: "Para lo que es habitual, permanente o siempre verdad.",
         body: [
-          "Se usa para lo habitual y lo general. Ojo con la tercera persona (he/she/it): el verbo añade -s.",
+          "Rutinas, hechos y verdades generales. Ojo con la tercera persona (he/she/it): el verbo añade -s.",
         ],
         examples: [
           { en: "I work every day.", es: "Trabajo todos los días." },
           { en: "She works in a bank.", es: "Ella trabaja en un banco.", note: "he/she/it → verbo + s." },
           { en: "Water boils at 100°C.", es: "El agua hierve a 100°C.", note: "Verdad general." },
         ],
+        more: [
+          "Negación e interrogación usan do/does: I don't work / Does she work?",
+          "Con he/she/it la -s puede cambiar la ortografía: study → studies, go → goes, watch → watches.",
+        ],
       },
       {
-        h: "Presente continuo: ahora mismo",
+        h: "Presente continuo",
+        tldr: "Para lo que ocurre ahora mismo o es temporal.",
         body: [
-          "Se forma con am/is/are + verbo-ing. Describe algo que sucede en este momento o temporalmente.",
+          "Se forma con am/is/are + verbo-ing. Describe la acción en curso o una situación pasajera.",
         ],
         examples: [
           { en: "I am working now.", es: "Estoy trabajando ahora." },
           { en: "They are eating.", es: "Están comiendo." },
           { en: "She is studying this week.", es: "Está estudiando esta semana (temporal)." },
         ],
-        tip: "Pista rápida: 'every day / usually / always' → presente simple. 'now / at the moment / right now' → presente continuo.",
+      },
+      {
+        h: "Simple vs. continuo, de un vistazo",
+        tldr: "La misma frase cambia de sentido según la forma.",
+        compare: {
+          left: {
+            title: "Present Simple",
+            points: [
+              "Rutina / permanente / verdad general",
+              "Señales: every day, usually, always, never",
+              "I work here. → Trabajo aquí (siempre).",
+            ],
+          },
+          right: {
+            title: "Present Continuous",
+            points: [
+              "Ahora mismo / temporal / en curso",
+              "Señales: now, at the moment, right now, today",
+              "I'm working here. → Estoy trabajando aquí (estos días).",
+            ],
+          },
+          note: "Regla de oro: ¿es tu vida en general → simple; ¿es lo que pasa ahora → continuo.",
+        },
+        tip: "Verbos de estado (like, want, know, need, love) casi nunca van en continuo: se dice 'I want', no 'I am wanting'.",
       },
     ],
     practice: [
@@ -743,6 +773,18 @@ export const EN_LESSONS: Record<string, Lesson> = {
         "Marca las -s de la tercera persona y los -ing.",
       ],
     },
+    selfCheck: [
+      "Sé cuándo usar presente simple y cuándo continuo.",
+      "Añado -s en la 3ª persona del simple (she works).",
+      "Formo el continuo con am/is/are + -ing.",
+      "No pongo verbos de estado (want, know) en continuo.",
+    ],
+    summary: [
+      "Simple = habitual/permanente; continuo = ahora/temporal.",
+      "3ª persona del simple: verbo + -s.",
+      "Continuo: am/is/are + verbo-ing.",
+      "Pistas: every day → simple; now → continuo.",
+    ],
   },
 
   "aud-instrucciones": {
@@ -1119,5 +1161,1073 @@ export const EN_LESSONS: Record<string, Lesson> = {
         "Marca en tu lista qué descriptores A1 ya dominas y cuáles repasar antes de A2.",
       ],
     },
+    selfCheck: [
+      "Me presento y doy datos personales.",
+      "Hago y respondo preguntas simples (do/does, wh-).",
+      "Uso el presente simple y continuo correctamente.",
+      "Pronuncio de forma inteligible los sonidos difíciles (th, v, vocales largas).",
+    ],
+    summary: [
+      "A1 = sobrevivir: saludar, presentarte, preguntar y responder lo básico.",
+      "Esqueleto firme: SVO con sujeto, presente, preguntas con do/does y wh-.",
+      "Cimientos sólidos hacen que A2 sea mucho más fácil.",
+    ],
+  },
+
+  // ─────────────────────────────── A2 · núcleo ───────────────────────────────
+  "est-tolerancia": {
+    intro:
+      "El mayor freno del principiante no es la gramática: es querer entender el 100% y bloquearse en cada palabra nueva. Aprender a tolerar lo desconocido te deja disfrutar del input… y así aprendes más rápido.",
+    goal: "seguir un audio o texto entendiendo la idea global sin traducir ni bloquearte.",
+    sections: [
+      {
+        h: "Entender no es traducir",
+        tldr: "Tu meta es captar el mensaje, no descifrar cada palabra.",
+        body: [
+          "Cuando traduces mentalmente palabra por palabra, vas lento y te pierdes. El objetivo es 'pescar' la idea principal aunque se te escapen detalles.",
+        ],
+        tip: "Pon los subtítulos en inglés, nunca en español. Los de tu idioma apagan tu escucha.",
+      },
+      {
+        h: "Deduce por contexto",
+        tldr: "Las palabras de alrededor te revelan la desconocida.",
+        body: [
+          "Antes de mirar el diccionario, adivina el significado por el contexto. Aciertas más de lo que crees.",
+        ],
+        examples: [
+          {
+            en: "The weather was awful, so we stayed home.",
+            es: "El tiempo estaba horrible, así que nos quedamos en casa.",
+            note: "No sabías 'awful'? El 'so we stayed home' te dice que es algo malo.",
+          },
+        ],
+        more: [
+          "Usa los cognados: information, important, possible… se parecen al español.",
+          "Fíjate en la forma: 'un-happy' = no feliz; 'care-ful' = lleno de cuidado.",
+        ],
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "No entiendes una palabra en medio de un vídeo. Lo mejor es:",
+        options: [
+          "Pausar y buscarla en el diccionario cada vez",
+          "Seguir y deducir por el contexto",
+          "Reiniciar el vídeo desde el principio",
+        ],
+        answer: 1,
+        why: "Deducir por contexto mantiene el flujo y entrena la comprensión real.",
+      },
+      {
+        kind: "choice",
+        q: "«The soup was delicious, I ate it all.» 'delicious' probablemente significa…",
+        options: ["asqueroso", "delicioso", "frío"],
+        answer: 1,
+        why: "Si se lo comió todo, la sopa era buena: 'delicious' = delicioso (además es cognado).",
+      },
+      {
+        kind: "choice",
+        q: "¿Qué subtítulos te ayudan a aprender más?",
+        options: ["En español", "En inglés", "Sin subtítulos siempre"],
+        answer: 1,
+        why: "Los subtítulos en inglés conectan sonido y forma escrita; los de tu idioma apagan la escucha.",
+      },
+    ],
+    activity: {
+      title: "Ver y resumir",
+      steps: [
+        "Elige un vídeo corto en inglés sobre algo que te guste, con subtítulos en inglés.",
+        "Míralo entero sin pausar. Tolera lo que no entiendas.",
+        "Escribe en 2 frases de qué trataba. No importa si fallaste detalles.",
+      ],
+    },
+    selfCheck: [
+      "Sigo un vídeo/audio sin traducir en mi cabeza.",
+      "Deduzco palabras nuevas por el contexto antes de buscarlas.",
+      "No me bloqueo cuando no entiendo una palabra.",
+    ],
+    summary: [
+      "Capta la idea global; los detalles llegan con la exposición.",
+      "Deduce por contexto y cognados antes de usar el diccionario.",
+      "Subtítulos en inglés, no en español.",
+    ],
+  },
+
+  "fon-acento": {
+    intro:
+      "En inglés, cada palabra tiene UNA sílaba fuerte. Poner el acento donde no va puede hacerte ininteligible aunque los sonidos sean correctos. Es un ajuste pequeño con un efecto enorme.",
+    goal: "colocar el acento en la sílaba correcta de las palabras frecuentes.",
+    sections: [
+      {
+        h: "La sílaba fuerte manda",
+        tldr: "Una sílaba se pronuncia más larga, alta y clara; el resto se relaja.",
+        body: [
+          "Las sílabas sin acento se reducen al sonido 'schwa' /ə/ (una 'e' floja). Por eso 'banana' suena /bəˈnɑːnə/: solo la del medio es fuerte.",
+        ],
+        examples: [
+          { en: "baNAna", ipa: "/bəˈnɑːnə/", es: "banana", note: "Acento en la 2ª sílaba." },
+          { en: "COMputer → comPUter", ipa: "/kəmˈpjuːtər/", es: "computadora", note: "Acento en 'pu'." },
+          { en: "imPORtant", ipa: "/ɪmˈpɔːrtnt/", es: "importante" },
+        ],
+      },
+      {
+        h: "Mismo escrito, distinto acento",
+        tldr: "El acento puede distinguir un sustantivo de un verbo.",
+        compare: {
+          left: {
+            title: "Sustantivo — acento al principio",
+            points: [
+              "a REcord /ˈrekɔːrd/ — un disco/registro",
+              "a PREsent /ˈpreznt/ — un regalo",
+              "an INcrease /ˈɪnkriːs/ — un aumento",
+            ],
+          },
+          right: {
+            title: "Verbo — acento al final",
+            points: [
+              "to reCORD /rɪˈkɔːrd/ — grabar",
+              "to preSENT /prɪˈzent/ — presentar",
+              "to inCREASE /ɪnˈkriːs/ — aumentar",
+            ],
+          },
+          note: "Regla útil (no absoluta): sustantivo → acento delante; verbo → acento detrás.",
+        },
+        tip: "Al aprender una palabra nueva, memoriza también DÓNDE va su acento. El diccionario lo marca con una ' antes de la sílaba fuerte.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Dónde va el acento en 'important'?",
+        options: ["IM-portant", "im-POR-tant", "impor-TANT"],
+        answer: 1,
+        why: "imPORtant: la sílaba fuerte es 'por'.",
+      },
+      {
+        kind: "choice",
+        q: "«I want to ___ this song.» (verbo) ¿Cómo se acentúa 'record'?",
+        options: ["REcord", "reCORD"],
+        answer: 1,
+        why: "Como verbo, el acento va al final: reCORD.",
+      },
+      {
+        kind: "choice",
+        q: "Las sílabas SIN acento suelen reducirse al sonido…",
+        options: ["/iː/ largo", "schwa /ə/", "/r/ fuerte"],
+        answer: 1,
+        why: "El inglés reduce las sílabas átonas a la schwa /ə/.",
+      },
+    ],
+    activity: {
+      title: "Marca el acento",
+      steps: [
+        "Elige 10 palabras de 2-3 sílabas que uses a menudo.",
+        "Marca en cuál sílaba crees que va el acento.",
+        "Comprueba con el audio del diccionario y corrige.",
+      ],
+    },
+    selfCheck: [
+      "Identifico la sílaba fuerte de una palabra.",
+      "Reduzco las sílabas átonas (schwa).",
+      "Distingo el acento de sustantivo vs. verbo (REcord/reCORD).",
+    ],
+    summary: [
+      "Cada palabra inglesa tiene una sílaba fuerte; el resto se relaja.",
+      "Colocar mal el acento afecta la comprensión más que un sonido imperfecto.",
+      "Sustantivo → acento delante; verbo → acento detrás (tendencia).",
+    ],
+  },
+
+  "voc-nucleo-2": {
+    intro:
+      "Con ~2000 palabras frecuentes entiendes la mayoría de las conversaciones y textos cotidianos. La clave a este nivel no es solo sumar palabras: es aprender cómo se combinan (colocaciones) y los phrasal verbs.",
+    goal: "manejar ~2000 palabras de uso diario y sus combinaciones más comunes.",
+    sections: [
+      {
+        h: "Colocaciones: las palabras van en pareja",
+        tldr: "Aprende grupos de palabras, no palabras sueltas.",
+        body: [
+          "Los nativos dicen 'make a decision' y 'do homework', no al revés. Aprender la combinación evita sonar raro y acelera el habla.",
+        ],
+        compare: {
+          left: {
+            title: "make (crear/producir)",
+            points: ["make a decision", "make a mistake", "make friends", "make money"],
+          },
+          right: {
+            title: "do (realizar una tarea)",
+            points: ["do homework", "do the dishes", "do exercise", "do business"],
+          },
+          note: "No hay regla perfecta: memoriza la pareja como un bloque.",
+        },
+      },
+      {
+        h: "Phrasal verbs: verbo + partícula",
+        tldr: "Un verbo común + una preposición forma un significado nuevo.",
+        body: [
+          "Son muy frecuentes en el habla real. 'Get up' no es 'obtener arriba': es 'levantarse'.",
+        ],
+        examples: [
+          { en: "get up", es: "levantarse" },
+          { en: "turn on / turn off", es: "encender / apagar" },
+          { en: "look for", es: "buscar" },
+          { en: "give up", es: "rendirse" },
+        ],
+        more: [
+          "Muchos son separables: 'turn the light on' = 'turn on the light'.",
+          "Con pronombre van SIEMPRE en medio: 'turn it on' (nunca 'turn on it').",
+        ],
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Cuál es la colocación correcta?",
+        options: ["do a decision", "make a decision", "take a decision (US neutro)"],
+        answer: 1,
+        why: "'make a decision' es la forma estándar (tomar una decisión).",
+      },
+      {
+        kind: "fill",
+        q: "Completa el phrasal verb: «I ___ up at 7 every day.» (levantarse)",
+        accept: ["get", "wake"],
+        hint: "get / wake …",
+        why: "'get up' = levantarse (también 'wake up' = despertarse).",
+      },
+      {
+        kind: "choice",
+        q: "Con pronombre, el phrasal verb separable va…",
+        options: [
+          "turn on it",
+          "turn it on",
+          "da igual el orden",
+        ],
+        answer: 1,
+        why: "Con pronombre, la partícula va detrás: 'turn it on'.",
+      },
+    ],
+    activity: {
+      title: "5 colocaciones + 5 phrasal verbs",
+      steps: [
+        "Elige un tema (trabajo, casa, estudio).",
+        "Anota 5 colocaciones y 5 phrasal verbs de ese tema en tu SRS, con una frase de ejemplo.",
+        "Úsalos en un texto corto de 4-5 frases.",
+      ],
+    },
+    selfCheck: [
+      "Aprendo palabras en combinación, no sueltas.",
+      "Reconozco y uso phrasal verbs comunes.",
+      "Coloco el pronombre en medio del phrasal verb separable.",
+    ],
+    summary: [
+      "~2000 palabras cubren la mayoría de lo cotidiano.",
+      "Aprende colocaciones (make/do…) como bloques.",
+      "Los phrasal verbs son clave en el habla real.",
+    ],
+  },
+
+  "gra-pasado": {
+    intro:
+      "Para contar tu día, tu fin de semana o tu vida necesitas el pasado simple. Tiene una parte fácil (los verbos regulares) y una que se memoriza (los irregulares), pero el mecanismo de preguntas y negaciones es único y sencillo.",
+    goal: "narrar hechos terminados en el pasado.",
+    sections: [
+      {
+        h: "Verbos regulares: + -ed",
+        tldr: "La mayoría forman el pasado añadiendo -ed.",
+        body: [
+          "work → worked, play → played, live → lived. Ojo con la pronunciación de -ed: no siempre suena igual.",
+        ],
+        examples: [
+          { en: "worked, liked, stopped", ipa: "/t/", es: "tras sonido sordo suena /t/." },
+          { en: "played, lived, opened", ipa: "/d/", es: "tras sonido sonoro suena /d/." },
+          { en: "wanted, needed, decided", ipa: "/ɪd/", es: "tras /t/ o /d/ suena /ɪd/ (sílaba extra)." },
+        ],
+      },
+      {
+        h: "Verbos irregulares: se memorizan",
+        tldr: "Los más frecuentes no siguen la regla; apréndelos como bloque.",
+        compare: {
+          left: {
+            title: "Regulares (+ed)",
+            points: ["work → worked", "play → played", "watch → watched"],
+          },
+          right: {
+            title: "Irregulares (memoria)",
+            points: ["go → went", "have → had", "see → saw", "make → made"],
+          },
+          note: "Los irregulares suelen ser los verbos más usados. Prioriza los 50 más comunes.",
+        },
+      },
+      {
+        h: "Preguntas y negaciones: did / didn't",
+        tldr: "Con 'did', el verbo principal vuelve a su forma base.",
+        body: [
+          "El pasado se marca UNA sola vez, en 'did'. Por eso el verbo principal pierde su forma de pasado.",
+        ],
+        examples: [
+          { en: "Did you go to the party?", es: "¿Fuiste a la fiesta?", note: "go, no went." },
+          { en: "I didn't see him.", es: "No lo vi.", note: "see, no saw." },
+        ],
+        tip: "Error clásico: 'I didn't went'. Correcto: 'I didn't go'. El 'did' ya lleva el pasado.",
+      },
+    ],
+    practice: [
+      {
+        kind: "fill",
+        q: "Pasado de 'go': «Yesterday I ___ to school.»",
+        accept: ["went"],
+        hint: "Es irregular.",
+        why: "go → went (irregular).",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuál es correcta?",
+        options: ["I didn't saw the film.", "I didn't see the film.", "I don't saw the film."],
+        answer: 1,
+        why: "Con 'didn't', el verbo va en base: see (no saw).",
+      },
+      {
+        kind: "choice",
+        q: "¿Cómo suena la '-ed' de 'wanted'?",
+        options: ["/t/", "/d/", "/ɪd/ (sílaba extra)"],
+        answer: 2,
+        why: "Tras /t/ o /d/, la -ed suena /ɪd/ y añade una sílaba: want-ed.",
+      },
+      {
+        kind: "fill",
+        q: "Pasado de 'be' con 'they': «They ___ happy.»",
+        accept: ["were"],
+        hint: "was / were …",
+        why: "I/he/she/it → was; you/we/they → were.",
+      },
+    ],
+    activity: {
+      title: "Cuenta tu fin de semana",
+      steps: [
+        "Escribe 6 frases sobre lo que hiciste el fin de semana pasado.",
+        "Subraya los verbos: marca cuáles son regulares (-ed) y cuáles irregulares.",
+        "Convierte una frase en pregunta con 'Did…?' y otra en negación con 'didn't'.",
+      ],
+    },
+    selfCheck: [
+      "Formo el pasado regular con -ed y lo pronuncio bien.",
+      "Conozco los irregulares más comunes (went, had, saw…).",
+      "Uso did/didn't + verbo base en preguntas y negaciones.",
+      "Uso was/were correctamente.",
+    ],
+    summary: [
+      "Regulares: + -ed (con 3 sonidos: /t/, /d/, /ɪd/).",
+      "Irregulares: se memorizan; son los más usados.",
+      "Preguntas/negaciones: did/didn't + verbo base.",
+    ],
+  },
+
+  "gra-futuro": {
+    intro:
+      "El inglés tiene dos formas principales de hablar del futuro, y elegir bien comunica tu intención. La diferencia entre 'will' y 'going to' es sutil pero muy útil.",
+    goal: "elegir entre 'will' y 'going to' según la situación.",
+    sections: [
+      {
+        h: "will vs. going to, de un vistazo",
+        tldr: "'going to' = ya lo tenías pensado; 'will' = lo decides ahora.",
+        compare: {
+          left: {
+            title: "will + verbo base",
+            points: [
+              "Decisión en el momento: I'll help you!",
+              "Predicción/opinión: I think it will rain.",
+              "Promesas y ofertas: I'll call you tonight.",
+            ],
+          },
+          right: {
+            title: "be going to + verbo",
+            points: [
+              "Plan ya decidido: I'm going to study medicine.",
+              "Predicción con evidencia: Look at the clouds — it's going to rain.",
+              "Intención: We're going to travel this summer.",
+            ],
+          },
+          note: "Los dos son 'futuro', pero cuentan cosas distintas sobre tu intención.",
+        },
+      },
+      {
+        h: "Un tercer recurso: presente continuo",
+        tldr: "Para citas y planes ya organizados con hora/lugar.",
+        examples: [
+          { en: "I'm meeting Ana at 6.", es: "Quedo con Ana a las 6.", note: "Cita concreta ya acordada." },
+          { en: "We're flying to Madrid on Friday.", es: "Volamos a Madrid el viernes." },
+        ],
+        more: [
+          "'shall' existe pero es formal/británico y poco frecuente hoy (Shall I open the window?).",
+        ],
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«This bag is heavy.» «Don't worry, I ___ carry it.» (te ofreces AHORA)",
+        options: ["am going to", "will", "carry"],
+        answer: 1,
+        why: "Decisión/ofrecimiento en el momento → 'will': I'll carry it.",
+      },
+      {
+        kind: "choice",
+        q: "«Why are you buying eggs?» «I ___ make a cake.» (plan ya decidido)",
+        options: ["will", "am going to", "make"],
+        answer: 1,
+        why: "Plan/intención previa → 'going to': I'm going to make a cake.",
+      },
+      {
+        kind: "choice",
+        q: "«Look at those black clouds! It ___ rain.» (evidencia visible)",
+        options: ["will", "is going to", "rains"],
+        answer: 1,
+        why: "Predicción con evidencia presente → 'going to'.",
+      },
+      {
+        kind: "fill",
+        q: "Cita concreta (presente continuo): «I ___ (meet) the doctor at 5.»",
+        accept: ["am meeting", "'m meeting"],
+        hint: "am/is/are + -ing.",
+        why: "Planes con hora fija → presente continuo: I'm meeting the doctor at 5.",
+      },
+    ],
+    activity: {
+      title: "Tus planes y predicciones",
+      steps: [
+        "Escribe 3 frases con 'going to' sobre planes que ya tienes.",
+        "Escribe 2 frases con 'will' (una predicción y un ofrecimiento).",
+        "Escribe 1 cita concreta con presente continuo.",
+      ],
+    },
+    selfCheck: [
+      "Uso 'will' para decisiones del momento, predicciones y ofertas.",
+      "Uso 'going to' para planes e intenciones previas.",
+      "Uso el presente continuo para citas concretas.",
+    ],
+    summary: [
+      "will = lo decides ahora / predicción / promesa.",
+      "going to = plan previo / predicción con evidencia.",
+      "Presente continuo = citas y planes con hora fija.",
+    ],
+  },
+
+  "gra-conectores": {
+    intro:
+      "Los conectores convierten frases sueltas en ideas que fluyen. Con cinco o seis básicos, tu inglés deja de sonar entrecortado.",
+    goal: "unir ideas con and, but, or, so, because y although.",
+    sections: [
+      {
+        h: "Los conectores esenciales",
+        tldr: "Cada uno indica una relación distinta entre ideas.",
+        bullets: [
+          "and = y (añade) · but = pero (contrasta) · or = o (alternativa)",
+          "because = porque (causa) · so = así que (resultado/consecuencia)",
+          "although = aunque (concesión)",
+        ],
+        examples: [
+          { en: "I was tired, so I went to bed.", es: "Estaba cansado, así que me fui a la cama.", note: "so → resultado." },
+          { en: "I went to bed because I was tired.", es: "Me fui a la cama porque estaba cansado.", note: "because → causa." },
+        ],
+      },
+      {
+        h: "because vs. so: ojo con el orden",
+        tldr: "Dicen lo mismo… pero al revés.",
+        compare: {
+          left: {
+            title: "because (causa)",
+            points: [
+              "Introduce el motivo.",
+              "Result + because + causa.",
+              "I stayed home because it rained.",
+            ],
+          },
+          right: {
+            title: "so (resultado)",
+            points: [
+              "Introduce la consecuencia.",
+              "Causa + so + result.",
+              "It rained, so I stayed home.",
+            ],
+          },
+          note: "Misma idea, distinto foco y orden.",
+        },
+        tip: "No empieces una frase formal con 'And' o 'But' al escribir; en el habla es normal, en textos cuida el registro.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«I wanted to go out, ___ it was raining.»",
+        options: ["so", "but", "because"],
+        answer: 1,
+        why: "Hay un contraste (quería salir / llovía) → 'but'.",
+      },
+      {
+        kind: "choice",
+        q: "«She studied a lot, ___ she passed the exam.»",
+        options: ["because", "but", "so"],
+        answer: 2,
+        why: "Causa + resultado → 'so' (así que aprobó).",
+      },
+      {
+        kind: "fill",
+        q: "Causa: «I'm happy ___ it's Friday.» (porque)",
+        accept: ["because"],
+        hint: "Introduce el motivo.",
+        why: "'because' introduce la causa.",
+      },
+    ],
+    activity: {
+      title: "Une tus ideas",
+      steps: [
+        "Escribe 3 pares de frases cortas relacionadas.",
+        "Únelas usando un conector distinto en cada par (and/but, because/so, although).",
+        "Léelas en voz alta: ¿suenan más fluidas?",
+      ],
+    },
+    selfCheck: [
+      "Uso and/but/or para añadir, contrastar y dar alternativas.",
+      "Distingo because (causa) de so (resultado) y su orden.",
+      "Uso although para concesiones.",
+    ],
+    summary: [
+      "Conectores = frases que fluyen en vez de frases sueltas.",
+      "because introduce la causa; so, el resultado (orden inverso).",
+      "although = aunque (concesión).",
+    ],
+  },
+
+  "aud-conversaciones": {
+    intro:
+      "El siguiente salto de escucha es entender conversaciones lentas y claras sobre temas conocidos: planes, compras, direcciones. No necesitas cada palabra: necesitas la información clave.",
+    goal: "captar la información esencial de conversaciones cotidianas lentas y claras.",
+    sections: [
+      {
+        h: "Caza las 'palabras de contenido'",
+        tldr: "El significado vive en sustantivos, verbos y números; el resto es relleno.",
+        body: [
+          "El inglés acentúa las palabras con carga de significado y reduce el resto. Entrena tu oído para engancharte a esas palabras fuertes.",
+        ],
+        examples: [
+          {
+            en: "Can you meet me at the STAtion at SEven?",
+            es: "¿Puedes verme en la ESTAción a las SIEte?",
+            note: "Las palabras clave (station, seven) suenan más fuertes.",
+          },
+        ],
+      },
+      {
+        h: "Escucha por tarea, no por perfección",
+        tldr: "Escucha con una pregunta concreta en mente.",
+        bullets: [
+          "¿Dónde quedan? ¿A qué hora? ¿Cuánto cuesta? Busca ESO.",
+          "Predice: si es un restaurante, oirás precios y comidas.",
+          "Reescucha: cada pasada rellena huecos.",
+        ],
+        tip: "Empieza con audio graduado (British Council A2, ELLLO nivel bajo) y sube poco a poco. Debe costarte un poco, no ahogarte.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En una conversación, ¿qué palabras cargan el significado?",
+        options: [
+          "Artículos y preposiciones (the, at, of)",
+          "Sustantivos, verbos y números (station, meet, seven)",
+          "Todas por igual",
+        ],
+        answer: 1,
+        why: "Las 'content words' llevan el significado y se pronuncian más fuertes.",
+      },
+      {
+        kind: "choice",
+        q: "La mejor forma de escuchar un diálogo cotidiano es:",
+        options: [
+          "Intentar traducir cada palabra",
+          "Escuchar buscando una información concreta (hora, lugar, precio)",
+          "Escuchar una sola vez y rendirte si fallas",
+        ],
+        answer: 1,
+        why: "Escuchar 'por tarea' enfoca tu atención en lo que importa.",
+      },
+    ],
+    activity: {
+      title: "Escucha con misión",
+      steps: [
+        "Elige un diálogo corto A2 (con transcripción).",
+        "Antes de oír, decide 2 datos que buscarás (hora, lugar, precio…).",
+        "Escucha 2 veces sin leer, anota los datos, y comprueba con la transcripción.",
+      ],
+    },
+    selfCheck: [
+      "Me engancho a las palabras de contenido.",
+      "Escucho buscando información concreta.",
+      "Entiendo la idea de una conversación lenta y clara sin traducir.",
+    ],
+    summary: [
+      "El significado está en las palabras fuertes (content words).",
+      "Escucha con una pregunta concreta en mente.",
+      "Reescuchar y usar audio graduado acelera el progreso.",
+    ],
+  },
+
+  "lec-cotidiano": {
+    intro:
+      "Leer a nivel A2 es entender textos cortos y útiles: correos, anuncios, horarios, menús, instrucciones. La técnica correcta depende de para qué lees.",
+    goal: "leer textos cotidianos cortos y encontrar la información que necesitas.",
+    sections: [
+      {
+        h: "Skimming vs. scanning",
+        tldr: "Dos formas de leer rápido según tu objetivo.",
+        compare: {
+          left: {
+            title: "Skimming (vistazo)",
+            points: [
+              "Leer por encima para captar la IDEA general.",
+              "'¿De qué trata este correo?'",
+              "Miras título, primera frase, palabras destacadas.",
+            ],
+          },
+          right: {
+            title: "Scanning (búsqueda)",
+            points: [
+              "Buscar un DATO concreto sin leer todo.",
+              "'¿A qué hora sale el tren?'",
+              "Tus ojos saltan a números, nombres, horas.",
+            ],
+          },
+          note: "No siempre hay que leer palabra por palabra.",
+        },
+      },
+      {
+        h: "Pistas del formato",
+        tldr: "La forma del texto ya te dice mucho.",
+        bullets: [
+          "Un correo tiene saludo, cuerpo y despedida.",
+          "Un anuncio destaca precio, fecha y oferta.",
+          "Un horario se lee en filas y columnas.",
+        ],
+        tip: "No busques cada palabra en el diccionario. Si el texto se entiende sin ella, sigue.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Quieres saber solo a qué hora abre una tienda. Usas…",
+        options: ["Skimming", "Scanning", "Leer todo palabra por palabra"],
+        answer: 1,
+        why: "Buscar un dato concreto (la hora) es scanning.",
+      },
+      {
+        kind: "choice",
+        q: "Quieres saber de qué trata un artículo en 10 segundos. Usas…",
+        options: ["Skimming", "Scanning", "Traducir el primer párrafo entero"],
+        answer: 0,
+        why: "Captar la idea general por encima es skimming.",
+      },
+      {
+        kind: "fill",
+        q: "En un correo, la parte final que se despide (Best regards, See you…) se llama la ___ .",
+        accept: ["despedida", "cierre", "closing", "firma"],
+        hint: "Lo contrario del saludo.",
+        why: "Es la despedida/cierre del correo.",
+      },
+    ],
+    activity: {
+      title: "Lee con propósito",
+      steps: [
+        "Busca un texto real corto en inglés (un menú, un anuncio, un horario).",
+        "Haz skimming: escribe en 1 frase de qué trata.",
+        "Haz scanning: encuentra 2 datos concretos (precio, hora, condición).",
+      ],
+    },
+    selfCheck: [
+      "Hago skimming para captar la idea general.",
+      "Hago scanning para encontrar un dato concreto.",
+      "Uso el formato del texto como pista.",
+    ],
+    summary: [
+      "Skimming = idea general; scanning = dato concreto.",
+      "El formato (correo, anuncio, horario) te orienta.",
+      "No necesitas cada palabra para entender.",
+    ],
+  },
+
+  "ora-cotidiana": {
+    intro:
+      "A2 es donde empiezas a 'defenderte': pedir en un café, comprar, preguntar direcciones, hacer planes. Son intercambios con un guion bastante predecible, y eso juega a tu favor.",
+    goal: "desenvolverte en situaciones cotidianas transaccionales.",
+    sections: [
+      {
+        h: "Situaciones con guion",
+        tldr: "Muchas conversaciones cotidianas siguen un patrón fijo.",
+        body: [
+          "En una cafetería, la interacción es casi siempre la misma. Si aprendes el guion, lo demás es cambiar palabras.",
+        ],
+        examples: [
+          { en: "— Can I have a coffee, please? — Sure. Anything else? — No, thanks. How much is it?", es: "Pedir en un café: pedir → ¿algo más? → no, gracias → ¿cuánto es?" },
+          { en: "Excuse me, how do I get to the station?", es: "Perdona, ¿cómo llego a la estación?" },
+        ],
+      },
+      {
+        h: "Gana tiempo y mantén el turno",
+        tldr: "No necesitas frases perfectas: necesitas seguir en la conversación.",
+        bullets: [
+          "Ganar tiempo: 'Well…', 'Let me think…', 'Uhm…'.",
+          "Pedir ayuda: 'Sorry, could you repeat that?'.",
+          "Confirmar: 'OK', 'Got it', 'That makes sense'.",
+        ],
+        tip: "Es mejor una frase corta y clara que quedarte callado buscando la perfecta. La fluidez se construye con bloques que ya dominas.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Quieres pedir direcciones educadamente. Empiezas con:",
+        options: ["Hey! Station?", "Excuse me, how do I get to…?", "Where station."],
+        answer: 1,
+        why: "'Excuse me, how do I get to…?' es claro y cortés.",
+      },
+      {
+        kind: "choice",
+        q: "No entendiste lo que te dijeron. Dices:",
+        options: ["Sorry, could you repeat that?", "Goodbye.", "Yes, of course."],
+        answer: 0,
+        why: "Pedir repetición mantiene viva la conversación.",
+      },
+      {
+        kind: "fill",
+        q: "Preguntar el precio: «How ___ is it?»",
+        accept: ["much"],
+        hint: "Para cantidades incontables/precio.",
+        why: "'How much is it?' = ¿Cuánto cuesta?",
+      },
+    ],
+    activity: {
+      title: "Role-play de café",
+      steps: [
+        "Escribe el guion de pedir algo en un café (4-6 turnos).",
+        "Represéntalo en voz alta haciendo los dos papeles.",
+        "Cámbialo a otra situación (comprar una entrada, pedir direcciones).",
+      ],
+    },
+    selfCheck: [
+      "Manejo el guion de situaciones cotidianas (café, tienda, direcciones).",
+      "Uso frases para ganar tiempo y pedir repetición.",
+      "Pregunto el precio y datos básicos con naturalidad.",
+    ],
+    summary: [
+      "Las conversaciones cotidianas siguen guiones predecibles.",
+      "Aprende el patrón y cambia solo las palabras.",
+      "Mantener el turno importa más que la perfección.",
+    ],
+  },
+
+  "esc-mensajes": {
+    intro:
+      "Escribir un mensaje o un correo simple es una de las cosas más útiles del A2. Lo importante no es solo la gramática: es el tono correcto según a quién escribes.",
+    goal: "escribir mensajes y correos simples con el registro adecuado.",
+    sections: [
+      {
+        h: "La estructura de un correo simple",
+        tldr: "Saludo → mensaje → despedida. Siempre.",
+        bullets: [
+          "Saludo: Hi Ana, / Hello, / Dear Mr Smith,",
+          "Cuerpo: 2-4 frases claras, una idea cada una.",
+          "Despedida: Best, / Thanks, / Kind regards,",
+        ],
+        examples: [
+          {
+            en: "Hi Tom,\nThanks for your message. I can meet on Friday at 5. See you then!\nBest,\nAna",
+            es: "Un correo informal completo: saludo, respuesta clara y despedida.",
+          },
+        ],
+      },
+      {
+        h: "Informal vs. formal",
+        tldr: "El mismo mensaje cambia de ropa según a quién va.",
+        compare: {
+          left: {
+            title: "Informal (amigos)",
+            points: ["Hi Sam! / Hey", "contracciones: I'm, can't", "Thanks! / See ya!"],
+          },
+          right: {
+            title: "Formal (trabajo, desconocidos)",
+            points: ["Dear Mr/Ms…", "sin contracciones: I am, cannot", "Kind regards, / Sincerely,"],
+          },
+          note: "Ante la duda, tira a algo neutro y educado.",
+        },
+        tip: "Empieza cada oración con mayúscula y termina con punto. La 'I' (yo) siempre va en mayúscula.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Escribes a un profesor que no conoces bien. Saludo apropiado:",
+        options: ["Hey!", "Dear Mr Smith,", "Yo,"],
+        answer: 1,
+        why: "En contexto formal se usa 'Dear + apellido'.",
+      },
+      {
+        kind: "choice",
+        q: "Despedida INFORMAL adecuada para un amigo:",
+        options: ["Yours sincerely,", "Best regards,", "Thanks! See you!"],
+        answer: 2,
+        why: "Con amigos, un cierre relajado ('Thanks! See you!') encaja.",
+      },
+      {
+        kind: "fill",
+        q: "Corrige la mayúscula del pronombre 'yo': «tomorrow ___ will call you.»",
+        accept: ["I"],
+        hint: "Siempre en mayúscula.",
+        why: "'I' se escribe siempre en mayúscula.",
+      },
+    ],
+    activity: {
+      title: "Dos versiones del mismo correo",
+      steps: [
+        "Escribe un correo corto invitando a alguien a un plan.",
+        "Haz una versión informal (para un amigo) y otra formal (para un compañero de trabajo).",
+        "Compara: ¿qué cambió en saludo, contracciones y despedida?",
+      ],
+    },
+    selfCheck: [
+      "Estructuro un correo: saludo, cuerpo, despedida.",
+      "Ajusto el registro (informal vs. formal).",
+      "Cuido mayúsculas, la 'I' y la puntuación.",
+    ],
+    summary: [
+      "Todo correo: saludo → mensaje claro → despedida.",
+      "El registro cambia según a quién escribes.",
+      "Neutro y educado es la apuesta segura.",
+    ],
+  },
+
+  "cul-normas": {
+    intro:
+      "Hablar bien no basta si rompes normas sociales sin querer. La cultura anglosajona valora la cortesía indirecta, el 'small talk' y ciertos hábitos que conviene conocer para no parecer brusco.",
+    goal: "comportarte de forma socialmente adecuada en interacciones cotidianas.",
+    sections: [
+      {
+        h: "La indirecta es cortesía",
+        tldr: "En inglés se pide 'de lado', no de frente.",
+        body: [
+          "Pedir algo de forma directa puede sonar a orden. Las formas indirectas suenan educadas y son la norma.",
+        ],
+        examples: [
+          { en: "Open the window. → Could you open the window, please?", es: "Abre la ventana → ¿Podrías abrir la ventana, por favor?" },
+          { en: "I want water. → Could I have some water, please?", es: "Quiero agua → ¿Me podrías dar agua, por favor?" },
+        ],
+      },
+      {
+        h: "Small talk y '¿cómo estás?'",
+        tldr: "Charlar de nada es parte del protocolo, no pérdida de tiempo.",
+        bullets: [
+          "'How are you?' suele ser un saludo: responde breve ('Good, thanks. You?').",
+          "El clima es un tema seguro para romper el hielo.",
+          "Gracias y 'please' se usan mucho más que en español.",
+        ],
+        tip: "Puntualidad, turnos de palabra y respetar la fila (queue) se valoran mucho en culturas anglosajonas.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Forma más apropiada de pedir ayuda a un desconocido:",
+        options: ["Help me.", "Could you help me, please?", "You, help."],
+        answer: 1,
+        why: "La forma indirecta con 'could' + 'please' es la cortés.",
+      },
+      {
+        kind: "choice",
+        q: "Alguien te saluda con «How are you?». Normalmente esperas:",
+        options: [
+          "Un relato largo de tus problemas",
+          "Una respuesta breve y devolver el saludo",
+          "Silencio",
+        ],
+        answer: 1,
+        why: "Suele ser un saludo social: 'Good, thanks. You?'.",
+      },
+      {
+        kind: "choice",
+        q: "Un tema seguro para 'small talk' con un desconocido es:",
+        options: ["Su salario", "El clima", "Su religión"],
+        answer: 1,
+        why: "El clima es neutro y universalmente aceptado para romper el hielo.",
+      },
+    ],
+    activity: {
+      title: "Suaviza y saluda",
+      steps: [
+        "Toma 3 peticiones directas y reescríbelas de forma indirecta y cortés.",
+        "Escribe un mini 'small talk' de 4 turnos empezando por el clima.",
+        "Practícalo en voz alta con tono amable.",
+      ],
+    },
+    selfCheck: [
+      "Uso formas indirectas para pedir cosas.",
+      "Respondo al 'How are you?' como saludo social.",
+      "Sé iniciar small talk con temas seguros.",
+    ],
+    summary: [
+      "La cortesía indirecta es la norma, no la excepción.",
+      "'How are you?' suele ser saludo, no pregunta literal.",
+      "Small talk, puntualidad y respetar la fila importan.",
+    ],
+  },
+
+  "flu-automatizar": {
+    intro:
+      "Saber una regla no es lo mismo que usarla sin pensar. La fluidez nace de automatizar bloques de lenguaje mediante repetición activa. La técnica estrella se llama shadowing.",
+    goal: "automatizar frases y sonar más natural y rápido al hablar.",
+    sections: [
+      {
+        h: "Habla en bloques, no palabra por palabra",
+        tldr: "Los nativos ensamblan trozos prefabricados ('chunks').",
+        body: [
+          "Frases como 'Do you know what I mean?' o 'I'd like to…' se dicen de un tirón. Aprenderlas enteras te hace más rápido que construirlas palabra por palabra.",
+        ],
+        examples: [
+          { en: "I'd like to…", es: "Me gustaría…", note: "Un bloque para pedir con cortesía." },
+          { en: "What do you think about…?", es: "¿Qué opinas de…?" },
+        ],
+      },
+      {
+        h: "Shadowing: imita como una sombra",
+        tldr: "Repite a la vez que el audio, copiando ritmo y entonación.",
+        bullets: [
+          "Escucha una frase corta y repítela imitando el sonido, no la ortografía.",
+          "Hazlo a la vez que el audio ('en sombra'), pisando su ritmo.",
+          "Repite la misma frase hasta que salga sin esfuerzo.",
+        ],
+        tip: "Copia la MÚSICA del idioma: dónde sube y baja la voz, qué palabras se acentúan. No solo los sonidos sueltos.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué es 'shadowing'?",
+        options: [
+          "Traducir un texto en voz alta",
+          "Repetir imitando el audio a la vez, copiando ritmo y entonación",
+          "Leer en silencio muchas veces",
+        ],
+        answer: 1,
+        why: "Shadowing = imitar el audio 'como una sombra', ritmo incluido.",
+      },
+      {
+        kind: "choice",
+        q: "Hablar en 'chunks' (bloques) te ayuda a…",
+        options: [
+          "Sonar más lento y cuidadoso",
+          "Ganar velocidad y naturalidad",
+          "Memorizar más reglas gramaticales",
+        ],
+        answer: 1,
+        why: "Los bloques prefabricados se dicen de un tirón: más fluidez.",
+      },
+    ],
+    activity: {
+      title: "Shadowing de 60 segundos",
+      steps: [
+        "Elige un clip de audio claro de 20-30 segundos con transcripción.",
+        "Escúchalo entero una vez. Luego repítelo 'en sombra' 3 veces imitando el ritmo.",
+        "Grábate y compara tu ritmo y entonación con el original.",
+      ],
+    },
+    selfCheck: [
+      "Aprendo y uso bloques de lenguaje ('chunks').",
+      "Practico shadowing copiando ritmo y entonación.",
+      "Digo mis frases habituales sin construirlas palabra por palabra.",
+    ],
+    summary: [
+      "La fluidez = automatizar bloques, no traducir en el momento.",
+      "Shadowing: imita el audio a la vez, con su música.",
+      "Copia ritmo y entonación, no solo los sonidos.",
+    ],
+  },
+
+  "hito-a2": {
+    intro:
+      "¡Segundo hito alcanzado! A2 significa que ya te 'defiendes' en situaciones cotidianas simples. Este nodo repasa e integra todo el nivel antes de dar el gran salto a B1 (la independencia).",
+    goal: "confirmar que dominas el nivel A2 antes de avanzar a B1.",
+    sections: [
+      {
+        h: "¿Qué puedes hacer ya? (descriptores CEFR A2)",
+        tldr: "Te desenvuelves en tareas sencillas y cotidianas.",
+        bullets: [
+          "Comprendes frases y expresiones frecuentes sobre temas cercanos (familia, compras, trabajo).",
+          "Te comunicas en tareas simples y habituales que requieren un intercambio directo de información.",
+          "Describes tu entorno, tu pasado y tus planes con frases sencillas.",
+        ],
+      },
+      {
+        h: "Repaso integrado",
+        tldr: "Antes de B1, comprueba que el nivel A2 está firme.",
+        body: [
+          "Los pilares del A2 son: pasado simple (regular/irregular, did), futuro (will vs going to), conectores, ~2000 palabras con colocaciones, acento léxico y desenvolverte en situaciones cotidianas.",
+        ],
+        tip: "Si algo aún cojea, vuelve a esa hoja del árbol. Un A2 firme hace que B1 —donde empiezas a ser independiente— sea mucho más llevadero.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Repaso pasado: ¿cuál es correcta?",
+        options: ["I didn't went.", "I didn't go.", "I don't went."],
+        answer: 1,
+        why: "did/didn't + verbo base: I didn't go.",
+      },
+      {
+        kind: "choice",
+        q: "«Look at the clouds! It ___ rain.»",
+        options: ["will", "is going to", "rains"],
+        answer: 1,
+        why: "Predicción con evidencia → going to.",
+      },
+      {
+        kind: "choice",
+        q: "«I was tired, ___ I went to bed.»",
+        options: ["because", "so", "but"],
+        answer: 1,
+        why: "Causa + resultado → 'so'.",
+      },
+      {
+        kind: "fill",
+        q: "Colocación correcta: «I need to ___ a decision.» (tomar)",
+        accept: ["make"],
+        hint: "make / do …",
+        why: "'make a decision' es la colocación estándar.",
+      },
+      {
+        kind: "choice",
+        q: "Acento del verbo 'record':",
+        options: ["REcord", "reCORD"],
+        answer: 1,
+        why: "Como verbo, el acento va al final: reCORD.",
+      },
+    ],
+    activity: {
+      title: "Autoevaluación A2",
+      steps: [
+        "Grábate 2 minutos contando qué hiciste ayer y qué planes tienes.",
+        "Escucha: ¿usaste pasado correcto, futuro adecuado y conectores?",
+        "Marca qué descriptores A2 dominas y cuáles repasar antes de B1.",
+      ],
+    },
+    selfCheck: [
+      "Cuento hechos pasados con el pasado simple.",
+      "Hablo de planes y predicciones con will/going to.",
+      "Uno ideas con conectores (because, so, but…).",
+      "Me desenvuelvo en situaciones cotidianas (compras, direcciones).",
+    ],
+    summary: [
+      "A2 = defenderte en lo cotidiano: pasado, futuro, conectores y ~2000 palabras.",
+      "Repasa los pilares antes de avanzar.",
+      "Un A2 firme hace de B1 (la independencia) un salto natural.",
+    ],
   },
 };
