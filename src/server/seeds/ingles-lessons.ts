@@ -2230,4 +2230,1088 @@ export const EN_LESSONS: Record<string, Lesson> = {
       "Un A2 firme hace de B1 (la independencia) un salto natural.",
     ],
   },
+
+  // ─────────────────────────────── B1 · núcleo ───────────────────────────────
+  "est-compensacion": {
+    intro:
+      "En B1 empiezas a ser independiente: quieres decir cosas más complejas de las que tu vocabulario permite. Las estrategias de compensación son los 'trucos' que usan los buenos aprendices para no callarse cuando les falta una palabra.",
+    goal: "seguir comunicando aunque no sepas la palabra exacta.",
+    sections: [
+      {
+        h: "Rodea la palabra que no sabes",
+        tldr: "Si no sabes la palabra, descríbela: no te quedes en silencio.",
+        body: [
+          "Un aprendiz de B1 no sabe todas las palabras, pero sabe salir del paso. La paráfrasis (explicar con otras palabras) es la estrategia número uno.",
+        ],
+        examples: [
+          { en: "I don't know the word… it's the thing you use to open a bottle.", es: "No sé la palabra… es la cosa que usas para abrir una botella (= corkscrew).", note: "Describes la función y te entienden." },
+          { en: "It's a kind of… / It's similar to… / It's used for…", es: "Es una especie de… / Es parecido a… / Sirve para…", note: "Fórmulas para rodear." },
+        ],
+      },
+      {
+        h: "Pide ayuda dentro de la conversación",
+        tldr: "El interlocutor es tu diccionario vivo.",
+        bullets: [
+          "'What's the word for…?' — pides la palabra que te falta.",
+          "'How do you say … in English?' — cuando la tienes en español.",
+          "'Sorry, do you mean…?' — confirmas que entendiste.",
+        ],
+        tip: "Los mejores aprendices no son los que más saben, sino los que más se atreven a comunicar con lo que tienen. Arriésgate.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Olvidaste la palabra 'umbrella'. ¿Qué haces?",
+        options: [
+          "Te callas hasta recordarla",
+          "La describes: 'the thing you use when it rains'",
+          "Cambias de idioma",
+        ],
+        answer: 1,
+        why: "Parafrasear (describir la función) mantiene viva la comunicación.",
+      },
+      {
+        kind: "choice",
+        q: "Necesitas una palabra que no sabes en inglés. Preguntas:",
+        options: ["What's the word for…?", "Goodbye.", "I don't understand."],
+        answer: 0,
+        why: "'What's the word for…?' pide justo la palabra que te falta.",
+      },
+    ],
+    activity: {
+      title: "Describe 5 objetos sin nombrarlos",
+      steps: [
+        "Elige 5 objetos cotidianos.",
+        "Descríbelos en inglés SIN decir su nombre (función, forma, uso).",
+        "Pide a alguien (o adivina tú) qué objeto es.",
+      ],
+    },
+    selfCheck: [
+      "Parafraseo cuando no sé una palabra.",
+      "Pido la palabra o una aclaración dentro de la conversación.",
+      "No me bloqueo ni cambio de idioma al primer obstáculo.",
+    ],
+    summary: [
+      "Comunicar > saberlo todo: rodea la palabra que falta.",
+      "Paráfrasis + pedir ayuda son tus dos herramientas.",
+      "Atreverte es lo que más acelera tu progreso.",
+    ],
+  },
+
+  "fon-ritmo": {
+    intro:
+      "El español es 'silábico' (cada sílaba dura casi lo mismo). El inglés es 'acentual': las sílabas fuertes marcan el ritmo y las débiles se comprimen. Entender esto es lo que hace que dejes de sonar 'a español' y empieces a entender el habla rápida.",
+    goal: "hablar y entender con el ritmo natural del inglés (habla conectada).",
+    sections: [
+      {
+        h: "El ritmo lo marcan las sílabas fuertes",
+        tldr: "Las palabras con significado suenan fuertes; el resto se aplasta.",
+        body: [
+          "En una frase, sustantivos, verbos y adjetivos se acentúan; artículos, preposiciones y auxiliares se debilitan. El tiempo entre golpes fuertes es casi constante.",
+        ],
+        examples: [
+          {
+            en: "I'll GO to the SHOP and BUY some BREAD.",
+            es: "Las mayúsculas marcan los golpes fuertes; lo demás se comprime.",
+          },
+        ],
+      },
+      {
+        h: "Formas débiles y encadenamiento (linking)",
+        tldr: "Las palabras se pegan y las funcionales se reducen.",
+        compare: {
+          left: {
+            title: "Forma fuerte (aislada)",
+            points: ["to /tuː/", "and /ænd/", "can /kæn/", "of /ɒv/"],
+          },
+          right: {
+            title: "Forma débil (en la frase)",
+            points: ["to /tə/", "and /ən/", "can /kən/", "of /əv/"],
+          },
+          note: "Por eso 'fish and chips' suena 'fish-en-chips'.",
+        },
+        more: [
+          "Linking consonante→vocal: 'an apple' suena 'a-napple'; 'turn it on' suena 'tur-ni-ton'.",
+          "No intentes pronunciar cada palabra por separado: el habla natural va encadenada.",
+        ],
+        tip: "Escuchar te resultará más fácil cuando ACEPTES que 'want to' suena 'wanna' y 'going to' suena 'gonna'. No es descuido: es el ritmo real.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En «I can SWIM», la palabra 'can' normalmente…",
+        options: ["Suena fuerte /kæn/", "Se reduce a /kən/", "Desaparece del todo"],
+        answer: 1,
+        why: "'can' afirmativo va en forma débil /kən/; el golpe fuerte es 'swim'.",
+      },
+      {
+        kind: "choice",
+        q: "¿Por qué 'an apple' suena como 'a-napple'?",
+        options: [
+          "Por un error de pronunciación",
+          "Por el encadenamiento (linking) consonante→vocal",
+          "Porque la 'n' es muda",
+        ],
+        answer: 1,
+        why: "La consonante final se une a la vocal siguiente: linking natural.",
+      },
+      {
+        kind: "choice",
+        q: "El ritmo del inglés se basa en…",
+        options: [
+          "Que cada sílaba dure lo mismo",
+          "Golpes en las sílabas fuertes, con las débiles comprimidas",
+          "Hablar siempre muy lento",
+        ],
+        answer: 1,
+        why: "El inglés es de ritmo acentual (stress-timed).",
+      },
+    ],
+    activity: {
+      title: "Golpea el ritmo",
+      steps: [
+        "Elige una frase de 8-10 palabras de un audio.",
+        "Da una palmada en cada sílaba FUERTE mientras la dices.",
+        "Comprime lo demás entre palmadas. Compara con el audio original.",
+      ],
+    },
+    selfCheck: [
+      "Acentúo las palabras de contenido y comprimo las funcionales.",
+      "Reconozco formas débiles (to /tə/, and /ən/, can /kən/).",
+      "Encadeno las palabras en vez de separarlas.",
+    ],
+    summary: [
+      "Inglés = ritmo acentual: golpes fuertes a intervalos regulares.",
+      "Las palabras funcionales se reducen (formas débiles).",
+      "El habla va encadenada: aceptar 'gonna/wanna' mejora tu escucha.",
+    ],
+  },
+
+  "voc-3000": {
+    intro:
+      "Alcanzar 3.000–4.000 familias de palabras es el umbral en que puedes leer y escuchar contenido nativo cómodo (cubre ~95% de un texto general). El foco ahora es la precisión: colocaciones, matices y palabras que se parecen pero engañan.",
+    goal: "manejar ~3-4k palabras con precisión de colocación y matiz.",
+    sections: [
+      {
+        h: "Colocaciones más finas",
+        tldr: "A este nivel importa la palabra EXACTA que acompaña.",
+        examples: [
+          { en: "heavy rain / strong wind", es: "lluvia fuerte / viento fuerte", note: "No 'strong rain' ni 'heavy wind'." },
+          { en: "make an effort · pay attention · take a risk", es: "hacer un esfuerzo · prestar atención · correr un riesgo" },
+        ],
+      },
+      {
+        h: "Falsos amigos (¡cuidado!)",
+        tldr: "Se parecen al español pero significan otra cosa.",
+        compare: {
+          left: {
+            title: "Parece… (español)",
+            points: ["actually ≠ actualmente", "library ≠ librería", "assist ≠ asistir a", "sensible ≠ sensible"],
+          },
+          right: {
+            title: "…pero significa (inglés)",
+            points: ["actually = en realidad", "library = biblioteca", "assist = ayudar", "sensible = sensato"],
+          },
+          note: "Actualmente = currently; librería = bookshop; asistir a = attend; sensible = sensitive.",
+        },
+        tip: "Cuando una palabra 'suena' a español, desconfía un segundo y comprueba: los falsos amigos son una fuente típica de errores en B1.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«There was ___ rain last night.» (mucha lluvia)",
+        options: ["strong", "heavy", "big"],
+        answer: 1,
+        why: "Colocación fija: 'heavy rain' (no 'strong rain').",
+      },
+      {
+        kind: "choice",
+        q: "'Actually' significa…",
+        options: ["actualmente", "en realidad", "actualizar"],
+        answer: 1,
+        why: "Falso amigo: 'actually' = en realidad. 'Actualmente' = currently.",
+      },
+      {
+        kind: "fill",
+        q: "«I go to the ___ to borrow books.» (biblioteca)",
+        accept: ["library"],
+        hint: "No es 'librería' (bookshop).",
+        why: "'library' = biblioteca. 'librería' = bookshop.",
+      },
+    ],
+    activity: {
+      title: "Cazador de colocaciones",
+      steps: [
+        "Lee un texto corto nativo (noticia, artículo).",
+        "Subraya 5 colocaciones (adjetivo+nombre, verbo+nombre).",
+        "Anótalas en tu SRS como bloque, no como palabras sueltas.",
+      ],
+    },
+    selfCheck: [
+      "Elijo la colocación exacta (heavy rain, make an effort).",
+      "Detecto falsos amigos antes de usarlos.",
+      "Aprendo vocabulario nuevo en bloques y con matiz.",
+    ],
+    summary: [
+      "3-4k palabras = leer/escuchar contenido nativo con comodidad.",
+      "La precisión de colocación distingue B1 de A2.",
+      "Ojo con los falsos amigos (actually, library, assist).",
+    ],
+  },
+
+  "gra-aspecto": {
+    intro:
+      "Aquí está el concepto que más cuesta a los hispanohablantes: cuándo usar el present perfect ('I have done') y cuándo el past simple ('I did'). En español los límites son otros, así que hay que reaprender la lógica, no traducir.",
+    goal: "distinguir present perfect de past simple sin traducir del español.",
+    sections: [
+      {
+        h: "La pregunta clave: ¿importa CUÁNDO?",
+        tldr: "Past simple = momento terminado; present perfect = conexión con el ahora.",
+        body: [
+          "Si el momento pasado está terminado y definido (yesterday, in 2019, last week), usas past simple. Si lo que importa es el resultado, la experiencia o un tiempo aún abierto, usas present perfect.",
+        ],
+        compare: {
+          left: {
+            title: "Past Simple — I did",
+            points: [
+              "Momento terminado y concreto",
+              "Señales: yesterday, ago, last week, in 2020",
+              "I saw her yesterday.",
+            ],
+          },
+          right: {
+            title: "Present Perfect — I have done",
+            points: [
+              "Experiencia / resultado / tiempo abierto",
+              "Señales: ever, never, just, already, yet, so far",
+              "I have seen that film. (en mi vida)",
+            ],
+          },
+          note: "Regla de oro: con tiempo terminado NUNCA uses present perfect.",
+        },
+      },
+      {
+        h: "for y since (desde cuándo)",
+        tldr: "El present perfect mide lo que empezó antes y sigue ahora.",
+        examples: [
+          { en: "I have lived here for five years.", es: "Vivo aquí desde hace cinco años (y sigo).", note: "for + duración." },
+          { en: "I have known her since 2018.", es: "La conozco desde 2018.", note: "since + punto de inicio." },
+        ],
+        more: [
+          "for + periodo (for two hours, for a long time); since + momento (since Monday, since I was a child).",
+          "Ojo: 'I live here since 2018' es un error típico; lo correcto es 'I have lived here since 2018'.",
+        ],
+        tip: "Error clásico: 'I have seen her yesterday'. Como 'yesterday' es tiempo terminado → 'I saw her yesterday'.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«I ___ to Paris in 2019.» (año terminado)",
+        options: ["have been", "went", "have gone"],
+        answer: 1,
+        why: "Tiempo terminado y concreto (in 2019) → past simple: went.",
+      },
+      {
+        kind: "choice",
+        q: "«___ you ever ___ sushi?» (experiencia en tu vida)",
+        options: ["Did / eat", "Have / eaten", "Do / eat"],
+        answer: 1,
+        why: "Experiencia sin tiempo concreto → present perfect: Have you ever eaten…?",
+      },
+      {
+        kind: "fill",
+        q: "Completa con for/since: «I've studied English ___ three years.»",
+        accept: ["for"],
+        hint: "¿duración o punto de inicio?",
+        why: "'for' + duración (three years).",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuál es correcta?",
+        options: [
+          "I have finished the report yesterday.",
+          "I finished the report yesterday.",
+          "I finish the report yesterday.",
+        ],
+        answer: 1,
+        why: "Con 'yesterday' (tiempo terminado) va past simple: I finished.",
+      },
+    ],
+    activity: {
+      title: "Tu vida vs. tu ayer",
+      steps: [
+        "Escribe 3 experiencias de tu vida con present perfect (I have…, ever/never).",
+        "Escribe 3 hechos concretos del pasado con past simple (ago, last…, in…).",
+        "Añade una frase con for y otra con since.",
+      ],
+    },
+    selfCheck: [
+      "Uso past simple con tiempos terminados (yesterday, in 2019).",
+      "Uso present perfect para experiencia/resultado/tiempo abierto.",
+      "Distingo for (duración) de since (punto de inicio).",
+      "No mezclo present perfect con expresiones de tiempo terminado.",
+    ],
+    summary: [
+      "¿El momento está terminado y definido? → past simple.",
+      "¿Cuenta la experiencia o el resultado ahora? → present perfect.",
+      "for + duración; since + punto de inicio.",
+      "Nunca present perfect + yesterday/ago/last.",
+    ],
+  },
+
+  "gra-condicional": {
+    intro:
+      "Los condicionales te dejan hablar de posibilidades, consecuencias e hipótesis: 'si pasa esto, pasa aquello'. Son una escalera de tres peldaños, de lo más real a lo más imaginario. Dominarlos multiplica lo que puedes expresar.",
+    goal: "expresar condiciones reales e hipotéticas con la estructura correcta.",
+    sections: [
+      {
+        h: "La escalera de los condicionales",
+        tldr: "Tres tipos según cuán real o imaginaria sea la condición.",
+        compare: {
+          left: {
+            title: "Cero y Primero (reales)",
+            points: [
+              "0: verdad general — If you heat ice, it melts.",
+              "1: futuro posible — If it rains, I will stay home.",
+              "Estructura 1: If + presente, will + base.",
+            ],
+          },
+          right: {
+            title: "Segundo (hipotético)",
+            points: [
+              "Imaginario/improbable — If I won the lottery, I would travel.",
+              "Estructura: If + pasado, would + base.",
+              "Presente o futuro irreal, no pasado real.",
+            ],
+          },
+          note: "Cuanto más 'atrás' pones el verbo, más irreal es la hipótesis.",
+        },
+      },
+      {
+        h: "Detalles que marcan la diferencia",
+        tldr: "El segundo condicional usa 'were' para todos y no lleva 'would' en el 'if'.",
+        examples: [
+          { en: "If I were you, I would apologize.", es: "Si yo fuera tú, me disculparía.", note: "'were' con todas las personas en el 2º condicional." },
+          { en: "If it rains, we will cancel. (real)  vs  If it rained, we would cancel. (hipotético)", es: "Compara la posibilidad real con la hipótesis." },
+        ],
+        more: [
+          "Nunca 'if' + would: se dice 'If I had money' (no 'If I would have').",
+          "La coma va cuando la frase empieza por 'if'; si va al final, sin coma: 'I would travel if I won the lottery.'",
+        ],
+        tip: "Piensa en la probabilidad: ¿puede pasar de verdad? → 1º condicional (will). ¿Es un sueño o improbable? → 2º condicional (would).",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«If it ___ tomorrow, we will cancel the trip.» (posible)",
+        options: ["rains", "rained", "will rain"],
+        answer: 0,
+        why: "1er condicional (real): If + presente, will + base.",
+      },
+      {
+        kind: "choice",
+        q: "«If I ___ rich, I would buy a house.» (hipótesis)",
+        options: ["am", "was/were", "will be"],
+        answer: 1,
+        why: "2º condicional: If + pasado (were/was), would + base. Se prefiere 'were'.",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuál es correcta?",
+        options: [
+          "If I would have time, I would help.",
+          "If I had time, I would help.",
+          "If I have time, I would help.",
+        ],
+        answer: 1,
+        why: "En el 'if' no va 'would': If I had time, I would help.",
+      },
+      {
+        kind: "fill",
+        q: "Verdad general (0 condicional): «If you heat water, it ___ .» (hervir)",
+        accept: ["boils"],
+        hint: "Presente simple, verdad de siempre.",
+        why: "Condicional cero: If + presente, presente.",
+      },
+    ],
+    activity: {
+      title: "Real vs. sueño",
+      steps: [
+        "Escribe 2 planes reales para esta semana con 1er condicional (If…, will).",
+        "Escribe 2 hipótesis imaginarias con 2º condicional (If…, would).",
+        "Escribe 1 frase con 'If I were you…' dando un consejo.",
+      ],
+    },
+    selfCheck: [
+      "Uso el 1er condicional para posibilidades reales (will).",
+      "Uso el 2º condicional para hipótesis (would + pasado).",
+      "Digo 'If I were you' y evito 'if + would'.",
+      "Coloco la coma según el orden de la frase.",
+    ],
+    summary: [
+      "0 = verdad general; 1 = futuro posible (will); 2 = hipótesis (would).",
+      "Más 'atrás' el verbo = más irreal.",
+      "En el 'if' nunca va 'would'; usa 'were' para todos en el 2º.",
+    ],
+  },
+
+  "gra-subordinacion": {
+    intro:
+      "Para que tus frases dejen de ser cortas y sueltas, necesitas unirlas con oraciones de relativo ('the man WHO called', 'the city WHERE I live'). Añaden información sin empezar una frase nueva y suben tu nivel de inmediato.",
+    goal: "unir ideas con oraciones de relativo (who, which, that, where, whose).",
+    sections: [
+      {
+        h: "Los pronombres relativos",
+        tldr: "Cada uno introduce información sobre un tipo de palabra.",
+        bullets: [
+          "who → personas · which → cosas · that → personas o cosas (informal)",
+          "where → lugares · when → tiempos · whose → posesión (cuyo)",
+        ],
+        examples: [
+          { en: "The woman who lives next door is a doctor.", es: "La mujer que vive al lado es doctora." },
+          { en: "This is the house where I grew up.", es: "Esta es la casa donde crecí." },
+          { en: "That's the student whose project won.", es: "Ese es el estudiante cuyo proyecto ganó." },
+        ],
+      },
+      {
+        h: "Especificativas vs. explicativas (¡la coma cambia todo!)",
+        tldr: "Sin comas: información esencial. Con comas: información extra.",
+        compare: {
+          left: {
+            title: "Especificativa (sin comas)",
+            points: [
+              "Identifica de cuál hablas: es esencial.",
+              "Admite 'that' y se puede omitir si es objeto.",
+              "The book that I bought is great.",
+            ],
+          },
+          right: {
+            title: "Explicativa (con comas)",
+            points: [
+              "Añade un dato extra que puedes quitar.",
+              "NO admite 'that'; no se omite el pronombre.",
+              "My brother, who lives in Paris, is a chef.",
+            ],
+          },
+          note: "Prueba: si puedes quitar la parte y la frase sigue teniendo sentido, van comas.",
+        },
+        more: [
+          "En especificativas de objeto, el relativo se puede omitir: 'The book (that) I bought'.",
+          "En explicativas nunca se usa 'that' ni se omite el pronombre.",
+        ],
+        tip: "Piensa la coma como un paréntesis: si la información es un 'por cierto…', va entre comas (explicativa).",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«The man ___ called you is my boss.» (persona)",
+        options: ["which", "who", "where"],
+        answer: 1,
+        why: "Para personas se usa 'who' (o 'that' informal).",
+      },
+      {
+        kind: "choice",
+        q: "«This is the restaurant ___ we met.» (lugar)",
+        options: ["which", "who", "where"],
+        answer: 2,
+        why: "Para lugares se usa 'where'.",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuál es una explicativa correcta (información extra)?",
+        options: [
+          "My mother that is a nurse works nights.",
+          "My mother, who is a nurse, works nights.",
+          "My mother who is a nurse, works nights.",
+        ],
+        answer: 1,
+        why: "Explicativa: comas a ambos lados y 'who' (nunca 'that').",
+      },
+      {
+        kind: "fill",
+        q: "Posesión: «She's the writer ___ books I love.» (cuyo/cuya)",
+        accept: ["whose"],
+        hint: "Relativo de posesión.",
+        why: "'whose' = cuyo/cuya (posesión).",
+      },
+    ],
+    activity: {
+      title: "Une con relativas",
+      steps: [
+        "Escribe 4 pares de frases donde la segunda describa algo de la primera.",
+        "Únelas con who/which/that/where/whose.",
+        "Marca cuáles son especificativas (sin comas) y cuáles explicativas (con comas).",
+      ],
+    },
+    selfCheck: [
+      "Elijo el relativo correcto (who/which/that/where/whose).",
+      "Distingo especificativas (sin comas) de explicativas (con comas).",
+      "Omito el relativo objeto en especificativas cuando procede.",
+      "No uso 'that' en las explicativas.",
+    ],
+    summary: [
+      "Relativos: who (personas), which (cosas), that (ambos), where (lugares), whose (posesión).",
+      "Sin comas = esencial; con comas = información extra.",
+      "En explicativas, nunca 'that' ni omisión del pronombre.",
+    ],
+  },
+
+  "aud-podcasts": {
+    intro:
+      "En B1 tu escucha da un salto: de audio hecho para estudiantes a audio graduado y podcasts para aprendices intermedios, y de ahí hacia contenido más natural. La estrategia cambia: ya no cazas datos sueltos, sigues un hilo largo.",
+    goal: "seguir el hilo de audio graduado y podcasts para nivel intermedio.",
+    sections: [
+      {
+        h: "De escucha intensiva a extensiva",
+        tldr: "Combina escuchar mucho (por placer) con escuchar a fondo (para aprender).",
+        compare: {
+          left: {
+            title: "Extensiva (cantidad)",
+            points: [
+              "Mucho input agradable, sin parar.",
+              "Entrenas el oído y el ritmo.",
+              "No pasa nada si pierdes detalles.",
+            ],
+          },
+          right: {
+            title: "Intensiva (profundidad)",
+            points: [
+              "Un fragmento corto, a fondo.",
+              "Con transcripción, repitiendo.",
+              "Anotas y aprendes lo nuevo.",
+            ],
+          },
+          note: "Ambas se complementan: volumen + precisión.",
+        },
+      },
+      {
+        h: "Cómo elegir el nivel correcto",
+        tldr: "Debe costarte un poco, no ahogarte (input i+1).",
+        bullets: [
+          "Empieza con podcasts para aprendices (velocidad y vocabulario controlados).",
+          "Sube cuando entiendas ~80% sin transcripción.",
+          "Reescucha: la 2ª y 3ª vez entiendes mucho más.",
+        ],
+        tip: "Escucha sobre temas que YA conoces: el conocimiento previo rellena los huecos de idioma.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "La escucha 'extensiva' consiste en…",
+        options: [
+          "Analizar un fragmento corto con transcripción",
+          "Escuchar mucho contenido agradable sin obsesionarte con los detalles",
+          "Memorizar diálogos",
+        ],
+        answer: 1,
+        why: "Extensiva = volumen de input agradable; entrena oído y ritmo.",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuándo subir de nivel de podcast?",
+        options: [
+          "Cuando entiendes el 100% sin esfuerzo",
+          "Cuando entiendes ~80% sin transcripción",
+          "Cuando no entiendes casi nada, para forzarte",
+        ],
+        answer: 1,
+        why: "El nivel ideal (i+1) te reta un poco; ~80% de comprensión es buena señal.",
+      },
+    ],
+    activity: {
+      title: "Un podcast, dos escuchas",
+      steps: [
+        "Elige un episodio corto de un podcast para aprendices intermedios.",
+        "Escúchalo entero una vez por placer (extensiva).",
+        "Vuelve a un minuto con transcripción y anota 5 expresiones nuevas (intensiva).",
+      ],
+    },
+    selfCheck: [
+      "Combino escucha extensiva e intensiva.",
+      "Elijo material que me reta sin ahogarme (~80% comprensible).",
+      "Sigo el hilo de un audio largo sin traducir.",
+    ],
+    summary: [
+      "Extensiva (cantidad) + intensiva (profundidad) se complementan.",
+      "Elige nivel i+1: te cuesta un poco, no te ahoga.",
+      "El tema conocido rellena los huecos de idioma.",
+    ],
+  },
+
+  "lec-extensiva": {
+    intro:
+      "La lectura extensiva —leer mucho y fácil, por placer— es una de las herramientas más potentes y subestimadas para adquirir vocabulario y gramática de forma natural. En B1, los graded readers son tu mejor aliado.",
+    goal: "leer libros graduados con fluidez y disfrute, adquiriendo lengua sin esfuerzo consciente.",
+    sections: [
+      {
+        h: "Leer fácil, leer mucho",
+        tldr: "El secreto no es leer difícil, sino leer mucho y cómodo.",
+        body: [
+          "Si en una página hay más de 2-3 palabras que no entiendes, el libro es demasiado difícil para lectura extensiva. Baja de nivel: el objetivo es fluidez, no sufrimiento.",
+        ],
+        examples: [
+          { en: "Graded readers", es: "Libros adaptados por niveles (A1, A2, B1…), ideales para leer sin diccionario." },
+        ],
+      },
+      {
+        h: "No traduzcas, no pares",
+        tldr: "Deduce por contexto y sigue avanzando.",
+        bullets: [
+          "Elige temas que te enganchen: la motivación sostiene el hábito.",
+          "Usa el diccionario solo si la palabra se repite y bloquea el sentido.",
+          "Lee un poco cada día: el volumen es lo que hace el efecto.",
+        ],
+        tip: "La lectura extensiva funciona porque ves las palabras frecuentes muchísimas veces en contexto real: eso fija el significado mejor que memorizar listas.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Para lectura extensiva, un libro es adecuado si por página hay…",
+        options: [
+          "10-15 palabras nuevas",
+          "2-3 palabras nuevas como mucho",
+          "Ninguna palabra nueva jamás",
+        ],
+        answer: 1,
+        why: "Con 2-3 palabras nuevas por página lees con fluidez y aún aprendes.",
+      },
+      {
+        kind: "choice",
+        q: "Encuentras una palabra desconocida. Lo ideal en lectura extensiva es:",
+        options: [
+          "Parar y buscarla siempre",
+          "Deducir por contexto y seguir (buscarla solo si se repite y bloquea)",
+          "Abandonar el libro",
+        ],
+        answer: 1,
+        why: "Mantener el flujo y deducir es la esencia de la lectura extensiva.",
+      },
+    ],
+    activity: {
+      title: "Empieza un graded reader",
+      steps: [
+        "Elige un graded reader de tu nivel (o uno por debajo) sobre un tema que te guste.",
+        "Lee 15 minutos sin diccionario, deduciendo por contexto.",
+        "Al terminar, anota solo 3 palabras que se repitieron y te parecieron útiles.",
+      ],
+    },
+    selfCheck: [
+      "Elijo lecturas fáciles y agradables (pocas palabras nuevas).",
+      "Deduzco por contexto sin parar a traducir.",
+      "Mantengo un hábito de lectura diaria.",
+    ],
+    summary: [
+      "Lee mucho y fácil: el volumen adquiere lengua sin esfuerzo consciente.",
+      "2-3 palabras nuevas por página es el punto justo.",
+      "No traduzcas ni pares: deduce y disfruta.",
+    ],
+  },
+
+  "ora-narrar": {
+    intro:
+      "El aprendiz B1 ya no solo responde: cuenta. Narrar una experiencia, una anécdota o una película exige encadenar hechos en el tiempo con soltura. Es donde tu habla empieza a sonar 'de verdad'.",
+    goal: "narrar experiencias y contar historias con secuencia y tiempos correctos.",
+    sections: [
+      {
+        h: "Ordena los hechos en el tiempo",
+        tldr: "Los conectores de secuencia guían al que escucha.",
+        bullets: [
+          "First / Then / After that / Later / Finally — para ordenar.",
+          "One day… / Suddenly… / In the end… — para dar vida a la anécdota.",
+        ],
+        examples: [
+          { en: "First we arrived, then we had lunch, and after that we explored the city.", es: "Primero llegamos, luego comimos y después exploramos la ciudad." },
+        ],
+      },
+      {
+        h: "Pasado + fondo: simple vs. continuo",
+        tldr: "El pasado continuo pinta el 'decorado'; el simple, la acción.",
+        compare: {
+          left: {
+            title: "Past continuous (fondo)",
+            points: [
+              "La escena en marcha: It was raining…",
+              "Acción larga interrumpida: I was cooking when…",
+            ],
+          },
+          right: {
+            title: "Past simple (acción)",
+            points: [
+              "El hecho puntual: …the phone rang.",
+              "Secuencia de acciones: I opened, I saw, I left.",
+            ],
+          },
+          note: "«I was walking home when I saw an old friend.» — fondo + acción.",
+        },
+        tip: "Cuenta primero, corrige después. Si te paras a pulir cada verbo, pierdes el hilo. La fluidez narrativa se entrena narrando.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«I ___ (walk) home when it started to rain.» (fondo en marcha)",
+        options: ["walked", "was walking", "walk"],
+        answer: 1,
+        why: "Acción de fondo en curso → pasado continuo: was walking.",
+      },
+      {
+        kind: "choice",
+        q: "Conector para CERRAR una historia:",
+        options: ["First", "Suddenly", "In the end"],
+        answer: 2,
+        why: "'In the end' / 'Finally' cierran la narración.",
+      },
+      {
+        kind: "fill",
+        q: "«I was reading when the phone ___ (ring).» (acción puntual)",
+        accept: ["rang"],
+        hint: "Irregular, past simple.",
+        why: "La acción puntual que interrumpe va en past simple: rang.",
+      },
+    ],
+    activity: {
+      title: "Cuenta una anécdota",
+      steps: [
+        "Piensa en algo que te pasó (gracioso, raro, memorable).",
+        "Cuéntalo en voz alta en 1 minuto usando conectores de secuencia.",
+        "Incluye al menos una frase con 'was/were + -ing' + past simple (fondo + acción).",
+      ],
+    },
+    selfCheck: [
+      "Ordeno los hechos con conectores de secuencia.",
+      "Combino pasado continuo (fondo) y simple (acción).",
+      "Narro una experiencia de 1 minuto sin bloquearme.",
+    ],
+    summary: [
+      "Secuencia: first / then / after that / finally.",
+      "Continuo = decorado; simple = acción y secuencia.",
+      "Narra fluido primero; pule después.",
+    ],
+  },
+
+  "esc-textos": {
+    intro:
+      "Escribir en B1 es producir textos conectados y con estructura: un correo de opinión, una reseña, una carta. Ya no son frases sueltas: es un texto con introducción, desarrollo y cierre que se sostiene solo.",
+    goal: "escribir textos conectados de opinión con estructura clara.",
+    sections: [
+      {
+        h: "Estructura de párrafos",
+        tldr: "Un texto claro tiene principio, cuerpo y final.",
+        bullets: [
+          "Introducción: presenta el tema y tu postura.",
+          "Cuerpo: una idea por párrafo, con ejemplos o razones.",
+          "Conclusión: resume y cierra.",
+        ],
+      },
+      {
+        h: "Conectores de discurso",
+        tldr: "Guían al lector por tu razonamiento.",
+        examples: [
+          { en: "In my opinion, … / I think that…", es: "Para introducir tu postura." },
+          { en: "For example, … / For instance, …", es: "Para ejemplificar." },
+          { en: "However, … / On the other hand, …", es: "Para contrastar." },
+          { en: "In conclusion, … / To sum up, …", es: "Para cerrar." },
+        ],
+        more: [
+          "No empieces frases con 'And'/'But' en textos formales: usa 'In addition' / 'However'.",
+          "Varía los conectores: repetir 'also' cinco veces empobrece el texto.",
+        ],
+        tip: "Antes de escribir, haz un mini-esquema de 3 puntos. Un texto planificado se lee mucho mejor que uno improvisado.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Conector para INTRODUCIR un ejemplo:",
+        options: ["However", "For example", "In conclusion"],
+        answer: 1,
+        why: "'For example / For instance' introducen ejemplos.",
+      },
+      {
+        kind: "choice",
+        q: "Conector para CONTRASTAR dos ideas:",
+        options: ["Therefore", "However", "Firstly"],
+        answer: 1,
+        why: "'However / On the other hand' marcan contraste.",
+      },
+      {
+        kind: "fill",
+        q: "Para cerrar un texto de opinión: «___ conclusion, …» (en)",
+        accept: ["in"],
+        hint: "In ___ conclusion.",
+        why: "'In conclusion' cierra el texto.",
+      },
+    ],
+    activity: {
+      title: "Texto de opinión (120 palabras)",
+      steps: [
+        "Elige un tema polémico simple (¿mascotas en el trabajo? ¿colegio en casa?).",
+        "Haz un esquema: intro (postura), 2 razones con ejemplo, conclusión.",
+        "Escríbelo usando al menos 4 conectores de discurso distintos.",
+      ],
+    },
+    selfCheck: [
+      "Estructuro el texto en introducción, cuerpo y conclusión.",
+      "Uso conectores de discurso variados (however, for example, in conclusion).",
+      "Planifico con un esquema antes de escribir.",
+    ],
+    summary: [
+      "Texto = introducción + cuerpo (una idea por párrafo) + conclusión.",
+      "Los conectores de discurso guían al lector.",
+      "Planificar en 3 puntos mejora cualquier texto.",
+    ],
+  },
+
+  "cul-registro": {
+    intro:
+      "En B1 ya no basta con ser correcto: hay que ser adecuado. El mismo mensaje se dice distinto a un amigo, a un jefe o en un examen. Elegir el registro correcto es una competencia tan importante como la gramática.",
+    goal: "adaptar el registro (formal/informal) al contexto y al interlocutor.",
+    sections: [
+      {
+        h: "Formal, neutro e informal",
+        tldr: "Cambian el vocabulario, las contracciones y las fórmulas.",
+        compare: {
+          left: {
+            title: "Informal",
+            points: [
+              "Contracciones: I'm, don't, wanna",
+              "Phrasal verbs: find out, put off",
+              "Kids, stuff, guys",
+            ],
+          },
+          right: {
+            title: "Formal",
+            points: [
+              "Formas completas: I am, do not",
+              "Verbos latinos: discover, postpone",
+              "Children, items, colleagues",
+            ],
+          },
+          note: "Muchos phrasal verbs tienen un equivalente formal de una palabra.",
+        },
+      },
+      {
+        h: "Cortesía indirecta según el contexto",
+        tldr: "Cuanto más formal o delicado, más indirecto.",
+        examples: [
+          { en: "Give me the report. → Could you send me the report when you have a moment?", es: "Directo → cortés y adecuado en el trabajo." },
+          { en: "I want to complain. → I'm afraid I'd like to make a complaint.", es: "Suavizar con 'I'm afraid' / 'I'd like to'." },
+        ],
+        tip: "Ante la duda con un desconocido o en el trabajo, tira a neutro-formal: es más fácil relajar el tono después que recuperar una mala primera impresión.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Versión FORMAL de 'find out':",
+        options: ["get", "discover", "check out"],
+        answer: 1,
+        why: "'discover' es el equivalente formal de 'find out'.",
+      },
+      {
+        kind: "choice",
+        q: "Escribes a un cliente. ¿Qué frase es adecuada?",
+        options: [
+          "Send me the money ASAP.",
+          "Could you please process the payment when possible?",
+          "Gimme the cash.",
+        ],
+        answer: 1,
+        why: "Registro formal + cortesía indirecta: 'Could you please…?'.",
+      },
+      {
+        kind: "choice",
+        q: "Versión FORMAL de 'postpone the meeting' frente a 'put off':",
+        options: ["put off = formal", "postpone = formal", "son idénticos en registro"],
+        answer: 1,
+        why: "'postpone' es formal; 'put off' es el phrasal informal.",
+      },
+    ],
+    activity: {
+      title: "Sube y baja el registro",
+      steps: [
+        "Escribe un mensaje informal a un amigo pidiéndole un favor.",
+        "Reescríbelo en versión formal para un compañero de trabajo.",
+        "Marca qué cambiaste: contracciones, phrasal verbs, fórmulas de cortesía.",
+      ],
+    },
+    selfCheck: [
+      "Reconozco vocabulario informal vs. formal.",
+      "Sustituyo phrasal verbs por su equivalente formal cuando conviene.",
+      "Ajusto la cortesía a la formalidad del contexto.",
+    ],
+    summary: [
+      "Ser correcto no basta: hay que ser adecuado.",
+      "Formal ↔ informal cambia vocabulario, contracciones y fórmulas.",
+      "Con desconocidos o en el trabajo, tira a neutro-formal.",
+    ],
+  },
+
+  "flu-conversacional": {
+    intro:
+      "La fluidez conversacional no es hablar rápido: es mantener una conversación sin bloqueos, con reacciones naturales y sin traducir en tu cabeza. En B1 empiezas a sentir que 'sigues el ritmo' de una charla real.",
+    goal: "mantener una conversación fluida reaccionando de forma natural.",
+    sections: [
+      {
+        h: "Reacciona, no solo respondas",
+        tldr: "Las respuestas cortas y las reacciones mantienen viva la charla.",
+        examples: [
+          { en: "Really? / That's great! / Oh no! / Me too. / So do I.", es: "Reacciones que muestran que escuchas y devuelven energía." },
+          { en: "— I love jazz. — Do you? So do I!", es: "Respuestas eco (do you? / so do I) suenan muy naturales." },
+        ],
+      },
+      {
+        h: "Fillers: ganar tiempo sin callarte",
+        tldr: "Pequeñas muletillas te dan un segundo para pensar en inglés.",
+        bullets: [
+          "Well… / You know… / Let me think… / Actually…",
+          "I mean… — para reformular lo que acabas de decir.",
+          "…, right? / …, you know? — para mantener el contacto.",
+        ],
+        more: [
+          "Los fillers son naturales y los usan los nativos: no son 'errores'.",
+          "Abusar de ellos suena inseguro; úsalos para respirar, no en cada frase.",
+        ],
+        tip: "Deja de traducir del español: piensa en bloques que ya dominas y lánzalos. La fluidez es un hábito, y se entrena hablando mucho, no estudiando más gramática.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "— «I went to Japan last year.» Reacción natural:",
+        options: ["Yes.", "Oh really? That's amazing!", "I don't understand."],
+        answer: 1,
+        why: "Una reacción ('Oh really? That's amazing!') muestra interés y da fluidez.",
+      },
+      {
+        kind: "choice",
+        q: "— «I love coffee.» — «___ I!» (yo también)",
+        options: ["So do", "So am", "Too do"],
+        answer: 0,
+        why: "'So do I' = yo también (con verbos que usan 'do').",
+      },
+      {
+        kind: "choice",
+        q: "Los 'fillers' (well…, you know…) sirven para…",
+        options: [
+          "Rellenar sin decir nada útil, y son errores",
+          "Ganar un segundo para pensar sin cortar la conversación",
+          "Sonar más formal",
+        ],
+        answer: 1,
+        why: "Son naturales y te dan tiempo para pensar en inglés sin quedarte mudo.",
+      },
+    ],
+    activity: {
+      title: "Charla de 3 minutos",
+      steps: [
+        "Elige un tema cotidiano y habla (contigo mismo o con alguien) 3 minutos sin parar.",
+        "Usa al menos 3 reacciones (Really? / Me too / That's great) y 2 fillers.",
+        "No te pares a corregir: el objetivo es no bloquearte.",
+      ],
+    },
+    selfCheck: [
+      "Reacciono a lo que oigo (Really?, Me too, So do I).",
+      "Uso fillers para ganar tiempo sin bloquearme.",
+      "Mantengo una charla sin traducir en mi cabeza.",
+    ],
+    summary: [
+      "Fluidez = no bloquearse, no hablar rápido.",
+      "Reacciona y usa respuestas eco (So do I).",
+      "Los fillers son naturales: úsalos para respirar.",
+    ],
+  },
+
+  "hito-b1": {
+    intro:
+      "¡Tercer hito: la independencia! B1 significa que puedes desenvolverte solo en la mayoría de situaciones de viaje, entender textos y charlas sobre temas conocidos, y expresar experiencias, opiniones y planes. Este nodo integra y confirma todo el nivel.",
+    goal: "confirmar que eres un usuario independiente antes de dar el salto a B2.",
+    sections: [
+      {
+        h: "¿Qué puedes hacer ya? (descriptores CEFR B1)",
+        tldr: "Eres un usuario independiente en contextos conocidos.",
+        bullets: [
+          "Comprendes las ideas principales de textos claros sobre temas conocidos (trabajo, estudio, ocio).",
+          "Te desenvuelves en la mayoría de situaciones de un viaje.",
+          "Produces textos sencillos y coherentes; narras experiencias, planes y opiniones y das razones breves.",
+        ],
+      },
+      {
+        h: "Repaso integrado",
+        tldr: "Antes de B2, comprueba que los pilares de B1 están firmes.",
+        body: [
+          "Los pilares del B1 son: present perfect vs past simple, los condicionales (0/1/2), las oraciones de relativo, ~3-4k palabras con matiz, el ritmo del inglés y narrar/opinar con soltura.",
+        ],
+        tip: "El salto a B2 es sobre todo de MATIZ y naturalidad. Un B1 firme —especialmente el aspecto perfecto y los condicionales— hace que B2 sea cuestión de pulir, no de reaprender.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Repaso aspecto: «I ___ Tokyo three times.» (experiencia)",
+        options: ["visited", "have visited", "was visiting"],
+        answer: 1,
+        why: "Experiencia sin tiempo concreto → present perfect: have visited.",
+      },
+      {
+        kind: "choice",
+        q: "Condicional: «If I ___ more time, I would learn piano.»",
+        options: ["have", "had", "will have"],
+        answer: 1,
+        why: "2º condicional (hipótesis): If + pasado, would + base.",
+      },
+      {
+        kind: "choice",
+        q: "Relativa: «The city ___ I was born is small.»",
+        options: ["which", "where", "who"],
+        answer: 1,
+        why: "Para lugares se usa 'where'.",
+      },
+      {
+        kind: "fill",
+        q: "for/since: «I've known him ___ 2015.»",
+        accept: ["since"],
+        hint: "¿punto de inicio o duración?",
+        why: "'since' + punto de inicio (2015).",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuál es correcta?",
+        options: [
+          "I have seen her last week.",
+          "I saw her last week.",
+          "I seen her last week.",
+        ],
+        answer: 1,
+        why: "Con 'last week' (tiempo terminado) → past simple: I saw her.",
+      },
+    ],
+    activity: {
+      title: "Autoevaluación B1",
+      steps: [
+        "Grábate 3 minutos: cuenta una experiencia (present perfect + past simple) y una hipótesis (2º condicional).",
+        "Escucha: ¿usaste bien el aspecto, los condicionales y alguna relativa?",
+        "Marca qué descriptores B1 dominas y cuáles repasar antes de B2.",
+      ],
+    },
+    selfCheck: [
+      "Distingo present perfect de past simple con seguridad.",
+      "Manejo los condicionales 0, 1 y 2.",
+      "Uso oraciones de relativo para dar detalle.",
+      "Narro, opino y doy razones con soltura.",
+    ],
+    summary: [
+      "B1 = independencia: te desenvuelves solo en temas conocidos.",
+      "Pilares: aspecto perfecto, condicionales, relativas, ~3-4k palabras.",
+      "B2 será pulir el matiz, no reaprender: llega con un B1 firme.",
+    ],
+  },
 };
