@@ -3314,4 +3314,2021 @@ export const EN_LESSONS: Record<string, Lesson> = {
       "B2 será pulir el matiz, no reaprender: llega con un B1 firme.",
     ],
   },
+
+  // ─────────────────────────────── B2 · fluidez funcional ───────────────────
+  "fon-entonacion": {
+    intro:
+      "La entonación es la melodía de la frase, y comunica tanto como las palabras. La misma frase, con distinta música, suena sincera, sarcástica, dudosa o cortante. En B2 empiezas a controlar esa capa.",
+    goal: "usar la entonación para transmitir actitud e intención, no solo información.",
+    sections: [
+      {
+        h: "Dos melodías básicas: sube o baja",
+        tldr: "La voz que baja cierra; la que sube abre o pregunta.",
+        compare: {
+          left: {
+            title: "Entonación descendente ↓",
+            points: [
+              "Afirmaciones seguras: I live in Madrid. ↓",
+              "Preguntas wh-: Where do you live? ↓",
+              "Suena firme, concluido.",
+            ],
+          },
+          right: {
+            title: "Entonación ascendente ↑",
+            points: [
+              "Preguntas de sí/no: Do you live here? ↑",
+              "Duda o cortesía: I'm not sure… ↑",
+              "Suena abierto, tentativo.",
+            ],
+          },
+          note: "Una entonación plana suena aburrida o brusca; varía la melodía.",
+        },
+      },
+      {
+        h: "Question tags: la melodía cambia el sentido",
+        tldr: "El mismo tag es pregunta real o busca acuerdo según suba o baje.",
+        examples: [
+          { en: "It's cold, isn't it? ↓", es: "Hace frío, ¿verdad? (no espero respuesta: busco acuerdo)." },
+          { en: "You locked the door, didn't you? ↑", es: "Cerraste la puerta, ¿no? (pregunta real, hay duda)." },
+        ],
+        tip: "Copia la entonación de series y podcasts imitando en voz alta (shadowing). La melodía se pega más por imitación que por reglas.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«Where do you work?» suele terminar con entonación…",
+        options: ["ascendente ↑", "descendente ↓", "plana"],
+        answer: 1,
+        why: "Las preguntas con wh- (información) suelen bajar al final.",
+      },
+      {
+        kind: "choice",
+        q: "«Do you like it?» (sí/no) suele terminar con entonación…",
+        options: ["ascendente ↑", "descendente ↓", "plana"],
+        answer: 0,
+        why: "Las preguntas de sí/no suelen subir al final.",
+      },
+      {
+        kind: "choice",
+        q: "«Nice weather, isn't it?» con tag descendente ↓ significa que…",
+        options: [
+          "Realmente dudas del tiempo que hace",
+          "Buscas acuerdo, no una respuesta",
+          "Estás enfadado",
+        ],
+        answer: 1,
+        why: "El tag descendente busca confirmación/acuerdo, no información nueva.",
+      },
+    ],
+    activity: {
+      title: "Una frase, tres actitudes",
+      steps: [
+        "Elige una frase neutra (p. ej. 'You did that.').",
+        "Dila y grábate tres veces: como afirmación segura, como pregunta incrédula y con sarcasmo.",
+        "Escúchate: ¿la melodía cambia el significado?",
+      ],
+    },
+    selfCheck: [
+      "Bajo la voz en afirmaciones y preguntas wh-.",
+      "Subo la voz en preguntas de sí/no y al dudar.",
+      "Uso los question tags con la melodía adecuada.",
+    ],
+    summary: [
+      "La entonación comunica actitud, no solo palabras.",
+      "Baja ↓ = cierre/seguridad; sube ↑ = apertura/pregunta.",
+      "El tag sube (pregunta real) o baja (busca acuerdo).",
+    ],
+  },
+
+  "voc-5000": {
+    intro:
+      "Cruzar las ~5000 palabras es entrar en el terreno de las expresiones idiomáticas. Ya no basta con traducir: hay significados que solo existen como bloque. Dominar idioms y matices es lo que hace que suenes natural, no 'de libro'.",
+    goal: "comprender y usar expresiones idiomáticas frecuentes con naturalidad.",
+    sections: [
+      {
+        h: "Los idioms no se traducen palabra por palabra",
+        tldr: "El significado del grupo no es la suma de sus palabras.",
+        compare: {
+          left: {
+            title: "Literal (engaña)",
+            points: [
+              "break the ice → 'romper el hielo'",
+              "under the weather → 'bajo el clima'",
+              "a piece of cake → 'un trozo de pastel'",
+            ],
+          },
+          right: {
+            title: "Significado real",
+            points: [
+              "romper la tensión inicial",
+              "sentirse pachucho / enfermo",
+              "algo muy fácil (pan comido)",
+            ],
+          },
+          note: "Apréndelos como un bloque, con su significado, no por sus partes.",
+        },
+        examples: [
+          { en: "Let's break the ice with a game.", es: "Rompamos el hielo con un juego." },
+          { en: "It cost an arm and a leg.", es: "Costó un ojo de la cara." },
+        ],
+      },
+      {
+        h: "Úsalos con criterio",
+        tldr: "Un idiom mal usado suena peor que no usarlo.",
+        bullets: [
+          "Apréndelos en contexto real (series, lectura), no en listas sueltas.",
+          "Fíjate en el registro: muchos idioms son informales.",
+          "Al principio, reconócelos al oírlos; úsalos solo cuando estés seguro.",
+        ],
+        tip: "No fuerces idioms en cada frase: los nativos los usan con moderación. La naturalidad es equilibrio, no acumulación.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«The exam was a piece of cake.» significa que fue…",
+        options: ["delicioso", "muy fácil", "muy difícil"],
+        answer: 1,
+        why: "'a piece of cake' = pan comido, muy fácil.",
+      },
+      {
+        kind: "choice",
+        q: "«I'm feeling under the weather.» significa que…",
+        options: ["te gusta la lluvia", "te sientes enfermo/pachucho", "tienes frío"],
+        answer: 1,
+        why: "'under the weather' = sentirse indispuesto.",
+      },
+      {
+        kind: "fill",
+        q: "Idiom para 'costar carísimo': «It cost an arm and a ___ .»",
+        accept: ["leg"],
+        hint: "arm and a …",
+        why: "'cost an arm and a leg' = costar un ojo de la cara.",
+      },
+    ],
+    activity: {
+      title: "Cinco idioms en contexto",
+      steps: [
+        "Busca 5 idioms nuevos en algo que estés viendo o leyendo.",
+        "Anota cada uno con su significado y una frase de ejemplo del contexto real.",
+        "Escribe un mini-diálogo usando 2 de ellos correctamente.",
+      ],
+    },
+    selfCheck: [
+      "Reconozco idioms frecuentes al oírlos/leerlos.",
+      "Entiendo que su significado no es literal.",
+      "Uso idioms con moderación y en el registro adecuado.",
+    ],
+    summary: [
+      "Los idioms se aprenden como bloque, no palabra por palabra.",
+      "Contexto y registro importan más que la cantidad.",
+      "Reconócelos primero; úsalos cuando estés seguro.",
+    ],
+  },
+
+  "gra-avanzada": {
+    intro:
+      "Dos estructuras separan un B1 competente de un B2 natural: la voz pasiva (para poner el foco en la acción, no en quién la hace) y el estilo indirecto (para contar lo que otros dijeron). Con ellas tu inglés gana precisión y registro.",
+    goal: "manejar la pasiva y el estilo indirecto con soltura.",
+    sections: [
+      {
+        h: "Voz pasiva: el foco en la acción",
+        tldr: "Se forma con be + participio; el 'quién' pasa a segundo plano.",
+        compare: {
+          left: {
+            title: "Activa (foco en quién)",
+            points: [
+              "Someone stole my bike.",
+              "They built the bridge in 1990.",
+              "Importa el agente.",
+            ],
+          },
+          right: {
+            title: "Pasiva (foco en qué)",
+            points: [
+              "My bike was stolen.",
+              "The bridge was built in 1990.",
+              "El agente es desconocido o irrelevante.",
+            ],
+          },
+          note: "Añade el agente con 'by' solo si aporta: '…was written by Orwell'.",
+        },
+      },
+      {
+        h: "Estilo indirecto: contar lo que se dijo",
+        tldr: "Al reportar, los tiempos suelen 'retroceder' un paso.",
+        examples: [
+          { en: "\"I am tired.\" → She said she was tired.", es: "presente → pasado (backshift)." },
+          { en: "\"I will call you.\" → He said he would call me.", es: "will → would." },
+          { en: "\"Where do you live?\" → She asked where I lived.", es: "pregunta → orden de afirmación, sin 'do', sin '?'." },
+        ],
+        more: [
+          "Cambian también los marcadores: now→then, today→that day, tomorrow→the next day.",
+          "No hace falta retroceder si lo dicho sigue siendo verdad: 'She said she lives in Rome' es aceptable.",
+          "Reported questions: sin inversión ni 'do': 'He asked if I was ready' (no 'was I ready').",
+        ],
+        tip: "Error típico: mantener el orden de pregunta al reportar ('She asked where do I live' ✗). Correcto: 'She asked where I lived'.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Pasiva de «They built this house in 1980.»",
+        options: [
+          "This house built in 1980.",
+          "This house was built in 1980.",
+          "This house is building in 1980.",
+        ],
+        answer: 1,
+        why: "Pasiva en pasado: was/were + participio → was built.",
+      },
+      {
+        kind: "choice",
+        q: "Reporta: «I am hungry» (she said)…",
+        options: ["She said she is hungry.", "She said she was hungry.", "She said I am hungry."],
+        answer: 1,
+        why: "Backshift: presente → pasado: She said she was hungry.",
+      },
+      {
+        kind: "choice",
+        q: "Reporta la pregunta «Do you like tea?» (he asked)…",
+        options: [
+          "He asked do I like tea.",
+          "He asked if I liked tea.",
+          "He asked if did I like tea.",
+        ],
+        answer: 1,
+        why: "Reported question: 'if' + orden de afirmación, sin 'do': if I liked tea.",
+      },
+      {
+        kind: "fill",
+        q: "Reporta: «I will help you» → «She said she ___ help me.»",
+        accept: ["would"],
+        hint: "will → ?",
+        why: "will retrocede a 'would'.",
+      },
+    ],
+    activity: {
+      title: "Reporta y transforma",
+      steps: [
+        "Toma 3 frases directas (una afirmación, una pregunta, una promesa).",
+        "Repórtalas con said/asked aplicando el backshift.",
+        "Reescribe 2 frases activas en pasiva y comenta por qué la pasiva encaja.",
+      ],
+    },
+    selfCheck: [
+      "Formo la pasiva con be + participio y sé cuándo usarla.",
+      "Aplico el backshift en el estilo indirecto.",
+      "Reporto preguntas sin inversión ni 'do'.",
+      "Ajusto los marcadores de tiempo (now→then, tomorrow→the next day).",
+    ],
+    summary: [
+      "Pasiva = foco en la acción; agente con 'by' solo si aporta.",
+      "Estilo indirecto: los tiempos retroceden un paso.",
+      "Reported questions: orden de afirmación, sin 'do' ni '?'.",
+    ],
+  },
+
+  "aud-nativo": {
+    intro:
+      "El gran salto de B2: pasar de audio pensado para estudiantes a contenido real hecho para nativos —series, películas, pódcasts auténticos— a velocidad natural. Da vértigo al principio; con estrategia, se conquista.",
+    goal: "comprender contenido nativo a velocidad natural sobre temas conocidos.",
+    sections: [
+      {
+        h: "Acepta el habla conectada",
+        tldr: "Los nativos no separan palabras: las funden.",
+        body: [
+          "Ya sabes que 'want to' suena 'wanna' y 'going to' suena 'gonna'. A velocidad nativa esto es la norma, no la excepción. Dejar de esperar palabras 'separadas' desbloquea tu comprensión.",
+        ],
+        examples: [
+          { en: "What are you doing? → 'Whatcha doin'?'", es: "El habla rápida comprime y funde." },
+          { en: "I don't know → 'I dunno'", es: "Reducciones habituales." },
+        ],
+      },
+      {
+        h: "Estrategia para no ahogarte",
+        tldr: "Redundancia y contexto hacen el trabajo pesado.",
+        bullets: [
+          "El mensaje se repite de varias formas: no necesitas cada palabra.",
+          "Elige temas y formatos que te gusten: la motivación sostiene el hábito.",
+          "Subtítulos en inglés primero; luego quítalos y confía en el oído.",
+        ],
+        tip: "Reescuchar un mismo clip 2-3 veces enseña más que ver diez clips una vez. La repetición revela lo que se te escapó.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "A velocidad nativa, 'going to' normalmente suena…",
+        options: ["go-ing to (separado)", "gonna", "no se pronuncia"],
+        answer: 1,
+        why: "El habla conectada lo reduce a 'gonna'; es lo normal, no descuido.",
+      },
+      {
+        kind: "choice",
+        q: "No entiendes una palabra en una serie. Lo mejor es:",
+        options: [
+          "Pausar y buscarla siempre",
+          "Confiar en la redundancia y el contexto y seguir",
+          "Poner subtítulos en tu idioma",
+        ],
+        answer: 1,
+        why: "El contenido nativo repite la idea; el contexto suele bastar.",
+      },
+    ],
+    activity: {
+      title: "Serie sin red",
+      steps: [
+        "Elige una escena de 3-4 minutos de una serie que te guste.",
+        "Míralas con subtítulos en inglés; luego repite la misma escena SIN subtítulos.",
+        "Anota 3 reducciones o expresiones que hayas cazado (gonna, kinda, wanna…).",
+      ],
+    },
+    selfCheck: [
+      "Entiendo la idea de contenido nativo a velocidad normal.",
+      "Reconozco reducciones del habla conectada.",
+      "Uso contexto y redundancia en vez de traducir cada palabra.",
+    ],
+    summary: [
+      "El habla nativa funde palabras: acéptalo y tu oído se abre.",
+      "Contexto y redundancia hacen el trabajo pesado.",
+      "Reescuchar > ver mucho una sola vez.",
+    ],
+  },
+
+  "lec-prosa": {
+    intro:
+      "Leer prosa nativa —una novela, buena prensa— pide algo más que entender palabras: pide leer entre líneas, captar el tono y no rendirte ante vocabulario denso. Es lectura para adultos, sobre temas de adultos.",
+    goal: "leer prosa nativa infiriendo significado, tono e intención.",
+    sections: [
+      {
+        h: "Leer entre líneas (inferencia)",
+        tldr: "El texto sugiere más de lo que dice literalmente.",
+        examples: [
+          {
+            en: "She smiled, but her eyes stayed cold.",
+            es: "Sonrió, pero sus ojos siguieron fríos.",
+            note: "El texto no dice 'era falsa': lo infieres.",
+          },
+        ],
+        body: [
+          "En prosa nativa, la intención, el sarcasmo o el estado de ánimo casi nunca se explican: se sugieren. Pregúntate: ¿qué NO se dice pero se da a entender?",
+        ],
+      },
+      {
+        h: "Vocabulario denso sin bloquearte",
+        tldr: "Distingue la palabra que importa de la que puedes saltarte.",
+        bullets: [
+          "Si una palabra no cambia el sentido de la frase, sigue.",
+          "Deduce por raíz y contexto antes de buscar.",
+          "Marca (no busques) las palabras que se repiten; esas sí valen la pena.",
+        ],
+        tip: "Elige tu primera novela nativa por interés y con una versión que ya conozcas (una historia vista en cine ayuda muchísimo).",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«He said he was fine, closing the door a little too hard.» El texto sugiere que…",
+        options: [
+          "Estaba realmente bien",
+          "No estaba bien (el portazo lo delata)",
+          "Tenía prisa",
+        ],
+        answer: 1,
+        why: "La inferencia: la acción contradice sus palabras.",
+      },
+      {
+        kind: "choice",
+        q: "Ante mucho vocabulario nuevo en una página, lo eficaz es:",
+        options: [
+          "Buscar cada palabra en el diccionario",
+          "Saltar las que no cambian el sentido y deducir el resto",
+          "Abandonar el texto",
+        ],
+        answer: 1,
+        why: "Priorizar el sentido global mantiene el flujo de lectura.",
+      },
+    ],
+    activity: {
+      title: "Lee y deduce el subtexto",
+      steps: [
+        "Lee un pasaje corto de prosa nativa (novela o reportaje).",
+        "Escribe en 1-2 frases qué SUGIERE el texto que no dice literalmente.",
+        "Anota solo las palabras nuevas que se repitieron.",
+      ],
+    },
+    selfCheck: [
+      "Infiero intención y tono más allá de lo literal.",
+      "No me bloqueo con vocabulario denso.",
+      "Distingo la palabra clave de la prescindible.",
+    ],
+    summary: [
+      "La prosa nativa sugiere; lee entre líneas.",
+      "Salta lo prescindible, deduce, marca lo que se repite.",
+      "Elige lecturas por interés para sostener el hábito.",
+    ],
+  },
+
+  "ora-debatir": {
+    intro:
+      "Debatir es defender tu postura y responder a las de otros con respeto. En inglés, el desacuerdo directo suena agresivo: la habilidad B2 es argumentar con firmeza pero con cortesía, matizando y cediendo terreno cuando toca.",
+    goal: "expresar y defender opiniones, y discrepar con cortesía.",
+    sections: [
+      {
+        h: "Opinar con matices (hedging)",
+        tldr: "Suavizar la afirmación suena más maduro y creíble.",
+        compare: {
+          left: {
+            title: "Tajante",
+            points: ["This is wrong.", "You're mistaken.", "That's a bad idea."],
+          },
+          right: {
+            title: "Matizado (hedging)",
+            points: [
+              "I'm not sure that's quite right.",
+              "I tend to think that…",
+              "That might not be the best approach.",
+            ],
+          },
+          note: "El matiz no es debilidad: es registro. Suena más persuasivo.",
+        },
+      },
+      {
+        h: "Discrepar sin ofender",
+        tldr: "Reconoce el punto del otro antes de rebatir.",
+        examples: [
+          { en: "I see your point, but have you considered…?", es: "Entiendo tu punto, pero ¿has considerado…?" },
+          { en: "That's a fair point. However, …", es: "Es un buen argumento. Sin embargo, …" },
+          { en: "I'm afraid I don't quite agree.", es: "Me temo que no estoy del todo de acuerdo." },
+        ],
+        tip: "La fórmula ganadora: reconoce (I see your point) → discrepa suave (but/however) → aporta tu razón. Nunca empieces con un 'No, you're wrong'.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Forma más cortés de discrepar:",
+        options: [
+          "No, that's wrong.",
+          "I see your point, but I'm not so sure.",
+          "You don't understand.",
+        ],
+        answer: 1,
+        why: "Reconocer + matizar es la forma cortés y persuasiva de discrepar.",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuál es un ejemplo de 'hedging' (matizar)?",
+        options: [
+          "This is definitely the only solution.",
+          "I tend to think this could help.",
+          "Everyone knows I'm right.",
+        ],
+        answer: 1,
+        why: "'I tend to think… could…' suaviza la afirmación (hedging).",
+      },
+      {
+        kind: "choice",
+        q: "Empezar un desacuerdo con «No, you're wrong» en inglés suena…",
+        options: ["educado", "agresivo/brusco", "neutral"],
+        answer: 1,
+        why: "El desacuerdo directo se percibe como agresivo; conviene suavizar.",
+      },
+    ],
+    activity: {
+      title: "Mini-debate",
+      steps: [
+        "Elige un tema con dos posturas (p. ej. teletrabajo sí/no).",
+        "Escribe tu opinión con hedging y 2 argumentos.",
+        "Escribe una réplica cortés a la postura contraria (reconoce → discrepa → razona).",
+      ],
+    },
+    selfCheck: [
+      "Matizo mis opiniones (hedging) en vez de afirmar tajante.",
+      "Reconozco el punto del otro antes de rebatir.",
+      "Discrepo con fórmulas corteses (I'm afraid…, However…).",
+    ],
+    summary: [
+      "Hedging = firmeza con cortesía; suena más persuasivo.",
+      "Discrepar: reconoce → suaviza → razona.",
+      "El desacuerdo directo suena agresivo en inglés.",
+    ],
+  },
+
+  "esc-argumentativo": {
+    intro:
+      "Un texto argumentativo defiende una tesis con estructura: no es opinar sin más, es construir un caso. En B2 escribes ensayos y correos detallados que se sostienen por su lógica y su cohesión.",
+    goal: "escribir textos argumentativos claros, estructurados y cohesionados.",
+    sections: [
+      {
+        h: "La estructura del argumento",
+        tldr: "Tesis → argumentos → contraargumento → conclusión.",
+        bullets: [
+          "Introducción con una tesis clara (tu postura en una frase).",
+          "Cada párrafo: una idea, con razón y ejemplo.",
+          "Un párrafo que reconoce la postura contraria y la rebate.",
+          "Conclusión que reafirma sin repetir textualmente.",
+        ],
+      },
+      {
+        h: "Cohesión: que las ideas 'peguen'",
+        tldr: "Los conectores de discurso guían al lector por tu lógica.",
+        examples: [
+          { en: "Firstly, … Moreover, …", es: "añadir / secuenciar" },
+          { en: "However, … Nevertheless, …", es: "contrastar" },
+          { en: "Therefore, … Consequently, …", es: "concluir/consecuencia" },
+          { en: "For instance, … In particular, …", es: "ejemplificar" },
+        ],
+        more: [
+          "Sube el registro con subordinación: 'Although the cost is high, the benefits outweigh it' suena más maduro que dos frases sueltas.",
+          "Evita empezar frases con And/But en registro formal; usa Moreover/However.",
+        ],
+        tip: "Planifica en un esquema de 4 puntos antes de escribir. La estructura clara vale más que las palabras elegantes.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Conector para introducir una CONSECUENCIA:",
+        options: ["However", "Therefore", "For instance"],
+        answer: 1,
+        why: "'Therefore/Consequently' introducen la consecuencia.",
+      },
+      {
+        kind: "choice",
+        q: "En un ensayo argumentativo, reconocer la postura contraria…",
+        options: [
+          "Debilita tu texto",
+          "Lo refuerza: muestra que consideraste otras vistas",
+          "Está prohibido",
+        ],
+        answer: 1,
+        why: "El contraargumento rebatido fortalece la argumentación.",
+      },
+      {
+        kind: "fill",
+        q: "Conector de contraste formal (no 'but'): «..., ___, the plan failed.»",
+        accept: ["however", "nevertheless"],
+        hint: "Empieza por H o N.",
+        why: "'However/Nevertheless' contrastan en registro formal.",
+      },
+    ],
+    activity: {
+      title: "Ensayo breve (150-180 palabras)",
+      steps: [
+        "Elige una postura sobre un tema polémico.",
+        "Esquema: tesis, 2 argumentos con ejemplo, 1 contraargumento rebatido, conclusión.",
+        "Redáctalo usando al menos 5 conectores de discurso distintos.",
+      ],
+    },
+    selfCheck: [
+      "Abro con una tesis clara.",
+      "Doy una idea por párrafo con razón y ejemplo.",
+      "Incluyo y rebato un contraargumento.",
+      "Cohesiono con conectores de discurso variados.",
+    ],
+    summary: [
+      "Argumentar = construir un caso, no solo opinar.",
+      "Tesis → argumentos → contraargumento → conclusión.",
+      "La cohesión (conectores + subordinación) sube el registro.",
+    ],
+  },
+
+  "cul-humor": {
+    intro:
+      "El humor y la ironía son el último gran filtro cultural. La cultura anglosajona —muy en especial la británica— adora el understatement y el sarcasmo: decir lo contrario de lo que se piensa, con cara seria. Captarlo es sentirte por fin 'dentro'.",
+    goal: "reconocer ironía, sarcasmo y understatement, y no tomarlos al pie de la letra.",
+    sections: [
+      {
+        h: "Ironía y sarcasmo: decir lo contrario",
+        tldr: "Las palabras dicen A; el tono y el contexto dicen lo opuesto.",
+        compare: {
+          left: {
+            title: "Literal",
+            points: [
+              "«Lovely weather!» = hace buen tiempo",
+              "«Great, just great.» = está contento",
+            ],
+          },
+          right: {
+            title: "Irónico (contexto opuesto)",
+            points: [
+              "«Lovely weather!» bajo un diluvio = qué asco de tiempo",
+              "«Great, just great.» tras un problema = qué desastre",
+            ],
+          },
+          note: "La clave está en el desajuste entre lo dicho y la situación.",
+        },
+      },
+      {
+        h: "Understatement: quitar hierro",
+        tldr: "Se dice menos de lo que se siente, sobre todo en inglés británico.",
+        examples: [
+          { en: "\"It's not bad.\"", es: "Puede significar 'está muy bien'." },
+          { en: "\"We have a bit of a problem.\"", es: "A menudo = tenemos un problemón." },
+          { en: "\"I'm a little tired.\" (tras 24h sin dormir)", es: "= estoy agotadísimo." },
+        ],
+        tip: "Ante una frase 'demasiado suave' o 'demasiado entusiasta' para la situación, sospecha ironía o understatement. El tono manda sobre las palabras.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Llueve a cántaros y alguien dice «Lovely weather!». Probablemente…",
+        options: ["Le encanta la lluvia", "Es ironía: se queja del tiempo", "Se equivocó de palabra"],
+        answer: 1,
+        why: "El desajuste con la situación señala ironía.",
+      },
+      {
+        kind: "choice",
+        q: "Un británico dice «It's not bad» de tu trabajo. Suele significar…",
+        options: ["Es mediocre", "Está bastante bien (understatement)", "Es horrible"],
+        answer: 1,
+        why: "El understatement británico suele decir menos de lo que valora.",
+      },
+      {
+        kind: "choice",
+        q: "¿Qué delata la ironía?",
+        options: [
+          "El significado literal de las palabras",
+          "El desajuste entre lo dicho, el tono y el contexto",
+          "La gramática de la frase",
+        ],
+        answer: 1,
+        why: "La ironía vive en la contradicción entre palabras y situación/tono.",
+      },
+    ],
+    activity: {
+      title: "Caza la ironía",
+      steps: [
+        "Busca una escena de comedia británica (o un sketch) con subtítulos.",
+        "Identifica 3 frases irónicas o de understatement y anota qué significan de verdad.",
+        "Escribe 2 frases irónicas tuyas para una situación cotidiana.",
+      ],
+    },
+    selfCheck: [
+      "Detecto ironía por el desajuste con el contexto.",
+      "Interpreto el understatement (not bad = bastante bien).",
+      "No tomo al pie de la letra frases 'demasiado suaves' o entusiastas.",
+    ],
+    summary: [
+      "Ironía = decir lo contrario; lo delata el contexto y el tono.",
+      "Understatement = decir menos de lo que se siente (muy británico).",
+      "Cuando lo dicho no encaja con la situación, sospecha humor.",
+    ],
+  },
+
+  "hito-b2": {
+    intro:
+      "¡Cuarto hito: fluidez funcional! B2 significa que te comunicas con naturalidad y espontaneidad, entiendes contenido nativo y defiendes tus ideas con matices. Este nodo integra todo el nivel antes del salto a C1.",
+    goal: "confirmar que dominas B2 antes de avanzar a C1.",
+    sections: [
+      {
+        h: "¿Qué puedes hacer ya? (descriptores CEFR B2)",
+        tldr: "Interactúas con fluidez y espontaneidad; defiendes puntos de vista.",
+        bullets: [
+          "Comprendes las ideas principales de textos complejos y contenido nativo sobre temas variados.",
+          "Te comunicas con un grado de fluidez que hace posible la interacción normal con nativos sin tensión.",
+          "Produces textos claros y detallados y defiendes un punto de vista con pros y contras.",
+        ],
+      },
+      {
+        h: "Repaso integrado",
+        tldr: "Antes de C1, comprueba que el matiz B2 está firme.",
+        body: [
+          "Los pilares del B2 son: pasiva y estilo indirecto, ~5000 palabras con idioms, entonación expresiva, comprensión de contenido nativo, debatir con hedging y escribir argumentando.",
+        ],
+        tip: "C1 va de precisión y flexibilidad: mediar, matizar y adaptar el registro. Un B2 firme hace que C1 sea afinar el instrumento, no cambiarlo.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Pasiva: «Someone has stolen my phone.» →",
+        options: [
+          "My phone has stolen.",
+          "My phone has been stolen.",
+          "My phone was stealing.",
+        ],
+        answer: 1,
+        why: "Present perfect pasivo: has/have been + participio.",
+      },
+      {
+        kind: "choice",
+        q: "Estilo indirecto: «I can swim» (she said)…",
+        options: ["She said she can swim.", "She said she could swim.", "She said I can swim."],
+        answer: 1,
+        why: "can → could (backshift).",
+      },
+      {
+        kind: "choice",
+        q: "«It's not bad» de un británico suele ser…",
+        options: ["una crítica dura", "un elogio (understatement)", "una pregunta"],
+        answer: 1,
+        why: "Understatement británico: suele valorar más de lo que dice.",
+      },
+      {
+        kind: "choice",
+        q: "Forma cortés de discrepar:",
+        options: ["You're wrong.", "I see your point, but…", "That's stupid."],
+        answer: 1,
+        why: "Reconocer + matizar es la fórmula cortés.",
+      },
+    ],
+    activity: {
+      title: "Autoevaluación B2",
+      steps: [
+        "Escribe un párrafo argumentativo (opinión + contraargumento) sobre un tema de actualidad.",
+        "Grábate 2 minutos defendiéndolo con hedging y reaccionando a la postura opuesta.",
+        "Marca qué descriptores B2 dominas y cuáles repasar antes de C1.",
+      ],
+    },
+    selfCheck: [
+      "Uso pasiva y estilo indirecto con naturalidad.",
+      "Reconozco idioms, ironía y understatement.",
+      "Debato con hedging y cortesía.",
+      "Escribo textos argumentativos cohesionados.",
+    ],
+    summary: [
+      "B2 = fluidez funcional: naturalidad, contenido nativo y matiz.",
+      "Pilares: pasiva, estilo indirecto, idioms, debate, argumentación.",
+      "C1 será afinar (mediar, matizar, adaptar), no reaprender.",
+    ],
+  },
+
+  // ─────────────────────────────── C1 · dominio operativo ───────────────────
+  "est-mediacion": {
+    intro:
+      "Mediar (una competencia central del CEFR 2020) es tender puentes: resumir, reformular y explicar información para que otros la entiendan, y facilitar el entendimiento entre personas. Es lo que hace un usuario avanzado que ya no solo 'usa' la lengua, sino que la pone al servicio de otros.",
+    goal: "reformular, resumir y facilitar la comunicación para terceros.",
+    sections: [
+      {
+        h: "Mediar un texto: resumir y reformular",
+        tldr: "Tomas información compleja y la haces accesible.",
+        body: [
+          "Mediar no es traducir: es captar lo esencial de un texto o charla y transmitirlo con tus palabras, adaptándolo a quien te escucha.",
+        ],
+        examples: [
+          { en: "So, in short, the report says that costs rose because of energy prices.", es: "Resumir lo esencial de un informe largo." },
+          { en: "What she means is that we should wait.", es: "Reformular/aclarar lo que otro quiso decir." },
+        ],
+      },
+      {
+        h: "Mediar la comunicación: facilitar",
+        tldr: "Ayudas a que otros se entiendan entre sí.",
+        bullets: [
+          "Aclarar: 'Let me put that another way…'.",
+          "Comprobar entendimiento: 'Does that make sense?', 'So you mean…?'.",
+          "Tender puentes culturales: explicar un matiz que el otro no capta.",
+        ],
+        tip: "Mediar bien exige empatía lingüística: pensar qué sabe y qué no sabe tu interlocutor, y ajustar el mensaje a eso.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Mediar un texto significa…",
+        options: [
+          "Traducirlo palabra por palabra",
+          "Captar lo esencial y reformularlo para quien te escucha",
+          "Leerlo en voz alta tal cual",
+        ],
+        answer: 1,
+        why: "Mediar = transmitir lo esencial con tus palabras, adaptado al receptor.",
+      },
+      {
+        kind: "choice",
+        q: "Frase útil para reformular y aclarar:",
+        options: ["Let me put that another way…", "Goodbye.", "I don't care."],
+        answer: 0,
+        why: "'Let me put that another way' reformula para facilitar el entendimiento.",
+      },
+    ],
+    activity: {
+      title: "Resume y reformula",
+      steps: [
+        "Lee o escucha un contenido complejo de 3-4 minutos.",
+        "Resúmelo en 4 frases para alguien que no lo ha visto.",
+        "Reformula el punto más difícil con una analogía o un ejemplo sencillo.",
+      ],
+    },
+    selfCheck: [
+      "Resumo información compleja con mis palabras.",
+      "Reformulo y aclaro lo que otros quieren decir.",
+      "Ajusto el mensaje a lo que sabe mi interlocutor.",
+    ],
+    summary: [
+      "Mediar = tender puentes, no traducir.",
+      "Resume lo esencial y reformula para el receptor.",
+      "Exige empatía lingüística: ajustar a quién te escucha.",
+    ],
+  },
+
+  "fon-naturalidad": {
+    intro:
+      "La naturalidad es el habla conectada real: sonidos que se caen, se funden y se reducen. Un C1 no pronuncia palabra por palabra 'de libro'; fluye. Entender y producir estas reducciones es lo que separa lo correcto de lo natural.",
+    goal: "hablar y entender con las reducciones y enlaces del habla real.",
+    sections: [
+      {
+        h: "Elisión y asimilación",
+        tldr: "Sonidos que desaparecen o se contagian entre palabras.",
+        examples: [
+          { en: "next day → 'nex day'", es: "elisión: se cae la /t/." },
+          { en: "ten bikes → 'tem bikes'", es: "asimilación: /n/ → /m/ ante /b/." },
+          { en: "handbag → 'hambag'", es: "asimilación dentro de la palabra." },
+        ],
+      },
+      {
+        h: "Reducciones frecuentes",
+        tldr: "El habla rápida comprime grupos enteros.",
+        compare: {
+          left: {
+            title: "Cuidada (dictado)",
+            points: ["going to", "want to", "did you", "kind of"],
+          },
+          right: {
+            title: "Natural (habla real)",
+            points: ["gonna", "wanna", "didja", "kinda"],
+          },
+          note: "No son 'inglés incorrecto': son el registro hablado normal.",
+        },
+        tip: "Objetivo C1: producir estas reducciones tú mismo, no solo reconocerlas. Grábate y compáralo con un modelo nativo.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En habla natural, «What do you want?» a menudo suena…",
+        options: ["What do you want (cada palabra)", "'Whaddya want?'", "no cambia"],
+        answer: 1,
+        why: "Reducción y enlace habituales: 'Whaddya want?'.",
+      },
+      {
+        kind: "choice",
+        q: "'next day' pronunciado 'nex day' es un ejemplo de…",
+        options: ["elisión (caída de /t/)", "un error", "entonación"],
+        answer: 0,
+        why: "Elisión: en grupos de consonantes, una suele caerse.",
+      },
+    ],
+    activity: {
+      title: "Reducciones en acción",
+      steps: [
+        "Elige 5 frases con 'going to / want to / did you'.",
+        "Dilas primero cuidadas y luego con la reducción natural (gonna, wanna, didja).",
+        "Grábate y compáralo con un clip nativo.",
+      ],
+    },
+    selfCheck: [
+      "Reconozco elisiones y asimilaciones al escuchar.",
+      "Produzco reducciones naturales (gonna, wanna, didja).",
+      "Mi habla fluye enlazada, no palabra por palabra.",
+    ],
+    summary: [
+      "Habla natural = sonidos que caen, se funden y se reducen.",
+      "gonna/wanna/didja son registro hablado normal.",
+      "Meta C1: producirlas, no solo reconocerlas.",
+    ],
+  },
+
+  "voc-8000": {
+    intro:
+      "Alrededor de las 8000 palabras el vocabulario deja de ser 'cuántas sabes' y pasa a ser 'cuál eliges'. Entran los sinónimos con matices de registro, la jerga y el lenguaje coloquial. Es la diferencia entre entenderlo todo y decirlo exactamente.",
+    goal: "elegir la palabra precisa según registro y matiz, incluida la jerga.",
+    sections: [
+      {
+        h: "Sinónimos no son intercambiables",
+        tldr: "Cada 'sinónimo' lleva un registro y un matiz distintos.",
+        compare: {
+          left: {
+            title: "Mismo concepto…",
+            points: ["kids", "get", "buy", "ask for"],
+          },
+          right: {
+            title: "…distinto registro",
+            points: ["children / offspring (formal)", "obtain / acquire (formal)", "purchase (formal)", "request (formal)"],
+          },
+          note: "Elige según el contexto: informal con amigos, formal en un informe.",
+        },
+      },
+      {
+        h: "Jerga y coloquialismos",
+        tldr: "El lenguaje informal real amplía tu comprensión de nativos.",
+        examples: [
+          { en: "That's awesome / cool / sick!", es: "informal: ¡genial!" },
+          { en: "I'm knackered. (BrE) / I'm beat.", es: "estoy hecho polvo/agotado." },
+          { en: "It's a rip-off.", es: "es un timo/robo." },
+        ],
+        tip: "La jerga cambia por región y generación, y envejece rápido. Reconócela para entender; úsala con cautela si no estás seguro del contexto.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Versión FORMAL de 'buy':",
+        options: ["get", "purchase", "grab"],
+        answer: 1,
+        why: "'purchase' es el registro formal de 'buy'.",
+      },
+      {
+        kind: "choice",
+        q: "«I'm knackered» (inglés británico) significa…",
+        options: ["estoy emocionado", "estoy agotado", "estoy enfadado"],
+        answer: 1,
+        why: "'knackered' (BrE, coloquial) = agotado, hecho polvo.",
+      },
+      {
+        kind: "choice",
+        q: "A este nivel, dominar vocabulario es sobre todo…",
+        options: [
+          "saber más palabras que nadie",
+          "elegir la palabra precisa según registro y matiz",
+          "usar siempre las palabras más largas",
+        ],
+        answer: 1,
+        why: "C1 = precisión y adecuación de registro, no acumulación.",
+      },
+    ],
+    activity: {
+      title: "Tres registros de una idea",
+      steps: [
+        "Elige una idea simple (p. ej. 'estoy cansado').",
+        "Exprésala en tres registros: coloquial, neutro y formal.",
+        "Anota 5 coloquialismos nuevos que hayas oído esta semana con su registro.",
+      ],
+    },
+    selfCheck: [
+      "Elijo entre sinónimos según registro y matiz.",
+      "Reconozco jerga y coloquialismos frecuentes.",
+      "Uso el lenguaje informal con conciencia del contexto.",
+    ],
+    summary: [
+      "~8000 palabras: la clave es CUÁL eliges, no cuántas sabes.",
+      "Los sinónimos difieren en registro y matiz.",
+      "Reconoce la jerga; úsala con cautela.",
+    ],
+  },
+
+  "aud-conferencias": {
+    intro:
+      "Seguir una conferencia o una clase académica exige mantener el hilo de un argumento largo, distinguir lo principal de lo secundario y, a menudo, tomar notas a la vez. Las señales del discurso son tu mapa.",
+    goal: "seguir discurso académico extenso e identificar su estructura.",
+    sections: [
+      {
+        h: "Las señales del discurso (signposting)",
+        tldr: "El ponente te dice dónde estás con frases-guía.",
+        examples: [
+          { en: "First, I'll outline… / Moving on to… / To sum up…", es: "estructura: apertura → transición → cierre." },
+          { en: "The key point here is… / This brings me to…", es: "marca lo importante y las transiciones." },
+          { en: "However, some argue that…", es: "introduce una objeción o matiz." },
+        ],
+      },
+      {
+        h: "Tomar notas sin perder el hilo",
+        tldr: "Anota ideas y relaciones, no cada palabra.",
+        bullets: [
+          "Capta la tesis y los puntos que la sostienen.",
+          "Usa símbolos y abreviaturas (→, =, ↑, b/c).",
+          "Deja huecos: los rellenas al reescuchar o preguntar.",
+        ],
+        tip: "Escucha para la ESTRUCTURA: si sabes que viene 'un ejemplo' o 'una conclusión', entiendes mejor aunque falles palabras.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«This brings me to my next point…» en una charla indica…",
+        options: ["una conclusión final", "una transición a otra idea", "un ejemplo"],
+        answer: 1,
+        why: "Es una señal de transición entre puntos.",
+      },
+      {
+        kind: "choice",
+        q: "Al tomar notas de una conferencia conviene anotar…",
+        options: [
+          "cada palabra del ponente",
+          "las ideas clave y sus relaciones, con abreviaturas",
+          "solo el título",
+        ],
+        answer: 1,
+        why: "Notas eficaces = ideas y relaciones, no dictado literal.",
+      },
+    ],
+    activity: {
+      title: "Escucha académica con notas",
+      steps: [
+        "Elige una charla (p. ej. una TED talk) de 6-8 minutos con transcripción.",
+        "Toma notas de la tesis y 3 puntos de apoyo usando abreviaturas.",
+        "Comprueba con la transcripción qué señales de discurso marcaron cada parte.",
+      ],
+    },
+    selfCheck: [
+      "Identifico las señales de discurso (signposting).",
+      "Distingo la tesis de los puntos de apoyo.",
+      "Tomo notas de ideas y relaciones sin perder el hilo.",
+    ],
+    summary: [
+      "Las señales de discurso son el mapa de la charla.",
+      "Escucha para la estructura, no para cada palabra.",
+      "Notas = ideas y relaciones con abreviaturas.",
+    ],
+  },
+
+  "lec-especializado": {
+    intro:
+      "Leer textos especializados y de análisis (académicos, técnicos, ensayos) exige seguir una argumentación densa, distinguir hechos de opiniones y evaluar la postura del autor. Ya no solo comprendes: valoras críticamente.",
+    goal: "comprender y evaluar críticamente textos densos y especializados.",
+    sections: [
+      {
+        h: "Hecho vs. opinión vs. postura del autor",
+        tldr: "Distingue lo que se afirma como dato de lo que se defiende.",
+        examples: [
+          { en: "Studies show that… (hecho reportado)", es: "afirmación basada en evidencia." },
+          { en: "It could be argued that… / Arguably…", es: "el autor marca que es una interpretación." },
+          { en: "Critics claim… but the evidence suggests…", es: "el autor toma partido." },
+        ],
+      },
+      {
+        h: "Vocabulario técnico en contexto",
+        tldr: "No busques todo: deduce por el andamiaje del texto.",
+        bullets: [
+          "Los textos académicos definen sus términos clave: búscalos ahí.",
+          "La nominalización ('the implementation of…') es señal de registro formal.",
+          "Fíjate en los conectores lógicos: revelan la estructura del argumento.",
+        ],
+        tip: "Lee críticamente: pregúntate ¿qué defiende el autor?, ¿con qué evidencia?, ¿qué deja fuera? Comprender no es aceptar.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«It could be argued that…» señala que lo que sigue es…",
+        options: ["un hecho comprobado", "una interpretación/opinión matizada", "una cita textual"],
+        answer: 1,
+        why: "Es una fórmula de hedging: marca interpretación, no hecho.",
+      },
+      {
+        kind: "choice",
+        q: "Leer críticamente un ensayo implica preguntarte…",
+        options: [
+          "solo qué significan las palabras",
+          "qué defiende el autor, con qué evidencia y qué omite",
+          "cuántas páginas tiene",
+        ],
+        answer: 1,
+        why: "La lectura crítica evalúa tesis, evidencia y omisiones.",
+      },
+    ],
+    activity: {
+      title: "Disecciona un argumento",
+      steps: [
+        "Lee un artículo de opinión o un abstract académico.",
+        "Escribe: tesis del autor, 2 evidencias que usa y 1 posible objeción que omite.",
+        "Marca 3 fórmulas de hedging o de postura que hayas encontrado.",
+      ],
+    },
+    selfCheck: [
+      "Distingo hechos de opiniones y de la postura del autor.",
+      "Deduzco el vocabulario técnico por el contexto.",
+      "Evalúo críticamente tesis, evidencia y omisiones.",
+    ],
+    summary: [
+      "Distingue hecho, opinión y postura del autor.",
+      "El texto académico define sus términos y marca su lógica.",
+      "Comprender no es aceptar: lee críticamente.",
+    ],
+  },
+
+  "ora-persuadir": {
+    intro:
+      "Persuadir y exponer con eficacia es hablar para mover a alguien: una presentación, una propuesta, un discurso. En C1 estructuras tu mensaje y usas recursos retóricos que hacen que se te escuche y se te recuerde.",
+    goal: "exponer y persuadir con estructura y recursos retóricos.",
+    sections: [
+      {
+        h: "Estructura que persuade",
+        tldr: "Gancho → mensaje claro → apoyo → llamada a la acción.",
+        bullets: [
+          "Abre con un gancho (dato, pregunta, historia breve).",
+          "Un mensaje central, no cinco: la claridad persuade.",
+          "Apoya con evidencia y ejemplos concretos.",
+          "Cierra con una llamada a la acción memorable.",
+        ],
+      },
+      {
+        h: "Recursos retóricos",
+        tldr: "Ciertos patrones hacen tu mensaje más potente.",
+        examples: [
+          { en: "Rule of three: clear, simple, effective.", es: "la regla de tres suena rotunda." },
+          { en: "Rhetorical question: Why does this matter?", es: "pregunta retórica que engancha." },
+          { en: "Contrast: It's not about cost — it's about value.", es: "el contraste marca el punto." },
+        ],
+        tip: "Compara informar y persuadir: informar transmite datos; persuadir los ordena hacia una conclusión y apela también a la emoción, no solo a la razón.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«clear, simple, effective» es un ejemplo de…",
+        options: ["pregunta retórica", "regla de tres", "understatement"],
+        answer: 1,
+        why: "Tres elementos en serie: la 'rule of three', muy persuasiva.",
+      },
+      {
+        kind: "choice",
+        q: "Una presentación persuasiva debería tener…",
+        options: [
+          "cinco mensajes centrales a la vez",
+          "un mensaje central claro, bien apoyado",
+          "solo datos, sin estructura",
+        ],
+        answer: 1,
+        why: "Un único mensaje claro persuade más que muchos difusos.",
+      },
+      {
+        kind: "choice",
+        q: "La diferencia entre informar y persuadir es que persuadir…",
+        options: [
+          "solo transmite datos neutros",
+          "ordena el mensaje hacia una conclusión y apela también a la emoción",
+          "evita cualquier estructura",
+        ],
+        answer: 1,
+        why: "Persuadir dirige la información hacia una conclusión y suma emoción a la razón.",
+      },
+    ],
+    activity: {
+      title: "Discurso de 2 minutos",
+      steps: [
+        "Elige algo que quieras 'vender' (una idea, un plan).",
+        "Estructúralo: gancho, mensaje central, 2 apoyos, llamada a la acción.",
+        "Grábalo usando al menos un recurso retórico (regla de tres, contraste o pregunta retórica).",
+      ],
+    },
+    selfCheck: [
+      "Estructuro mi mensaje (gancho → central → apoyo → acción).",
+      "Uso recursos retóricos (regla de tres, contraste, preguntas).",
+      "Distingo informar de persuadir y apelo también a la emoción.",
+    ],
+    summary: [
+      "Persuadir = estructura clara + un mensaje central + emoción.",
+      "Recursos: regla de tres, contraste, pregunta retórica.",
+      "Cierra con una llamada a la acción memorable.",
+    ],
+  },
+
+  "esc-complejo": {
+    intro:
+      "Escribir textos complejos y bien estructurados —un informe, una propuesta, un ensayo extenso— exige coherencia global: que todo el documento, no solo cada párrafo, avance hacia un objetivo. Es arquitectura, no solo redacción.",
+    goal: "escribir documentos extensos coherentes y bien estructurados.",
+    sections: [
+      {
+        h: "Arquitectura del documento",
+        tldr: "Estructura clara y párrafos temáticos que encajan.",
+        bullets: [
+          "Informe: introducción, secciones con encabezados, hallazgos, conclusión/recomendaciones.",
+          "Cada párrafo empieza con una frase-tema que anuncia su idea.",
+          "Las secciones se enlazan: cada una prepara la siguiente.",
+        ],
+      },
+      {
+        h: "Registro formal y cohesión",
+        tldr: "La nominalización y los conectores dan formalidad y flujo.",
+        examples: [
+          { en: "We decided to… → The decision was made to…", es: "nominalización: más formal e impersonal." },
+          { en: "This suggests that… / In light of these findings…", es: "conectores que enlazan secciones." },
+        ],
+        more: [
+          "Evita la voz demasiado personal en informes: prefiere impersonal/pasiva cuando aporte objetividad.",
+          "Coherencia global: revisa que la conclusión responda a lo planteado en la introducción.",
+        ],
+        tip: "Escribe primero el esqueleto (títulos y una frase por sección). Un documento largo se gana en la planificación, no en la redacción.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "La 'frase-tema' de un párrafo sirve para…",
+        options: [
+          "decorar el inicio",
+          "anunciar la idea principal del párrafo",
+          "cerrar el documento",
+        ],
+        answer: 1,
+        why: "La topic sentence anuncia de qué trata el párrafo y guía al lector.",
+      },
+      {
+        kind: "choice",
+        q: "«The decision was made to expand» frente a «We decided to expand» es más…",
+        options: ["informal", "formal e impersonal (nominalización)", "incorrecto"],
+        answer: 1,
+        why: "La nominalización/pasiva aporta formalidad e impersonalidad.",
+      },
+      {
+        kind: "choice",
+        q: "La 'coherencia global' de un documento significa que…",
+        options: [
+          "cada párrafo es correcto por separado",
+          "todo el documento avanza hacia un objetivo y la conclusión responde a la introducción",
+          "usa palabras difíciles",
+        ],
+        answer: 1,
+        why: "Coherencia global = el conjunto, no solo las partes, tiene sentido y dirección.",
+      },
+    ],
+    activity: {
+      title: "Esqueleto de un informe",
+      steps: [
+        "Elige un tema para un informe corto (un problema y su solución).",
+        "Escribe solo el esqueleto: títulos de sección + una frase-tema por sección.",
+        "Desarrolla una sección cuidando registro formal y cohesión.",
+      ],
+    },
+    selfCheck: [
+      "Estructuro documentos con secciones y frases-tema.",
+      "Uso registro formal (nominalización, impersonal) cuando conviene.",
+      "Cuido la coherencia global: la conclusión responde a la introducción.",
+    ],
+    summary: [
+      "Textos largos = arquitectura, no solo redacción.",
+      "Frase-tema por párrafo; secciones que se enlazan.",
+      "Planifica el esqueleto antes de redactar.",
+    ],
+  },
+
+  "cul-referentes": {
+    intro:
+      "Entender de verdad a los nativos exige captar sus referentes: alusiones a la historia, la política, la cultura pop y la actualidad que ellos dan por sabidas. Sin ese contexto, entiendes las palabras pero te pierdes el chiste, la crítica o el guiño.",
+    goal: "reconocer alusiones y referentes culturales frecuentes.",
+    sections: [
+      {
+        h: "Alusiones que se dan por sabidas",
+        tldr: "Frases que remiten a algo cultural sin explicarlo.",
+        examples: [
+          { en: "It's his Achilles' heel.", es: "su punto débil (referencia clásica)." },
+          { en: "That's a catch-22.", es: "un círculo vicioso sin salida (novela de Heller)." },
+          { en: "Big Brother is watching.", es: "vigilancia total (Orwell, 1984)." },
+        ],
+      },
+      {
+        h: "Actualidad y cultura pop",
+        tldr: "El humor y la crítica usan referentes del momento.",
+        bullets: [
+          "Series, cine y música son fuente constante de referencias.",
+          "La política y las noticias alimentan chistes y titulares.",
+          "Muchos idioms nacen de deportes (a level playing field, to throw in the towel).",
+        ],
+        tip: "Cuando no captes una referencia, búscala: cada una que aprendes desbloquea muchos chistes y titulares futuros. Es inversión, no curiosidad ociosa.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«That's his Achilles' heel» significa que es su…",
+        options: ["punto fuerte", "punto débil/vulnerable", "mejor amigo"],
+        answer: 1,
+        why: "Referencia clásica: el talón de Aquiles = punto vulnerable.",
+      },
+      {
+        kind: "choice",
+        q: "«Big Brother is watching» alude a…",
+        options: [
+          "un programa de cocina",
+          "la vigilancia total (1984 de Orwell)",
+          "un hermano mayor real",
+        ],
+        answer: 1,
+        why: "Referente cultural de la novela '1984' de George Orwell.",
+      },
+    ],
+    activity: {
+      title: "Diario de referentes",
+      steps: [
+        "Durante una semana, anota 5 alusiones culturales que oigas o leas (series, prensa).",
+        "Investiga el origen de cada una.",
+        "Escribe una frase propia usando una de ellas correctamente.",
+      ],
+    },
+    selfCheck: [
+      "Reconozco alusiones culturales frecuentes.",
+      "Investigo los referentes que no capto.",
+      "Entiendo el guiño/crítica detrás de la referencia, no solo las palabras.",
+    ],
+    summary: [
+      "Los referentes se dan por sabidos: sin ellos te pierdes el matiz.",
+      "Vienen de historia, literatura, deporte, política y cultura pop.",
+      "Cada referente aprendido desbloquea muchos futuros.",
+    ],
+  },
+
+  "flu-pensar": {
+    intro:
+      "El último salto de fluidez es dejar de traducir: pensar directamente en inglés. Cuando tu monólogo interno ocurre en el idioma, la lengua deja de ser una tarea y se vuelve una segunda piel.",
+    goal: "pensar en inglés y reducir la traducción mental a cero.",
+    sections: [
+      {
+        h: "El monólogo interno",
+        tldr: "Narra tu día por dentro en inglés.",
+        body: [
+          "Traducir del español añade un paso que te frena. Entrenar el pensamiento directo elimina ese cuello de botella. Empieza por narrar acciones simples mentalmente: 'I'm making coffee. It's too hot.'",
+        ],
+      },
+      {
+        h: "Automatiza para liberar la mente",
+        tldr: "Lo automático deja tu atención libre para las ideas.",
+        bullets: [
+          "Cuanto más automatizados tus bloques (chunks), menos traduces.",
+          "Rodea la palabra que no sabes en inglés, no vuelvas al español.",
+          "Rodéate del idioma: móvil, notas y listas en inglés.",
+        ],
+        tip: "Si te sorprendes traduciendo, no te frustres: redirígete al inglés directo. Es un músculo; se fortalece con repetición diaria, no con teoría.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Pensar en inglés ayuda a la fluidez porque…",
+        options: [
+          "elimina el paso extra de traducir del español",
+          "hace la gramática más difícil",
+          "obliga a hablar más lento",
+        ],
+        answer: 0,
+        why: "Quitar la traducción intermedia elimina el cuello de botella.",
+      },
+      {
+        kind: "choice",
+        q: "Si no sabes una palabra mientras piensas en inglés, lo mejor es…",
+        options: [
+          "volver al español y traducir",
+          "rodearla en inglés (describirla) y seguir",
+          "detenerte por completo",
+        ],
+        answer: 1,
+        why: "Mantenerte en inglés (parafraseando) refuerza el pensamiento directo.",
+      },
+    ],
+    activity: {
+      title: "Un día en inglés (por dentro)",
+      steps: [
+        "Elige 3 momentos del día (café, trayecto, cena).",
+        "Narra mentalmente lo que haces SOLO en inglés durante 2 minutos cada uno.",
+        "Cuando falte una palabra, rodéala en inglés; anótala después para tu SRS.",
+      ],
+    },
+    selfCheck: [
+      "Narro acciones cotidianas mentalmente en inglés.",
+      "Evito traducir del español al hablar.",
+      "Rodeo en inglés las palabras que me faltan.",
+    ],
+    summary: [
+      "Fluidez plena = pensar en inglés, no traducir.",
+      "El monólogo interno y la automatización eliminan el cuello de botella.",
+      "Es un músculo: se entrena a diario.",
+    ],
+  },
+
+  "hito-c1": {
+    intro:
+      "¡Quinto hito: dominio operativo! C1 significa que usas la lengua con flexibilidad y eficacia para fines sociales, académicos y profesionales, y te expresas sin buscar demasiado las palabras. Este nodo integra todo el nivel antes del tramo final, C2.",
+    goal: "confirmar que dominas C1 antes de aspirar a la maestría (C2).",
+    sections: [
+      {
+        h: "¿Qué puedes hacer ya? (descriptores CEFR C1)",
+        tldr: "Usas la lengua con flexibilidad y eficacia, casi sin esfuerzo.",
+        bullets: [
+          "Comprendes textos largos y exigentes y captas el sentido implícito.",
+          "Te expresas con fluidez y espontaneidad sin buscar de forma evidente las palabras.",
+          "Produces textos claros, bien estructurados y detallados sobre temas complejos.",
+        ],
+      },
+      {
+        h: "Repaso integrado",
+        tldr: "Antes de C2, comprueba que la flexibilidad C1 está firme.",
+        body: [
+          "Los pilares del C1 son: mediar y reformular, naturalidad en el habla conectada, ~8000 palabras con precisión de registro, seguir discurso académico, leer críticamente, persuadir, escribir documentos complejos y pensar en inglés.",
+        ],
+        tip: "C2 no añade 'más gramática': añade sutileza, matiz y naturalidad casi nativa. Un C1 firme convierte C2 en pulir el arte, no aprender la técnica.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Mediar significa…",
+        options: [
+          "traducir literalmente",
+          "reformular/resumir para facilitar el entendimiento de otros",
+          "hablar más rápido",
+        ],
+        answer: 1,
+        why: "Mediar = tender puentes reformulando y resumiendo para el receptor.",
+      },
+      {
+        kind: "choice",
+        q: "Registro formal de 'buy':",
+        options: ["get", "purchase", "grab"],
+        answer: 1,
+        why: "'purchase' es el registro formal.",
+      },
+      {
+        kind: "choice",
+        q: "«It could be argued that…» marca…",
+        options: ["un hecho", "una interpretación matizada (hedging)", "una orden"],
+        answer: 1,
+        why: "Fórmula de hedging: señala interpretación, no hecho.",
+      },
+      {
+        kind: "choice",
+        q: "La 'regla de tres' (clear, simple, effective) es un recurso…",
+        options: ["gramatical", "retórico/persuasivo", "de pronunciación"],
+        answer: 1,
+        why: "Es un recurso retórico que da fuerza al mensaje.",
+      },
+    ],
+    activity: {
+      title: "Autoevaluación C1",
+      steps: [
+        "Escribe un texto estructurado de ~200 palabras defendiendo una postura compleja.",
+        "Grábate 3 minutos exponiéndola con recursos retóricos y sin traducir.",
+        "Marca qué descriptores C1 dominas y cuáles pulir antes de C2.",
+      ],
+    },
+    selfCheck: [
+      "Medio y reformulo para otros.",
+      "Hablo con naturalidad (habla conectada) sin traducir.",
+      "Elijo el registro y la palabra precisos.",
+      "Persuado y escribo documentos complejos y cohesionados.",
+    ],
+    summary: [
+      "C1 = dominio operativo: flexibilidad y eficacia casi sin esfuerzo.",
+      "Pilares: mediación, naturalidad, precisión, persuasión, pensar en inglés.",
+      "C2 será pulir el arte (sutileza y matiz), no aprender técnica nueva.",
+    ],
+  },
+
+  // ─────────────────────────────── C2 · maestría ────────────────────────────
+  "fon-nativo": {
+    intro:
+      "En C2 tu pronunciación ya es inteligible sin esfuerzo; el objetivo es pulir: prosodia, ritmo y matices que te acercan a un hablante competente. No se trata de 'perder acento', sino de que tu música inglesa sea tan natural que deje de distraer.",
+    goal: "pulir prosodia y ritmo hasta un habla natural y sin esfuerzo para el oyente.",
+    sections: [
+      {
+        h: "Elige y sé consistente con un modelo",
+        tldr: "Coherencia de acento importa más que 'cuál' elijas.",
+        body: [
+          "Mezclar rasgos de acento británico y americano en la misma frase distrae. Elige un modelo de referencia (p. ej. inglés británico estándar o americano general) y sé consistente en vocales y ritmo.",
+        ],
+        examples: [
+          { en: "schedule: /ˈʃedjuːl/ (BrE) vs /ˈskedʒuːl/ (AmE)", es: "elige uno y mantenlo." },
+        ],
+      },
+      {
+        h: "La prosodia es el último 10%",
+        tldr: "Ritmo, acento de la frase y melodía te dan naturalidad total.",
+        bullets: [
+          "Acento de frase: la palabra más importante lleva el golpe fuerte y puede cambiar el sentido.",
+          "Formas débiles impecables: la fluidez vive en las sílabas átonas bien reducidas.",
+          "Enlace y ritmo natural, sin pausas 'de dictado'.",
+        ],
+        tip: "Graba y compara microfragmentos con un modelo nativo. En C2, el progreso está en detalles finos que solo se oyen al comparar de cerca.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En C2, la meta de pronunciación es…",
+        options: [
+          "eliminar por completo cualquier acento",
+          "pulir prosodia y ritmo para un habla natural y consistente",
+          "hablar lo más rápido posible",
+        ],
+        answer: 1,
+        why: "C2 = naturalidad y consistencia, no borrar la identidad del hablante.",
+      },
+      {
+        kind: "choice",
+        q: "Mezclar rasgos británicos y americanos en la misma frase…",
+        options: ["suena más culto", "distrae y resta naturalidad", "es obligatorio en C2"],
+        answer: 1,
+        why: "La consistencia de modelo es clave para sonar natural.",
+      },
+    ],
+    activity: {
+      title: "Afinado fino",
+      steps: [
+        "Elige un modelo de acento y un clip de 20 segundos.",
+        "Haz shadowing centrándote en el acento de frase y las formas débiles.",
+        "Grábate, compara microfragmento a microfragmento y ajusta.",
+      ],
+    },
+    selfCheck: [
+      "Mantengo un modelo de acento consistente.",
+      "Coloco bien el acento de frase.",
+      "Reduzco las sílabas átonas con naturalidad.",
+    ],
+    summary: [
+      "C2 = pulir, no borrar acento: naturalidad y consistencia.",
+      "La prosodia (ritmo, acento de frase, melodía) es el último 10%.",
+      "El progreso fino se oye comparando de cerca con un modelo.",
+    ],
+  },
+
+  "voc-matiz": {
+    intro:
+      "El léxico casi nativo no es saber más palabras: es sentir su connotación. 'Slim', 'slender' y 'skinny' significan 'delgado', pero una halaga y otra insulta. En C2 eliges la palabra por el matiz exacto que quieres transmitir.",
+    goal: "elegir palabras por su connotación y matiz precisos.",
+    sections: [
+      {
+        h: "Connotación: el aura de la palabra",
+        tldr: "Sinónimos denotan lo mismo pero connotan distinto.",
+        compare: {
+          left: {
+            title: "Connotación positiva/neutra",
+            points: ["slim, slender (elogio)", "confident (seguro)", "thrifty (ahorrador)", "curious (interesado)"],
+          },
+          right: {
+            title: "Connotación negativa",
+            points: ["skinny, scrawny (crítica)", "arrogant (arrogante)", "stingy (tacaño)", "nosy (entrometido)"],
+          },
+          note: "Denotan casi lo mismo; el matiz cambia el mensaje y tu intención.",
+        },
+      },
+      {
+        h: "Colocación de precisión e idiomaticidad",
+        tldr: "Lo natural es decir exactamente lo que un nativo diría.",
+        examples: [
+          { en: "a strong argument (no 'a powerful argument' en muchos contextos)", es: "la colocación exacta suena nativa." },
+          { en: "deeply grateful / bitterly disappointed", es: "intensificadores que 'pegan' con su adjetivo." },
+        ],
+        tip: "Fíjate en las connotaciones al leer/escuchar nativos: anota por qué eligieron ESA palabra y no su sinónimo. El matiz se adquiere por exposición atenta.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Para HALAGAR a alguien por estar delgado, dirías…",
+        options: ["You look skinny.", "You look slim.", "You look scrawny."],
+        answer: 1,
+        why: "'slim/slender' tienen connotación positiva; 'skinny/scrawny', negativa.",
+      },
+      {
+        kind: "choice",
+        q: "'Stingy' frente a 'thrifty' para describir a alguien con el dinero:",
+        options: [
+          "Son idénticos",
+          "'thrifty' es positivo (ahorrador); 'stingy' es negativo (tacaño)",
+          "'stingy' es un elogio",
+        ],
+        answer: 1,
+        why: "Misma idea, connotación opuesta: thrifty (+) vs stingy (−).",
+      },
+      {
+        kind: "choice",
+        q: "Dominar vocabulario en C2 consiste sobre todo en…",
+        options: [
+          "acumular palabras raras",
+          "elegir por connotación y colocación precisas",
+          "usar siempre términos técnicos",
+        ],
+        answer: 1,
+        why: "C2 = precisión de matiz y naturalidad, no rareza.",
+      },
+    ],
+    activity: {
+      title: "Escala de connotaciones",
+      steps: [
+        "Elige 3 adjetivos y busca 2-3 sinónimos de cada uno.",
+        "Ordénalos de connotación positiva a negativa.",
+        "Escribe una frase donde el matiz elegido cambie la intención.",
+      ],
+    },
+    selfCheck: [
+      "Distingo connotación positiva/negativa entre sinónimos.",
+      "Elijo la palabra por el matiz que quiero transmitir.",
+      "Uso colocaciones de precisión que suenan nativas.",
+    ],
+    summary: [
+      "Los sinónimos denotan igual pero connotan distinto.",
+      "C2 = elegir por matiz e intención, no por rareza.",
+      "El matiz se adquiere observando por qué el nativo eligió ESA palabra.",
+    ],
+  },
+
+  "aud-cualquier": {
+    intro:
+      "La cima de la comprensión: entender cualquier acento y registro sin esfuerzo, incluso con ruido, habla rápida o coloquialismos. Ya no dependes de un inglés 'estándar y claro': te adaptas a la variedad real del mundo.",
+    goal: "comprender cualquier acento y registro, incluso en condiciones difíciles.",
+    sections: [
+      {
+        h: "La variedad de acentos",
+        tldr: "El inglés real es escocés, irlandés, indio, australiano… no solo el de los cursos.",
+        bullets: [
+          "Cada acento tiene patrones propios de vocales y ritmo; la exposición los 'sintoniza'.",
+          "Unos minutos de adaptación bastan cuando ya tienes una base sólida.",
+          "El contexto compensa lo que un acento nuevo te dificulta al principio.",
+        ],
+        examples: [
+          { en: "AmE 'water' /ˈwɑːɾər/ vs BrE /ˈwɔːtə/ vs algunas variantes con 't' glotal", es: "la misma palabra, mundos distintos." },
+        ],
+      },
+      {
+        h: "Registro extremo: muy formal o muy coloquial",
+        tldr: "Del discurso académico al argot callejero.",
+        tip: "Expón tu oído a propósito a lo incómodo: un acento que te cueste, un pódcast muy coloquial. La incomodidad controlada es donde crece la comprensión.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Ante un acento regional nuevo (p. ej. escocés), lo normal en C2 es…",
+        options: [
+          "no entender nada nunca",
+          "necesitar unos minutos de adaptación y luego seguir bien",
+          "pedir que cambien de acento",
+        ],
+        answer: 1,
+        why: "Con base sólida, el oído se sintoniza a un acento nuevo en poco tiempo.",
+      },
+      {
+        kind: "choice",
+        q: "¿Qué ayuda más a comprender un acento difícil?",
+        options: [
+          "Evitarlo siempre",
+          "Exposición deliberada y apoyarse en el contexto",
+          "Subtítulos en tu idioma",
+        ],
+        answer: 1,
+        why: "La exposición sintoniza el oído; el contexto rellena los huecos.",
+      },
+    ],
+    activity: {
+      title: "Tour de acentos",
+      steps: [
+        "Elige 3 clips con acentos distintos (p. ej. escocés, indio, australiano).",
+        "Escucha 2 minutos de cada uno sin subtítulos y resume la idea.",
+        "Anota 2 rasgos que notaste en cada acento (vocal, ritmo, 'r').",
+      ],
+    },
+    selfCheck: [
+      "Me adapto a acentos regionales tras unos minutos.",
+      "Comprendo registros extremos (académico y muy coloquial).",
+      "Uso el contexto para compensar dificultad de acento o ruido.",
+    ],
+    summary: [
+      "El inglés real es muchos acentos: la exposición sintoniza el oído.",
+      "Con base sólida, adaptarse a un acento nuevo es cuestión de minutos.",
+      "El contexto compensa acento, ruido y coloquialismos.",
+    ],
+  },
+
+  "lec-cualquier": {
+    intro:
+      "Leer cualquier texto —literario, abstracto, filosófico, técnico— con aprecio por su estilo. En C2 no solo comprendes ideas difíciles: percibes CÓMO están escritas y por qué el autor eligió esa forma.",
+    goal: "leer y apreciar cualquier texto, incluidos los literarios y abstractos.",
+    sections: [
+      {
+        h: "Texto abstracto y denso",
+        tldr: "Sigues ideas complejas sin apoyo concreto.",
+        body: [
+          "Un ensayo filosófico o un texto teórico avanza por conceptos, no por ejemplos. La clave es sostener la línea del argumento y tolerar la abstracción sin exigir que 'se aterrice' todo.",
+        ],
+      },
+      {
+        h: "Apreciar el estilo",
+        tldr: "El CÓMO comunica tanto como el QUÉ.",
+        examples: [
+          { en: "Metáfora, ritmo de la prosa, ironía sostenida", es: "recursos que cargan de significado la forma." },
+          { en: "A short, blunt sentence after long ones hits hard.", es: "el ritmo sintáctico crea efecto." },
+        ],
+        tip: "Al leer literatura, pregúntate por qué el autor eligió esa palabra, ese ritmo, ese punto de vista. Leer como escritor multiplica lo que captas.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En un texto abstracto/filosófico, la estrategia clave es…",
+        options: [
+          "exigir un ejemplo concreto para cada idea",
+          "sostener la línea del argumento y tolerar la abstracción",
+          "saltarte los conectores",
+        ],
+        answer: 1,
+        why: "El texto abstracto avanza por conceptos; hay que seguir el hilo lógico.",
+      },
+      {
+        kind: "choice",
+        q: "Una frase corta y seca tras varias largas suele buscar…",
+        options: ["un error de estilo", "un efecto de énfasis/impacto", "rellenar espacio"],
+        answer: 1,
+        why: "El contraste de ritmo sintáctico crea énfasis: es recurso de estilo.",
+      },
+    ],
+    activity: {
+      title: "Lee como escritor",
+      steps: [
+        "Elige un pasaje literario que te guste.",
+        "Identifica 2 recursos de estilo (metáfora, ritmo, ironía, punto de vista).",
+        "Explica en 2 frases qué EFECTO logra cada recurso.",
+      ],
+    },
+    selfCheck: [
+      "Sigo textos abstractos sin necesitar ejemplos concretos.",
+      "Aprecio recursos de estilo y su efecto.",
+      "Leo 'como escritor', atento al cómo y no solo al qué.",
+    ],
+    summary: [
+      "C2 lee cualquier texto, incluido el abstracto y el literario.",
+      "El estilo (cómo) comunica tanto como el contenido (qué).",
+      "Leer como escritor multiplica lo que captas.",
+    ],
+  },
+
+  "ora-adaptar": {
+    intro:
+      "La cumbre del habla: adaptar el lenguaje al contexto con total sutileza. Decir sin decir, insinuar, suavizar, bromear con tacto. En C2 manejas la implicatura y el tono como un hablante competente, sin esfuerzo aparente.",
+    goal: "adaptar registro, tono e implicatura al contexto con sutileza.",
+    sections: [
+      {
+        h: "Implicatura: decir sin decir",
+        tldr: "Comunicas más de lo que las palabras afirman.",
+        examples: [
+          { en: "It's getting late… (= deberíamos irnos)", es: "insinúas sin ordenar." },
+          { en: "That's… an interesting choice. (posible crítica velada)", es: "el tono marca lo implícito." },
+        ],
+      },
+      {
+        h: "Diplomacia y agilidad de registro",
+        tldr: "Cambias de tono al vuelo según con quién hablas.",
+        bullets: [
+          "Suavizar malas noticias: 'I'm afraid there might be a slight issue…'.",
+          "Del humor con amigos a la formalidad con un cliente en segundos.",
+          "El tono y la elección de palabras hacen el trabajo fino, no el volumen.",
+        ],
+        tip: "La sutileza es cultural: observa cómo los nativos rechazan, critican o piden favores 'de lado'. La forma indirecta suele ser la más eficaz.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "«It's getting late…» en una visita suele implicar…",
+        options: ["que quieres saber la hora", "que sugieres terminar/irse", "que tienes sueño literal"],
+        answer: 1,
+        why: "Implicatura: se sugiere terminar sin decirlo directamente.",
+      },
+      {
+        kind: "choice",
+        q: "Dar una mala noticia con tacto en inglés suena como…",
+        options: [
+          "There's a huge problem, your fault.",
+          "I'm afraid there might be a slight issue…",
+          "This is bad.",
+        ],
+        answer: 1,
+        why: "Suavizar con 'I'm afraid… might… slight' es diplomacia de registro.",
+      },
+    ],
+    activity: {
+      title: "Di lo mismo de tres formas",
+      steps: [
+        "Elige un mensaje delicado (rechazar una invitación, criticar una idea).",
+        "Exprésalo de tres formas: directa, diplomática e implícita.",
+        "Decide cuál usarías con un amigo, un jefe y un desconocido.",
+      ],
+    },
+    selfCheck: [
+      "Uso la implicatura para sugerir sin afirmar.",
+      "Suavizo mensajes delicados con diplomacia.",
+      "Cambio de registro y tono al vuelo según el contexto.",
+    ],
+    summary: [
+      "C2 adapta registro, tono e implicatura con sutileza.",
+      "La implicatura comunica más de lo que se dice.",
+      "La forma indirecta suele ser la más eficaz y elegante.",
+    ],
+  },
+
+  "esc-estilo": {
+    intro:
+      "Escribir con estilo es tener voz: que un texto tuyo se reconozca, se adecúe a su género y logre un efecto buscado. En C2 no solo escribes correcto y claro: escribes bien, con intención estética y control del registro.",
+    goal: "escribir con voz propia, adecuación de género y recursos de estilo.",
+    sections: [
+      {
+        h: "Voz y adecuación al género",
+        tldr: "Cada género pide un tono; tu voz lo habita sin romperlo.",
+        bullets: [
+          "Un artículo de opinión, un relato y un informe tienen 'reglas' de tono distintas.",
+          "La voz propia se nota en el ritmo, la elección léxica y el punto de vista.",
+          "Adecuar el registro no es borrar tu voz: es afinarla al contexto.",
+        ],
+      },
+      {
+        h: "Recursos y economía",
+        tldr: "El buen estilo suele ser claridad + ritmo + concisión.",
+        examples: [
+          { en: "Vary sentence length for rhythm.", es: "alterna frases largas y cortas." },
+          { en: "Cut every word that doesn't earn its place.", es: "edita: menos es más." },
+        ],
+        more: [
+          "Recursos: metáfora medida, paralelismo, contraste, la frase corta de remate.",
+          "Evita el exceso: el adorno que no aporta, resta. La contención es estilo.",
+        ],
+        tip: "Escribe, luego recorta. La mayoría de los textos mejoran quitando el 20% de las palabras. Editar es donde nace el estilo.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Adecuar el registro a un género significa…",
+        options: [
+          "escribir siempre igual",
+          "afinar tono y forma al contexto sin perder tu voz",
+          "usar las palabras más largas",
+        ],
+        answer: 1,
+        why: "Adecuación = ajustar al género conservando voz propia.",
+      },
+      {
+        kind: "choice",
+        q: "Un principio central del buen estilo es…",
+        options: [
+          "añadir cuantos más adornos mejor",
+          "claridad, ritmo y concisión (cortar lo que no aporta)",
+          "usar solo frases largas",
+        ],
+        answer: 1,
+        why: "La economía y el ritmo son núcleo del estilo eficaz.",
+      },
+      {
+        kind: "choice",
+        q: "Alternar frases largas y cortas sirve para…",
+        options: ["confundir al lector", "crear ritmo y énfasis", "alargar el texto"],
+        answer: 1,
+        why: "La variación de longitud crea ritmo y controla el énfasis.",
+      },
+    ],
+    activity: {
+      title: "Edita para dar estilo",
+      steps: [
+        "Escribe un párrafo sobre un tema libre.",
+        "Recórtalo un 20% sin perder sentido.",
+        "Alterna una frase corta de remate al final y compara el efecto.",
+      ],
+    },
+    selfCheck: [
+      "Adecúo tono y forma al género conservando mi voz.",
+      "Uso recursos de estilo con medida.",
+      "Edito para lograr claridad, ritmo y concisión.",
+    ],
+    summary: [
+      "Estilo = voz propia + adecuación al género + efecto buscado.",
+      "Claridad, ritmo y concisión son el núcleo.",
+      "Editar (recortar) es donde nace el estilo.",
+    ],
+  },
+
+  "cul-intercultural": {
+    intro:
+      "La competencia intercultural crítica es la maestría cultural: no solo conocer 'la cultura anglosajona', sino mediar entre culturas con conciencia de tus propios sesgos, sin caer en estereotipos. Es ver la lengua como una ventana a muchas formas de pensar.",
+    goal: "mediar entre culturas con conciencia crítica y sin estereotipos.",
+    sections: [
+      {
+        h: "Más allá del estereotipo",
+        tldr: "No hay 'una' cultura anglosajona: hay variedad y matices.",
+        body: [
+          "El inglés es lengua materna y franca de cientos de millones de personas con culturas muy distintas. Generalizar ('los ingleses son…') falsea la realidad; la mirada crítica reconoce la diversidad interna.",
+        ],
+      },
+      {
+        h: "Conciencia de los propios sesgos",
+        tldr: "Interpretas al otro desde tu cultura sin darte cuenta.",
+        bullets: [
+          "Lo que en una cultura es cortesía, en otra puede ser distancia o excesiva franqueza.",
+          "Mediar es explicar esos matices en ambas direcciones.",
+          "La humildad cultural (asumir que no lo sabes todo) evita malentendidos.",
+        ],
+        tip: "Ante un choque cultural, pregunta antes de juzgar: '¿es esto lo habitual aquí?'. La curiosidad respetuosa es la clave de la competencia intercultural.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "La competencia intercultural crítica implica…",
+        options: [
+          "memorizar reglas de 'la cultura inglesa'",
+          "reconocer la diversidad y tus propios sesgos, sin estereotipar",
+          "adoptar por completo otra cultura",
+        ],
+        answer: 1,
+        why: "Es conciencia crítica de la diversidad y de los sesgos propios.",
+      },
+      {
+        kind: "choice",
+        q: "Ante un comportamiento cultural que te choca, lo más maduro es…",
+        options: [
+          "juzgarlo desde tu cultura",
+          "preguntar y contextualizar antes de juzgar",
+          "asumir que está mal",
+        ],
+        answer: 1,
+        why: "La curiosidad respetuosa evita malentendidos y estereotipos.",
+      },
+    ],
+    activity: {
+      title: "Puente cultural",
+      steps: [
+        "Piensa en un malentendido cultural (real o posible) entre tu cultura y una angloparlante.",
+        "Explícalo en inglés desde AMBOS puntos de vista, sin juzgar.",
+        "Propón cómo lo mediarías para que las dos partes se entiendan.",
+      ],
+    },
+    selfCheck: [
+      "Reconozco la diversidad interna de las culturas angloparlantes.",
+      "Soy consciente de mis propios sesgos culturales.",
+      "Medio entre culturas explicando matices en ambas direcciones.",
+    ],
+    summary: [
+      "No hay 'una' cultura anglosajona: cuidado con el estereotipo.",
+      "Interpretamos al otro desde nuestra cultura: sé consciente del sesgo.",
+      "Mediar con humildad y curiosidad es la maestría cultural.",
+    ],
+  },
+
+  "hito-c2": {
+    intro:
+      "¡Hito final: maestría! C2 significa que comprendes prácticamente todo lo que lees y oyes sin esfuerzo, te expresas con espontaneidad, precisión y matices sutiles, y reconstruyes ideas de fuentes diversas con coherencia. Has recorrido el árbol entero.",
+    goal: "confirmar la maestría del idioma en todas sus competencias.",
+    sections: [
+      {
+        h: "¿Qué puedes hacer ya? (descriptores CEFR C2)",
+        tldr: "Dominio casi total: comprendes todo y te expresas con matiz.",
+        bullets: [
+          "Comprendes con facilidad prácticamente todo lo que lees u oyes.",
+          "Resumes y reconstruyes información de fuentes diversas de forma coherente.",
+          "Te expresas espontáneamente, con gran fluidez y precisión, matizando significados incluso en situaciones complejas.",
+        ],
+      },
+      {
+        h: "El aprendizaje no termina",
+        tldr: "La maestría se mantiene usando la lengua, no guardándola.",
+        body: [
+          "Incluso los nativos siguen aprendiendo palabras y matices toda su vida. Mantener C2 es seguir leyendo, escuchando, hablando y escribiendo sobre temas cada vez más variados.",
+        ],
+        tip: "Ahora usa el idioma como herramienta para otra cosa que te apasione: estudia, trabaja o crea EN inglés. El mejor mantenimiento es vivir en la lengua.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Matiz: para HALAGAR que alguien es delgado…",
+        options: ["skinny", "slender", "scrawny"],
+        answer: 1,
+        why: "'slender/slim' tienen connotación positiva; 'skinny/scrawny', negativa.",
+      },
+      {
+        kind: "choice",
+        q: "«It's getting late…» en una visita implica…",
+        options: ["preguntar la hora", "sugerir terminar la visita", "hablar del reloj"],
+        answer: 1,
+        why: "Implicatura: sugerir sin decirlo directamente.",
+      },
+      {
+        kind: "choice",
+        q: "La competencia intercultural crítica evita…",
+        options: ["la diversidad", "los estereotipos y el sesgo no consciente", "el inglés formal"],
+        answer: 1,
+        why: "Reconoce diversidad y sesgos propios, sin estereotipar.",
+      },
+      {
+        kind: "choice",
+        q: "El mejor modo de MANTENER un C2 es…",
+        options: [
+          "dejar de practicar, ya está dominado",
+          "seguir usando la lengua para cosas que te importan",
+          "repasar solo gramática básica",
+        ],
+        answer: 1,
+        why: "La maestría se mantiene viviendo en la lengua, no guardándola.",
+      },
+    ],
+    activity: {
+      title: "Vive en inglés",
+      steps: [
+        "Elige un proyecto real que harás EN inglés (un curso, un blog, un club de lectura).",
+        "Define cómo el inglés será la herramienta, no el objetivo.",
+        "Empieza hoy: la maestría se mantiene usándola.",
+      ],
+    },
+    selfCheck: [
+      "Comprendo casi todo lo que leo y oigo sin esfuerzo.",
+      "Me expreso con precisión, matiz y espontaneidad.",
+      "Reconstruyo información de fuentes diversas con coherencia.",
+      "Uso el inglés como herramienta para otras metas.",
+    ],
+    summary: [
+      "C2 = maestría: comprensión casi total y expresión con matiz.",
+      "El aprendizaje no termina; se mantiene usando la lengua.",
+      "Vive en inglés: que sea la herramienta, no el objetivo.",
+    ],
+  },
 };

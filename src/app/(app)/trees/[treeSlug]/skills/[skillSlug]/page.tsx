@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BookOpen, Clock, ExternalLink, Sparkles } from "lucide-react";
+import { BookOpen, Clock, ExternalLink, Lock, Sparkles } from "lucide-react";
 
 import { auth } from "@/auth";
 import { Alert } from "@/components/ui/alert";
@@ -94,9 +94,10 @@ export default async function SkillPage({
 
   const missing = skill.prerequisites
     .filter((p) => !completed.has(p.prerequisiteId))
-    .map((p) => p.prerequisite.title);
+    .map((p) => ({ slug: p.prerequisite.slug, title: p.prerequisite.title }));
 
   const content = (skill.content ?? {}) as SkillContent;
+  const isLocked = state === "locked";
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-10">
@@ -131,13 +132,51 @@ export default async function SkillPage({
         <Badge variant="neutral">
           <Clock className="size-3.5" /> {skill.estimatedMinutes} min
         </Badge>
-        {content.lesson && <Badge variant="growth">Lección interactiva</Badge>}
+        {content.lesson && !isLocked && (
+          <Badge variant="growth">Lección interactiva</Badge>
+        )}
+        {isLocked && (
+          <Badge variant="neutral">
+            <Lock className="size-3" /> Bloqueada
+          </Badge>
+        )}
         {state === "completed" && <Badge variant="growth">Completada ✓</Badge>}
       </div>
 
       <p className="text-muted-foreground mt-5">{skill.description}</p>
 
-      {content.lesson ? (
+      {isLocked ? (
+        // Vista previa: se puede descubrir la habilidad (qué aprenderás y qué
+        // desbloquear), pero la lección completa queda reservada.
+        <div className="mt-6 space-y-4">
+          <Alert variant="info">
+            <span className="flex items-start gap-2">
+              <Lock className="mt-0.5 size-4 shrink-0" />
+              <span>
+                Esta es una <strong>vista previa</strong>. Desbloquea la lección
+                completa cuando termines los requisitos de más abajo.
+              </span>
+            </span>
+          </Alert>
+          {(content.lesson?.goal || content.lesson?.intro) && (
+            <div className="border-primary/30 bg-primary/5 rounded-xl border p-5">
+              <h2 className="flex items-center gap-2 text-sm font-semibold tracking-wide uppercase">
+                <Sparkles className="size-4" /> Qué aprenderás
+              </h2>
+              {content.lesson?.goal && (
+                <p className="text-primary mt-2 text-sm font-medium">
+                  Al terminar podrás: {content.lesson.goal}
+                </p>
+              )}
+              {content.lesson?.intro && (
+                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                  {content.lesson.intro}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      ) : content.lesson ? (
         <SkillLesson lesson={content.lesson} />
       ) : (
         <Alert variant="info" className="mt-6">
@@ -240,8 +279,22 @@ export default async function SkillPage({
         {state === "available" && <CompleteSkillButton skillId={skill.id} />}
         {state === "locked" && (
           <Alert variant="info">
-            Esta habilidad está bloqueada. Antes debes completar:{" "}
-            <strong>{missing.join(", ")}</strong>.
+            <span className="flex items-center gap-2 font-medium">
+              <Lock className="size-4 shrink-0" /> Para desbloquear esta
+              habilidad, antes completa:
+            </span>
+            <ul className="mt-2 space-y-1">
+              {missing.map((p) => (
+                <li key={p.slug}>
+                  <Link
+                    href={`/trees/${treeSlug}/skills/${p.slug}`}
+                    className="text-primary hover:underline"
+                  >
+                    → {p.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Alert>
         )}
       </div>
