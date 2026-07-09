@@ -2,17 +2,24 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BookOpen, Clock, ExternalLink, Lock, Sparkles } from "lucide-react";
+import {
+  BookOpen,
+  ChevronRight,
+  Clock,
+  ExternalLink,
+  Lock,
+  Sparkles,
+} from "lucide-react";
 
 import { auth } from "@/auth";
 import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { getSkill } from "@/modules/catalog/services";
+import { getSkill, getTreeBySlug } from "@/modules/catalog/services";
 import { getCompletedSkillIds } from "@/modules/progress/services";
 import { isUnlocked } from "@/modules/skill-tree/state";
 import { CompleteSkillButton } from "@/modules/progress/components/complete-skill-button";
-import { SkillLesson, type Lesson } from "@/modules/skill-tree/lesson";
+import { LessonPlayer, type Lesson } from "@/modules/skill-tree/lesson";
 
 export async function generateMetadata({
   params,
@@ -64,6 +71,30 @@ interface SkillContent {
   lesson?: Lesson;
 }
 
+/** Acordeón: mantiene fuera de la vista el texto largo hasta que se pide. */
+function Accordion({
+  title,
+  icon,
+  children,
+}: {
+  title: string;
+  icon?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <details className="group border-border mt-3 rounded-xl border">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-4 py-3 text-sm font-semibold">
+        <span className="flex items-center gap-2">
+          {icon}
+          {title}
+        </span>
+        <ChevronRight className="text-muted-foreground size-4 transition-transform group-open:rotate-90" />
+      </summary>
+      <div className="px-4 pb-4">{children}</div>
+    </details>
+  );
+}
+
 export default async function SkillPage({
   params,
 }: {
@@ -99,6 +130,64 @@ export default async function SkillPage({
   const content = (skill.content ?? {}) as SkillContent;
   const isLocked = state === "locked";
 
+  // Siguiente hoja sugerida: la que se desbloquea al completar ésta.
+  let next: { href: string; title: string } | null = null;
+  const tree = await getTreeBySlug(treeSlug);
+  if (tree) {
+    const completedPlus = new Set(completed);
+    completedPlus.add(skill.id);
+    const candidates = tree.skills
+      .filter((s) => s.id !== skill.id && !completed.has(s.id))
+      .filter((s) =>
+        isUnlocked(
+          {
+            id: s.id,
+            isRoot: s.isRoot,
+            prerequisites: s.prerequisites.map((p) => ({
+              prerequisiteId: p.prerequisiteId,
+              group: p.group,
+            })),
+          },
+          completedPlus,
+        ),
+      )
+      .sort((a, b) => a.order - b.order);
+    const pickNext =
+      candidates.find((s) => s.order > skill.order) ?? candidates[0];
+    if (pickNext)
+      next = {
+        href: `/trees/${treeSlug}/skills/${pickNext.slug}`,
+        title: pickNext.title,
+      };
+  }
+
+  // Filas de la ficha pedagógica (referencia, en acordeón).
+  const fichaRows: { h: string; body: ReactNode }[] = [];
+  const list = (items?: string[]) =>
+    items && items.length ? (
+      <ul className="list-disc space-y-1 pl-5">
+        {items.map((x, i) => (
+          <li key={i}>{x}</li>
+        ))}
+      </ul>
+    ) : null;
+  if (skill.objective)
+    fichaRows.push({ h: "Objetivo de aprendizaje", body: skill.objective });
+  if (content.competency)
+    fichaRows.push({ h: "Competencia que adquieres", body: content.competency });
+  if (content.rationale)
+    fichaRows.push({ h: "Por qué existe (y aquí)", body: content.rationale });
+  if (content.masteryCriteria?.length)
+    fichaRows.push({
+      h: "Criterios de dominio",
+      body: list(content.masteryCriteria),
+    });
+  if (content.commonErrors?.length)
+    fichaRows.push({
+      h: "Errores frecuentes",
+      body: list(content.commonErrors),
+    });
+
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-10">
       <Link
@@ -132,22 +221,19 @@ export default async function SkillPage({
         <Badge variant="neutral">
           <Clock className="size-3.5" /> {skill.estimatedMinutes} min
         </Badge>
-        {content.lesson && !isLocked && (
-          <Badge variant="growth">Lección interactiva</Badge>
-        )}
         {isLocked && (
           <Badge variant="neutral">
             <Lock className="size-3" /> Bloqueada
           </Badge>
         )}
-        {state === "completed" && <Badge variant="growth">Completada ✓</Badge>}
+        {state === "completed" && (
+          <Badge variant="growth">Completada ✓</Badge>
+        )}
       </div>
 
       <p className="text-muted-foreground mt-5">{skill.description}</p>
 
       {isLocked ? (
-        // Vista previa: se puede descubrir la habilidad (qué aprenderás y qué
-        // desbloquear), pero la lección completa queda reservada.
         <div className="mt-6 space-y-4">
           <Alert variant="info">
             <span className="flex items-start gap-2">
@@ -165,7 +251,7 @@ export default async function SkillPage({
               </h2>
               {content.lesson?.goal && (
                 <p className="text-primary mt-2 text-sm font-medium">
-                  Al terminar podrás: {content.lesson.goal}
+                  Al terminar podrás {content.lesson.goal}
                 </p>
               )}
               {content.lesson?.intro && (
@@ -175,109 +261,6 @@ export default async function SkillPage({
               )}
             </div>
           )}
-        </div>
-      ) : content.lesson ? (
-        <SkillLesson lesson={content.lesson} />
-      ) : (
-        <Alert variant="info" className="mt-6">
-          El contenido interactivo de esta habilidad está en preparación.
-          Debajo tienes su ficha pedagógica y recursos para empezar a trabajarla.
-        </Alert>
-      )}
-
-      {(() => {
-        const c = content;
-        const hasLesson = !!c.lesson;
-        const list = (items?: string[]) =>
-          items && items.length ? (
-            <ul className="list-disc space-y-1 pl-5">
-              {items.map((x, i) => (
-                <li key={i}>{x}</li>
-              ))}
-            </ul>
-          ) : null;
-        const rows: { h: string; body: ReactNode }[] = [];
-        if (skill.objective)
-          rows.push({ h: "Objetivo de aprendizaje", body: skill.objective });
-        if (c.competency)
-          rows.push({ h: "Competencia que adquieres", body: c.competency });
-        if (c.rationale)
-          rows.push({ h: "Por qué existe (y aquí)", body: c.rationale });
-        if (c.masteryCriteria?.length)
-          rows.push({
-            h: "Criterios de dominio",
-            body: list(c.masteryCriteria),
-          });
-        if (c.commonErrors?.length)
-          rows.push({ h: "Errores frecuentes", body: list(c.commonErrors) });
-        // Cuando hay lección, sus ejercicios/actividad sustituyen a las sugerencias.
-        if (!hasLesson && c.exercises?.length)
-          rows.push({ h: "Ejercicios sugeridos", body: list(c.exercises) });
-        if (!hasLesson && c.assessments?.length)
-          rows.push({ h: "Cómo se evalúa", body: list(c.assessments) });
-        if (rows.length === 0) return null;
-        return (
-          <div className="mt-8">
-            <h2 className="mb-3 text-lg font-semibold">Ficha pedagógica</h2>
-            <div className="space-y-4">
-              {rows.map((r, i) => (
-                <div key={i}>
-                  <h3 className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
-                    {r.h}
-                  </h3>
-                  <div className="mt-1 text-sm">{r.body}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      })()}
-
-      {/* Recursos */}
-      <h2 className="mt-8 mb-3 flex items-center gap-2 text-lg font-semibold">
-        <BookOpen className="size-5" /> Recursos
-      </h2>
-      {skill.resources.length === 0 ? (
-        <p className="text-muted-foreground text-sm">
-          Aún no hay recursos para esta habilidad.
-        </p>
-      ) : (
-        <div className="space-y-2">
-          {skill.resources.map((r) => (
-            <a
-              key={r.id}
-              href={r.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block"
-            >
-              <Card className="hover:border-primary transition-colors">
-                <CardContent className="flex items-center justify-between gap-3 py-3">
-                  <div>
-                    <div className="text-sm font-medium">{r.title}</div>
-                    <div className="text-muted-foreground text-xs">
-                      {RESOURCE_LABEL[r.type] ?? "Recurso"}
-                      {r.provider ? ` · ${r.provider}` : ""}
-                      {r.durationMinutes ? ` · ${r.durationMinutes} min` : ""}
-                    </div>
-                  </div>
-                  <ExternalLink className="text-muted-foreground size-4 shrink-0" />
-                </CardContent>
-              </Card>
-            </a>
-          ))}
-        </div>
-      )}
-
-      {/* Acción */}
-      <div className="mt-8">
-        {state === "completed" && (
-          <Alert variant="success">
-            Ya completaste esta habilidad. ¡Bien hecho! 🌱
-          </Alert>
-        )}
-        {state === "available" && <CompleteSkillButton skillId={skill.id} />}
-        {state === "locked" && (
           <Alert variant="info">
             <span className="flex items-center gap-2 font-medium">
               <Lock className="size-4 shrink-0" /> Para desbloquear esta
@@ -296,8 +279,78 @@ export default async function SkillPage({
               ))}
             </ul>
           </Alert>
-        )}
-      </div>
+        </div>
+      ) : content.lesson ? (
+        <LessonPlayer
+          lesson={content.lesson}
+          meta={{
+            title: skill.title,
+            xpReward: skill.xpReward,
+            rationale: content.rationale,
+            goal: content.lesson.goal,
+          }}
+          skillId={skill.id}
+          treeSlug={treeSlug}
+          next={next}
+          alreadyCompleted={state === "completed"}
+        />
+      ) : (
+        <div className="mt-6 space-y-3">
+          <Alert variant="info">
+            El contenido interactivo de esta habilidad está en preparación.
+          </Alert>
+          <CompleteSkillButton skillId={skill.id} />
+        </div>
+      )}
+
+      {/* Material de referencia, plegado para no saturar. */}
+      {fichaRows.length > 0 && (
+        <Accordion title="Ficha pedagógica">
+          <div className="space-y-4">
+            {fichaRows.map((r, i) => (
+              <div key={i}>
+                <h3 className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+                  {r.h}
+                </h3>
+                <div className="mt-1 text-sm">{r.body}</div>
+              </div>
+            ))}
+          </div>
+        </Accordion>
+      )}
+
+      {skill.resources.length > 0 && (
+        <Accordion
+          title={`Recursos (${skill.resources.length})`}
+          icon={<BookOpen className="size-4" />}
+        >
+          <div className="space-y-2">
+            {skill.resources.map((r) => (
+              <a
+                key={r.id}
+                href={r.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <Card className="hover:border-primary transition-colors">
+                  <CardContent className="flex items-center justify-between gap-3 py-3">
+                    <div>
+                      <div className="text-sm font-medium">{r.title}</div>
+                      <div className="text-muted-foreground text-xs">
+                        {RESOURCE_LABEL[r.type] ?? "Recurso"}
+                        {r.provider ? ` · ${r.provider}` : ""}
+                        {r.durationMinutes ? ` · ${r.durationMinutes} min` : ""}
+                      </div>
+                    </div>
+                    <ExternalLink className="text-muted-foreground size-4 shrink-0" />
+                  </CardContent>
+                </Card>
+              </a>
+            ))}
+          </div>
+        </Accordion>
+      )}
     </div>
   );
 }
