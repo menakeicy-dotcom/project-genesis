@@ -290,6 +290,7 @@ export default async function SkillPage({
             goal: content.lesson.goal,
           }}
           skillId={skill.id}
+          skillSlug={skill.slug}
           treeSlug={treeSlug}
           next={next}
           alreadyCompleted={state === "completed"}

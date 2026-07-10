@@ -39,14 +39,37 @@ export default async function ExplorePage() {
           const inner = (
             <Card
               className={
-                available
-                  ? "hover:border-primary h-full transition-colors"
-                  : "h-full opacity-70"
+                "group relative h-full overflow-hidden transition-all " +
+                (available
+                  ? "hover:-translate-y-0.5 hover:shadow-lg"
+                  : "opacity-80")
               }
             >
+              {/* Acento de identidad: franja superior con el degradado propio. */}
+              <div
+                className="h-1.5 w-full"
+                style={{
+                  background: `linear-gradient(90deg, ${d.accent.from}, ${d.accent.to})`,
+                }}
+                aria-hidden
+              />
+              {/* Halo sutil del color al pasar el ratón. */}
+              <div
+                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{
+                  background: `radial-gradient(120% 80% at 15% 0%, ${d.accent.from}22, transparent 60%)`,
+                }}
+                aria-hidden
+              />
               <CardHeader>
                 <div className="mb-2 flex items-start justify-between">
-                  <span className="text-4xl" aria-hidden>
+                  <span
+                    className="flex size-12 items-center justify-center rounded-2xl text-2xl shadow-sm"
+                    style={{
+                      background: `linear-gradient(135deg, ${d.accent.from}, ${d.accent.to})`,
+                    }}
+                    aria-hidden
+                  >
                     {d.icon}
                   </span>
                   <Badge variant={meta.tone}>
@@ -55,9 +78,17 @@ export default async function ExplorePage() {
                   </Badge>
                 </div>
                 <CardTitle className="text-lg">{d.name}</CardTitle>
-                <CardDescription>{d.description}</CardDescription>
+                <p
+                  className="text-xs font-semibold tracking-wide uppercase"
+                  style={{ color: d.accent.to }}
+                >
+                  {d.tagline}
+                </p>
+                <CardDescription className="mt-1">
+                  {d.description}
+                </CardDescription>
                 {available && trees > 0 && (
-                  <p className="text-muted-foreground mt-1 text-xs">
+                  <p className="text-foreground mt-2 text-xs font-medium">
                     {trees} {trees === 1 ? "árbol" : "árboles"} · empieza ahora →
                   </p>
                 )}

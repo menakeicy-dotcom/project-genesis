@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Flame, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  Clock,
+  Flame,
+  GraduationCap,
+  Sparkles,
+  Target,
+} from "lucide-react";
 
 import { auth } from "@/auth";
 import { buttonVariants } from "@/components/ui/button";
+import { HowItWorks } from "@/modules/onboarding/how-it-works";
 import {
   Card,
   CardContent,
@@ -18,6 +26,15 @@ import { hasSeenWelcome } from "@/modules/onboarding/services";
 import { WelcomeGate } from "@/modules/onboarding/welcome";
 
 export const metadata: Metadata = { title: "Panel" };
+
+/** Formatea minutos como "45 min" o "2 h 10 min". */
+function fmtTime(min: number): string {
+  if (min <= 0) return "0 min";
+  if (min < 60) return `${min} min`;
+  const h = Math.floor(min / 60);
+  const m = min % 60;
+  return m ? `${h} h ${m} min` : `${h} h`;
+}
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -39,7 +56,8 @@ export default async function DashboardPage() {
             Sigue haciendo crecer tu árbol de aprendizaje.
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
+          <HowItWorks autoOpen={seenWelcome} />
           <Badge variant="primary">
             <Sparkles className="size-3.5" /> Nivel {data.level}
           </Badge>
@@ -61,6 +79,66 @@ export default async function DashboardPage() {
           <ProgressBar value={data.pct} />
         </CardContent>
       </Card>
+
+      {/* Estadísticas rápidas */}
+      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {[
+          {
+            icon: <Sparkles className="size-4" />,
+            label: "XP total",
+            value: data.totalXp,
+          },
+          {
+            icon: <GraduationCap className="size-4" />,
+            label: "Habilidades",
+            value: data.completedSkills,
+          },
+          {
+            icon: <Clock className="size-4" />,
+            label: "Tiempo",
+            value: fmtTime(data.minutes),
+          },
+          {
+            icon: <Flame className="size-4" />,
+            label: "Racha",
+            value: `${data.streak} d`,
+          },
+        ].map((s) => (
+          <Card key={s.label}>
+            <CardContent className="py-4">
+              <div className="text-muted-foreground flex items-center gap-1.5 text-xs">
+                {s.icon}
+                {s.label}
+              </div>
+              <div className="mt-1 text-xl font-bold">{s.value}</div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Próximo objetivo recomendado */}
+      {data.nextObjective && (
+        <Link href={data.nextObjective.href} className="mt-4 block">
+          <Card className="hover:border-primary border-primary/30 bg-primary/5 transition-colors">
+            <CardContent className="flex items-center justify-between gap-3 py-4">
+              <div className="flex items-center gap-3">
+                <span className="bg-primary/15 text-primary flex size-10 items-center justify-center rounded-xl">
+                  <Target className="size-5" />
+                </span>
+                <div>
+                  <div className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+                    Tu próximo objetivo
+                  </div>
+                  <div className="text-sm font-medium">
+                    {data.nextObjective.title}
+                  </div>
+                </div>
+              </div>
+              <ArrowRight className="text-primary size-5 shrink-0" />
+            </CardContent>
+          </Card>
+        </Link>
+      )}
 
       {/* Tus árboles */}
       <div className="mt-8 flex items-center justify-between">

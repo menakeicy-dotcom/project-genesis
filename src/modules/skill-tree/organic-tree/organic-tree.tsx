@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion, useReducedMotion } from "framer-motion";
 
 import type { NodeState } from "@/modules/skill-tree/state";
 import {
@@ -187,11 +188,15 @@ function paint(
 export function OrganicTree({
   nodes,
   treeSlug,
+  grew,
 }: {
   nodes: OrganicTreeNode[];
   treeSlug: string;
+  /** Slug de la habilidad recién completada, para celebrar su hoja. */
+  grew?: string;
 }) {
   const router = useRouter();
+  const reduce = useReducedMotion();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
   const [dark, setDark] = useState(true);
@@ -239,6 +244,7 @@ export function OrganicTree({
   return (
     <div
       ref={boxRef}
+      data-testid="organic-tree"
       className="relative w-full overflow-hidden rounded-2xl"
       style={{
         aspectRatio: `${VW} / ${VH}`,
@@ -252,8 +258,8 @@ export function OrganicTree({
         aria-hidden="true"
       />
 
-      {/* Overlay interactivo: cada habilidad es una hoja sobre la copa. */}
-      {placed.map(({ node, at }) => {
+      {/* Overlay interactivo: cada habilidad es una hoja que brota sobre la copa. */}
+      {placed.map(({ node, at }, idx) => {
         const left = (at.x / VW) * 100;
         const top = (at.y / VH) * 100;
         const cls =
@@ -262,18 +268,39 @@ export function OrganicTree({
             : node.state === "available"
               ? "ot-leaf ot-open"
               : "ot-leaf ot-locked";
+        const isGrew = grew != null && node.slug === grew;
         return (
-          <button
+          <motion.button
             key={node.id}
             type="button"
             title={node.title}
             aria-label={node.title}
-            onClick={() =>
-              router.push(`/trees/${treeSlug}/skills/${node.slug}`)
-            }
+            onClick={() => router.push(`/trees/${treeSlug}/skills/${node.slug}`)}
             className={cls}
             style={{ left: `${left}%`, top: `${top}%` }}
-          />
+            initial={reduce ? false : { scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={
+              reduce
+                ? { duration: 0 }
+                : isGrew
+                  ? { type: "spring", stiffness: 260, damping: 12, delay: 0.15 }
+                  : {
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 20,
+                      delay: Math.min(1.2, idx * 0.02),
+                    }
+            }
+          >
+            {/* Celebración: anillos de luz verde en la hoja recién completada. */}
+            {isGrew && !reduce && (
+              <>
+                <span className="ot-ring" />
+                <span className="ot-ring ot-ring2" />
+              </>
+            )}
+          </motion.button>
         );
       })}
 
@@ -285,8 +312,11 @@ export function OrganicTree({
         .ot-locked::after{background:rgba(200,220,205,.28)}
         .ot-leaf:hover::after{transform:scale(1.55)}
         .ot-leaf:focus-visible{outline:2px solid #86e0a0;outline-offset:2px;border-radius:50%}
+        .ot-ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(140,240,170,.9);animation:otRing 1.6s ease-out infinite}
+        .ot-ring2{animation-delay:.5s}
         @keyframes otPulse{0%,100%{box-shadow:0 0 10px 3px rgba(140,240,170,.45)}50%{box-shadow:0 0 18px 6px rgba(140,240,170,.85)}}
-        @media (prefers-reduced-motion: reduce){.ot-open::after{animation:none}}
+        @keyframes otRing{0%{transform:scale(1);opacity:.9}100%{transform:scale(4.5);opacity:0}}
+        @media (prefers-reduced-motion: reduce){.ot-open::after{animation:none}.ot-ring{display:none}}
       `}</style>
     </div>
   );

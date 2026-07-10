@@ -19,6 +19,9 @@ export interface Discipline {
   name: string;
   description: string;
   status: DisciplineStatus;
+  /** Identidad visual: degradado propio (from → to) y una frase que la define. */
+  accent: { from: string; to: string };
+  tagline: string;
 }
 
 /** Metadatos de presentación de cada estado (etiqueta + tono visual). */
@@ -43,6 +46,8 @@ export const DISCIPLINES: Discipline[] = [
     description:
       "Aprende idiomas como se adquieren de verdad: por competencias que crecen. Inglés de A1 a C2 ya disponible.",
     status: "available",
+    accent: { from: "#0ea5e9", to: "#14b8a6" },
+    tagline: "Habla con el mundo",
   },
   {
     slug: "programacion",
@@ -51,6 +56,8 @@ export const DISCIPLINES: Discipline[] = [
     description:
       "Del primer «Hello, world» a construir software real: lógica, lenguajes y buenas prácticas.",
     status: "soon",
+    accent: { from: "#6366f1", to: "#8b5cf6" },
+    tagline: "Crea con código",
   },
   {
     slug: "musica",
@@ -59,6 +66,8 @@ export const DISCIPLINES: Discipline[] = [
     description:
       "Teoría, oído, ritmo e instrumento: toca y comprende la música desde cero.",
     status: "soon",
+    accent: { from: "#a855f7", to: "#ec4899" },
+    tagline: "Suena a ti",
   },
   {
     slug: "arte-diseno",
@@ -67,6 +76,8 @@ export const DISCIPLINES: Discipline[] = [
     description:
       "Dibujo, color, composición y diseño digital para crear con intención.",
     status: "soon",
+    accent: { from: "#ec4899", to: "#f97316" },
+    tagline: "Da forma a tus ideas",
   },
   {
     slug: "cocina",
@@ -75,6 +86,8 @@ export const DISCIPLINES: Discipline[] = [
     description:
       "Técnicas, sabores y recetas: de lo básico a platos que impresionan.",
     status: "soon",
+    accent: { from: "#f97316", to: "#ef4444" },
+    tagline: "Cocina como un chef",
   },
   {
     slug: "negocios",
@@ -83,6 +96,8 @@ export const DISCIPLINES: Discipline[] = [
     description:
       "Modelos de negocio, finanzas y estrategia para lanzar y hacer crecer ideas.",
     status: "soon",
+    accent: { from: "#10b981", to: "#059669" },
+    tagline: "Convierte ideas en negocio",
   },
   {
     slug: "matematicas",
@@ -91,14 +106,18 @@ export const DISCIPLINES: Discipline[] = [
     description:
       "De la aritmética al cálculo: entender el porqué, no solo el cómo.",
     status: "soon",
+    accent: { from: "#8b5cf6", to: "#6366f1" },
+    tagline: "Piensa con lógica",
   },
   {
     slug: "ciencia",
-    icon: "🔬",
+    icon: "🧪",
     name: "Ciencia",
     description:
       "Física, química y biología con pensamiento científico y curiosidad.",
     status: "soon",
+    accent: { from: "#06b6d4", to: "#3b82f6" },
+    tagline: "Entiende el universo",
   },
   {
     slug: "salud-fitness",
@@ -107,6 +126,8 @@ export const DISCIPLINES: Discipline[] = [
     description:
       "Entrenamiento, nutrición y hábitos para un cuerpo y una mente fuertes.",
     status: "soon",
+    accent: { from: "#f43f5e", to: "#f97316" },
+    tagline: "Cuerpo y mente fuertes",
   },
   {
     slug: "fotografia-video",
@@ -115,5 +136,7 @@ export const DISCIPLINES: Discipline[] = [
     description:
       "Luz, encuadre y edición para contar historias con imágenes.",
     status: "soon",
+    accent: { from: "#f59e0b", to: "#eab308" },
+    tagline: "Captura la historia",
   },
 ];

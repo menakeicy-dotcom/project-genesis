@@ -5,7 +5,9 @@ import { Flame, Sparkles, Trophy } from "lucide-react";
 import { auth } from "@/auth";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ProgressBar } from "@/components/ui/progress-bar";
 import { getUserProfile } from "@/modules/progress/services";
+import { HowItWorks } from "@/modules/onboarding/how-it-works";
 
 export const metadata: Metadata = { title: "Perfil" };
 
@@ -31,16 +33,35 @@ export default async function ProfilePage() {
         <div className="bg-primary/10 text-primary flex size-16 items-center justify-center rounded-full text-2xl font-bold">
           {name.charAt(0).toUpperCase()}
         </div>
-        <div>
+        <div className="flex-1">
           <h1 className="text-2xl font-bold tracking-tight">{name}</h1>
           <p className="text-muted-foreground">
             Tu árbol de aprendizaje cuenta tu historia.
           </p>
         </div>
+        <HowItWorks />
       </div>
 
+      {/* Progreso global */}
+      <Card className="mt-8">
+        <CardContent className="pt-6">
+          <div className="mb-2 flex items-center justify-between text-sm">
+            <span className="font-medium">Progreso global</span>
+            <span className="text-muted-foreground">
+              {profile.completedSkills} habilidades ·{" "}
+              {profile.disciplinesStarted}{" "}
+              {profile.disciplinesStarted === 1 ? "disciplina" : "disciplinas"}
+            </span>
+          </div>
+          <ProgressBar
+            value={profile.overallPct}
+            tone={profile.overallPct === 100 ? "growth" : "primary"}
+          />
+        </CardContent>
+      </Card>
+
       {/* Estadísticas */}
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <Stat label="Nivel" value={profile.level} />
         <Stat label="XP total" value={profile.totalXp} />
         <Stat label="Racha (días)" value={profile.streak} />
@@ -72,15 +93,22 @@ export default async function ProfilePage() {
                   <span className="text-xl">{b.icon}</span> {b.name}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="text-muted-foreground flex gap-4 text-sm">
-                <span>
-                  <Flame className="text-growth mr-1 inline size-4" />
-                  {b.xp} XP
-                </span>
-                <span>{b.skills} habilidades</span>
-                <span>
-                  {b.trees} {b.trees === 1 ? "árbol" : "árboles"}
-                </span>
+              <CardContent>
+                <div className="text-muted-foreground mb-2 flex gap-4 text-sm">
+                  <span>
+                    <Flame className="text-growth mr-1 inline size-4" />
+                    {b.xp} XP
+                  </span>
+                  <span>
+                    {b.skills}/{b.total} habilidades
+                  </span>
+                </div>
+                <ProgressBar
+                  value={
+                    b.total > 0 ? Math.round((b.skills / b.total) * 100) : 0
+                  }
+                  tone={b.skills >= b.total && b.total > 0 ? "growth" : "primary"}
+                />
               </CardContent>
             </Card>
           ))}

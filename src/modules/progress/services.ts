@@ -120,6 +120,32 @@ export async function completeSkill(userId: string, skillId: string) {
 }
 
 /** Datos del panel principal del usuario. */
+/**
+ * Próximo objetivo recomendado: la primera habilidad disponible (desbloqueada y
+ * sin completar) del árbol indicado, en orden. Es el "qué hago ahora".
+ */
+async function nextObjectiveFor(
+  userId: string,
+  treeId: string,
+  treeSlug: string,
+): Promise<{ title: string; href: string } | null> {
+  const skills = await db.skill.findMany({
+    where: { treeId },
+    orderBy: { order: "asc" },
+    include: { prerequisites: true },
+  });
+  const completed = await completedSkillIds(userId, treeId);
+  const nextSkill = skills.find(
+    (s) => !completed.has(s.id) && isUnlocked(s, completed),
+  );
+  return nextSkill
+    ? {
+        title: nextSkill.title,
+        href: `/trees/${treeSlug}/skills/${nextSkill.slug}`,
+      }
+    : null;
+}
+
 export async function getUserDashboard(userId: string) {
   const enrollments = await db.userTreeEnrollment.findMany({
     where: { userId },
@@ -128,10 +154,33 @@ export async function getUserDashboard(userId: string) {
   });
 
   const totalXp = enrollments.reduce((sum, e) => sum + e.earnedXp, 0);
+  const completedSkills = enrollments.reduce(
+    (sum, e) => sum + e.completedSkills,
+    0,
+  );
+
+  // Tiempo estudiado ≈ minutos estimados de las habilidades completadas.
+  const done = await db.userSkillProgress.findMany({
+    where: { userId, status: "COMPLETED" },
+    select: { skill: { select: { estimatedMinutes: true } } },
+  });
+  const minutes = done.reduce(
+    (s, p) => s + (p.skill?.estimatedMinutes ?? 0),
+    0,
+  );
+
+  // Próximo objetivo: en el árbol con actividad más reciente.
+  const active = enrollments[0];
+  const nextObjective = active
+    ? await nextObjectiveFor(userId, active.treeId, active.tree.slug)
+    : null;
 
   return {
     enrollments,
     totalXp,
+    completedSkills,
+    minutes,
+    nextObjective,
     ...levelProgress(totalXp),
     streak: await currentStreak(userId),
   };
@@ -161,6 +210,7 @@ export async function getUserProfile(userId: string) {
       icon: string | null;
       xp: number;
       skills: number;
+      total: number;
       trees: number;
     }
   >();
@@ -171,10 +221,12 @@ export async function getUserProfile(userId: string) {
       icon: cat.icon,
       xp: 0,
       skills: 0,
+      total: 0,
       trees: 0,
     };
     branch.xp += e.earnedXp;
     branch.skills += e.completedSkills;
+    branch.total += e.totalSkills;
     branch.trees += 1;
     branchesMap.set(cat.id, branch);
   }
@@ -182,12 +234,18 @@ export async function getUserProfile(userId: string) {
   const streak = await currentStreak(userId);
   const level = levelForXp(totalXp);
 
+  const totalAll = enrollments.reduce((s, e) => s + e.totalSkills, 0);
+  const overallPct =
+    totalAll > 0 ? Math.round((completedSkills / totalAll) * 100) : 0;
+
   return {
     totalXp,
     level,
     streak,
     completedSkills,
     completedTrees,
+    disciplinesStarted: branchesMap.size,
+    overallPct,
     branches: [...branchesMap.values()].sort((a, b) => b.xp - a.xp),
     achievements: deriveAchievements({
       completedSkills,
@@ -235,6 +293,24 @@ function deriveAchievements(stats: {
       label: "Racha de 3 días",
       icon: "🔥",
       unlocked: stats.streak >= 3,
+    },
+    {
+      key: "twenty-five-skills",
+      label: "25 habilidades",
+      icon: "🍃",
+      unlocked: stats.completedSkills >= 25,
+    },
+    {
+      key: "level-10",
+      label: "Nivel 10",
+      icon: "🌟",
+      unlocked: stats.level >= 10,
+    },
+    {
+      key: "streak-7",
+      label: "Racha de 7 días",
+      icon: "⚡",
+      unlocked: stats.streak >= 7,
     },
   ];
 }

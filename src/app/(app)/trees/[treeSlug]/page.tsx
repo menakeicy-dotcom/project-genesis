@@ -22,10 +22,13 @@ export async function generateMetadata({
 
 export default async function TreePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ treeSlug: string }>;
+  searchParams: Promise<{ grew?: string }>;
 }) {
   const { treeSlug } = await params;
+  const { grew } = await searchParams;
   const tree = await getTreeBySlug(treeSlug);
   if (!tree) notFound();
 
@@ -92,7 +95,7 @@ export default async function TreePage({
         completas nuevas ramas.
       </p>
 
-      <OrganicTree nodes={nodes} treeSlug={tree.slug} />
+      <OrganicTree nodes={nodes} treeSlug={tree.slug} grew={grew} />
     </div>
   );
 }

@@ -49,6 +49,7 @@ export function LessonPlayer({
   lesson,
   meta,
   skillId,
+  skillSlug,
   treeSlug,
   next,
   alreadyCompleted,
@@ -56,6 +57,7 @@ export function LessonPlayer({
   lesson: Lesson;
   meta: PlayerMeta;
   skillId: string;
+  skillSlug: string;
   treeSlug: string;
   next: { href: string; title: string } | null;
   alreadyCompleted: boolean;
@@ -112,10 +114,14 @@ export function LessonPlayer({
   };
   const canContinue = step.kind !== "exercise" || exerciseResolved(step);
 
-  const finish = () => {
+  const finish = (toTree: boolean) => {
     startTransition(async () => {
       if (!alreadyCompleted) await completeSkillAction(skillId);
-      router.push(next?.href ?? `/trees/${treeSlug}`);
+      router.push(
+        toTree
+          ? `/trees/${treeSlug}?grew=${skillSlug}`
+          : (next?.href ?? `/trees/${treeSlug}?grew=${skillSlug}`),
+      );
       router.refresh();
     });
   };
@@ -213,19 +219,29 @@ export function LessonPlayer({
         </button>
 
         {step.kind === "finish" ? (
-          <button
-            type="button"
-            onClick={finish}
-            disabled={isPending}
-            className="bg-primary text-primary-foreground inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-semibold disabled:opacity-60"
-          >
-            {isPending
-              ? "Guardando…"
-              : next
-                ? "Completar y continuar"
-                : "Completar"}
-            {!isPending && <ChevronRight className="size-4" />}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => finish(true)}
+              disabled={isPending}
+              className="text-primary hover:bg-primary/10 rounded-lg px-3 py-2 text-sm font-medium disabled:opacity-60"
+            >
+              Ver mi árbol 🌿
+            </button>
+            <button
+              type="button"
+              onClick={() => finish(false)}
+              disabled={isPending}
+              className="bg-primary text-primary-foreground inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-semibold disabled:opacity-60"
+            >
+              {isPending
+                ? "Guardando…"
+                : next
+                  ? "Completar y continuar"
+                  : "Completar"}
+              {!isPending && <ChevronRight className="size-4" />}
+            </button>
+          </div>
         ) : (
           <button
             type="button"
