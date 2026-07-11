@@ -1,1 +1,1 @@
-export { OrganicTree, type OrganicTreeNode } from "./organic-tree";
+export { OrganicTree, type OrganicStrand } from "./organic-tree";

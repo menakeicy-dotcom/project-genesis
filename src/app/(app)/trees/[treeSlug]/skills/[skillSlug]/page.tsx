@@ -17,7 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { getSkill, getTreeBySlug } from "@/modules/catalog/services";
 import { getCompletedSkillIds } from "@/modules/progress/services";
-import { isUnlocked } from "@/modules/skill-tree/state";
+import { isUnlockedByStrand } from "@/modules/skill-tree/state";
 import { CompleteSkillButton } from "@/modules/progress/components/complete-skill-button";
 import { LessonPlayer, type Lesson } from "@/modules/skill-tree/lesson";
 
@@ -110,53 +110,49 @@ export default async function SkillPage({
   const session = await auth();
   const userId = session!.user.id;
   const completed = await getCompletedSkillIds(userId, skill.treeId);
+  const content = (skill.content ?? {}) as SkillContent;
 
-  const skillShape = {
-    id: skill.id,
-    isRoot: skill.isRoot,
-    prerequisites: skill.prerequisites.map((p) => ({
-      prerequisiteId: p.prerequisiteId,
-      group: p.group,
-    })),
-  };
+  const tree = await getTreeBySlug(treeSlug);
+  const treeSkills = (tree?.skills ?? []).map((s) => ({
+    id: s.id,
+    branch: s.branch,
+    tier: s.tier,
+  }));
 
+  // Desbloqueo por progresión INTRA-HEBRA (no entre hebras).
   const state = completed.has(skill.id)
     ? "completed"
-    : isUnlocked(skillShape, completed)
+    : isUnlockedByStrand(
+          { id: skill.id, branch: skill.branch, tier: skill.tier },
+          treeSkills,
+          completed,
+        )
       ? "available"
       : "locked";
-
-  const missing = skill.prerequisites
-    .filter((p) => !completed.has(p.prerequisiteId))
-    .map((p) => ({ slug: p.prerequisite.slug, title: p.prerequisite.title }));
-
-  const content = (skill.content ?? {}) as SkillContent;
   const isLocked = state === "locked";
 
-  // Siguiente hoja sugerida: la que se desbloquea al completar ésta.
+  // Lo que falta = habilidades de la MISMA hebra con nivel inferior sin completar.
+  const missing = (tree?.skills ?? [])
+    .filter(
+      (s) =>
+        s.branch === skill.branch &&
+        s.tier < skill.tier &&
+        !completed.has(s.id),
+    )
+    .sort((a, b) => a.tier - b.tier || a.order - b.order)
+    .map((s) => ({ slug: s.slug, title: s.title }));
+
+  // Siguiente habilidad DENTRO de la misma hebra (continuar la progresión).
   let next: { href: string; title: string } | null = null;
-  const tree = await getTreeBySlug(treeSlug);
   if (tree) {
-    const completedPlus = new Set(completed);
-    completedPlus.add(skill.id);
-    const candidates = tree.skills
-      .filter((s) => s.id !== skill.id && !completed.has(s.id))
-      .filter((s) =>
-        isUnlocked(
-          {
-            id: s.id,
-            isRoot: s.isRoot,
-            prerequisites: s.prerequisites.map((p) => ({
-              prerequisiteId: p.prerequisiteId,
-              group: p.group,
-            })),
-          },
-          completedPlus,
-        ),
+    const sameBranch = tree.skills
+      .filter(
+        (s) =>
+          s.branch === skill.branch && s.id !== skill.id && !completed.has(s.id),
       )
-      .sort((a, b) => a.order - b.order);
+      .sort((a, b) => a.tier - b.tier || a.order - b.order);
     const pickNext =
-      candidates.find((s) => s.order > skill.order) ?? candidates[0];
+      sameBranch.find((s) => s.tier >= skill.tier) ?? sameBranch[0];
     if (pickNext)
       next = {
         href: `/trees/${treeSlug}/skills/${pickNext.slug}`,
@@ -194,10 +190,17 @@ export default async function SkillPage({
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-10">
       <Link
-        href={`/trees/${treeSlug}`}
+        href={
+          skill.branch
+            ? `/trees/${treeSlug}/rama/${skill.branch}`
+            : `/trees/${treeSlug}`
+        }
         className="text-muted-foreground text-sm hover:underline"
       >
-        ← {skill.tree.title}
+        ←{" "}
+        {content.branchLabel ??
+          (skill.branch ? BRANCH_LABEL[skill.branch] : null) ??
+          skill.tree.title}
       </Link>
 
       <div className="text-muted-foreground mt-4 flex items-center gap-2 text-sm">
@@ -268,8 +271,8 @@ export default async function SkillPage({
           )}
           <Alert variant="info">
             <span className="flex items-center gap-2 font-medium">
-              <Lock className="size-4 shrink-0" /> Para desbloquear esta
-              habilidad, antes completa:
+              <Lock className="size-4 shrink-0" /> Completa el nivel anterior de
+              esta rama para desbloquearla:
             </span>
             <ul className="mt-2 space-y-1">
               {missing.map((p) => (
@@ -295,7 +298,7 @@ export default async function SkillPage({
             goal: content.lesson.goal,
           }}
           skillId={skill.id}
-          skillSlug={skill.slug}
+          strandKey={skill.branch ?? ""}
           treeSlug={treeSlug}
           next={next}
           alreadyCompleted={state === "completed"}

@@ -3,10 +3,14 @@ import "server-only";
 import { db } from "@/server/db";
 import {
   computeNodeStates,
-  isUnlocked,
+  computeStrandStates,
+  isUnlockedByStrand,
   type NodeState,
 } from "@/modules/skill-tree/state";
 import { levelForXp, levelProgress } from "@/modules/progress/xp";
+
+/** Estado de una hebra en el árbol principal (todas abiertas). */
+export type StrandState = "completed" | "progress" | "open";
 
 /** Conjunto de IDs de habilidades completadas por un usuario en un árbol. */
 async function completedSkillIds(
@@ -48,6 +52,162 @@ export async function getEnrollment(userId: string, treeId: string) {
   });
 }
 
+/** Etiqueta de rama guardada en Skill.content (o la clave como respaldo). */
+function branchLabelOf(content: unknown, key: string): string {
+  const c = content as { branchLabel?: string } | null;
+  return c?.branchLabel ?? key;
+}
+function levelLabelOf(content: unknown, tier: number): string {
+  const c = content as { levelLabel?: string } | null;
+  return c?.levelLabel ?? String(tier);
+}
+
+export interface StrandSummary {
+  key: string;
+  label: string;
+  total: number;
+  completed: number;
+  pct: number;
+  state: StrandState;
+  /** Primera habilidad disponible de la hebra (para "continuar"). */
+  nextSlug?: string;
+}
+
+/**
+ * NIVEL 1 — las grandes habilidades (hebras) del árbol principal. Todas abiertas.
+ * Cada una con su progreso. Reutilizable por cualquier disciplina.
+ */
+export async function getTreeStrands(userId: string, treeSlug: string) {
+  const tree = await db.tree.findUnique({
+    where: { slug: treeSlug },
+    include: { category: true, skills: { orderBy: { order: "asc" } } },
+  });
+  if (!tree) return null;
+
+  const completed = await completedSkillIds(userId, tree.id);
+  const states = computeStrandStates(
+    tree.skills.map((s) => ({ id: s.id, branch: s.branch, tier: s.tier })),
+    completed,
+  );
+
+  const map = new Map<
+    string,
+    { key: string; label: string; order: number; total: number; done: number; nextSlug?: string }
+  >();
+  for (const s of tree.skills) {
+    const key = s.branch ?? "otros";
+    const e =
+      map.get(key) ??
+      {
+        key,
+        label: branchLabelOf(s.content, key),
+        order: s.order,
+        total: 0,
+        done: 0,
+        nextSlug: undefined as string | undefined,
+      };
+    e.total++;
+    if (completed.has(s.id)) e.done++;
+    if (!e.nextSlug && states.get(s.id) === "available") e.nextSlug = s.slug;
+    e.order = Math.min(e.order, s.order);
+    map.set(key, e);
+  }
+
+  const strands: StrandSummary[] = [...map.values()]
+    .sort((a, b) => a.order - b.order)
+    .map((e) => ({
+      key: e.key,
+      label: e.label,
+      total: e.total,
+      completed: e.done,
+      pct: e.total ? Math.round((e.done / e.total) * 100) : 0,
+      state: e.done === e.total ? "completed" : e.done > 0 ? "progress" : "open",
+      nextSlug: e.nextSlug,
+    }));
+
+  return { tree, strands };
+}
+
+/**
+ * NIVEL 2 — dentro de una hebra: niveles ordenados con sus habilidades y su
+ * estado (progresión intra-hebra). Un nivel se desbloquea al completar el
+ * anterior de la misma hebra.
+ */
+export async function getStrand(
+  userId: string,
+  treeSlug: string,
+  branch: string,
+) {
+  const tree = await db.tree.findUnique({
+    where: { slug: treeSlug },
+    include: {
+      category: true,
+      skills: { orderBy: [{ tier: "asc" }, { order: "asc" }] },
+    },
+  });
+  if (!tree) return null;
+
+  const completed = await completedSkillIds(userId, tree.id);
+  const states = computeStrandStates(
+    tree.skills.map((s) => ({ id: s.id, branch: s.branch, tier: s.tier })),
+    completed,
+  );
+
+  const skills = tree.skills.filter((s) => (s.branch ?? "otros") === branch);
+  if (skills.length === 0) return null;
+
+  const levelsMap = new Map<
+    number,
+    {
+      tier: number;
+      label: string;
+      skills: {
+        slug: string;
+        title: string;
+        state: NodeState;
+        xp: number;
+        minutes: number;
+        hasLesson: boolean;
+      }[];
+    }
+  >();
+  for (const s of skills) {
+    const e =
+      levelsMap.get(s.tier) ??
+      { tier: s.tier, label: levelLabelOf(s.content, s.tier), skills: [] };
+    const c = s.content as { lesson?: unknown } | null;
+    e.skills.push({
+      slug: s.slug,
+      title: s.title,
+      state: states.get(s.id) ?? "locked",
+      xp: s.xpReward,
+      minutes: s.estimatedMinutes,
+      hasLesson: !!c?.lesson,
+    });
+    levelsMap.set(s.tier, e);
+  }
+
+  const levels = [...levelsMap.values()]
+    .sort((a, b) => a.tier - b.tier)
+    .map((l) => ({
+      ...l,
+      unlocked: l.skills.some((sk) => sk.state !== "locked"),
+    }));
+
+  const done = skills.filter((s) => completed.has(s.id)).length;
+  return {
+    treeSlug,
+    treeTitle: tree.title,
+    categoryIcon: tree.category.icon,
+    branch,
+    label: branchLabelOf(skills[0]!.content, branch),
+    levels,
+    total: skills.length,
+    completed: done,
+    pct: skills.length ? Math.round((done / skills.length) * 100) : 0,
+  };
+}
+
 /** Inscribe al usuario en un árbol (idempotente). */
 export async function enrollInTree(userId: string, treeId: string) {
   const totalSkills = await db.skill.count({ where: { treeId } });
@@ -64,18 +224,20 @@ export async function enrollInTree(userId: string, treeId: string) {
  * Todo en una transacción.
  */
 export async function completeSkill(userId: string, skillId: string) {
-  const skill = await db.skill.findUnique({
-    where: { id: skillId },
-    include: { prerequisites: true },
-  });
+  const skill = await db.skill.findUnique({ where: { id: skillId } });
   if (!skill) throw new Error("Habilidad no encontrada.");
 
   const completed = await completedSkillIds(userId, skill.treeId);
   if (completed.has(skillId)) return; // ya completada
 
-  // Verifica desbloqueo en el servidor (no confiar en el cliente).
-  if (!isUnlocked(skill, completed)) {
-    throw new Error("Esta habilidad aún está bloqueada.");
+  // Desbloqueo por progresión intra-hebra (no confiar en el cliente):
+  // debe estar completo el nivel anterior de la MISMA rama.
+  const treeSkills = await db.skill.findMany({
+    where: { treeId: skill.treeId },
+    select: { id: true, branch: true, tier: true },
+  });
+  if (!isUnlockedByStrand(skill, treeSkills, completed)) {
+    throw new Error("Antes debes completar el nivel anterior de esta rama.");
   }
 
   const totalSkills = await db.skill.count({ where: { treeId: skill.treeId } });
@@ -132,12 +294,25 @@ async function nextObjectiveFor(
   const skills = await db.skill.findMany({
     where: { treeId },
     orderBy: { order: "asc" },
-    include: { prerequisites: true },
+    select: { id: true, slug: true, title: true, branch: true, tier: true },
   });
   const completed = await completedSkillIds(userId, treeId);
-  const nextSkill = skills.find(
-    (s) => !completed.has(s.id) && isUnlocked(s, completed),
-  );
+  const states = computeStrandStates(skills, completed);
+
+  // Progreso por hebra, para sugerir continuar una ya empezada.
+  const branchDone = new Map<string, number>();
+  for (const s of skills)
+    if (completed.has(s.id))
+      branchDone.set(s.branch ?? "", (branchDone.get(s.branch ?? "") ?? 0) + 1);
+
+  const candidates = skills.filter((s) => states.get(s.id) === "available");
+  candidates.sort((a, b) => {
+    const pa = branchDone.get(a.branch ?? "") ?? 0;
+    const pb = branchDone.get(b.branch ?? "") ?? 0;
+    if (pb !== pa) return pb - pa; // hebra con más progreso primero
+    return a.tier - b.tier; // luego el nivel más bajo
+  });
+  const nextSkill = candidates[0];
   return nextSkill
     ? {
         title: nextSkill.title,

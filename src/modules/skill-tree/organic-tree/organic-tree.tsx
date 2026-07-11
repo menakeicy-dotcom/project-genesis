@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 
-import type { NodeState } from "@/modules/skill-tree/state";
 import {
   buildTree,
   hashSeed,
@@ -15,12 +14,15 @@ import {
   type TreeArt,
 } from "./build";
 
-export interface OrganicTreeNode {
-  id: string;
-  slug: string;
-  title: string;
-  state: NodeState;
-  tier: number;
+/**
+ * NIVEL 1: cada nodo del árbol principal es una HEBRA (gran habilidad), no una
+ * habilidad concreta. Todas están abiertas; el color refleja el progreso.
+ */
+export interface OrganicStrand {
+  key: string;
+  label: string;
+  pct: number;
+  state: "completed" | "progress" | "open";
 }
 
 interface Palette {
@@ -186,13 +188,13 @@ function paint(
 }
 
 export function OrganicTree({
-  nodes,
+  strands,
   treeSlug,
   grew,
 }: {
-  nodes: OrganicTreeNode[];
+  strands: OrganicStrand[];
   treeSlug: string;
-  /** Slug de la habilidad recién completada, para celebrar su hoja. */
+  /** Clave de la hebra recién avanzada, para celebrar su hoja. */
   grew?: string;
 }) {
   const router = useRouter();
@@ -203,15 +205,14 @@ export function OrganicTree({
 
   const art = useMemo(() => buildTree(hashSeed(treeSlug)), [treeSlug]);
 
-  // Habilidades ordenadas por nivel → anclas de dentro/abajo hacia fuera/arriba.
+  // Cada hebra se posa en un ancla repartida por la copa.
   const placed = useMemo(() => {
-    const ordered = [...nodes].sort((a, b) => a.tier - b.tier);
-    const anchors = pickAnchors(art, ordered.length);
-    return ordered.map((n, i) => ({
-      node: n,
+    const anchors = pickAnchors(art, strands.length);
+    return strands.map((s, i) => ({
+      node: s,
       at: anchors[i] ?? anchors[anchors.length - 1]!,
     }));
-  }, [nodes, art]);
+  }, [strands, art]);
 
   useEffect(() => {
     const el = document.documentElement;
@@ -258,24 +259,24 @@ export function OrganicTree({
         aria-hidden="true"
       />
 
-      {/* Overlay interactivo: cada habilidad es una hoja que brota sobre la copa. */}
+      {/* Overlay: cada HEBRA es un nodo abierto con etiqueta y progreso. */}
       {placed.map(({ node, at }, idx) => {
         const left = (at.x / VW) * 100;
         const top = (at.y / VH) * 100;
         const cls =
           node.state === "completed"
-            ? "ot-leaf ot-done"
-            : node.state === "available"
-              ? "ot-leaf ot-open"
-              : "ot-leaf ot-locked";
-        const isGrew = grew != null && node.slug === grew;
+            ? "ot-node ot-done"
+            : node.state === "progress"
+              ? "ot-node ot-progress"
+              : "ot-node ot-open";
+        const isGrew = grew != null && node.key === grew;
         return (
           <motion.button
-            key={node.id}
+            key={node.key}
             type="button"
-            title={node.title}
-            aria-label={node.title}
-            onClick={() => router.push(`/trees/${treeSlug}/skills/${node.slug}`)}
+            title={`${node.label} · ${node.pct}%`}
+            aria-label={`${node.label}, ${node.pct}% completado`}
+            onClick={() => router.push(`/trees/${treeSlug}/rama/${node.key}`)}
             className={cls}
             style={{ left: `${left}%`, top: `${top}%` }}
             initial={reduce ? false : { scale: 0, opacity: 0 }}
@@ -283,40 +284,45 @@ export function OrganicTree({
             transition={
               reduce
                 ? { duration: 0 }
-                : isGrew
-                  ? { type: "spring", stiffness: 260, damping: 12, delay: 0.15 }
-                  : {
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 20,
-                      delay: Math.min(1.2, idx * 0.02),
-                    }
+                : {
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 16,
+                    delay: isGrew ? 0.15 : Math.min(1, idx * 0.06),
+                  }
             }
           >
-            {/* Celebración: anillos de luz verde en la hoja recién completada. */}
-            {isGrew && !reduce && (
-              <>
-                <span className="ot-ring" />
-                <span className="ot-ring ot-ring2" />
-              </>
-            )}
+            <span className="ot-dot">
+              {isGrew && !reduce && (
+                <>
+                  <span className="ot-ring" />
+                  <span className="ot-ring ot-ring2" />
+                </>
+              )}
+            </span>
+            <span className="ot-label">
+              {node.label}
+              {node.pct > 0 && <b> · {node.pct}%</b>}
+            </span>
           </motion.button>
         );
       })}
 
       <style>{`
-        .ot-leaf{position:absolute;transform:translate(-50%,-50%);width:22px;height:22px;border:0;border-radius:50%;cursor:pointer;padding:0;background:transparent}
-        .ot-leaf::after{content:"";position:absolute;inset:5px;border-radius:50%;transition:transform .2s ease, box-shadow .2s ease}
-        .ot-done::after{background:radial-gradient(circle at 40% 35%, #b9f6c8, #3fae63);box-shadow:0 0 10px 2px rgba(120,240,150,.6)}
-        .ot-open::after{background:radial-gradient(circle at 40% 35%, #eafff0, #86e0a0);box-shadow:0 0 14px 4px rgba(140,240,170,.7);animation:otPulse 2.6s ease-in-out infinite}
-        .ot-locked::after{background:rgba(200,220,205,.28)}
-        .ot-leaf:hover::after{transform:scale(1.55)}
-        .ot-leaf:focus-visible{outline:2px solid #86e0a0;outline-offset:2px;border-radius:50%}
+        .ot-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;border:0;background:transparent;cursor:pointer;padding:0}
+        .ot-dot{position:relative;width:16px;height:16px;border-radius:50%;transition:transform .2s ease, box-shadow .2s ease}
+        .ot-done .ot-dot{background:radial-gradient(circle at 40% 35%, #b9f6c8, #3fae63);box-shadow:0 0 12px 3px rgba(120,240,150,.7)}
+        .ot-progress .ot-dot{background:radial-gradient(circle at 40% 35%, #eafff0, #86e0a0);box-shadow:0 0 12px 3px rgba(140,240,170,.6);animation:otPulse 2.6s ease-in-out infinite}
+        .ot-open .ot-dot{background:radial-gradient(circle at 40% 35%, #ffffff, #cfe9d6);box-shadow:0 0 8px 2px rgba(200,230,210,.35)}
+        .ot-label{font:600 12px/1.1 system-ui,sans-serif;color:#f4fff7;text-shadow:0 1px 3px rgba(0,0,0,.85);white-space:nowrap;background:rgba(6,20,14,.55);padding:2px 8px;border-radius:999px;backdrop-filter:blur(2px)}
+        .ot-label b{font-weight:700;opacity:.85}
+        .ot-node:hover .ot-dot{transform:scale(1.35)}
+        .ot-node:focus-visible{outline:2px solid #86e0a0;outline-offset:3px;border-radius:12px}
         .ot-ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(140,240,170,.9);animation:otRing 1.6s ease-out infinite}
         .ot-ring2{animation-delay:.5s}
         @keyframes otPulse{0%,100%{box-shadow:0 0 10px 3px rgba(140,240,170,.45)}50%{box-shadow:0 0 18px 6px rgba(140,240,170,.85)}}
         @keyframes otRing{0%{transform:scale(1);opacity:.9}100%{transform:scale(4.5);opacity:0}}
-        @media (prefers-reduced-motion: reduce){.ot-open::after{animation:none}.ot-ring{display:none}}
+        @media (prefers-reduced-motion: reduce){.ot-progress .ot-dot{animation:none}.ot-ring{display:none}}
       `}</style>
     </div>
   );

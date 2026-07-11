@@ -49,7 +49,7 @@ export function LessonPlayer({
   lesson,
   meta,
   skillId,
-  skillSlug,
+  strandKey,
   treeSlug,
   next,
   alreadyCompleted,
@@ -57,7 +57,8 @@ export function LessonPlayer({
   lesson: Lesson;
   meta: PlayerMeta;
   skillId: string;
-  skillSlug: string;
+  /** Clave de la hebra, para celebrar su hoja al volver al árbol. */
+  strandKey: string;
   treeSlug: string;
   next: { href: string; title: string } | null;
   alreadyCompleted: boolean;
@@ -117,11 +118,8 @@ export function LessonPlayer({
   const finish = (toTree: boolean) => {
     startTransition(async () => {
       if (!alreadyCompleted) await completeSkillAction(skillId);
-      router.push(
-        toTree
-          ? `/trees/${treeSlug}?grew=${skillSlug}`
-          : (next?.href ?? `/trees/${treeSlug}?grew=${skillSlug}`),
-      );
+      const treeHref = `/trees/${treeSlug}?grew=${strandKey}`;
+      router.push(toTree ? treeHref : (next?.href ?? treeHref));
       router.refresh();
     });
   };

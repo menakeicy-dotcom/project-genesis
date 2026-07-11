@@ -6,7 +6,7 @@ import { auth } from "@/auth";
 import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { getTreeBySlug } from "@/modules/catalog/services";
-import { getEnrollment, getTreeNodeStates } from "@/modules/progress/services";
+import { getEnrollment, getTreeStrands } from "@/modules/progress/services";
 import { EnrollButton } from "@/modules/progress/components/enroll-button";
 import { OrganicTree } from "@/modules/skill-tree/organic-tree";
 
@@ -29,34 +29,18 @@ export default async function TreePage({
 }) {
   const { treeSlug } = await params;
   const { grew } = await searchParams;
-  const tree = await getTreeBySlug(treeSlug);
-  if (!tree) notFound();
 
   const session = await auth();
   const userId = session!.user.id;
 
-  const skillsForState = tree.skills.map((s) => ({
-    id: s.id,
-    isRoot: s.isRoot,
-    prerequisites: s.prerequisites.map((p) => ({
-      prerequisiteId: p.prerequisiteId,
-      group: p.group,
-    })),
-  }));
+  const data = await getTreeStrands(userId, treeSlug);
+  if (!data) notFound();
+  const { tree, strands } = data;
 
-  const states = await getTreeNodeStates(userId, tree.id, skillsForState);
   const enrollment = await getEnrollment(userId, tree.id);
 
-  const nodes = tree.skills.map((s) => ({
-    id: s.id,
-    title: s.title,
-    state: states.get(s.id) ?? "locked",
-    slug: s.slug,
-    tier: s.tier,
-  }));
-
-  const total = tree.skills.length;
-  const completed = nodes.filter((n) => n.state === "completed").length;
+  const total = strands.reduce((s, b) => s + b.total, 0);
+  const completed = strands.reduce((s, b) => s + b.completed, 0);
   const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
 
   return (
@@ -74,7 +58,7 @@ export default async function TreePage({
           <p className="text-muted-foreground mt-1">{tree.description}</p>
           <div className="mt-3 flex gap-2">
             <Badge variant="outline">{tree.difficulty}</Badge>
-            <Badge variant="neutral">{total} habilidades</Badge>
+            <Badge variant="neutral">{strands.length} grandes habilidades</Badge>
           </div>
         </div>
         {!enrollment && <EnrollButton treeId={tree.id} treeSlug={tree.slug} />}
@@ -82,20 +66,50 @@ export default async function TreePage({
 
       <div className="mt-6">
         <div className="text-muted-foreground mb-2 flex justify-between text-sm">
-          <span>
-            {completed}/{total} completadas
-          </span>
+          <span>{completed}/{total} habilidades completadas</span>
           <span>{pct}%</span>
         </div>
         <ProgressBar value={pct} tone={pct === 100 ? "growth" : "primary"} />
       </div>
 
       <p className="text-muted-foreground mt-6 mb-3 text-sm">
-        Toca una hoja para abrir esa habilidad. Tu árbol crece a medida que
-        completas nuevas ramas.
+        Tú decides qué aprender hoy. Cada hoja es una gran habilidad: elige la que
+        quieras: dentro, avanzarás nivel a nivel.
       </p>
 
-      <OrganicTree nodes={nodes} treeSlug={tree.slug} grew={grew} />
+      <OrganicTree strands={strands} treeSlug={tree.slug} grew={grew} />
+
+      {/* Acceso por lista (accesible y como respaldo del árbol). */}
+      <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {strands.map((b) => (
+          <Link
+            key={b.key}
+            href={`/trees/${tree.slug}/rama/${b.key}`}
+            className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
+          >
+            <div className="flex items-center justify-between">
+              <span className="font-semibold">{b.label}</span>
+              <Badge
+                variant={
+                  b.state === "completed"
+                    ? "growth"
+                    : b.state === "progress"
+                      ? "primary"
+                      : "neutral"
+                }
+              >
+                {b.completed}/{b.total}
+              </Badge>
+            </div>
+            <div className="mt-3">
+              <ProgressBar
+                value={b.pct}
+                tone={b.state === "completed" ? "growth" : "primary"}
+              />
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

@@ -1778,6 +1778,9 @@ export async function upsertEnglishTree(
           masteryCriteria: n.cr,
           exercises: n.ex,
           assessments: n.ev,
+          levelLabel:
+            ["Pre-A1", "A1", "A2", "B1", "B2", "C1", "C2"][n.lv] ?? String(n.lv),
+          branchLabel: EN_BRANCHES[n.b] ?? n.b,
           ...(EN_LESSONS[n.s] ? { lesson: EN_LESSONS[n.s] } : {}),
         } as unknown as Prisma.InputJsonValue,
         resources: {
