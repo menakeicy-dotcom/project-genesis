@@ -69,6 +69,9 @@ interface SkillContent {
   exercises?: string[];
   assessments?: string[];
   lesson?: Lesson;
+  /** Etiquetas propias de la disciplina (para no depender de CEFR ni de ramas de Inglés). */
+  levelLabel?: string;
+  branchLabel?: string;
 }
 
 /** Acordeón: mantiene fuera de la vista el texto largo hasta que se pide. */
@@ -206,10 +209,12 @@ export default async function SkillPage({
       <div className="mt-3 flex flex-wrap gap-2">
         {skill.branch && (
           <Badge variant="outline">
-            {BRANCH_LABEL[skill.branch] ?? skill.branch}
+            {content.branchLabel ?? BRANCH_LABEL[skill.branch] ?? skill.branch}
           </Badge>
         )}
-        <Badge variant="neutral">Nivel {CEFR[skill.tier] ?? skill.tier}</Badge>
+        <Badge variant="neutral">
+          Nivel {content.levelLabel ?? CEFR[skill.tier] ?? skill.tier}
+        </Badge>
         {skill.difficulty && (
           <Badge variant="neutral">
             {DIFFICULTY_LABEL[skill.difficulty] ?? skill.difficulty}

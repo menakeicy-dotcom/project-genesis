@@ -55,7 +55,7 @@ export const DISCIPLINES: Discipline[] = [
     name: "Programación",
     description:
       "Del primer «Hello, world» a construir software real: lógica, lenguajes y buenas prácticas.",
-    status: "soon",
+    status: "available",
     accent: { from: "#6366f1", to: "#8b5cf6" },
     tagline: "Crea con código",
   },
