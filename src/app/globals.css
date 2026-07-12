@@ -5,8 +5,9 @@
 
 /*
  * Paleta semántica de SkillTree.
- * - Azul = color principal (marca, acciones).
- * - Verde = SOLO crecimiento (progreso, logros). Se usa con moderación.
+ * - Verde = color PRINCIPAL (marca, acciones): la plataforma es un árbol.
+ *   Se usan verdes elegantes inspirados en naturaleza (bosque), no fluorescentes.
+ * - `growth` es un verde algo más vivo para celebración/logro (completadas).
  * Los valores se definen como variables y el modo oscuro los redefine.
  */
 :root {
@@ -21,13 +22,13 @@
 
   --border: #e2e8f0;
   --input: #e2e8f0;
-  --ring: #2563eb;
+  --ring: #15803d;
 
-  /* Azul — principal */
-  --primary: #2563eb;
-  --primary-foreground: #f8fafc;
+  /* Verde bosque — principal (acciones, marca) */
+  --primary: #15803d;
+  --primary-foreground: #f0fdf4;
 
-  /* Verde — crecimiento (uso puntual) */
+  /* Verde — crecimiento/celebración (uso puntual) */
   --growth: #16a34a;
   --growth-foreground: #f0fdf4;
 
@@ -38,7 +39,7 @@
 }
 
 .dark {
-  /* Fondo negro neutro (no azul). Superficies en gris muy oscuro neutro. */
+  /* Fondo negro neutro. Superficies en gris muy oscuro neutro. */
   --background: #000000;
   --foreground: #ededf0;
 
@@ -50,10 +51,11 @@
 
   --border: #262629;
   --input: #262629;
-  --ring: #3b82f6;
+  --ring: #31b866;
 
-  --primary: #3b82f6;
-  --primary-foreground: #05080d;
+  /* Verde bosque más luminoso sobre negro */
+  --primary: #31b866;
+  --primary-foreground: #04140a;
 
   --growth: #22c55e;
   --growth-foreground: #052e16;
@@ -133,6 +135,74 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Modo claro con más vida (sin perder limpieza): un halo verde muy tenue arriba
+ * y una base cálida apenas perceptible, fijos al viewport. El modo oscuro se
+ * mantiene en negro puro.
+ */
+:root:not(.dark) body {
+  background-image:
+    radial-gradient(1100px 520px at 50% -8%, rgba(21, 128, 61, 0.06), transparent 62%),
+    radial-gradient(900px 500px at 100% 100%, rgba(21, 128, 61, 0.04), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* Vaivén suave (viento) para hojas/nodos. Solo transform → barato en GPU. */
+@keyframes stSway {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+/* Respiración de la luz ambiente del árbol. */
+@keyframes stBreathe {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+/* Motas/partículas naturales que ascienden lentamente. */
+@keyframes stMote {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-70px) translateX(12px);
+    opacity: 0;
+  }
+}
+
+/* Caída global de hojas (animación de la interfaz). */
+@keyframes stFall {
+  0% {
+    transform: translate3d(0, -12vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--leaf-opacity, 0.35);
+  }
+  88% {
+    opacity: var(--leaf-opacity, 0.35);
+  }
+  100% {
+    transform: translate3d(var(--drift, 24px), 112vh, 0)
+      rotate(var(--spin, 320deg));
+    opacity: 0;
+  }
 }
 
 /*

@@ -259,7 +259,27 @@ export function OrganicTree({
         aria-hidden="true"
       />
 
-      {/* Overlay: cada HEBRA es un nodo abierto con etiqueta y progreso. */}
+      {/* Ambiente: luz que respira + motas naturales (estilo bosque). */}
+      {!reduce && (
+        <>
+          <div className="ot-light" aria-hidden />
+          <div className="ot-motes" aria-hidden>
+            {MOTES.map((m, i) => (
+              <span
+                key={i}
+                style={{
+                  left: `${m.x}%`,
+                  top: `${m.y}%`,
+                  animationDuration: `${m.d}s`,
+                  animationDelay: `${m.delay}s`,
+                }}
+              />
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Overlay: cada HEBRA es una HOJA abierta con etiqueta y progreso. */}
       {placed.map(({ node, at }, idx) => {
         const left = (at.x / VW) * 100;
         const top = (at.y / VH) * 100;
@@ -292,13 +312,36 @@ export function OrganicTree({
                   }
             }
           >
-            <span className="ot-dot">
+            <span
+              className="ot-leaf-wrap"
+              style={
+                reduce
+                  ? undefined
+                  : {
+                      animationDuration: `${4.2 + (idx % 4) * 0.7}s`,
+                      animationDelay: `${(idx % 5) * 0.4}s`,
+                    }
+              }
+            >
               {isGrew && !reduce && (
                 <>
                   <span className="ot-ring" />
                   <span className="ot-ring ot-ring2" />
                 </>
               )}
+              <svg className="ot-leaf" viewBox="0 0 24 24" width="26" height="26">
+                <path
+                  className="ot-blade"
+                  d="M12 1.5C5.5 5 2.4 10.4 3.4 20.6c10.2 1 15.6-4.4 16.6-14.4-4.4 0-7.6 1-9.7 4.1-1-4.1 0-7.4 1.7-8.8Z"
+                />
+                <path
+                  className="ot-vein"
+                  d="M6 18.5C10.2 14 14.4 9.6 18.4 7.2"
+                  fill="none"
+                  strokeWidth="1.1"
+                  strokeLinecap="round"
+                />
+              </svg>
             </span>
             <span className="ot-label">
               {node.label}
@@ -309,21 +352,44 @@ export function OrganicTree({
       })}
 
       <style>{`
-        .ot-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;border:0;background:transparent;cursor:pointer;padding:0}
-        .ot-dot{position:relative;width:16px;height:16px;border-radius:50%;transition:transform .2s ease, box-shadow .2s ease}
-        .ot-done .ot-dot{background:radial-gradient(circle at 40% 35%, #b9f6c8, #3fae63);box-shadow:0 0 12px 3px rgba(120,240,150,.7)}
-        .ot-progress .ot-dot{background:radial-gradient(circle at 40% 35%, #eafff0, #86e0a0);box-shadow:0 0 12px 3px rgba(140,240,170,.6);animation:otPulse 2.6s ease-in-out infinite}
-        .ot-open .ot-dot{background:radial-gradient(circle at 40% 35%, #ffffff, #cfe9d6);box-shadow:0 0 8px 2px rgba(200,230,210,.35)}
-        .ot-label{font:600 12px/1.1 system-ui,sans-serif;color:#f4fff7;text-shadow:0 1px 3px rgba(0,0,0,.85);white-space:nowrap;background:rgba(6,20,14,.55);padding:2px 8px;border-radius:999px;backdrop-filter:blur(2px)}
+        .ot-light{position:absolute;left:50%;top:8%;width:70%;height:55%;transform:translateX(-50%);pointer-events:none;
+          background:radial-gradient(ellipse at 50% 30%, rgba(190,240,190,.14), rgba(190,240,190,0) 62%);
+          animation:stBreathe 7s ease-in-out infinite}
+        .ot-motes{position:absolute;inset:0;pointer-events:none}
+        .ot-motes span{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--lt-mote,rgba(120,200,140,.5));
+          box-shadow:0 0 6px 1px var(--lt-mote,rgba(120,200,140,.5));animation-name:stMote;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+        .ot-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px;border:0;background:transparent;cursor:pointer;padding:0}
+        .ot-leaf-wrap{position:relative;display:block;transform-origin:50% 92%;animation-name:stSway;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+        .ot-leaf{display:block;transition:transform .2s ease, filter .2s ease}
+        .ot-blade{transition:fill .2s ease}
+        .ot-vein{stroke:rgba(255,255,255,.4)}
+        .ot-done .ot-blade{fill:#57c878;filter:drop-shadow(0 0 7px rgba(90,220,130,.75))}
+        .ot-done .ot-leaf{filter:drop-shadow(0 0 4px rgba(90,220,130,.5))}
+        .ot-progress .ot-blade{fill:#8fe0a2;filter:drop-shadow(0 0 6px rgba(140,235,170,.6))}
+        .ot-open .ot-blade{fill:#cfe9d6;opacity:.85}
+        .ot-open .ot-vein{stroke:rgba(80,120,90,.5)}
+        .ot-label{font:600 12px/1.1 system-ui,sans-serif;color:#f4fff7;text-shadow:0 1px 3px rgba(0,0,0,.85);white-space:nowrap;background:rgba(6,20,14,.5);padding:2px 8px;border-radius:999px;backdrop-filter:blur(2px)}
         .ot-label b{font-weight:700;opacity:.85}
-        .ot-node:hover .ot-dot{transform:scale(1.35)}
+        .ot-node:hover .ot-leaf{transform:scale(1.28) rotate(-4deg)}
         .ot-node:focus-visible{outline:2px solid #86e0a0;outline-offset:3px;border-radius:12px}
-        .ot-ring{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(140,240,170,.9);animation:otRing 1.6s ease-out infinite}
+        .ot-ring{position:absolute;left:50%;top:45%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;border:2px solid rgba(140,240,170,.9);animation:otRing 1.6s ease-out infinite}
         .ot-ring2{animation-delay:.5s}
-        @keyframes otPulse{0%,100%{box-shadow:0 0 10px 3px rgba(140,240,170,.45)}50%{box-shadow:0 0 18px 6px rgba(140,240,170,.85)}}
         @keyframes otRing{0%{transform:scale(1);opacity:.9}100%{transform:scale(4.5);opacity:0}}
-        @media (prefers-reduced-motion: reduce){.ot-progress .ot-dot{animation:none}.ot-ring{display:none}}
+        @media (prefers-reduced-motion: reduce){
+          .ot-leaf-wrap{animation:none}
+          .ot-ring,.ot-light,.ot-motes{display:none}
+        }
       `}</style>
     </div>
   );
 }
+
+/** Motas ambientales (posición/tiempo fijos → deterministas y sin re-render). */
+const MOTES = [
+  { x: 22, y: 40, d: 9, delay: 0 },
+  { x: 38, y: 30, d: 11, delay: 2 },
+  { x: 55, y: 44, d: 8, delay: 4 },
+  { x: 68, y: 34, d: 12, delay: 1 },
+  { x: 80, y: 48, d: 10, delay: 3 },
+  { x: 47, y: 52, d: 13, delay: 5 },
+];

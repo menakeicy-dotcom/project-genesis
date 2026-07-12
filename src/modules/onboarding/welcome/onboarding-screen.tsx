@@ -157,7 +157,7 @@ export function OnboardingScreen() {
                     <p className="text-xl font-semibold text-white sm:text-2xl">
                       {activeCategory.name}
                     </p>
-                    <p className="mx-auto mt-1.5 max-w-sm text-sm text-blue-100/75 sm:text-base">
+                    <p className="mx-auto mt-1.5 max-w-sm text-sm text-emerald-100/75 sm:text-base">
                       {activeCategory.description}
                     </p>
                   </IntroText>
@@ -187,7 +187,7 @@ export function OnboardingScreen() {
                 <button
                   type="button"
                   onClick={finish}
-                  className="inline-flex h-11 items-center justify-center rounded-md bg-[#2563eb] px-6 text-base font-medium text-white shadow-sm transition-colors hover:bg-[#1d4ed8] focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none"
+                  className="inline-flex h-11 items-center justify-center rounded-md bg-[#15803d] px-6 text-base font-medium text-white shadow-sm transition-colors hover:bg-[#166534] focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none"
                 >
                   🌱 Comenzar mi viaje
                 </button>
