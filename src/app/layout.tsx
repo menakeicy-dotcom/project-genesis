@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { FallingLeaves } from "@/components/falling-leaves";
+import { BackgroundLeaves } from "@/components/background-leaves";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -28,6 +29,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <BackgroundLeaves />
           {children}
           <FallingLeaves />
         </ThemeProvider>

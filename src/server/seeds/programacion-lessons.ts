@@ -2328,4 +2328,450 @@ export const PROG_LESSONS: Record<string, Lesson> = {
       "Los tests dan confianza para cambiar sin miedo.",
     ],
   },
+
+  "prog-logica": {
+    intro:
+      "Toda decisión de un programa —un if, un filtro, una validación— se reduce a verdadero o falso. La lógica booleana es el álgebra de esos dos valores, y dominarla evita un montón de bugs.",
+    goal: "combinar condiciones con AND, OR y NOT sin equivocarte.",
+    sections: [
+      {
+        h: "Los tres operadores",
+        tldr: "AND exige todo; OR con uno basta; NOT invierte.",
+        code: "True  and True  → True     # ambos\nTrue  and False → False\nTrue  or  False → True      # al menos uno\nFalse or  False → False\nnot   True      → False     # invierte",
+      },
+      {
+        h: "AND vs OR: el error más común",
+        tldr: "Confundirlos cambia por completo qué pasa la condición.",
+        compare: {
+          left: {
+            title: "AND (y) — más estricto",
+            points: [
+              "Verdadero solo si TODO se cumple",
+              "edad >= 18 and tiene_entrada",
+              "Cuantas más condiciones, más difícil",
+            ],
+          },
+          right: {
+            title: "OR (o) — más permisivo",
+            points: [
+              "Verdadero si AL MENOS UNA se cumple",
+              "es_admin or es_dueño",
+              "Cuantas más condiciones, más fácil",
+            ],
+          },
+          note: "¿Quieres que se cumplan varias a la vez? AND. ¿Cualquiera vale? OR.",
+        },
+        more: [
+          "Leyes de De Morgan: not (A and B) == (not A) or (not B).",
+          "Cuidado con la doble negación: 'not no_activo' se lee mal; usa nombres positivos.",
+        ],
+        tip: "Escribe las condiciones en positivo siempre que puedas: 'esta_activo' se razona mejor que 'not esta_inactivo'.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Cuándo es verdadero «A and B»?",
+        options: [
+          "Cuando al menos uno es verdadero",
+          "Solo cuando A y B son ambos verdaderos",
+          "Nunca",
+        ],
+        answer: 1,
+        why: "AND exige que TODAS las condiciones se cumplan.",
+      },
+      {
+        kind: "choice",
+        q: "«not (True or False)» vale…",
+        options: ["True", "False", "None"],
+        answer: 1,
+        why: "(True or False) es True; not True es False.",
+      },
+      {
+        kind: "choice",
+        q: "Para dejar entrar si es mayor de edad Y tiene entrada usas…",
+        options: ["or", "and", "not"],
+        answer: 1,
+        why: "Deben cumplirse las dos condiciones → AND.",
+      },
+    ],
+    activity: {
+      title: "Tabla de verdad",
+      steps: [
+        "Elige una regla real (p. ej. 'puede conducir si tiene licencia y no ha bebido').",
+        "Escríbela con AND/OR/NOT.",
+        "Haz su tabla de verdad probando todas las combinaciones.",
+      ],
+    },
+    selfCheck: [
+      "Sé qué hacen AND, OR y NOT.",
+      "Distingo cuándo usar AND vs OR.",
+      "Escribo condiciones en positivo y legibles.",
+    ],
+    summary: [
+      "AND exige todo; OR con uno basta; NOT invierte.",
+      "Confundir AND/OR es el bug lógico nº1.",
+      "Condiciones en positivo = más fáciles de razonar.",
+    ],
+  },
+
+  "prog-css": {
+    intro:
+      "Si HTML es el esqueleto, CSS es la ropa y la postura: color, tipografía, espaciado y, sobre todo, cómo se colocan los elementos en la pantalla. Es lo que convierte una página funcional en una agradable.",
+    goal: "dar estilo y estructurar el layout de una página con CSS.",
+    sections: [
+      {
+        h: "Selector, propiedad, valor",
+        tldr: "Eliges qué elementos y les aplicas reglas.",
+        code: ".tarjeta {\n  padding: 16px;\n  border-radius: 12px;\n  background: #16a34a;\n  color: white;\n}",
+      },
+      {
+        h: "El modelo de caja y el layout",
+        tldr: "Todo elemento es una caja; flexbox coloca esas cajas.",
+        body: [
+          "Cada elemento tiene contenido, relleno (padding), borde y margen. Para disponer varias cajas en fila o columna, flexbox es la herramienta moderna.",
+        ],
+        code: ".fila {\n  display: flex;      /* cajas en fila */\n  gap: 1rem;          /* espacio entre ellas */\n  justify-content: center;  /* centradas */\n  align-items: center;\n}",
+        tip: "Aprende primero el modelo de caja y flexbox: resuelven el 90% de los layouts y evitan pelear con posiciones absolutas.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué propiedad activa un contenedor flexible (flexbox)?",
+        options: ["display: flex", "position: absolute", "float: left"],
+        answer: 0,
+        why: "display: flex convierte al elemento en contenedor flex.",
+      },
+      {
+        kind: "fill",
+        q: "Propiedad para el espacio INTERIOR de una caja (entre borde y contenido): ___",
+        accept: ["padding"],
+        hint: "Relleno interior.",
+        why: "padding es el espacio interior; margin es el exterior.",
+      },
+      {
+        kind: "choice",
+        q: "En CSS, «.tarjeta { }» aplica a…",
+        options: [
+          "el elemento con id 'tarjeta'",
+          "todos los elementos con la clase 'tarjeta'",
+          "la etiqueta <tarjeta>",
+        ],
+        answer: 1,
+        why: "El punto (.) selecciona por clase.",
+      },
+    ],
+    activity: {
+      title: "Estiliza tu tarjeta",
+      steps: [
+        "Toma el HTML de tu tarjeta anterior.",
+        "Dale color, padding y bordes redondeados con CSS.",
+        "Colócala centrada usando flexbox.",
+      ],
+    },
+    selfCheck: [
+      "Escribo reglas selector { propiedad: valor }.",
+      "Entiendo el modelo de caja (padding/margin/borde).",
+      "Uso flexbox para disponer elementos.",
+    ],
+    summary: [
+      "CSS = selector + propiedad + valor.",
+      "Todo es una caja; flexbox las coloca.",
+      "Modelo de caja + flexbox resuelven casi todo.",
+    ],
+  },
+
+  "prog-json": {
+    intro:
+      "Cuando dos programas se intercambian datos por la red, necesitan un formato común. JSON es ese idioma: texto legible que representa objetos y listas, casi idéntico a un diccionario.",
+    goal: "leer y producir datos en formato JSON.",
+    sections: [
+      {
+        h: "JSON se parece a un diccionario",
+        tldr: "Pares clave→valor, listas y valores básicos, en texto.",
+        code: '{\n  "nombre": "Ana",\n  "edad": 25,\n  "activa": true,\n  "hobbies": ["leer", "correr"]\n}',
+      },
+      {
+        h: "Parsear y serializar",
+        tldr: "Convertir texto JSON ↔ objetos de tu lenguaje.",
+        examples: [
+          { en: "Texto → objeto (parsear)", ipa: "datos = json.loads(texto)", es: "Lees JSON recibido y lo usas como diccionario." },
+          { en: "Objeto → texto (serializar)", ipa: "texto = json.dumps(datos)", es: "Preparas tus datos para enviarlos." },
+        ],
+        tip: "Reglas estrictas del JSON: comillas DOBLES en las claves, sin comas finales y sin comentarios. Un carácter de más lo invalida.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "JSON se parece sobre todo a…",
+        options: ["una lista de números", "un diccionario (clave→valor)", "una tabla SQL"],
+        answer: 1,
+        why: "JSON representa objetos como pares clave→valor, como un diccionario.",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuál es JSON VÁLIDO?",
+        options: [
+          "{ nombre: 'Ana' }",
+          '{ "nombre": "Ana" }',
+          '{ "nombre": "Ana", }',
+        ],
+        answer: 1,
+        why: "Claves con comillas dobles y sin coma final.",
+      },
+      {
+        kind: "choice",
+        q: "Convertir texto JSON recibido en un objeto usable se llama…",
+        options: ["serializar", "parsear", "compilar"],
+        answer: 1,
+        why: "Parsear = texto → objeto; serializar = objeto → texto.",
+      },
+    ],
+    activity: {
+      title: "Ida y vuelta",
+      steps: [
+        "Crea un diccionario con tus datos.",
+        "Serialízalo a JSON (texto) e imprímelo.",
+        "Vuelve a parsearlo y comprueba que recuperas el objeto.",
+      ],
+    },
+    selfCheck: [
+      "Reconozco la estructura de un JSON.",
+      "Parseo y serializo entre JSON y objetos.",
+      "Detecto JSON inválido (comillas/comas).",
+    ],
+    summary: [
+      "JSON = datos en texto, con forma de diccionario/lista.",
+      "Parsear (texto→objeto) y serializar (objeto→texto).",
+      "Comillas dobles, sin comas finales ni comentarios.",
+    ],
+  },
+
+  "prog-modulos": {
+    intro:
+      "Nadie escribe todo desde cero. Los módulos y librerías te dejan reutilizar código —tuyo o de la comunidad— con una línea. Saber importar bien es multiplicar lo que puedes hacer.",
+    goal: "aprovechar módulos y librerías en tus programas.",
+    sections: [
+      {
+        h: "import: traer código ya hecho",
+        tldr: "Un módulo es un archivo con funciones listas para usar.",
+        code: "import random\nrandom.randint(1, 6)   # dado\n\nfrom math import sqrt\nsqrt(16)               # 4.0",
+      },
+      {
+        h: "Escribir vs. importar",
+        tldr: "Antes de programar algo común, comprueba si ya existe.",
+        compare: {
+          left: {
+            title: "Reinventar",
+            points: ["Escribes tú la raíz cuadrada", "Más código, más bugs", "Pierdes tiempo"],
+          },
+          right: {
+            title: "Importar",
+            points: ["from math import sqrt", "Probado por millones", "Te centras en tu problema"],
+          },
+          note: "La potencia de un lenguaje está tanto en su sintaxis como en su ecosistema.",
+        },
+        more: [
+          "La librería estándar trae mucho (math, random, datetime, json…).",
+          "Para paquetes externos se usa un gestor (p. ej. pip); instálalos en entornos aislados.",
+        ],
+        tip: "No importes '*' (todo): trae nombres que chocan. Importa lo que usas: 'from math import sqrt'.",
+      },
+    ],
+    practice: [
+      {
+        kind: "fill",
+        q: "Palabra clave para traer un módulo completo: ___ random",
+        accept: ["import"],
+        hint: "import…",
+        why: "'import random' trae el módulo entero.",
+      },
+      {
+        kind: "choice",
+        q: "Antes de escribir una función de raíz cuadrada, lo sensato es…",
+        options: [
+          "escribirla desde cero siempre",
+          "comprobar si ya existe (math.sqrt)",
+          "copiarla de otro proyecto",
+        ],
+        answer: 1,
+        why: "Reutilizar código probado ahorra tiempo y bugs.",
+      },
+      {
+        kind: "choice",
+        q: "¿Por qué evitar 'from modulo import *'?",
+        options: [
+          "Es más lento",
+          "Trae muchos nombres que pueden chocar y oscurecen de dónde viene cada cosa",
+          "No funciona nunca",
+        ],
+        answer: 1,
+        why: "Importar todo contamina el espacio de nombres.",
+      },
+    ],
+    activity: {
+      title: "Apóyate en el ecosistema",
+      steps: [
+        "Haz un juego de adivinar un número usando random.",
+        "Usa datetime para mostrar la fecha actual.",
+        "Anota qué módulo de la librería estándar te sorprendió."],
+    },
+    selfCheck: [
+      "Importo módulos y uso sus funciones.",
+      "Reviso si algo ya existe antes de escribirlo.",
+      "Importo solo lo que necesito.",
+    ],
+    summary: [
+      "Los módulos reutilizan código con una línea.",
+      "Importar > reinventar lo común.",
+      "Evita 'import *'; importa lo que usas.",
+    ],
+  },
+
+  "prog-herencia": {
+    intro:
+      "La herencia permite crear una clase a partir de otra: la nueva hereda lo que ya existe y añade o cambia lo suyo. Bien usada, evita duplicar código; mal usada, crea jerarquías frágiles.",
+    goal: "reutilizar y especializar clases con herencia y polimorfismo.",
+    sections: [
+      {
+        h: "Una subclase hereda y especializa",
+        tldr: "Reutiliza lo común en la clase base; cambia lo específico en la hija.",
+        code: "class Animal:\n    def hablar(self):\n        return \"...\"\n\nclass Perro(Animal):        # hereda de Animal\n    def hablar(self):       # y especializa\n        return \"Guau\"\n\nPerro().hablar()   # 'Guau'",
+      },
+      {
+        h: "Polimorfismo y cuándo NO heredar",
+        tldr: "Un mismo método, distinto comportamiento según la clase.",
+        body: [
+          "Puedes tratar a muchos objetos por igual (todos 'hablan') y cada uno responde a su manera. Pero si la relación no es un 'es-un', prefiere composición (tener, no ser).",
+        ],
+        compare: {
+          left: {
+            title: "Herencia (es-un)",
+            points: ["Perro ES UN Animal", "Comparte y especializa", "Ojo: jerarquías profundas frágiles"],
+          },
+          right: {
+            title: "Composición (tiene-un)",
+            points: ["Coche TIENE UN Motor", "Más flexible", "Preferida en la práctica moderna"],
+          },
+          note: "Regla útil: 'favorece la composición sobre la herencia'.",
+        },
+        tip: "Antes de heredar, pregúntate: ¿es realmente un 'es-un'? Si dudas, probablemente quieres composición.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Que una subclase redefina un método de la base se llama…",
+        options: ["herencia múltiple", "sobreescribir (polimorfismo)", "encapsular"],
+        answer: 1,
+        why: "Sobreescribir el método da comportamiento distinto: polimorfismo.",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuándo es correcta la herencia?",
+        options: [
+          "Siempre que quieras reutilizar código",
+          "Cuando existe una relación 'es-un' real",
+          "Nunca",
+        ],
+        answer: 1,
+        why: "Herencia modela 'es-un'; si no, usa composición.",
+      },
+      {
+        kind: "choice",
+        q: "«Coche tiene un Motor» sugiere…",
+        options: ["herencia", "composición", "recursión"],
+        answer: 1,
+        why: "'tiene-un' es composición, no herencia.",
+      },
+    ],
+    activity: {
+      title: "Es-un vs tiene-un",
+      steps: [
+        "Crea una clase base (Figura) y dos subclases (Círculo, Cuadrado) con area().",
+        "Recórrelas en una lista y llama a area() en cada una (polimorfismo).",
+        "Piensa un caso donde composición sea mejor que herencia."],
+    },
+    selfCheck: [
+      "Creo una subclase que hereda y especializa.",
+      "Uso polimorfismo (mismo método, distinto comportamiento).",
+      "Distingo 'es-un' (herencia) de 'tiene-un' (composición).",
+    ],
+    summary: [
+      "Herencia: la subclase hereda y especializa la base.",
+      "Polimorfismo: mismo método, comportamiento propio.",
+      "Favorece la composición sobre la herencia.",
+    ],
+  },
+
+  "prog-busqueda": {
+    intro:
+      "Buscar es la operación más común en programación. Hay una forma lenta que siempre funciona (lineal) y una rapidísima que exige una condición (binaria). Elegir bien marca la diferencia con muchos datos.",
+    goal: "elegir y aplicar la búsqueda adecuada.",
+    sections: [
+      {
+        h: "Lineal vs. binaria",
+        tldr: "Binaria es logarítmica, pero exige datos ordenados.",
+        compare: {
+          left: {
+            title: "Búsqueda lineal — O(n)",
+            points: ["Revisa uno por uno", "Funciona con cualquier lista", "Lenta con millones"],
+          },
+          right: {
+            title: "Búsqueda binaria — O(log n)",
+            points: ["Descarta la mitad cada paso", "Exige lista ORDENADA", "Rapidísima a escala"],
+          },
+          note: "1.000.000 de elementos: lineal hasta 1M pasos; binaria ~20.",
+        },
+      },
+      {
+        h: "Cómo funciona la binaria",
+        tldr: "Mira el centro y descarta la mitad donde no puede estar.",
+        code: "# lista ordenada\nlo, hi = 0, len(a) - 1\nwhile lo <= hi:\n    mid = (lo + hi) // 2\n    if a[mid] == x: return mid\n    if a[mid] < x: lo = mid + 1\n    else:          hi = mid - 1",
+        tip: "Es el mismo truco de 'adivina el número': si dices más alto/más bajo, encuentras un número del 1 al 1000 en ~10 intentos.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué necesita la búsqueda binaria para funcionar?",
+        options: ["Que la lista esté ordenada", "Nada especial", "Que la lista sea pequeña"],
+        answer: 0,
+        why: "La binaria descarta mitades: solo vale si los datos están ordenados.",
+      },
+      {
+        kind: "choice",
+        q: "Coste de la búsqueda binaria:",
+        options: ["O(n)", "O(log n)", "O(n²)"],
+        answer: 1,
+        why: "Descartar la mitad cada paso da coste logarítmico.",
+      },
+      {
+        kind: "choice",
+        q: "En una lista NO ordenada, para buscar debes usar…",
+        options: ["binaria", "lineal", "ninguna"],
+        answer: 1,
+        why: "Sin orden, la binaria no aplica: toca lineal (o ordenar primero).",
+      },
+    ],
+    activity: {
+      title: "Adivina con estrategia",
+      steps: [
+        "Piensa un número del 1 al 100; pide a alguien que lo adivine diciendo 'más/menos'.",
+        "Cuenta los intentos: con estrategia binaria serán ~7.",
+        "Implementa la búsqueda binaria sobre una lista ordenada."],
+    },
+    selfCheck: [
+      "Distingo búsqueda lineal de binaria y su coste.",
+      "Sé que la binaria exige datos ordenados.",
+      "Implemento una búsqueda binaria correcta.",
+    ],
+    summary: [
+      "Lineal O(n): siempre vale, lenta a escala.",
+      "Binaria O(log n): rapidísima, exige orden.",
+      "Descartar la mitad cada paso es la clave.",
+    ],
+  },
 };
