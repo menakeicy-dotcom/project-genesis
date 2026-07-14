@@ -138,6 +138,12 @@ function SectionCard({ sec }: { sec: LessonSection }) {
         </ul>
       )}
 
+      {sec.code && (
+        <pre className="border-border bg-muted/50 mt-3 overflow-x-auto rounded-lg border p-3 font-mono text-xs leading-relaxed">
+          <code>{sec.code}</code>
+        </pre>
+      )}
+
       {sec.compare && (
         <div className="mt-4">
           <Compare c={sec.compare} />

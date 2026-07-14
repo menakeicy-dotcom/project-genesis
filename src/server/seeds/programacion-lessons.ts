@@ -1495,4 +1495,837 @@ export const PROG_LESSONS: Record<string, Lesson> = {
       "Lo avanzado es escalar lo que ya dominas.",
     ],
   },
+
+  "prog-recursion": {
+    intro:
+      "Una función recursiva se llama a sí misma. Suena a magia (o a peligro), pero es solo una forma elegante de resolver problemas que 'contienen' versiones más pequeñas de sí mismos.",
+    goal: "resolver un problema definiéndolo en términos de sí mismo.",
+    sections: [
+      {
+        h: "Dos partes: caso base y caso recursivo",
+        tldr: "El caso base detiene la recursión; el recursivo la acerca a él.",
+        body: [
+          "Sin caso base, la función se llama para siempre (y el programa se cae). Con él, cada llamada resuelve un trozo más pequeño hasta tocar el caso base.",
+        ],
+        code: "def factorial(n):\n    if n <= 1:        # caso base\n        return 1\n    return n * factorial(n - 1)   # caso recursivo\n\nfactorial(4)  # 4*3*2*1 = 24",
+        tip: "Confía en que la función 'ya funciona' para el caso más pequeño. Es el salto de fe de la recursión.",
+      },
+      {
+        h: "¿Bucle o recursión?",
+        tldr: "Todo lo recursivo puede hacerse con bucle; a veces la recursión es más clara.",
+        compare: {
+          left: {
+            title: "Recursión",
+            points: [
+              "Brilla en estructuras anidadas (árboles, carpetas)",
+              "Suele leerse como la definición del problema",
+            ],
+          },
+          right: {
+            title: "Bucle",
+            points: [
+              "Más eficiente en memoria (sin pila de llamadas)",
+              "Mejor para repeticiones lineales simples",
+            ],
+          },
+          note: "Elige la que exprese el problema con más claridad.",
+        },
+        more: [
+          "Cada llamada se apila; demasiada profundidad da 'stack overflow'.",
+          "Recorrer un árbol o unas carpetas anidadas es casi imposible de leer con bucles: ahí la recursión gana.",
+        ],
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué pasa si una función recursiva no tiene caso base?",
+        options: [
+          "Devuelve None",
+          "Se llama infinitamente hasta que el programa se cae",
+          "Se convierte en un bucle for",
+        ],
+        answer: 1,
+        why: "Sin caso base, la recursión no termina: desborda la pila.",
+      },
+      {
+        kind: "choice",
+        q: "¿En qué caso conviene MÁS la recursión?",
+        options: [
+          "Sumar los números del 1 al 100",
+          "Recorrer una estructura anidada como un árbol de carpetas",
+          "Repetir un saludo 3 veces",
+        ],
+        answer: 1,
+        why: "Las estructuras anidadas se expresan de forma natural con recursión.",
+      },
+      {
+        kind: "fill",
+        q: "En factorial(n), el caso base suele ser cuando n vale 1 o ___ .",
+        accept: ["0", "cero"],
+        hint: "El otro número pequeño.",
+        why: "El caso base cubre n<=1 (0 y 1 devuelven 1).",
+      },
+    ],
+    activity: {
+      title: "Piensa en pequeño",
+      steps: [
+        "Escribe una función recursiva que sume los elementos de una lista.",
+        "Identifica su caso base (lista vacía → 0) y el recursivo.",
+        "Reescríbela con un bucle y compara cuál se lee mejor.",
+      ],
+    },
+    selfCheck: [
+      "Identifico el caso base y el recursivo.",
+      "Escribo una función recursiva que termina.",
+      "Sé cuándo la recursión es más clara que un bucle.",
+    ],
+    summary: [
+      "Recursión = caso base + caso recursivo que se acerca a él.",
+      "Sin caso base, no termina.",
+      "Brilla en estructuras anidadas (árboles, carpetas).",
+    ],
+  },
+
+  "prog-oop": {
+    intro:
+      "La programación orientada a objetos agrupa datos y el comportamiento que los usa en una misma 'cosa': un objeto. En vez de variables sueltas y funciones aparte, modelas el mundo con piezas que se cuidan a sí mismas.",
+    goal: "modelar entidades con clases (datos + comportamiento) y crear objetos.",
+    sections: [
+      {
+        h: "Clase vs. objeto",
+        tldr: "La clase es el molde; el objeto, cada galleta hecha con él.",
+        body: [
+          "Una clase define qué datos (atributos) y qué acciones (métodos) tiene un tipo de cosa. Con ella creas objetos concretos, cada uno con su propio estado.",
+        ],
+        code: "class Cuenta:\n    def __init__(self, saldo=0):\n        self.saldo = saldo          # atributo\n    def depositar(self, x):         # método\n        self.saldo += x\n\nc = Cuenta()      # objeto (instancia)\nc.depositar(100)\nprint(c.saldo)    # 100",
+      },
+      {
+        h: "Por qué agrupar datos y comportamiento",
+        tldr: "El objeto protege y gestiona su propio estado.",
+        bullets: [
+          "El saldo solo cambia a través de métodos de la cuenta (control).",
+          "Cada objeto recuerda su estado sin variables globales.",
+          "El código se organiza alrededor de conceptos del dominio.",
+        ],
+        tip: "self es el propio objeto: cómo un método accede a los datos de SU instancia. Es el error nº1 olvidarlo en los métodos.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué relación hay entre clase y objeto?",
+        options: [
+          "Son lo mismo",
+          "La clase es el molde; el objeto es una instancia concreta",
+          "El objeto es el molde de la clase",
+        ],
+        answer: 1,
+        why: "La clase define el tipo; cada objeto es una instancia con su estado.",
+      },
+      {
+        kind: "choice",
+        q: "En un método, ¿para qué sirve 'self'?",
+        options: [
+          "Es un nombre decorativo",
+          "Referencia al propio objeto para acceder a sus atributos",
+          "Crea una nueva clase",
+        ],
+        answer: 1,
+        why: "self es la instancia actual; permite leer/escribir sus atributos.",
+      },
+      {
+        kind: "choice",
+        q: "Una ventaja de agrupar datos + comportamiento es…",
+        options: [
+          "usar más variables globales",
+          "que el objeto controla y protege su propio estado",
+          "que el código sea más largo",
+        ],
+        answer: 1,
+        why: "La encapsulación mantiene el estado bajo control del objeto.",
+      },
+    ],
+    activity: {
+      title: "Modela algo real",
+      steps: [
+        "Crea una clase (p. ej. Libro o Coche) con 2-3 atributos.",
+        "Añade un método que cambie o use su estado.",
+        "Crea 2 objetos distintos y comprueba que su estado es independiente.",
+      ],
+    },
+    selfCheck: [
+      "Distingo clase (molde) de objeto (instancia).",
+      "Defino atributos y métodos y uso self.",
+      "Explico por qué agrupar datos y comportamiento.",
+    ],
+    summary: [
+      "Clase = molde; objeto = instancia con su estado.",
+      "Atributos (datos) + métodos (comportamiento) juntos.",
+      "self referencia al propio objeto.",
+    ],
+  },
+
+  "prog-complejidad": {
+    intro:
+      "Dos programas pueden dar el mismo resultado y, sin embargo, uno tardar un segundo y el otro una hora con muchos datos. La notación Big-O describe cómo CRECE el coste al crecer la entrada.",
+    goal: "razonar sobre el coste de un algoritmo y elegir el que escala mejor.",
+    sections: [
+      {
+        h: "No mides segundos: mides crecimiento",
+        tldr: "Big-O ignora constantes y mira qué pasa cuando los datos crecen.",
+        code: "# O(1) — constante: no depende del tamaño\nx = lista[0]\n\n# O(n) — lineal: recorre toda la lista\nfor e in lista:\n    ...\n\n# O(n^2) — cuadrático: bucle dentro de bucle\nfor a in lista:\n    for b in lista:\n        ...",
+      },
+      {
+        h: "El caso estrella: buscar",
+        tldr: "La estructura correcta cambia el coste radicalmente.",
+        compare: {
+          left: {
+            title: "Buscar en lista — O(n)",
+            points: ["Revisa elemento por elemento", "Con 1M de datos, lento"],
+          },
+          right: {
+            title: "Buscar por clave (dict) — O(1)",
+            points: ["Acceso casi instantáneo", "Escala sin despeinarse"],
+          },
+          note: "Elegir dict en vez de lista puede convertir horas en milisegundos.",
+        },
+        more: [
+          "Órdenes comunes de menor a mayor coste: O(1) < O(log n) < O(n) < O(n log n) < O(n^2).",
+          "Primero haz que funcione; optimiza solo lo que un análisis (o el reloj) señale.",
+        ],
+        tip: "Un bucle dentro de otro sobre los mismos datos es una alarma de O(n²): pregúntate si hay una forma con dict/set.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Un bucle dentro de otro sobre la misma lista suele ser…",
+        options: ["O(1)", "O(n)", "O(n²)"],
+        answer: 2,
+        why: "Dos bucles anidados recorren n×n → coste cuadrático.",
+      },
+      {
+        kind: "choice",
+        q: "Acceder a un valor por su clave en un diccionario es, en promedio…",
+        options: ["O(1)", "O(n)", "O(n²)"],
+        answer: 0,
+        why: "El hashing da acceso por clave casi constante: O(1).",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuándo conviene preocuparse por Big-O?",
+        options: [
+          "Siempre, antes de que el código funcione",
+          "Cuando los datos crecen y el rendimiento importa",
+          "Nunca",
+        ],
+        answer: 1,
+        why: "Primero corrección; la eficiencia importa al escalar.",
+      },
+    ],
+    activity: {
+      title: "Cambia el coste",
+      steps: [
+        "Escribe una búsqueda de duplicados con dos bucles (O(n²)).",
+        "Reescríbela usando un set para bajarla a ~O(n).",
+        "Cronometra ambas con una lista grande y compara.",
+      ],
+    },
+    selfCheck: [
+      "Distingo O(1), O(n) y O(n²) en código.",
+      "Elijo la estructura que reduce el coste.",
+      "No optimizo antes de que el código funcione.",
+    ],
+    summary: [
+      "Big-O describe cómo crece el coste con los datos.",
+      "Anidar bucles → O(n²); acceso por clave → O(1).",
+      "La estructura correcta cambia el coste radicalmente.",
+    ],
+  },
+
+  "prog-estructuras-intro": {
+    intro:
+      "Listas, diccionarios, conjuntos… no son intercambiables. Cada estructura es buena en unas operaciones y mala en otras. Elegir bien es lo que hace que el código sea simple Y rápido.",
+    goal: "elegir la estructura de datos adecuada para cada problema.",
+    sections: [
+      {
+        h: "Cada estructura, su superpoder",
+        tldr: "Pregúntate qué operación harás más y elige por ella.",
+        bullets: [
+          "Lista: orden y posición (recorrer, índice). Buscar es O(n).",
+          "Diccionario: buscar/asociar por clave. O(1) medio.",
+          "Conjunto (set): pertenencia y unicidad. O(1) medio, sin duplicados.",
+        ],
+        code: "# ¿El elemento está? → set\nvistos = set()\nif x in vistos: ...      # O(1)\n\n# ¿Cuántas veces aparece cada palabra? → dict\nconteo = {}\nconteo[palabra] = conteo.get(palabra, 0) + 1",
+      },
+      {
+        h: "La pregunta clave",
+        tldr: "'¿Cómo voy a buscar o acceder a los datos?' decide la estructura.",
+        tip: "Si te sorprendes usando 'x in lista' muchas veces dentro de un bucle, casi siempre quieres un set o un dict.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Quieres comprobar rápidamente si un elemento ya apareció. Usas…",
+        options: ["una lista", "un set", "una cadena"],
+        answer: 1,
+        why: "El set da pertenencia en O(1) y evita duplicados.",
+      },
+      {
+        kind: "choice",
+        q: "Necesitas asociar cada usuario con su puntuación. Usas…",
+        options: ["una lista", "un diccionario (clave→valor)", "un set"],
+        answer: 1,
+        why: "Asociar por clave es el trabajo del diccionario.",
+      },
+      {
+        kind: "choice",
+        q: "El orden y la posición de los elementos importa. Usas…",
+        options: ["una lista", "un set", "un diccionario"],
+        answer: 0,
+        why: "La lista mantiene orden y acceso por índice.",
+      },
+    ],
+    activity: {
+      title: "La estructura correcta",
+      steps: [
+        "Para 3 problemas (agenda, palabras únicas de un texto, cola de espera) elige estructura.",
+        "Justifica cada elección con la operación dominante.",
+        "Implementa uno y comprueba que el código queda simple.",
+      ],
+    },
+    selfCheck: [
+      "Sé el superpoder de lista, dict y set.",
+      "Elijo por la operación que más repito.",
+      "Evito buscar en listas dentro de bucles.",
+    ],
+    summary: [
+      "Lista = orden/posición; dict = por clave; set = pertenencia/únicos.",
+      "Elige por la operación dominante.",
+      "La estructura correcta simplifica y acelera.",
+    ],
+  },
+
+  "prog-como-web": {
+    intro:
+      "Antes de escribir HTML o JavaScript, hay que entender el escenario: qué es un cliente, qué es un servidor y qué ocurre exactamente cuando escribes una dirección y pulsas Enter.",
+    goal: "explicar el modelo cliente-servidor de la web.",
+    sections: [
+      {
+        h: "Cliente y servidor",
+        tldr: "Tu navegador (cliente) pide; una computadora remota (servidor) responde.",
+        body: [
+          "El navegador envía una petición a un servidor identificado por una URL. El servidor responde con archivos (HTML, CSS, JS, imágenes) que el navegador ensambla y muestra.",
+        ],
+        examples: [
+          {
+            en: "Petición → Respuesta",
+            ipa: "GET https://skilltree.app  →  200 OK + HTML",
+            es: "El navegador pide una página y recibe el HTML que la describe.",
+          },
+        ],
+      },
+      {
+        h: "Las tres piezas del navegador",
+        tldr: "HTML estructura, CSS viste, JavaScript da vida.",
+        bullets: [
+          "HTML: el contenido y su estructura (el esqueleto).",
+          "CSS: el aspecto y la disposición (la ropa).",
+          "JavaScript: el comportamiento y la interacción (los músculos).",
+        ],
+        tip: "El servidor NO se ejecuta en tu navegador: te envía archivos. Entender esa frontera evita mucha confusión al empezar.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En la web, el navegador actúa como…",
+        options: ["servidor", "cliente que hace peticiones", "base de datos"],
+        answer: 1,
+        why: "El navegador es el cliente: pide recursos al servidor.",
+      },
+      {
+        kind: "choice",
+        q: "¿Qué pieza da ESTRUCTURA a una página?",
+        options: ["CSS", "HTML", "JavaScript"],
+        answer: 1,
+        why: "HTML define el contenido y su estructura semántica.",
+      },
+      {
+        kind: "choice",
+        q: "¿Qué recibe el navegador del servidor al abrir una página?",
+        options: [
+          "El servidor entero",
+          "Archivos (HTML, CSS, JS, imágenes)",
+          "Nada, lo genera solo",
+        ],
+        answer: 1,
+        why: "El servidor responde con archivos que el navegador ensambla.",
+      },
+    ],
+    activity: {
+      title: "Espía la web",
+      steps: [
+        "Abre las herramientas de desarrollo del navegador (pestaña Red).",
+        "Recarga una web y observa las peticiones y respuestas.",
+        "Identifica el HTML principal y algún archivo CSS o JS.",
+      ],
+    },
+    selfCheck: [
+      "Explico qué es cliente y servidor.",
+      "Sé qué recibe el navegador al abrir una URL.",
+      "Distingo el rol de HTML, CSS y JavaScript.",
+    ],
+    summary: [
+      "Cliente (navegador) pide; servidor responde con archivos.",
+      "HTML estructura, CSS viste, JS da vida.",
+      "El servidor no se ejecuta en tu navegador.",
+    ],
+  },
+
+  "prog-html": {
+    intro:
+      "HTML es el esqueleto de toda página web. No es 'programar' en el sentido de lógica, pero es el lienzo sobre el que todo lo demás sucede. Bien hecho, es semántico: las etiquetas describen QUÉ es cada cosa.",
+    goal: "estructurar contenido con HTML semántico.",
+    sections: [
+      {
+        h: "Etiquetas: contenido con significado",
+        tldr: "Cada etiqueta dice qué ES su contenido, no cómo se ve.",
+        code: "<article>\n  <h1>Mi primer artículo</h1>\n  <p>Un párrafo con un <a href=\"/mas\">enlace</a>.</p>\n  <ul>\n    <li>Punto uno</li>\n    <li>Punto dos</li>\n  </ul>\n</article>",
+      },
+      {
+        h: "Semántico, no decorativo",
+        tldr: "Usa la etiqueta que describe el contenido, no <div> para todo.",
+        bullets: [
+          "Encabezados (h1–h6) crean jerarquía y accesibilidad.",
+          "nav, main, header, footer describen regiones de la página.",
+          "El aspecto lo pone el CSS, no el HTML.",
+        ],
+        tip: "El HTML semántico mejora el SEO y la accesibilidad (lectores de pantalla). No es opcional: es hacerlo bien.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Para qué sirve la etiqueta <h1>?",
+        options: [
+          "Poner texto en negrita",
+          "El encabezado principal (jerarquía y significado)",
+          "Crear un enlace",
+        ],
+        answer: 1,
+        why: "Los h1–h6 definen la jerarquía de encabezados.",
+      },
+      {
+        kind: "fill",
+        q: "Etiqueta para crear un enlace (ancla): <___ href=\"...\">",
+        accept: ["a"],
+        hint: "Una sola letra.",
+        why: "<a> (anchor) crea enlaces.",
+      },
+      {
+        kind: "choice",
+        q: "'HTML semántico' significa…",
+        options: [
+          "usar <div> para todo",
+          "elegir etiquetas que describen el contenido",
+          "escribir en mayúsculas",
+        ],
+        answer: 1,
+        why: "Semántico = la etiqueta comunica el significado del contenido.",
+      },
+    ],
+    activity: {
+      title: "Maqueta una tarjeta",
+      steps: [
+        "Crea una página con un encabezado, un párrafo y una lista.",
+        "Añade un enlace y una imagen (con texto alternativo).",
+        "Revisa que usas etiquetas semánticas, no solo <div>.",
+      ],
+    },
+    selfCheck: [
+      "Uso encabezados y listas correctamente.",
+      "Creo enlaces e imágenes con sus atributos.",
+      "Prefiero etiquetas semánticas a <div> genéricos.",
+    ],
+    summary: [
+      "HTML estructura el contenido con etiquetas.",
+      "Semántico = la etiqueta describe el significado.",
+      "El aspecto es cosa del CSS.",
+    ],
+  },
+
+  "prog-js-navegador": {
+    intro:
+      "JavaScript es el lenguaje que da vida a las páginas. A través del DOM (la representación de la página como objetos), tu código puede leer y cambiar cualquier elemento en tiempo real.",
+    goal: "modificar una página dinámicamente con JavaScript.",
+    sections: [
+      {
+        h: "El DOM: la página como objetos",
+        tldr: "El navegador convierte tu HTML en objetos que JS puede manipular.",
+        code: "// Seleccionar un elemento\nconst titulo = document.querySelector('h1');\n\n// Leer y cambiar su contenido\ntitulo.textContent = '¡Hola desde JavaScript!';",
+      },
+      {
+        h: "Del dato a la pantalla",
+        tldr: "Cambias una variable y reflejas el cambio en el DOM.",
+        examples: [
+          {
+            en: "Actualizar la interfaz",
+            ipa: "contador.textContent = valor;",
+            es: "La página muestra siempre el estado actual de tus datos.",
+          },
+        ],
+        more: [
+          "querySelector usa selectores CSS: '#id', '.clase', 'tag'.",
+          "Si el script corre antes de que exista el elemento, querySelector devuelve null: coloca el script al final o espera al DOM.",
+        ],
+        tip: "Regla mental: los datos son la fuente de verdad; el DOM es su reflejo. Cambia el dato y vuelve a pintar.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué es el DOM?",
+        options: [
+          "Un lenguaje distinto de JavaScript",
+          "La página representada como objetos que JS puede manipular",
+          "Una base de datos del navegador",
+        ],
+        answer: 1,
+        why: "El DOM es el árbol de objetos que representa la página.",
+      },
+      {
+        kind: "fill",
+        q: "Método para seleccionar el primer elemento que casa un selector CSS: document.___('h1')",
+        accept: ["querySelector"],
+        hint: "query…",
+        why: "document.querySelector(selector) devuelve el primer coincidente.",
+      },
+      {
+        kind: "choice",
+        q: "Tu script no encuentra un elemento (devuelve null). Causa probable:",
+        options: [
+          "El elemento aún no existe cuando corre el script",
+          "JavaScript está roto",
+          "Falta CSS",
+        ],
+        answer: 0,
+        why: "Si el script corre antes de renderizar el elemento, no lo encuentra.",
+      },
+    ],
+    activity: {
+      title: "Da vida a la página",
+      steps: [
+        "Crea un HTML con un <h1> y un <button>.",
+        "Con JS, cambia el texto del h1 al cargar.",
+        "Reto: haz que el botón cambie el texto al pulsarlo.",
+      ],
+    },
+    selfCheck: [
+      "Explico qué es el DOM.",
+      "Selecciono y modifico elementos con JS.",
+      "Entiendo que los datos son la fuente y el DOM su reflejo.",
+    ],
+    summary: [
+      "El DOM representa la página como objetos.",
+      "querySelector selecciona; textContent/… modifica.",
+      "Cambia el dato y refleja en el DOM.",
+    ],
+  },
+
+  "prog-bd-que-es": {
+    intro:
+      "Cuando cierras un programa, sus variables desaparecen. Una base de datos guarda los datos para que perduren y se puedan consultar de forma eficiente por muchos usuarios a la vez.",
+    goal: "entender por qué y cuándo usar una base de datos.",
+    sections: [
+      {
+        h: "Tablas, filas y columnas",
+        tldr: "Una tabla es como una hoja de cálculo con reglas.",
+        body: [
+          "En una base de datos relacional, los datos viven en tablas: cada fila es un registro (un usuario) y cada columna un campo (nombre, email). Una clave primaria identifica cada fila de forma única.",
+        ],
+        code: "usuarios\n┌────┬─────────┬──────────────────┐\n│ id │ nombre  │ email            │\n├────┼─────────┼──────────────────┤\n│ 1  │ Ana     │ ana@correo.com   │\n│ 2  │ Beto    │ beto@correo.com  │\n└────┴─────────┴──────────────────┘",
+      },
+      {
+        h: "Relacional vs. NoSQL",
+        tldr: "Estructura y relaciones fuertes, o flexibilidad y escala.",
+        compare: {
+          left: {
+            title: "Relacional (SQL)",
+            points: ["Tablas con esquema fijo", "Relaciones y consistencia", "SQL como lenguaje"],
+          },
+          right: {
+            title: "NoSQL (documentos, etc.)",
+            points: ["Datos flexibles (JSON-like)", "Escala horizontal fácil", "Sin esquema rígido"],
+          },
+          note: "Para empezar y para la mayoría de apps, relacional es una apuesta segura.",
+        },
+        tip: "Persistir no es 'guardar en un archivo de texto': una base de datos aporta consultas, integridad y acceso concurrente.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En una base de datos relacional, una fila representa…",
+        options: ["un campo", "un registro (p. ej. un usuario)", "una consulta"],
+        answer: 1,
+        why: "Cada fila es un registro; cada columna, un campo.",
+      },
+      {
+        kind: "choice",
+        q: "¿Para qué sirve una clave primaria?",
+        options: [
+          "Ordenar alfabéticamente",
+          "Identificar de forma única cada fila",
+          "Encriptar los datos",
+        ],
+        answer: 1,
+        why: "La clave primaria identifica unívocamente cada registro.",
+      },
+      {
+        kind: "choice",
+        q: "Ventaja de una base de datos frente a un archivo de texto:",
+        options: [
+          "Ocupa menos siempre",
+          "Consultas eficientes, integridad y acceso concurrente",
+          "No necesita estructura",
+        ],
+        answer: 1,
+        why: "Aporta consulta, integridad y concurrencia, no solo almacenamiento.",
+      },
+    ],
+    activity: {
+      title: "Diseña una tabla",
+      steps: [
+        "Elige una entidad (productos, canciones, alumnos).",
+        "Define sus columnas y su clave primaria.",
+        "Escribe 3 filas de ejemplo.",
+      ],
+    },
+    selfCheck: [
+      "Explico tabla, fila, columna y clave primaria.",
+      "Sé por qué persistir supera a un archivo suelto.",
+      "Distingo relacional de NoSQL a alto nivel.",
+    ],
+    summary: [
+      "Base de datos = datos que perduran y se consultan eficientemente.",
+      "Relacional: tablas, filas, columnas, clave primaria.",
+      "SQL para estructura/relaciones; NoSQL para flexibilidad/escala.",
+    ],
+  },
+
+  "prog-sql-select": {
+    intro:
+      "SQL es el idioma con el que se piden datos a una base de datos relacional. Con unas pocas palabras (SELECT, FROM, WHERE, ORDER BY) puedes responder casi cualquier pregunta sobre tus datos.",
+    goal: "consultar y filtrar datos con SQL.",
+    sections: [
+      {
+        h: "La consulta básica",
+        tldr: "Qué columnas, de qué tabla, con qué filtro y en qué orden.",
+        code: "SELECT nombre, precio\nFROM productos\nWHERE precio > 100\nORDER BY precio DESC\nLIMIT 5;",
+      },
+      {
+        h: "Las cuatro piezas",
+        tldr: "SELECT columnas · FROM tabla · WHERE filtro · ORDER BY orden.",
+        bullets: [
+          "SELECT: qué columnas quieres (o * para todas).",
+          "WHERE: condición para filtrar filas.",
+          "ORDER BY … DESC/ASC: ordenar el resultado.",
+          "LIMIT: cuántas filas devolver.",
+        ],
+        tip: "Sin WHERE, la consulta devuelve TODA la tabla. Con millones de filas, eso es un problema: filtra siempre que puedas.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué cláusula FILTRA las filas de una consulta?",
+        options: ["SELECT", "WHERE", "ORDER BY"],
+        answer: 1,
+        why: "WHERE aplica la condición de filtrado.",
+      },
+      {
+        kind: "fill",
+        q: "Completa para ordenar de mayor a menor por precio: ORDER BY precio ___",
+        accept: ["desc", "descendente"],
+        hint: "Descendente en SQL.",
+        why: "DESC ordena de mayor a menor.",
+      },
+      {
+        kind: "choice",
+        q: "«SELECT * FROM usuarios;» devuelve…",
+        options: [
+          "solo la primera fila",
+          "todas las columnas de todas las filas",
+          "solo los nombres",
+        ],
+        answer: 1,
+        why: "* selecciona todas las columnas; sin WHERE, todas las filas.",
+      },
+    ],
+    activity: {
+      title: "Traduce preguntas a SQL",
+      steps: [
+        "Usa un entorno como SQLBolt (en Recursos).",
+        "Escribe consultas para: los 3 más caros, los que empiezan por 'A', el total de filas.",
+        "Añade siempre un WHERE cuando la pregunta lo pida.",
+      ],
+    },
+    selfCheck: [
+      "Escribo SELECT … FROM … con columnas concretas.",
+      "Filtro con WHERE y ordeno con ORDER BY.",
+      "Sé que sin WHERE traigo toda la tabla.",
+    ],
+    summary: [
+      "SELECT columnas FROM tabla WHERE filtro ORDER BY orden.",
+      "* = todas las columnas; LIMIT acota filas.",
+      "Filtra siempre que puedas.",
+    ],
+  },
+
+  "prog-http": {
+    intro:
+      "HTTP es el protocolo con el que hablan clientes y servidores en la web. Entender sus peticiones, métodos y códigos de estado es alfabetización básica para cualquier programador moderno.",
+    goal: "entender cómo dialogan cliente y servidor por HTTP.",
+    sections: [
+      {
+        h: "Petición y respuesta",
+        tldr: "El cliente pide con un método y una URL; el servidor responde con un código y datos.",
+        code: "GET /api/tareas/42        →  200 OK      { \"id\": 42, ... }\nPOST /api/tareas          →  201 Created { \"id\": 43 }\nGET /api/tareas/999       →  404 Not Found\nPOST /api/tareas (roto)   →  500 Server Error",
+      },
+      {
+        h: "Métodos y códigos de estado",
+        tldr: "El método dice la intención; el código, cómo fue.",
+        bullets: [
+          "GET (leer), POST (crear), PUT/PATCH (actualizar), DELETE (borrar).",
+          "2xx éxito · 3xx redirección · 4xx error del cliente · 5xx error del servidor.",
+          "404 = no existe; 401/403 = no autorizado; 500 = falló el servidor.",
+        ],
+        tip: "Distingue 4xx (te equivocaste TÚ, el cliente) de 5xx (falló el servidor). Es el primer paso para depurar cualquier problema de red.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué método HTTP se usa para CREAR un recurso?",
+        options: ["GET", "POST", "DELETE"],
+        answer: 1,
+        why: "POST se usa para crear; GET solo lee.",
+      },
+      {
+        kind: "choice",
+        q: "Un código 404 significa…",
+        options: [
+          "El servidor falló",
+          "El recurso no existe",
+          "Todo salió bien",
+        ],
+        answer: 1,
+        why: "404 Not Found: el recurso pedido no existe.",
+      },
+      {
+        kind: "choice",
+        q: "Los códigos 5xx indican…",
+        options: [
+          "error del cliente",
+          "error del servidor",
+          "éxito",
+        ],
+        answer: 1,
+        why: "5xx = el servidor falló al procesar la petición.",
+      },
+    ],
+    activity: {
+      title: "Lee la red",
+      steps: [
+        "Abre las herramientas del navegador (pestaña Red) en una web.",
+        "Identifica una petición GET y su código de estado.",
+        "Anota un ejemplo de 2xx y, si aparece, uno de 3xx/4xx.",
+      ],
+    },
+    selfCheck: [
+      "Explico una petición/respuesta HTTP.",
+      "Asocio GET/POST/PUT/DELETE con su intención.",
+      "Distingo 4xx (cliente) de 5xx (servidor).",
+    ],
+    summary: [
+      "Cliente pide (método + URL); servidor responde (código + datos).",
+      "GET leer, POST crear, PUT/PATCH actualizar, DELETE borrar.",
+      "2xx ok · 3xx redir · 4xx cliente · 5xx servidor.",
+    ],
+  },
+
+  "prog-testing": {
+    intro:
+      "Probar a mano si tu código funciona es lento y poco fiable. Las pruebas automáticas comprueban tu código por ti, siempre igual, y te avisan al instante si algo se rompe. Son la red de seguridad que te deja cambiar sin miedo.",
+    goal: "escribir pruebas que verifican tu código automáticamente.",
+    sections: [
+      {
+        h: "Una prueba es una afirmación",
+        tldr: "Dado X, el resultado DEBE ser Y. Si no, la prueba falla.",
+        code: "def suma(a, b):\n    return a + b\n\n# prueba\nassert suma(2, 3) == 5\nassert suma(-1, 1) == 0\n# si una afirmación es falsa, salta el error",
+      },
+      {
+        h: "Prueba también lo que puede fallar",
+        tldr: "El 'camino feliz' no basta: prueba los casos límite.",
+        bullets: [
+          "Casos normales, vacíos, negativos, ceros y valores extremos.",
+          "Una buena prueba falla cuando el código está mal (y solo entonces).",
+          "Los tests documentan qué se espera del código.",
+        ],
+        tip: "Escribe una prueba que reproduzca cada bug ANTES de arreglarlo: así confirmas el fallo y evitas que vuelva.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Para qué sirve una prueba automática?",
+        options: [
+          "Hacer el código más rápido",
+          "Verificar automáticamente que el código hace lo esperado",
+          "Ocultar los errores",
+        ],
+        answer: 1,
+        why: "Comprueba el comportamiento esperado, de forma repetible.",
+      },
+      {
+        kind: "choice",
+        q: "Probar solo el 'camino feliz' es un error porque…",
+        options: [
+          "es demasiado rápido",
+          "los bugs suelen esconderse en los casos límite",
+          "no se puede automatizar",
+        ],
+        answer: 1,
+        why: "Los casos límite (vacío, negativo, extremos) destapan los fallos.",
+      },
+      {
+        kind: "fill",
+        q: "Palabra clave de Python que afirma que algo debe ser verdadero en una prueba: ___ suma(2,3) == 5",
+        accept: ["assert"],
+        hint: "assert…",
+        why: "assert lanza un error si la condición es falsa.",
+      },
+    ],
+    activity: {
+      title: "Tu red de seguridad",
+      steps: [
+        "Escribe una función (p. ej. es_par) y 3 asserts que la prueben.",
+        "Añade un caso límite (0, negativos).",
+        "Rompe la función a propósito y observa cómo la prueba lo detecta.",
+      ],
+    },
+    selfCheck: [
+      "Escribo pruebas con assert que pasan y fallan cuando deben.",
+      "Pruebo casos límite, no solo el camino feliz.",
+      "Reproduzco un bug con una prueba antes de arreglarlo.",
+    ],
+    summary: [
+      "Una prueba afirma: dado X, el resultado debe ser Y.",
+      "Prueba casos límite, no solo el camino feliz.",
+      "Los tests dan confianza para cambiar sin miedo.",
+    ],
+  },
 };

@@ -352,6 +352,11 @@ function LearnStep({ section }: { section: LessonSection }) {
           ))}
         </ul>
       )}
+      {section.code && (
+        <pre className="border-border bg-muted/50 overflow-x-auto rounded-lg border p-3 font-mono text-xs leading-relaxed">
+          <code>{section.code}</code>
+        </pre>
+      )}
       {section.compare && <CompareBox c={section.compare} />}
       {section.examples && section.examples.length > 0 && (
         <div className="space-y-2">

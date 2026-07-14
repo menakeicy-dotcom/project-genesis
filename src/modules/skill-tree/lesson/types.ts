@@ -40,6 +40,8 @@ export interface LessonSection {
   body?: string[];
   /** Puntos clave. */
   bullets?: string[];
+  /** Bloque de código/fórmula multilínea (monoespaciado). Neutro de lenguaje. */
+  code?: string;
   /** Ejemplos ilustrativos dentro de la sección. */
   examples?: LessonExample[];
   /** Comparación visual de dos conceptos. */
