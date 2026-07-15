@@ -13,39 +13,22 @@
  * columnas `objective`, `branch`, `difficulty` y en `content` (JSON): competencia,
  * justificación, razón de su posición, errores frecuentes, criterios de dominio,
  * ejercicios y evaluaciones sugeridas.
+ *
+ * Inglés se declara como un `TreeSpec` y se siembra con el MOTOR GENÉRICO
+ * (`upsertTree` de `./lib`), el mismo que Programación y cualquier disciplina
+ * futura: una sola implementación de validación y sembrado para todas.
  */
 
-import type { Prisma, PrismaClient } from "@prisma/client";
-
+import type { SeedNode, SeedRes, TreeSpec } from "./lib";
 import { EN_LESSONS } from "./ingles-lessons";
 
-type Res = {
-  t: "VIDEO" | "ARTICLE" | "EXERCISE" | "BOOK" | "OTHER";
-  title: string;
-  url: string;
-  p: string;
-};
-
-export interface EnNode {
-  s: string; // slug
-  b: string; // branch key
-  lv: number; // nivel CEFR: 0 Pre-A1, 1 A1, 2 A2, 3 B1, 4 B2, 5 C1, 6 C2
-  t: string; // título
-  d: string; // descripción
-  o: string; // objetivo de aprendizaje (can-do)
-  c: string; // competencia adquirida
-  w: string; // justificación pedagógica + razón de su posición
-  df: "easy" | "medium" | "hard" | "expert";
-  m: number; // minutos estimados
-  xp: number;
-  root?: boolean;
-  pre: string[]; // prerrequisitos (slugs)
-  er: string[]; // errores frecuentes
-  cr: string[]; // criterios de dominio
-  ex: string[]; // posibles ejercicios
-  ev: string[]; // posibles evaluaciones
-  r: Res[]; // recursos
-}
+/**
+ * Un nodo de Inglés es exactamente un `SeedNode` del motor genérico (misma
+ * forma para todas las disciplinas). Se mantiene el alias `EnNode`/`Res` por
+ * legibilidad del contenido de abajo, sin duplicar el contrato.
+ */
+type Res = SeedRes;
+export type EnNode = SeedNode;
 
 /** Ramas (hebras de competencia) y su nivel de referencia visual. */
 export const EN_BRANCHES: Record<string, string> = {
@@ -61,20 +44,6 @@ export const EN_BRANCHES: Record<string, string> = {
   fluidez: "Fluidez",
   hito: "Hitos de nivel",
 };
-
-const LANE = [
-  "estrategias",
-  "pronunciacion",
-  "vocabulario",
-  "gramatica",
-  "escucha",
-  "lectura",
-  "conversacion",
-  "escritura",
-  "cultura",
-  "fluidez",
-  "hito",
-];
 
 // Recursos reutilizables (fuentes reconocidas y de acceso libre).
 const R = {
@@ -1600,212 +1569,33 @@ export const EN_NODES: EnNode[] = [
   },
 ];
 
-/**
- * Validación pura del DAG antes de insertarlo. Verifica: slugs únicos,
- * prerrequisitos existentes, ausencia de ciclos, alcanzabilidad desde una raíz,
- * ausencia de nodos aislados y continuidad de todas las hebras hasta C2.
- * Lanza un error si algo falla (evita sembrar un árbol roto en producción).
- */
-export function validateEnglishTree(nodes: EnNode[] = EN_NODES): {
-  ok: boolean;
-  errors: string[];
-} {
-  const errors: string[] = [];
-  const bySlug = new Map(nodes.map((n) => [n.s, n]));
-
-  // Slugs únicos.
-  if (bySlug.size !== nodes.length) errors.push("Hay slugs duplicados.");
-
-  // Prerrequisitos existentes.
-  for (const n of nodes)
-    for (const p of n.pre)
-      if (!bySlug.has(p))
-        errors.push(`${n.s}: prerrequisito inexistente '${p}'.`);
-
-  // Sin ciclos (DFS con colores).
-  const color = new Map<string, number>(); // 0 sin visitar, 1 en pila, 2 hecho
-  const dfs = (slug: string): boolean => {
-    color.set(slug, 1);
-    for (const p of bySlug.get(slug)?.pre ?? []) {
-      const c = color.get(p) ?? 0;
-      if (c === 1) return true; // arista de retroceso → ciclo
-      if (c === 0 && dfs(p)) return true;
-    }
-    color.set(slug, 2);
-    return false;
-  };
-  for (const n of nodes)
-    if ((color.get(n.s) ?? 0) === 0 && dfs(n.s)) {
-      errors.push(`Ciclo detectado en o cerca de '${n.s}'.`);
-      break;
-    }
-
-  // Alcanzabilidad desde raíces (BFS por aristas de desbloqueo).
-  const roots = nodes
-    .filter((n) => n.root || n.pre.length === 0)
-    .map((n) => n.s);
-  if (roots.length === 0)
-    errors.push("No hay ninguna raíz (nodo sin prerrequisitos).");
-  const unlocks = new Map<string, string[]>();
-  for (const n of nodes)
-    for (const p of n.pre) unlocks.set(p, [...(unlocks.get(p) ?? []), n.s]);
-  const reachable = new Set<string>(roots);
-  const queue = [...roots];
-  while (queue.length) {
-    const cur = queue.shift()!;
-    for (const nxt of unlocks.get(cur) ?? [])
-      if (!reachable.has(nxt)) {
-        reachable.add(nxt);
-        queue.push(nxt);
-      }
-  }
-  for (const n of nodes)
-    if (!reachable.has(n.s))
-      errors.push(`'${n.s}' no es alcanzable desde una raíz.`);
-
-  // Sin nodos aislados (todo nodo tiene prereq o desbloquea a alguien).
-  for (const n of nodes)
-    if (n.pre.length === 0 && !(unlocks.get(n.s)?.length ?? 0) && !n.root)
-      errors.push(`'${n.s}' está aislado.`);
-
-  // Continuidad de hebras hasta C2: el hito C2 depende (transitivamente) de
-  // al menos un nodo de cada rama de competencia.
-  const c2 = bySlug.get("hito-c2");
-  if (c2) {
-    const anc = new Set<string>();
-    const stack = [...c2.pre];
-    while (stack.length) {
-      const s = stack.pop()!;
-      if (anc.has(s)) continue;
-      anc.add(s);
-      for (const p of bySlug.get(s)?.pre ?? []) stack.push(p);
-    }
-    const branchesReached = new Set([...anc].map((s) => bySlug.get(s)?.b));
-    for (const b of Object.keys(EN_BRANCHES))
-      if (b !== "hito" && !branchesReached.has(b))
-        errors.push(`La rama '${b}' no tiene continuidad hasta C2.`);
-  }
-
-  return { ok: errors.length === 0, errors };
-}
-
-/** Posición X por rama (para separar visualmente las hebras). */
-function laneX(branch: string): number {
-  const i = Math.max(0, LANE.indexOf(branch));
-  return 120 + i * 150;
-}
+/** Etiquetas de nivel CEFR (índice de tier → etiqueta legible). */
+const EN_LEVELS = ["Pre-A1", "A1", "A2", "B1", "B2", "C1", "C2"];
 
 /**
- * Inserta (o reemplaza) el árbol de Inglés de forma idempotente, respetando la
- * arquitectura Tree → Skill → SkillPrerequisite → Resource. Seguro de re-ejecutar.
+ * Declaración de la disciplina **Inglés** como `TreeSpec`. Se siembra con el
+ * motor genérico `upsertTree(db, INGLES_SPEC)` (ver `./lib` y la ruta
+ * `/api/seed`): la misma validación de DAG y el mismo sembrado idempotente que
+ * usan Programación y cualquier disciplina futura. Ya no existe un motor de
+ * sembrado propio de Inglés.
  */
-export async function upsertEnglishTree(
-  db: PrismaClient,
-): Promise<{ tree: string; skills: number; prerequisites: number }> {
-  // No sembrar un árbol inválido.
-  const check = validateEnglishTree();
-  if (!check.ok) {
-    throw new Error(
-      `Árbol de Inglés inválido:\n- ${check.errors.join("\n- ")}`,
-    );
-  }
-
-  // Categoría Idiomas (crea si falta; no toca otras categorías).
-  const category = await db.category.upsert({
-    where: { slug: "idiomas" },
-    update: {},
-    create: {
-      slug: "idiomas",
-      name: "Idiomas",
-      description: "Aprende a comunicarte en nuevos idiomas.",
-      icon: "🌍",
-      order: 0,
-    },
-  });
-
-  // Árbol (reemplaza sus skills para reflejar la versión más reciente).
-  const existing = await db.tree.findUnique({ where: { slug: "ingles" } });
-  if (existing) {
-    await db.skill.deleteMany({ where: { treeId: existing.id } });
-  }
-  const tree = existing
-    ? await db.tree.update({
-        where: { id: existing.id },
-        data: {
-          categoryId: category.id,
-          title: "Inglés · de cero a dominio (C2)",
-          description:
-            "Aprende inglés desde cero hasta un nivel avanzado siguiendo cómo se adquiere realmente una lengua: por competencias que evolucionan (escucha, habla, lectura, escritura, vocabulario, gramática, pronunciación, cultura, estrategias y fluidez).",
-          difficulty: "beginner",
-          status: "PUBLISHED",
-        },
-      })
-    : await db.tree.create({
-        data: {
-          categoryId: category.id,
-          slug: "ingles",
-          title: "Inglés · de cero a dominio (C2)",
-          description:
-            "Aprende inglés desde cero hasta un nivel avanzado siguiendo cómo se adquiere realmente una lengua: por competencias que evolucionan (escucha, habla, lectura, escritura, vocabulario, gramática, pronunciación, cultura, estrategias y fluidez).",
-          difficulty: "beginner",
-          status: "PUBLISHED",
-        },
-      });
-
-  const idBySlug: Record<string, string> = {};
-  let order = 0;
-  for (const n of EN_NODES) {
-    const created = await db.skill.create({
-      data: {
-        treeId: tree.id,
-        slug: n.s,
-        title: n.t,
-        description: n.d,
-        objective: n.o,
-        branch: n.b,
-        difficulty: n.df,
-        tier: n.lv,
-        xpReward: n.xp,
-        estimatedMinutes: n.m,
-        positionX: laneX(n.b),
-        positionY: n.lv * 130,
-        isRoot: !!n.root,
-        order: order++,
-        content: {
-          competency: n.c,
-          rationale: n.w,
-          commonErrors: n.er,
-          masteryCriteria: n.cr,
-          exercises: n.ex,
-          assessments: n.ev,
-          levelLabel:
-            ["Pre-A1", "A1", "A2", "B1", "B2", "C1", "C2"][n.lv] ?? String(n.lv),
-          branchLabel: EN_BRANCHES[n.b] ?? n.b,
-          ...(EN_LESSONS[n.s] ? { lesson: EN_LESSONS[n.s] } : {}),
-        } as unknown as Prisma.InputJsonValue,
-        resources: {
-          create: n.r.map((res, i) => ({
-            type: res.t,
-            title: res.title,
-            url: res.url,
-            provider: res.p,
-            order: i,
-          })),
-        },
-      },
-    });
-    idBySlug[n.s] = created.id;
-  }
-
-  let prerequisites = 0;
-  for (const n of EN_NODES) {
-    for (const pre of n.pre) {
-      await db.skillPrerequisite.create({
-        data: { skillId: idBySlug[n.s]!, prerequisiteId: idBySlug[pre]! },
-      });
-      prerequisites++;
-    }
-  }
-
-  return { tree: tree.slug, skills: EN_NODES.length, prerequisites };
-}
+export const INGLES_SPEC: TreeSpec = {
+  category: {
+    slug: "idiomas",
+    name: "Idiomas",
+    description: "Aprende a comunicarte en nuevos idiomas.",
+    icon: "🌍",
+    order: 0,
+  },
+  tree: {
+    slug: "ingles",
+    title: "Inglés · de cero a dominio (C2)",
+    description:
+      "Aprende inglés desde cero hasta un nivel avanzado siguiendo cómo se adquiere realmente una lengua: por competencias que evolucionan (escucha, habla, lectura, escritura, vocabulario, gramática, pronunciación, cultura, estrategias y fluidez).",
+    difficulty: "beginner",
+  },
+  branches: EN_BRANCHES,
+  levels: EN_LEVELS,
+  nodes: EN_NODES,
+  lessons: EN_LESSONS,
+};

@@ -16,12 +16,59 @@
  *   Aprende → Ejemplos → Practica → Actividad → Retroalimentación → Resumen.
  */
 
-/** Un ejemplo bilingüe (inglés → español), con pronunciación/nota opcional. */
+/**
+ * Un ejemplo ilustrativo, AGNÓSTICO de disciplina.
+ *
+ * Modelo genérico:
+ *   - `text` : texto principal (una frase, un concepto, un título).
+ *   - `sub`  : texto secundario (traducción, explicación o aclaración).
+ *   - `mono` : línea monoespaciada (código, fórmula o transcripción fonética).
+ *   - `term` : etiqueta breve opcional (categoría/tipo del ejemplo).
+ *   - `note` : nota al pie.
+ *
+ * Alias retrocompatibles: el contenido antiguo (Inglés/Programación) usa
+ * `en`/`es`/`ipa`, que siguen funcionando. Usa `viewExample()` para leer
+ * cualquier ejemplo de forma uniforme, prefiriendo los campos genéricos.
+ */
 export interface LessonExample {
-  en: string;
-  es?: string;
-  ipa?: string;
+  /** Texto principal (frase, concepto, título). Genérico. */
+  text?: string;
+  /** Texto secundario: traducción, explicación o aclaración. */
+  sub?: string;
+  /** Línea monoespaciada: código, fórmula o transcripción fonética. */
+  mono?: string;
+  /** Etiqueta breve opcional (categoría/tipo del ejemplo). */
+  term?: string;
+  /** Nota al pie. */
   note?: string;
+
+  // ── Alias retrocompatibles (no usar en contenido nuevo) ──
+  /** @deprecated usa `text`. */
+  en?: string;
+  /** @deprecated usa `sub`. */
+  es?: string;
+  /** @deprecated usa `mono`. */
+  ipa?: string;
+}
+
+/** Vista normalizada de un ejemplo (campos genéricos, con fallback a los alias). */
+export interface ExampleView {
+  text: string;
+  sub?: string;
+  mono?: string;
+  term?: string;
+  note?: string;
+}
+
+/** Normaliza un ejemplo (nuevo o antiguo) a la vista genérica que usa la UI. */
+export function viewExample(ex: LessonExample): ExampleView {
+  return {
+    text: ex.text ?? ex.en ?? "",
+    sub: ex.sub ?? ex.es,
+    mono: ex.mono ?? ex.ipa,
+    term: ex.term,
+    note: ex.note,
+  };
 }
 
 /** Comparación visual de dos conceptos que se confunden (A vs B). */
@@ -52,7 +99,14 @@ export interface LessonSection {
   tip?: string;
 }
 
-/** Pregunta de práctica autocorregible. */
+/**
+ * Pregunta de práctica autocorregible. Tipos AGNÓSTICOS de disciplina:
+ *   - `choice` : opción múltiple (una correcta).
+ *   - `fill`   : escribir la respuesta (una o varias aceptadas).
+ *   - `order`  : ordenar pasos/elementos en la secuencia correcta.
+ *   - `match`  : emparejar conceptos de dos columnas.
+ * Sirven igual para gramática, código, teoría musical o cualquier área.
+ */
 export type PracticeItem =
   | {
       kind: "choice";
@@ -68,6 +122,20 @@ export type PracticeItem =
       /** Respuestas aceptadas (se comparan normalizadas: minúsculas, sin tildes/espacios extra). */
       accept: string[];
       hint?: string;
+      why?: string;
+    }
+  | {
+      kind: "order";
+      q: string;
+      /** Elementos en su orden CORRECTO (la UI los baraja al presentarlos). */
+      items: string[];
+      why?: string;
+    }
+  | {
+      kind: "match";
+      q: string;
+      /** Parejas correctas izquierda↔derecha (la UI baraja la columna derecha). */
+      pairs: { left: string; right: string }[];
       why?: string;
     };
 

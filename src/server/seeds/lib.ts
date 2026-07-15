@@ -79,6 +79,104 @@ export interface ValidationResult {
   stats: { nodes: number; roots: number; withLesson: number };
 }
 
+/**
+ * Resultado del LINTER DE CALIDAD del estándar SkillTree. No bloquea el
+ * sembrado (a diferencia de `validateTree`), pero mide si una disciplina cumple
+ * el estándar de calidad: cobertura de lecciones y de campos pedagógicos, y
+ * riqueza de cada lección (práctica, resumen, ejemplos…). Sirve para que toda
+ * disciplina FUTURA mantenga el mismo nivel que Inglés y Programación.
+ */
+export interface LintResult {
+  /** Cobertura global (0–100) de lecciones sobre el total de nodos. */
+  lessonCoverage: number;
+  warnings: string[];
+  /** Métricas agregadas útiles para el informe/panel de autoría. */
+  metrics: {
+    nodes: number;
+    withLesson: number;
+    withPractice: number;
+    withSummary: number;
+    practiceKinds: Record<string, number>;
+    avgSectionsPerLesson: number;
+    avgPracticePerLesson: number;
+  };
+}
+
+/**
+ * ESTÁNDAR SkillTree — criterios mínimos de una ficha de habilidad.
+ * Cambiar aquí sube (o baja) el listón para TODAS las disciplinas a la vez.
+ */
+const STANDARD = {
+  minMasteryCriteria: 1,
+  minCommonErrors: 1,
+  minResources: 1,
+  minSectionsPerLesson: 2,
+  minPracticePerLesson: 1,
+};
+
+/** Analiza una disciplina contra el estándar de calidad (no bloqueante). */
+export function lintTree(spec: TreeSpec): LintResult {
+  const warnings: string[] = [];
+  const nodes = spec.nodes;
+  const practiceKinds: Record<string, number> = {};
+
+  // Nodos aislados: sin prerrequisitos, sin dependientes y no raíz (huérfanos
+  // que no conectan con el DAG). Señal de calidad universal.
+  const hasDependents = new Set<string>();
+  for (const n of nodes) for (const p of n.pre) hasDependents.add(p);
+  for (const n of nodes)
+    if (n.pre.length === 0 && !hasDependents.has(n.s) && !n.root)
+      warnings.push(`${n.s}: nodo aislado (no conecta con ninguna otra habilidad).`);
+  let withLesson = 0;
+  let withPractice = 0;
+  let withSummary = 0;
+  let totalSections = 0;
+  let totalPractice = 0;
+
+  for (const n of nodes) {
+    // Ficha pedagógica: campos que el estándar considera obligatorios.
+    if (!n.o?.trim()) warnings.push(`${n.s}: sin objetivo de aprendizaje.`);
+    if (!n.c?.trim()) warnings.push(`${n.s}: sin competencia declarada.`);
+    if ((n.cr?.length ?? 0) < STANDARD.minMasteryCriteria)
+      warnings.push(`${n.s}: sin criterios de dominio.`);
+    if ((n.er?.length ?? 0) < STANDARD.minCommonErrors)
+      warnings.push(`${n.s}: sin errores frecuentes.`);
+    if ((n.r?.length ?? 0) < STANDARD.minResources)
+      warnings.push(`${n.s}: sin recursos.`);
+    if (n.xp <= 0) warnings.push(`${n.s}: XP no positiva.`);
+
+    const lesson = spec.lessons[n.s];
+    if (!lesson) continue;
+    withLesson++;
+    const sections = lesson.sections?.length ?? 0;
+    const practice = lesson.practice?.length ?? 0;
+    totalSections += sections;
+    totalPractice += practice;
+    if (practice > 0) withPractice++;
+    if ((lesson.summary?.length ?? 0) > 0) withSummary++;
+    if (sections < STANDARD.minSectionsPerLesson)
+      warnings.push(`${n.s}: la lección tiene menos de ${STANDARD.minSectionsPerLesson} secciones.`);
+    if (practice < STANDARD.minPracticePerLesson)
+      warnings.push(`${n.s}: la lección no tiene práctica autocorregible.`);
+    for (const p of lesson.practice ?? [])
+      practiceKinds[p.kind] = (practiceKinds[p.kind] ?? 0) + 1;
+  }
+
+  return {
+    lessonCoverage: nodes.length ? Math.round((withLesson / nodes.length) * 100) : 0,
+    warnings,
+    metrics: {
+      nodes: nodes.length,
+      withLesson,
+      withPractice,
+      withSummary,
+      practiceKinds,
+      avgSectionsPerLesson: withLesson ? +(totalSections / withLesson).toFixed(1) : 0,
+      avgPracticePerLesson: withLesson ? +(totalPractice / withLesson).toFixed(1) : 0,
+    },
+  };
+}
+
 /** Valida el grafo de un árbol antes de sembrarlo. */
 export function validateTree(spec: TreeSpec): ValidationResult {
   const errors: string[] = [];

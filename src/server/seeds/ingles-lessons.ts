@@ -313,6 +313,28 @@ export const EN_LESSONS: Record<string, Lesson> = {
         hint: "Adverbio de 'slow'.",
         why: "'slowly' (despacio). El adverbio se forma con -ly.",
       },
+      {
+        kind: "match",
+        q: "Empareja cada frase en inglés con su significado:",
+        pairs: [
+          { left: "Thank you", right: "Gracias" },
+          { left: "Excuse me", right: "Con permiso" },
+          { left: "I don't understand", right: "No entiendo" },
+          { left: "Nice to meet you", right: "Encantado de conocerte" },
+        ],
+        why: "Reconocer estas fórmulas al instante es tu red de seguridad al conversar.",
+      },
+      {
+        kind: "order",
+        q: "Ordena los pasos naturales de una primera interacción:",
+        items: [
+          "Hi!",
+          "My name is Ana.",
+          "Nice to meet you.",
+          "Sorry, can you speak more slowly, please?",
+        ],
+        why: "Saludo → presentarte → cortesía → pedir ayuda si hace falta.",
+      },
     ],
     activity: {
       title: "Tu presentación de 5 frases",

@@ -2,9 +2,20 @@ import { NextResponse } from "next/server";
 
 import { db } from "@/server/db";
 import { seedIfEmpty } from "@/server/seed";
-import { upsertEnglishTree } from "@/server/seeds/ingles";
-import { upsertTree } from "@/server/seeds/lib";
+import { INGLES_SPEC } from "@/server/seeds/ingles";
+import { lintTree, upsertTree, type TreeSpec } from "@/server/seeds/lib";
 import { PROGRAMACION_SPEC } from "@/server/seeds/programacion";
+
+/** Resumen de calidad de una disciplina según el estándar SkillTree. */
+function quality(spec: TreeSpec) {
+  const l = lintTree(spec);
+  return {
+    lessonCoverage: `${l.lessonCoverage}%`,
+    metrics: l.metrics,
+    warnings: l.warnings.length,
+    sample: l.warnings.slice(0, 8),
+  };
+}
 
 /**
  * Siembra el contenido de demostración. Protegida por SEED_SECRET y segura de
@@ -27,9 +38,9 @@ export async function GET(request: Request) {
   }
 
   const result = await seedIfEmpty(db);
-  // Los árboles "reales" se insertan/actualizan de forma idempotente mediante el
-  // motor genérico de sembrado. Inglés conserva su propio upsert por ahora.
-  const english = await upsertEnglishTree(db);
+  // Todas las disciplinas se insertan/actualizan de forma idempotente con el
+  // MISMO motor genérico de sembrado (validación de DAG incluida).
+  const english = await upsertTree(db, INGLES_SPEC);
   const programacion = await upsertTree(db, PROGRAMACION_SPEC);
 
   return NextResponse.json({
@@ -37,5 +48,9 @@ export async function GET(request: Request) {
     demo: result.seeded ? "Contenido de demostración cargado." : "Ya existía.",
     english,
     programacion,
+    quality: {
+      english: quality(INGLES_SPEC),
+      programacion: quality(PROGRAMACION_SPEC),
+    },
   });
 }

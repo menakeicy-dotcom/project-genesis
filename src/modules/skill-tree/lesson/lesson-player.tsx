@@ -18,7 +18,15 @@ import {
 
 import { cn } from "@/lib/utils";
 import { completeSkillAction } from "@/modules/progress/actions";
+import { ArrowDown, ArrowUp } from "lucide-react";
+import { viewExample } from "./types";
 import type { Lesson, LessonCompare, LessonExample, LessonSection, PracticeItem } from "./types";
+
+/** Baraja determinista y estable (rota una posición): evita depender de random. */
+function rotated<T>(arr: T[]): T[] {
+  if (arr.length < 2) return arr.slice();
+  return [...arr.slice(1), arr[0]!];
+}
 
 function normalize(s: string): string {
   return s
@@ -92,6 +100,9 @@ export function LessonPlayer({
   const [fill, setFill] = useState<Record<number, string>>({});
   const [checked, setChecked] = useState<Record<number, boolean>>({});
   const [awarded, setAwarded] = useState<Record<number, boolean>>({});
+  // `order`: arreglo actual del usuario. `match`: izquierda→derecha elegida.
+  const [ord, setOrd] = useState<Record<number, string[]>>({});
+  const [match, setMatch] = useState<Record<number, Record<number, number>>>({});
 
   const step = steps[i]!;
   const pct = Math.round((i / (steps.length - 1)) * 100);
@@ -186,6 +197,10 @@ export function LessonPlayer({
                 setFill={setFill}
                 checked={checked}
                 setChecked={setChecked}
+                ord={ord}
+                setOrd={setOrd}
+                match={match}
+                setMatch={setMatch}
                 onCorrect={() => award(step.ex)}
               />
             )}
@@ -287,14 +302,24 @@ function IntroStep({ lesson, meta }: { lesson: Lesson; meta: PlayerMeta }) {
 }
 
 function ExampleBox({ ex }: { ex: LessonExample }) {
+  const v = viewExample(ex);
   return (
     <div className="border-border bg-muted/40 rounded-lg border p-3">
-      <p className="text-sm font-medium">{ex.en}</p>
-      {ex.ipa && <p className="text-muted-foreground mt-0.5 font-mono text-xs">{ex.ipa}</p>}
-      {ex.es && <p className="text-muted-foreground mt-0.5 text-sm">{ex.es}</p>}
-      {ex.note && (
+      {v.term && (
+        <p className="text-primary mb-1 text-[0.7rem] font-semibold tracking-wide uppercase">
+          {v.term}
+        </p>
+      )}
+      <p className="text-sm font-medium">{v.text}</p>
+      {v.mono && (
+        <pre className="text-muted-foreground mt-1 overflow-x-auto font-mono text-xs whitespace-pre-wrap">
+          {v.mono}
+        </pre>
+      )}
+      {v.sub && <p className="text-muted-foreground mt-0.5 text-sm">{v.sub}</p>}
+      {v.note && (
         <p className="text-muted-foreground mt-1 border-t border-dashed pt-1 text-xs italic">
-          {ex.note}
+          {v.note}
         </p>
       )}
     </div>
@@ -397,6 +422,10 @@ function ExerciseStep({
   setFill,
   checked,
   setChecked,
+  ord,
+  setOrd,
+  match,
+  setMatch,
   onCorrect,
 }: {
   item: PracticeItem;
@@ -407,18 +436,29 @@ function ExerciseStep({
   setFill: React.Dispatch<React.SetStateAction<Record<number, string>>>;
   checked: Record<number, boolean>;
   setChecked: React.Dispatch<React.SetStateAction<Record<number, boolean>>>;
+  ord: Record<number, string[]>;
+  setOrd: React.Dispatch<React.SetStateAction<Record<number, string[]>>>;
+  match: Record<number, Record<number, number>>;
+  setMatch: React.Dispatch<React.SetStateAction<Record<number, Record<number, number>>>>;
   onCorrect: () => void;
 }) {
+  const KIND_LABEL: Record<PracticeItem["kind"], string> = {
+    choice: "Mini ejercicio",
+    fill: "Escribe la respuesta",
+    order: "Ordena los pasos",
+    match: "Empareja",
+  };
   return (
     <div className="space-y-4">
       <div className="text-muted-foreground flex items-center gap-2 text-xs font-semibold tracking-wide uppercase">
-        <Target className="size-4" /> Mini ejercicio
+        <Target className="size-4" /> {KIND_LABEL[item.kind]}
       </div>
       <p className="text-base font-medium">{item.q}</p>
 
-      {item.kind === "choice" ? (
+      {item.kind === "choice" && (
         <ChoiceUI item={item} ex={ex} pick={pick} setPick={setPick} onCorrect={onCorrect} />
-      ) : (
+      )}
+      {item.kind === "fill" && (
         <FillUI
           item={item}
           ex={ex}
@@ -427,6 +467,213 @@ function ExerciseStep({
           checked={checked}
           setChecked={setChecked}
           onCorrect={onCorrect}
+        />
+      )}
+      {item.kind === "order" && (
+        <OrderUI
+          item={item}
+          ex={ex}
+          ord={ord}
+          setOrd={setOrd}
+          checked={checked}
+          setChecked={setChecked}
+          onCorrect={onCorrect}
+        />
+      )}
+      {item.kind === "match" && (
+        <MatchUI
+          item={item}
+          ex={ex}
+          match={match}
+          setMatch={setMatch}
+          checked={checked}
+          setChecked={setChecked}
+          onCorrect={onCorrect}
+        />
+      )}
+    </div>
+  );
+}
+
+function OrderUI({
+  item,
+  ex,
+  ord,
+  setOrd,
+  checked,
+  setChecked,
+  onCorrect,
+}: {
+  item: Extract<PracticeItem, { kind: "order" }>;
+  ex: number;
+  ord: Record<number, string[]>;
+  setOrd: React.Dispatch<React.SetStateAction<Record<number, string[]>>>;
+  checked: Record<number, boolean>;
+  setChecked: React.Dispatch<React.SetStateAction<Record<number, boolean>>>;
+  onCorrect: () => void;
+}) {
+  // Arreglo inicial barajado (estable): rota el orden correcto una posición.
+  const current = ord[ex] ?? rotated(item.items);
+  const isChecked = !!checked[ex];
+  const correct = current.every((v, i) => v === item.items[i]);
+
+  const move = (from: number, to: number) => {
+    if (isChecked || to < 0 || to >= current.length) return;
+    const next = current.slice();
+    const [it] = next.splice(from, 1);
+    next.splice(to, 0, it!);
+    setOrd((o) => ({ ...o, [ex]: next }));
+  };
+
+  return (
+    <div className="space-y-2">
+      <ul className="space-y-2">
+        {current.map((label, i) => {
+          const rightHere = isChecked && label === item.items[i];
+          return (
+            <li
+              key={label}
+              className={cn(
+                "flex items-center gap-2 rounded-xl border px-3 py-2.5 text-sm",
+                !isChecked && "border-border",
+                rightHere && "border-growth/60 bg-growth/10",
+                isChecked && !rightHere && "border-destructive/60 bg-destructive/10",
+              )}
+            >
+              <span className="text-muted-foreground w-5 shrink-0 text-center font-mono text-xs">
+                {i + 1}
+              </span>
+              <span className="flex-1">{label}</span>
+              {!isChecked && (
+                <span className="flex shrink-0 gap-1">
+                  <button
+                    type="button"
+                    aria-label="Subir"
+                    onClick={() => move(i, i - 1)}
+                    disabled={i === 0}
+                    className="hover:text-primary text-muted-foreground disabled:opacity-30"
+                  >
+                    <ArrowUp className="size-4" />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Bajar"
+                    onClick={() => move(i, i + 1)}
+                    disabled={i === current.length - 1}
+                    className="hover:text-primary text-muted-foreground disabled:opacity-30"
+                  >
+                    <ArrowDown className="size-4" />
+                  </button>
+                </span>
+              )}
+              {rightHere && <Check className="text-growth size-4 shrink-0" />}
+              {isChecked && !rightHere && <X className="text-destructive size-4 shrink-0" />}
+            </li>
+          );
+        })}
+      </ul>
+      {!isChecked ? (
+        <button
+          type="button"
+          onClick={() => {
+            setChecked((c) => ({ ...c, [ex]: true }));
+            if (current.every((v, i) => v === item.items[i])) onCorrect();
+          }}
+          className="bg-primary text-primary-foreground rounded-xl px-4 py-2 text-sm font-medium"
+        >
+          Comprobar
+        </button>
+      ) : (
+        <Feedback
+          correct={correct}
+          why={item.why}
+          extra={!correct ? `Orden correcto: ${item.items.join(" → ")}` : undefined}
+        />
+      )}
+    </div>
+  );
+}
+
+function MatchUI({
+  item,
+  ex,
+  match,
+  setMatch,
+  checked,
+  setChecked,
+  onCorrect,
+}: {
+  item: Extract<PracticeItem, { kind: "match" }>;
+  ex: number;
+  match: Record<number, Record<number, number>>;
+  setMatch: React.Dispatch<React.SetStateAction<Record<number, Record<number, number>>>>;
+  checked: Record<number, boolean>;
+  setChecked: React.Dispatch<React.SetStateAction<Record<number, boolean>>>;
+  onCorrect: () => void;
+}) {
+  const isChecked = !!checked[ex];
+  const chosen = match[ex] ?? {};
+  // Columna derecha barajada (estable). El valor guarda el índice de pareja
+  // correcta al que pertenece cada etiqueta derecha.
+  const rightOrder = rotated(item.pairs.map((_, i) => i));
+  const allChosen = item.pairs.every((_, i) => chosen[i] !== undefined);
+  const isRight = (leftIdx: number) => chosen[leftIdx] === leftIdx;
+  const correct = item.pairs.every((_, i) => isRight(i));
+
+  return (
+    <div className="space-y-2">
+      <div className="space-y-2">
+        {item.pairs.map((pair, li) => (
+          <div key={li} className="border-border rounded-xl border p-3">
+            <p className="text-sm font-medium">{pair.left}</p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {rightOrder.map((ri) => {
+                const picked = chosen[li] === ri;
+                const showGood = isChecked && picked && ri === li;
+                const showBad = isChecked && picked && ri !== li;
+                return (
+                  <button
+                    key={ri}
+                    type="button"
+                    disabled={isChecked}
+                    onClick={() => setMatch((m) => ({ ...m, [ex]: { ...m[ex], [li]: ri } }))}
+                    className={cn(
+                      "rounded-lg border px-2.5 py-1.5 text-xs transition-colors",
+                      !picked && "border-border hover:border-primary",
+                      picked && !isChecked && "border-primary bg-primary/10",
+                      showGood && "border-growth/60 bg-growth/10",
+                      showBad && "border-destructive/60 bg-destructive/10",
+                    )}
+                  >
+                    {item.pairs[ri]!.right}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+      {!isChecked ? (
+        <button
+          type="button"
+          disabled={!allChosen}
+          onClick={() => {
+            setChecked((c) => ({ ...c, [ex]: true }));
+            if (item.pairs.every((_, i) => chosen[i] === i)) onCorrect();
+          }}
+          className="bg-primary text-primary-foreground rounded-xl px-4 py-2 text-sm font-medium disabled:opacity-40"
+        >
+          Comprobar
+        </button>
+      ) : (
+        <Feedback
+          correct={correct}
+          why={item.why}
+          extra={
+            !correct
+              ? `Correcto: ${item.pairs.map((p) => `${p.left} → ${p.right}`).join("; ")}`
+              : undefined
+          }
         />
       )}
     </div>

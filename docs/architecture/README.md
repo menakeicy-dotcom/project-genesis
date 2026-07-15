@@ -14,6 +14,8 @@ Léela en orden:
    código.
 7. [Escalabilidad y crecimiento](./07-escalabilidad-y-crecimiento.md) — cómo
    crecer durante años.
+8. [Estándar de contenido](./08-estandar-de-contenido.md) — el contrato que toda
+   disciplina cumple para tener la misma calidad (motor universal).
 
 > Las decisiones de producto que condicionan esta arquitectura están en
 > [ADR-0002](../decisions/0002-definicion-producto-skilltree.md).

@@ -150,6 +150,28 @@ export const PROG_LESSONS: Record<string, Lesson> = {
         answer: 0,
         why: "Abstracción: ignorar el detalle irrelevante.",
       },
+      {
+        kind: "order",
+        q: "Ordena los pasos del algoritmo para preparar un té:",
+        items: [
+          "Hervir el agua",
+          "Poner la bolsita en la taza",
+          "Verter el agua caliente",
+          "Esperar 3 minutos",
+          "Retirar la bolsita",
+        ],
+        why: "Un algoritmo es una secuencia ORDENADA: cambiar el orden cambia el resultado.",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada idea del pensamiento computacional con su significado:",
+        pairs: [
+          { left: "Descomposición", right: "Partir el problema en trozos pequeños" },
+          { left: "Abstracción", right: "Quedarte solo con lo esencial" },
+          { left: "Algoritmo", right: "Secuencia de pasos sin ambigüedad" },
+        ],
+        why: "Son las tres herramientas para pensar antes de teclear.",
+      },
     ],
     activity: {
       title: "Algoritmo de la vida real",

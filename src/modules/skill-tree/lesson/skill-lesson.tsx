@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import type { Lesson, LessonCompare, LessonExample, LessonSection } from "./types";
+import { viewExample } from "./types";
 import { Practice } from "./practice";
 import { SelfCheck } from "./self-check";
 
@@ -45,18 +46,24 @@ function Band({
 }
 
 function Example({ ex }: { ex: LessonExample }) {
+  const v = viewExample(ex);
   return (
     <div className="border-border bg-muted/40 rounded-lg border p-3">
-      <p className="text-sm font-medium">{ex.en}</p>
-      {ex.ipa && (
-        <p className="text-muted-foreground mt-0.5 font-mono text-xs">
-          {ex.ipa}
+      {v.term && (
+        <p className="text-primary mb-1 text-[0.7rem] font-semibold tracking-wide uppercase">
+          {v.term}
         </p>
       )}
-      {ex.es && <p className="text-muted-foreground mt-0.5 text-sm">{ex.es}</p>}
-      {ex.note && (
+      <p className="text-sm font-medium">{v.text}</p>
+      {v.mono && (
+        <pre className="text-muted-foreground mt-0.5 overflow-x-auto font-mono text-xs whitespace-pre-wrap">
+          {v.mono}
+        </pre>
+      )}
+      {v.sub && <p className="text-muted-foreground mt-0.5 text-sm">{v.sub}</p>}
+      {v.note && (
         <p className="text-muted-foreground mt-1 border-t border-dashed pt-1 text-xs italic">
-          {ex.note}
+          {v.note}
         </p>
       )}
     </div>

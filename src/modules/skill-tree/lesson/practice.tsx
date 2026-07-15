@@ -139,16 +139,81 @@ function FillQuestion({
   );
 }
 
+function OrderQuestion({
+  item,
+  index,
+}: {
+  item: Extract<PracticeItem, { kind: "order" }>;
+  index: number;
+}) {
+  const [reveal, setReveal] = useState(false);
+  return (
+    <li className="border-border bg-card rounded-lg border p-4">
+      <p className="text-sm font-medium">
+        <span className="text-muted-foreground mr-1.5">{index + 1}.</span>
+        {item.q}
+      </p>
+      <ol className="text-muted-foreground mt-3 list-decimal space-y-1 pl-5 text-sm">
+        {(reveal ? item.items : [...item.items].reverse()).map((s, i) => (
+          <li key={i}>{s}</li>
+        ))}
+      </ol>
+      <button
+        type="button"
+        onClick={() => setReveal((r) => !r)}
+        className="text-primary mt-2 text-xs font-medium"
+      >
+        {reveal ? "Ocultar orden" : "Ver orden correcto"}
+      </button>
+      {reveal && item.why && (
+        <p className="text-muted-foreground mt-1 text-sm">{item.why}</p>
+      )}
+    </li>
+  );
+}
+
+function MatchQuestion({
+  item,
+  index,
+}: {
+  item: Extract<PracticeItem, { kind: "match" }>;
+  index: number;
+}) {
+  return (
+    <li className="border-border bg-card rounded-lg border p-4">
+      <p className="text-sm font-medium">
+        <span className="text-muted-foreground mr-1.5">{index + 1}.</span>
+        {item.q}
+      </p>
+      <ul className="text-muted-foreground mt-3 space-y-1 text-sm">
+        {item.pairs.map((p, i) => (
+          <li key={i} className="flex gap-2">
+            <span className="text-foreground font-medium">{p.left}</span>
+            <span aria-hidden>→</span>
+            <span>{p.right}</span>
+          </li>
+        ))}
+      </ul>
+      {item.why && <p className="text-muted-foreground mt-2 text-sm">{item.why}</p>}
+    </li>
+  );
+}
+
 export function Practice({ items }: { items: PracticeItem[] }) {
   return (
     <ol className="space-y-3">
-      {items.map((item, i) =>
-        item.kind === "choice" ? (
-          <ChoiceQuestion key={i} item={item} index={i} />
-        ) : (
-          <FillQuestion key={i} item={item} index={i} />
-        ),
-      )}
+      {items.map((item, i) => {
+        switch (item.kind) {
+          case "choice":
+            return <ChoiceQuestion key={i} item={item} index={i} />;
+          case "fill":
+            return <FillQuestion key={i} item={item} index={i} />;
+          case "order":
+            return <OrderQuestion key={i} item={item} index={i} />;
+          case "match":
+            return <MatchQuestion key={i} item={item} index={i} />;
+        }
+      })}
     </ol>
   );
 }
