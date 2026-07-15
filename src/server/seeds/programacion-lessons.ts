@@ -2774,4 +2774,544 @@ export const PROG_LESSONS: Record<string, Lesson> = {
       "Descartar la mitad cada paso es la clave.",
     ],
   },
+
+  "prog-alcance": {
+    intro:
+      "¿Por qué una variable creada dentro de una función no existe fuera? Eso es el ámbito (scope): las reglas de quién ve qué. Entenderlo evita bugs sutiles y variables que se pisan sin querer.",
+    goal: "controlar dónde vive y quién ve cada variable.",
+    sections: [
+      {
+        h: "Local vs. global",
+        tldr: "Lo creado dentro de una función vive y muere ahí.",
+        code: "mensaje = \"global\"      # visible en todo el archivo\n\ndef saludar():\n    nombre = \"local\"     # solo existe dentro de saludar()\n    print(nombre, mensaje)\n\nsaludar()\nprint(nombre)  # ERROR: 'nombre' no existe aquí",
+      },
+      {
+        h: "Por qué preferir lo local",
+        tldr: "Menos variables compartidas = menos formas de romper algo.",
+        compare: {
+          left: {
+            title: "Variables globales",
+            points: [
+              "Cualquiera las cambia",
+              "Bugs difíciles de rastrear",
+              "Funciones que dependen de un estado oculto",
+            ],
+          },
+          right: {
+            title: "Variables locales / parámetros",
+            points: [
+              "Cada función controla lo suyo",
+              "Fáciles de razonar y probar",
+              "Datos que entran por parámetros, salen por return",
+            ],
+          },
+          note: "Regla: pasa datos por parámetros y devuélvelos; evita el estado global.",
+        },
+        more: [
+          "Si una función necesita un dato, pásalo como parámetro (no lo leas de una global).",
+          "Una función 'pura' (solo depende de sus parámetros) es la más fácil de probar.",
+        ],
+        tip: "Si te cuesta seguir de dónde sale un valor, casi siempre es una variable global escondida. Conviértela en parámetro.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Una variable creada dentro de una función…",
+        options: [
+          "existe en todo el programa",
+          "solo existe dentro de esa función (local)",
+          "borra las globales",
+        ],
+        answer: 1,
+        why: "Las variables locales viven solo en su función.",
+      },
+      {
+        kind: "choice",
+        q: "La forma recomendada de dar un dato a una función es…",
+        options: [
+          "leerlo de una variable global",
+          "pasarlo como parámetro",
+          "escribirlo dentro de la función a mano",
+        ],
+        answer: 1,
+        why: "Pasar por parámetros hace la función clara y testeable.",
+      },
+      {
+        kind: "choice",
+        q: "Abusar de variables globales suele causar…",
+        options: [
+          "código más rápido",
+          "bugs difíciles de rastrear por estado compartido",
+          "menos líneas siempre",
+        ],
+        answer: 1,
+        why: "El estado global compartido es fuente de bugs difíciles.",
+      },
+    ],
+    activity: {
+      title: "De global a parámetro",
+      steps: [
+        "Escribe una función que dependa de una variable global.",
+        "Refactorízala para que ese dato entre por parámetro.",
+        "Comprueba que ahora es más fácil de probar con distintos valores.",
+      ],
+    },
+    selfCheck: [
+      "Distingo variables locales de globales.",
+      "Paso datos por parámetros en vez de usar globales.",
+      "Reconozco cuándo un bug viene de estado compartido.",
+    ],
+    summary: [
+      "El ámbito define quién ve cada variable.",
+      "Lo local vive dentro de su función.",
+      "Pasa datos por parámetros; evita el estado global.",
+    ],
+  },
+
+  "prog-solid": {
+    intro:
+      "Un objeto no debería enseñar todas sus tripas ni encargarse de mil cosas. La encapsulación (proteger el estado) y la responsabilidad única son la base de un diseño que no se convierte en un nudo imposible de mantener.",
+    goal: "diseñar objetos cohesivos, protegidos y con una sola responsabilidad.",
+    sections: [
+      {
+        h: "Encapsular: proteger el estado",
+        tldr: "El objeto expone acciones, no sus datos internos crudos.",
+        code: "class Cuenta:\n    def __init__(self):\n        self._saldo = 0          # 'privado' por convención\n    def depositar(self, x):\n        if x <= 0: raise ValueError(\"monto inválido\")\n        self._saldo += x         # el objeto valida y controla",
+      },
+      {
+        h: "Responsabilidad única",
+        tldr: "Una clase, una razón para cambiar.",
+        compare: {
+          left: {
+            title: "Clase que hace de todo",
+            points: [
+              "Calcula, guarda en BD y envía correos",
+              "Cambiar una cosa arriesga las demás",
+              "Difícil de probar",
+            ],
+          },
+          right: {
+            title: "Responsabilidad única",
+            points: [
+              "Cada clase, un propósito",
+              "Cambios aislados y seguros",
+              "Fácil de probar y reutilizar",
+            ],
+          },
+          note: "La 'S' de SOLID: Single Responsibility. Una clase, una razón para cambiar.",
+        },
+        tip: "Señal de alarma: si describes una clase con 'y' ('valida Y guarda Y notifica'), probablemente tiene demasiadas responsabilidades.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Encapsular significa…",
+        options: [
+          "exponer todos los atributos como públicos",
+          "proteger el estado y exponer acciones controladas",
+          "meter todo en una clase",
+        ],
+        answer: 1,
+        why: "La encapsulación oculta el estado y lo cambia por métodos que validan.",
+      },
+      {
+        kind: "choice",
+        q: "El principio de responsabilidad única dice que una clase debe…",
+        options: [
+          "hacer el mayor número de cosas posible",
+          "tener una sola razón para cambiar",
+          "no tener métodos",
+        ],
+        answer: 1,
+        why: "SRP: una clase, una responsabilidad, una razón para cambiar.",
+      },
+      {
+        kind: "choice",
+        q: "Describir una clase con muchos 'y' (valida Y guarda Y envía) es señal de…",
+        options: [
+          "buen diseño",
+          "demasiadas responsabilidades",
+          "encapsulación",
+        ],
+        answer: 1,
+        why: "Muchas responsabilidades → conviene dividir la clase.",
+      },
+    ],
+    activity: {
+      title: "Una razón para cambiar",
+      steps: [
+        "Toma una clase que haga varias cosas (calcular + guardar + notificar).",
+        "Sepárala en clases con una responsabilidad cada una.",
+        "Protege el estado interno y exponlo solo por métodos.",
+      ],
+    },
+    selfCheck: [
+      "Encapsulo el estado y lo cambio con métodos que validan.",
+      "Doy a cada clase una sola responsabilidad.",
+      "Detecto clases que hacen demasiado.",
+    ],
+    summary: [
+      "Encapsular = proteger el estado, exponer acciones.",
+      "Responsabilidad única: una clase, una razón para cambiar.",
+      "Si la describes con muchos 'y', divídela.",
+    ],
+  },
+
+  "prog-eventos": {
+    intro:
+      "Una web cobra vida cuando reacciona: un clic, una tecla, un formulario enviado. La programación dirigida por eventos es 'cuando pase X, haz Y', y es el corazón de toda interfaz interactiva.",
+    goal: "responder a acciones del usuario para crear interfaces vivas.",
+    sections: [
+      {
+        h: "Escuchar un evento",
+        tldr: "Registras una función que se ejecuta cuando ocurre algo.",
+        code: "const boton = document.querySelector('#saludar');\n\nboton.addEventListener('click', () => {\n  alert('¡Hola!');   // se ejecuta al hacer clic\n});",
+      },
+      {
+        h: "El patrón: estado → evento → actualizar",
+        tldr: "El evento cambia un dato; luego repintas la interfaz.",
+        body: [
+          "Un buen manejador no toca la pantalla a lo loco: actualiza el estado (una variable) y refleja ese estado en el DOM. Así la interfaz siempre muestra la verdad.",
+        ],
+        examples: [
+          { en: "Contador", ipa: "count++; span.textContent = count;", es: "El clic incrementa el dato y actualiza lo que se ve." },
+        ],
+        tip: "Evita registrar el mismo listener varias veces (p. ej. dentro de un bucle que se repite): acabarás ejecutando la acción de más.",
+      },
+    ],
+    practice: [
+      {
+        kind: "fill",
+        q: "Método para escuchar un evento en un elemento: boton.___('click', fn)",
+        accept: ["addEventListener"],
+        hint: "addEvent…",
+        why: "addEventListener(tipo, función) registra el manejador.",
+      },
+      {
+        kind: "choice",
+        q: "El patrón recomendado al manejar un evento es…",
+        options: [
+          "tocar el DOM directamente sin estado",
+          "actualizar el estado y reflejarlo en el DOM",
+          "recargar la página",
+        ],
+        answer: 1,
+        why: "Estado como fuente de verdad; el DOM refleja el estado.",
+      },
+      {
+        kind: "choice",
+        q: "Un ejemplo de evento del usuario es…",
+        options: ["un clic", "una variable", "un comentario"],
+        answer: 0,
+        why: "Clics, teclas y envíos de formulario son eventos del usuario.",
+      },
+    ],
+    activity: {
+      title: "Interfaz que reacciona",
+      steps: [
+        "Crea un botón y un contador en la página.",
+        "Con addEventListener, incrementa el contador al hacer clic.",
+        "Reto: un botón para restar y otro para reiniciar."],
+    },
+    selfCheck: [
+      "Registro eventos con addEventListener.",
+      "Actualizo el estado y reflejo el cambio en el DOM.",
+      "Evito registrar listeners duplicados.",
+    ],
+    summary: [
+      "Eventos = 'cuando pase X, haz Y'.",
+      "addEventListener(tipo, función).",
+      "Actualiza el estado y refléjalo en el DOM.",
+    ],
+  },
+
+  "prog-rest": {
+    intro:
+      "Cuando un frontend habla con un backend, necesitan un acuerdo sobre cómo pedir y enviar datos. REST es el estilo dominante: organiza la API en recursos con URLs claras y usa los verbos de HTTP para las acciones.",
+    goal: "entender y diseñar una API REST.",
+    sections: [
+      {
+        h: "Recursos + verbos HTTP",
+        tldr: "La URL nombra la cosa; el método HTTP dice qué hacer con ella.",
+        code: "GET    /tareas        # listar tareas\nGET    /tareas/42     # ver la tarea 42\nPOST   /tareas        # crear una tarea\nPUT    /tareas/42     # actualizar la 42\nDELETE /tareas/42     # borrar la 42",
+      },
+      {
+        h: "El error clásico: verbos en la URL",
+        tldr: "La acción va en el método, no en la ruta.",
+        compare: {
+          left: {
+            title: "No RESTful",
+            points: ["/getTareas", "/crearTarea", "/borrarTarea?id=42", "La URL 'hace' cosas"],
+          },
+          right: {
+            title: "RESTful",
+            points: ["GET /tareas", "POST /tareas", "DELETE /tareas/42", "La URL nombra recursos"],
+          },
+          note: "Recursos en la URL (sustantivos); acciones en el método (GET/POST/…).",
+        },
+        tip: "Piensa en las URLs como sustantivos (cosas) y en los métodos como verbos (acciones). '/tareas' + POST, no '/crearTarea'.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En REST, ¿qué indica la ACCIÓN a realizar?",
+        options: ["la URL", "el método HTTP (GET/POST/…)", "el navegador"],
+        answer: 1,
+        why: "La URL nombra el recurso; el método dice qué hacer.",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuál URL es más RESTful para crear una tarea?",
+        options: ["GET /crearTarea", "POST /tareas", "GET /tareas/crear"],
+        answer: 1,
+        why: "Recurso 'tareas' + método POST para crear.",
+      },
+      {
+        kind: "choice",
+        q: "Poner verbos en la URL (/getUsers) es…",
+        options: ["lo recomendado", "un antipatrón (no RESTful)", "obligatorio"],
+        answer: 1,
+        why: "Los verbos van en el método HTTP, no en la ruta.",
+      },
+    ],
+    activity: {
+      title: "Diseña una API",
+      steps: [
+        "Elige un recurso (libros, notas, productos).",
+        "Define sus endpoints CRUD con recurso + método.",
+        "Revisa que no haya verbos en las URLs."],
+    },
+    selfCheck: [
+      "Nombro recursos en la URL (sustantivos).",
+      "Uso el método HTTP para la acción.",
+      "Evito verbos en las rutas.",
+    ],
+    summary: [
+      "REST = recursos (URL) + verbos (método HTTP).",
+      "GET leer, POST crear, PUT actualizar, DELETE borrar.",
+      "Sustantivos en la URL; acciones en el método.",
+    ],
+  },
+
+  "prog-codigo-limpio": {
+    intro:
+      "El código se lee muchas más veces de las que se escribe. Escribir 'limpio' —nombres claros, funciones pequeñas, sin trucos— no es estética: es lo que hace que tú y tu equipo podáis entenderlo y cambiarlo dentro de seis meses.",
+    goal: "escribir código legible y mantenible.",
+    sections: [
+      {
+        h: "El nombre lo es (casi) todo",
+        tldr: "Un buen nombre hace innecesario el comentario.",
+        compare: {
+          left: {
+            title: "Confuso",
+            points: ["def f(x, y):", "d = x * y", "tmp, aux, data1"],
+          },
+          right: {
+            title: "Limpio",
+            points: ["def area(base, altura):", "superficie = base * altura", "nombres que dicen QUÉ son"],
+          },
+          note: "Si necesitas un comentario para explicar un nombre, cambia el nombre.",
+        },
+      },
+      {
+        h: "Funciones pequeñas que hacen una cosa",
+        tldr: "Si una función necesita comentarios de sección, divídela.",
+        code: "# en vez de una función de 60 líneas...\ndef procesar_pedido(p):\n    validar(p)\n    total = calcular_total(p)\n    guardar(p, total)\n    notificar(p)",
+        tip: "Regla práctica: si no puedes nombrar una función con un verbo claro, probablemente hace demasiadas cosas.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "El mejor nombre para una función que calcula el área es…",
+        options: ["f(x, y)", "area(base, altura)", "calc()"],
+        answer: 1,
+        why: "El nombre describe qué hace y qué recibe.",
+      },
+      {
+        kind: "choice",
+        q: "Si una función necesita comentarios que separan secciones, conviene…",
+        options: [
+          "dejarla así",
+          "dividirla en funciones más pequeñas",
+          "borrar los comentarios",
+        ],
+        answer: 1,
+        why: "Esas secciones suelen ser funciones esperando a nacer.",
+      },
+      {
+        kind: "choice",
+        q: "El código limpio importa sobre todo porque…",
+        options: [
+          "se ve bonito",
+          "se lee muchas más veces de las que se escribe",
+          "corre más rápido",
+        ],
+        answer: 1,
+        why: "La legibilidad ahorra tiempo a lo largo de la vida del código.",
+      },
+    ],
+    activity: {
+      title: "Refactor de legibilidad",
+      steps: [
+        "Toma una función tuya larga o con nombres pobres.",
+        "Renombra variables/funciones para que digan QUÉ son.",
+        "Divídela en funciones pequeñas con un verbo claro cada una."],
+    },
+    selfCheck: [
+      "Uso nombres que explican qué son las cosas.",
+      "Escribo funciones pequeñas con una sola tarea.",
+      "Prefiero un buen nombre a un comentario.",
+    ],
+    summary: [
+      "Nombres claros > comentarios.",
+      "Funciones pequeñas que hacen una cosa.",
+      "Se escribe una vez; se lee muchas.",
+    ],
+  },
+
+  "prog-pilas-colas": {
+    intro:
+      "A veces el ORDEN en que sacas los datos importa tanto como los datos. Las pilas (el último en entrar sale primero) y las colas (el primero en entrar sale primero) modelan procesos que ves cada día.",
+    goal: "usar pilas (LIFO) y colas (FIFO) para modelar procesos reales.",
+    sections: [
+      {
+        h: "LIFO vs. FIFO",
+        tldr: "Pila: como platos apilados. Cola: como la fila del súper.",
+        compare: {
+          left: {
+            title: "Pila (LIFO)",
+            points: [
+              "Último en entrar, primero en salir",
+              "Deshacer (Ctrl+Z), historial del navegador",
+              "push (apilar) / pop (desapilar)",
+            ],
+          },
+          right: {
+            title: "Cola (FIFO)",
+            points: [
+              "Primero en entrar, primero en salir",
+              "Tareas por procesar, impresora",
+              "enqueue (encolar) / dequeue (desencolar)",
+            ],
+          },
+          note: "Elige por el orden en que necesitas sacar los elementos.",
+        },
+      },
+      {
+        h: "Con una lista basta para empezar",
+        tldr: "append + pop implementan una pila en Python.",
+        code: "pila = []\npila.append('a')   # apilar\npila.append('b')\npila.pop()          # 'b' (el último)  → LIFO",
+        tip: "Verificar paréntesis balanceados, deshacer acciones o recorrer en profundidad: si piensas 'lo último primero', quieres una pila.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Una pila sigue el orden…",
+        options: ["FIFO (primero en entrar, primero en salir)", "LIFO (último en entrar, primero en salir)", "aleatorio"],
+        answer: 1,
+        why: "Pila = LIFO, como platos apilados.",
+      },
+      {
+        kind: "choice",
+        q: "La función 'Deshacer' (Ctrl+Z) se modela naturalmente con…",
+        options: ["una cola", "una pila", "un diccionario"],
+        answer: 1,
+        why: "Deshaces la última acción primero → pila (LIFO).",
+      },
+      {
+        kind: "choice",
+        q: "Una fila de tareas por procesar en orden de llegada es…",
+        options: ["una pila", "una cola (FIFO)", "un set"],
+        answer: 1,
+        why: "Primero en llegar, primero en procesarse → cola (FIFO).",
+      },
+    ],
+    activity: {
+      title: "LIFO y FIFO en acción",
+      steps: [
+        "Implementa una pila con una lista (append/pop) y pruébala.",
+        "Úsala para comprobar si '(())' tiene los paréntesis balanceados.",
+        "Piensa un caso de tu vida diaria que sea claramente una cola."],
+    },
+    selfCheck: [
+      "Distingo LIFO (pila) de FIFO (cola).",
+      "Implemento una pila con una lista.",
+      "Elijo pila o cola según el orden de salida.",
+    ],
+    summary: [
+      "Pila = LIFO (último primero); cola = FIFO (primero primero).",
+      "Pila: deshacer, historial. Cola: tareas, impresora.",
+      "Elige por el orden en que sacas los datos.",
+    ],
+  },
+
+  "prog-sql-escritura": {
+    intro:
+      "Consultar datos es la mitad; la otra mitad es cambiarlos. INSERT, UPDATE y DELETE crean, modifican y borran registros. Son poderosos… y peligrosos si olvidas una palabra.",
+    goal: "crear, actualizar y borrar registros con SQL de forma segura.",
+    sections: [
+      {
+        h: "Las tres operaciones de escritura",
+        tldr: "INSERT crea, UPDATE modifica, DELETE borra.",
+        code: "INSERT INTO productos (nombre, precio)\nVALUES ('Camiseta', 25);\n\nUPDATE productos SET precio = 20\nWHERE id = 7;\n\nDELETE FROM productos\nWHERE id = 7;",
+      },
+      {
+        h: "El WHERE que salva vidas",
+        tldr: "UPDATE o DELETE sin WHERE afecta a TODAS las filas.",
+        body: [
+          "«UPDATE productos SET precio = 0;» sin WHERE pone a cero TODOS los precios. «DELETE FROM productos;» borra la tabla entera. El WHERE limita la operación a las filas correctas.",
+        ],
+        tip: "Antes de un UPDATE/DELETE, escribe primero un SELECT con el mismo WHERE para ver EXACTAMENTE qué filas vas a tocar.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué comando AÑADE un registro nuevo?",
+        options: ["UPDATE", "INSERT", "DELETE"],
+        answer: 1,
+        why: "INSERT INTO … VALUES … crea una fila nueva.",
+      },
+      {
+        kind: "choice",
+        q: "«DELETE FROM productos;» (sin WHERE) hace…",
+        options: [
+          "borrar una fila",
+          "borrar TODAS las filas de la tabla",
+          "nada",
+        ],
+        answer: 1,
+        why: "Sin WHERE, DELETE afecta a toda la tabla. ¡Cuidado!",
+      },
+      {
+        kind: "fill",
+        q: "Cláusula imprescindible para limitar un UPDATE a ciertas filas: ___",
+        accept: ["where"],
+        hint: "La misma que filtra en SELECT.",
+        why: "WHERE limita qué filas se modifican o borran.",
+      },
+    ],
+    activity: {
+      title: "Escribe con red de seguridad",
+      steps: [
+        "En un entorno SQL, inserta 3 productos.",
+        "Actualiza el precio de uno usando WHERE id = ...",
+        "Antes de borrar, haz un SELECT con el mismo WHERE para confirmar."],
+    },
+    selfCheck: [
+      "Inserto registros con INSERT.",
+      "Actualizo y borro usando siempre WHERE.",
+      "Compruebo con SELECT antes de un DELETE/UPDATE.",
+    ],
+    summary: [
+      "INSERT crea, UPDATE modifica, DELETE borra.",
+      "Sin WHERE, UPDATE/DELETE afectan a TODA la tabla.",
+      "SELECT con el mismo WHERE antes de escribir.",
+    ],
+  },
 };
