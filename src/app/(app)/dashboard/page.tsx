@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
+  Brain,
   Clock,
   Flame,
   GraduationCap,
@@ -22,6 +23,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { getUserDashboard } from "@/modules/progress/services";
+import { getReviewSummary } from "@/modules/review/services";
 import { hasSeenWelcome } from "@/modules/onboarding/services";
 import { WelcomeGate } from "@/modules/onboarding/welcome";
 
@@ -40,9 +42,10 @@ export default async function DashboardPage() {
   const session = await auth();
   const userId = session!.user.id;
   const name = session?.user?.name ?? "de nuevo";
-  const [data, seenWelcome] = await Promise.all([
+  const [data, seenWelcome, review] = await Promise.all([
     getUserDashboard(userId),
     hasSeenWelcome(userId),
+    getReviewSummary(userId),
   ]);
 
   return (
@@ -135,6 +138,35 @@ export default async function DashboardPage() {
                 </div>
               </div>
               <ArrowRight className="text-primary size-5 shrink-0" />
+            </CardContent>
+          </Card>
+        </Link>
+      )}
+
+      {/* Repaso inteligente: solo si hay algo que repasar */}
+      {review.total > 0 && (
+        <Link href="/repaso" className="mt-4 block">
+          <Card className="hover:border-primary transition-colors">
+            <CardContent className="flex items-center justify-between gap-3 py-4">
+              <div className="flex items-center gap-3">
+                <span className="bg-primary/15 text-primary flex size-10 items-center justify-center rounded-xl">
+                  <Brain className="size-5" />
+                </span>
+                <div>
+                  <div className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+                    Repaso inteligente
+                  </div>
+                  <div className="text-sm font-medium">
+                    {review.due > 0
+                      ? `${review.due} ${review.due === 1 ? "repaso te toca" : "repasos te tocan"} hoy`
+                      : "Repasa para no olvidar lo aprendido"}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                {review.due > 0 && <Badge variant="primary">{review.due}</Badge>}
+                <ArrowRight className="text-primary size-5 shrink-0" />
+              </div>
             </CardContent>
           </Card>
         </Link>

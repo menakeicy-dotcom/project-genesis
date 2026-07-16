@@ -10,6 +10,7 @@ import { logout } from "@/modules/auth/actions";
 const NAV = [
   { href: "/dashboard", label: "Panel" },
   { href: "/explore", label: "Explorar" },
+  { href: "/repaso", label: "Repaso" },
   { href: "/profile", label: "Perfil" },
 ];
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
@@ -134,6 +134,32 @@ export function LessonPlayer({
       router.refresh();
     });
   };
+
+  // Navegación por teclado (menos fricción): Enter avanza / completa; ←/→ mueven.
+  // No interfiere mientras se escribe en un campo de texto.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement | null)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
+      if (e.key === "Enter" || e.key === "ArrowRight") {
+        if (step.kind === "finish") {
+          if (!isPending) {
+            e.preventDefault();
+            finish(false);
+          }
+        } else if (canContinue) {
+          e.preventDefault();
+          go(1);
+        }
+      } else if (e.key === "ArrowLeft" && i > 0) {
+        e.preventDefault();
+        go(-1);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, canContinue, i, isPending]);
 
   const slide = reduce
     ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
