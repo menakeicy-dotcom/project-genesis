@@ -138,6 +138,36 @@ body {
 }
 
 /*
+ * Accesibilidad: foco de teclado SIEMPRE visible (antes no había ninguno).
+ * Solo aparece al navegar con teclado (:focus-visible), no al hacer clic, así
+ * no molesta con ratón. Beneficia a toda la plataforma y a cualquier disciplina.
+ */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Enlace "saltar al contenido": oculto hasta que recibe foco con Tab. */
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius);
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transform: translateY(-150%);
+  transition: transform 0.15s ease;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/*
  * Modo claro con más vida (sin perder limpieza): un halo verde muy tenue arriba
  * y una base cálida apenas perceptible, fijos al viewport. El modo oscuro se
  * mantiene en negro puro.

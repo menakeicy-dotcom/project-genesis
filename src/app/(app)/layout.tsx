@@ -29,6 +29,9 @@ export default async function AppLayout({
 
   return (
     <div className="flex min-h-dvh flex-col">
+      <a href="#main" className="skip-link">
+        Saltar al contenido
+      </a>
       <header className="border-border bg-background/80 sticky top-0 z-40 w-full border-b backdrop-blur">
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4">
           <div className="flex items-center gap-6">
@@ -70,7 +73,9 @@ export default async function AppLayout({
           ))}
         </nav>
       </header>
-      <main className="flex-1">{children}</main>
+      <main id="main" className="flex-1">
+        {children}
+      </main>
     </div>
   );
 }

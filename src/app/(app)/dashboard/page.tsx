@@ -22,7 +22,8 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/ui/progress-bar";
-import { getUserDashboard } from "@/modules/progress/services";
+import { ProgressRing } from "@/components/ui/progress-ring";
+import { getDailyGoal, getUserDashboard } from "@/modules/progress/services";
 import { getReviewSummary } from "@/modules/review/services";
 import { hasSeenWelcome } from "@/modules/onboarding/services";
 import { WelcomeGate } from "@/modules/onboarding/welcome";
@@ -42,10 +43,11 @@ export default async function DashboardPage() {
   const session = await auth();
   const userId = session!.user.id;
   const name = session?.user?.name ?? "de nuevo";
-  const [data, seenWelcome, review] = await Promise.all([
+  const [data, seenWelcome, review, daily] = await Promise.all([
     getUserDashboard(userId),
     hasSeenWelcome(userId),
     getReviewSummary(userId),
+    getDailyGoal(userId),
   ]);
 
   return (
@@ -70,16 +72,37 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {/* Resumen de nivel */}
+      {/* Resumen de nivel + meta diaria */}
       <Card className="mt-6">
-        <CardContent className="pt-6">
-          <div className="mb-2 flex items-center justify-between text-sm">
-            <span className="font-medium">Nivel {data.level}</span>
-            <span className="text-muted-foreground">
-              {data.current}/{data.needed} XP · {data.totalXp} XP totales
-            </span>
+        <CardContent className="flex flex-col gap-5 pt-6 sm:flex-row sm:items-center">
+          <div className="min-w-0 flex-1">
+            <div className="mb-2 flex items-center justify-between text-sm">
+              <span className="font-medium">Nivel {data.level}</span>
+              <span className="text-muted-foreground">
+                {data.current}/{data.needed} XP · {data.totalXp} XP totales
+              </span>
+            </div>
+            <ProgressBar value={data.pct} />
           </div>
-          <ProgressBar value={data.pct} />
+          <div className="flex items-center gap-3 sm:border-l sm:pl-5">
+            <ProgressRing
+              value={daily.pct}
+              tone={daily.met ? "growth" : "primary"}
+              label={`Meta diaria: ${daily.earned} de ${daily.goal} XP hoy`}
+            >
+              <span className="text-sm font-bold">{daily.pct}%</span>
+            </ProgressRing>
+            <div className="text-sm">
+              <div className="font-semibold">Meta diaria</div>
+              <div className="text-muted-foreground">
+                {daily.met ? (
+                  <span className="text-growth font-medium">¡Cumplida! 🎉</span>
+                ) : (
+                  `${daily.earned}/${daily.goal} XP hoy`
+                )}
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 

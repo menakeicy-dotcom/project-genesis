@@ -490,6 +490,43 @@ function deriveAchievements(stats: {
   ];
 }
 
+/** Meta de XP diaria por defecto (motivación: un objetivo pequeño y alcanzable). */
+const DAILY_GOAL_XP = 30;
+
+/**
+ * Meta diaria: XP conseguida HOY frente al objetivo. Cuenta la XP de cualquier
+ * disciplina (completar habilidades + repasos), así el hábito es global y no
+ * por árbol. Reutilizable por cualquier disciplina futura sin cambios.
+ */
+export async function getDailyGoal(userId: string): Promise<{
+  earned: number;
+  goal: number;
+  pct: number;
+  met: boolean;
+}> {
+  const today = new Date().toISOString().slice(0, 10);
+  const start = new Date(`${today}T00:00:00.000Z`);
+  const events = await db.activityEvent.findMany({
+    where: {
+      userId,
+      createdAt: { gte: start },
+      type: { in: ["skill_completed", "skill_reviewed"] },
+    },
+    select: { payload: true },
+  });
+  const earned = events.reduce((sum, e) => {
+    const xp = (e.payload as { xp?: number } | null)?.xp;
+    return sum + (typeof xp === "number" ? xp : 0);
+  }, 0);
+  const goal = DAILY_GOAL_XP;
+  return {
+    earned,
+    goal,
+    pct: goal > 0 ? Math.min(100, Math.round((earned / goal) * 100)) : 0,
+    met: earned >= goal,
+  };
+}
+
 /** Racha actual (días consecutivos con actividad, terminando hoy o ayer). */
 async function currentStreak(userId: string): Promise<number> {
   const events = await db.activityEvent.findMany({

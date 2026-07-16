@@ -732,6 +732,7 @@ function ChoiceUI({
             key={k}
             type="button"
             disabled={answered}
+            aria-pressed={isPicked}
             onClick={() => {
               setPick((p) => ({ ...p, [ex]: k }));
               if (k === item.answer) onCorrect();
@@ -830,6 +831,8 @@ function Feedback({
 }) {
   return (
     <motion.div
+      role="status"
+      aria-live="polite"
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(

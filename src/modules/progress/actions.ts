@@ -37,10 +37,13 @@ export async function completeSkillAction(skillId: string) {
     include: { tree: true },
   });
   if (skill) {
-    revalidatePath(`/trees/${skill.tree.slug}`);
-    revalidatePath(`/trees/${skill.tree.slug}/skills/${skill.slug}`);
+    // Revalida TODO el subárbol de rutas del árbol (rama y hermanas incluidas),
+    // para que una habilidad recién desbloqueada deje de verse bloqueada al
+    // navegar sin recargar. `"layout"` cubre /trees/[slug] y sus anidadas.
+    revalidatePath(`/trees/${skill.tree.slug}`, "layout");
   }
   revalidatePath("/dashboard");
   revalidatePath("/profile");
+  revalidatePath("/repaso");
   return { success: true };
 }

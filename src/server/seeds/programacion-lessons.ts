@@ -3336,4 +3336,327 @@ export const PROG_LESSONS: Record<string, Lesson> = {
       "SELECT con el mismo WHERE antes de escribir.",
     ],
   },
+
+  "prog-abstraccion": {
+    intro:
+      "Ningún cerebro abarca un programa entero de golpe. La abstracción es el superpoder que lo hace posible: esconder el 'cómo' tras un nombre claro y quedarte con el 'qué'. Usas abstracciones todo el día: conduces un coche sin pensar en la combustión.",
+    goal: "diseñar soluciones por capas de abstracción y descomponer un problema en piezas.",
+    sections: [
+      {
+        h: "Abstraer = ocultar el detalle tras una interfaz",
+        tldr: "Un buen nombre te deja usar algo sin saber cómo funciona por dentro.",
+        body: [
+          "Cuando llamas a `len(lista)` no piensas en cómo cuenta: confías en el nombre. Eso es una abstracción: una 'caja' con una etiqueta clara y las tripas escondidas.",
+          "Programar bien es crear tus propias cajas: funciones y módulos con nombres tan claros que otros (y tu yo futuro) los usen sin abrir la tapa.",
+        ],
+        examples: [
+          {
+            term: "sin abstraer",
+            text: "Todo el cálculo mezclado en una línea",
+            mono: "precio = base + base * 0.21 - (base * 0.1 if cupon else 0)",
+            sub: "Funciona, pero hay que releerlo entero para entenderlo.",
+          },
+          {
+            term: "abstraído",
+            text: "El detalle vive tras un nombre",
+            mono: "precio = precio_final(base, cupon)",
+            sub: "Se lee como una frase. El 'cómo' está dentro de la función.",
+          },
+        ],
+      },
+      {
+        h: "Descomponer = dividir en piezas de una sola responsabilidad",
+        tldr: "Una función, una tarea. Si hace 'y', pártela.",
+        body: [
+          "Descomponer es cortar un problema grande en subproblemas pequeños que puedas resolver y probar por separado. Cada pieza debe tener una responsabilidad única.",
+        ],
+        code: "# monolito: hace demasiado\ndef procesar(pedido): ...  # valida, calcula, guarda, envía email\n\n# descompuesto: cada pieza una tarea\ndef validar(pedido): ...\ndef calcular_total(pedido): ...\ndef guardar(pedido): ...\ndef enviar_confirmacion(pedido): ...",
+        more: [
+          "Señal de que una función hace demasiado: al describirla usas la palabra 'y' ('valida y guarda y envía').",
+          "Una función 'pura' (solo depende de sus parámetros y devuelve un valor) es la más fácil de abstraer y probar.",
+        ],
+        tip: "Diseña de arriba abajo: escribe primero los nombres de las piezas que te gustaría tener, y luego rellénalas. El nombre es el contrato.",
+      },
+      {
+        h: "El equilibrio: ni de más, ni de menos",
+        tldr: "Abstrae lo que se repite o confunde; no inventes capas 'por si acaso'.",
+        compare: {
+          left: {
+            title: "Abstracción sana",
+            points: ["Esconde complejidad real", "Nombre que se entiende solo", "Reduce repetición"],
+          },
+          right: {
+            title: "Abstracción de más",
+            points: ["Capas que nadie necesita", "Indirección que estorba", "Más difícil de seguir, no menos"],
+          },
+          note: "Una 'fuga de abstracción' es cuando tienes que abrir la caja para usarla: mala señal.",
+        },
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Abstraer, en programación, es sobre todo…",
+        options: [
+          "escribir código más corto a toda costa",
+          "ocultar el detalle tras una interfaz clara (un nombre)",
+          "usar palabras difíciles",
+        ],
+        answer: 1,
+        why: "Abstraer = esconder el 'cómo' y exponer un 'qué' con nombre claro.",
+      },
+      {
+        kind: "choice",
+        q: "Una función que 'valida y calcula y guarda y envía' incumple…",
+        options: [
+          "la responsabilidad única (habría que descomponerla)",
+          "nada, cuanto más haga mejor",
+          "la sintaxis de Python",
+        ],
+        answer: 0,
+        why: "Cada pieza debe tener una sola responsabilidad; esa función pide descomponerse.",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada idea con su significado:",
+        pairs: [
+          { left: "Abstracción", right: "Ocultar el detalle tras un nombre" },
+          { left: "Descomposición", right: "Dividir en piezas pequeñas" },
+          { left: "Responsabilidad única", right: "Cada pieza hace una sola cosa" },
+        ],
+        why: "Son las tres herramientas para domar la complejidad.",
+      },
+      {
+        kind: "order",
+        q: "Ordena el diseño 'de arriba abajo' de una tarea:",
+        items: [
+          "Nombra las piezas que te gustaría tener",
+          "Define qué recibe y qué devuelve cada una",
+          "Implementa cada pieza por separado",
+          "Únelas en la función principal",
+        ],
+        why: "Primero el 'qué' (nombres y contratos), luego el 'cómo' (implementación).",
+      },
+      {
+        kind: "fill",
+        q: "Una función que solo depende de sus parámetros y no toca nada externo se llama función ___.",
+        accept: ["pura", "pure"],
+        hint: "Se opone a las que dependen de estado global.",
+        why: "Una función pura es la más fácil de abstraer, mover y probar.",
+      },
+    ],
+    activity: {
+      title: "Rediseña un monolito",
+      steps: [
+        "Toma un programa tuyo (o inventa uno) que haga varias cosas en una sola función.",
+        "Escribe los NOMBRES de las funciones más pequeñas en que lo partirías (aún sin código).",
+        "Implementa cada una y deja la función principal como una lista de llamadas legibles.",
+        "Léelo en voz alta: ¿se entiende como una frase? Si sí, abstrajiste bien.",
+      ],
+    },
+    selfCheck: [
+      "Explico qué esconde y qué expone una abstracción.",
+      "Divido un problema en piezas de responsabilidad única.",
+      "Reconozco cuándo estoy abstrayendo de más.",
+    ],
+    summary: [
+      "Abstraer: ocultar el 'cómo' tras un nombre claro.",
+      "Descomponer: dividir en piezas de una sola tarea.",
+      "Diseña de arriba abajo: nombres y contratos primero.",
+      "Ni de más ni de menos: abstrae lo que se repite o confunde.",
+    ],
+  },
+
+  "prog-matrices": {
+    intro:
+      "El mundo real casi nunca es una lista plana: un tablero, una hoja de cálculo, una imagen o una tabla son datos en dos dimensiones. Para modelarlos se usan listas de listas (matrices), y para recorrerlas, bucles dentro de bucles.",
+    goal: "modelar datos en 2D y recorrerlos con bucles anidados sin perderte entre filas y columnas.",
+    sections: [
+      {
+        h: "Una matriz es una lista de listas",
+        tldr: "Cada elemento de la lista externa es, a su vez, una fila (otra lista).",
+        code: "tablero = [\n    [1, 2, 3],   # fila 0\n    [4, 5, 6],   # fila 1\n    [7, 8, 9],   # fila 2\n]\n\ntablero[1][2]   # fila 1, columna 2  ->  6",
+        body: [
+          "El primer índice elige la fila; el segundo, la columna. Siempre en ese orden: `matriz[fila][columna]`.",
+        ],
+        tip: "Piensa en un edificio: primer índice = piso (fila), segundo = puerta (columna). Primero subes al piso, luego eliges la puerta.",
+      },
+      {
+        h: "Recorrer con bucles anidados",
+        tldr: "Un bucle para las filas y, dentro, otro para las columnas.",
+        code: "for fila in tablero:\n    for valor in fila:\n        print(valor, end=' ')\n    print()          # salto de línea al acabar la fila",
+        more: [
+          "Si necesitas los índices, usa `for f in range(len(tablero))` y dentro `for c in range(len(tablero[f]))`.",
+          "El bucle de dentro se ejecuta por completo en cada vuelta del de fuera: 3 filas × 3 columnas = 9 pasos.",
+        ],
+      },
+      {
+        h: "El error clásico: confundir filas y columnas",
+        tldr: "`matriz[fila][columna]`, nunca al revés.",
+        compare: {
+          left: {
+            title: "Correcto",
+            points: ["`m[f][c]`", "Fila primero, columna después", "El bucle externo recorre filas"],
+          },
+          right: {
+            title: "Trampa habitual",
+            points: ["`m[c][f]` sin querer", "Índices cambiados → dato equivocado", "IndexError si las filas no son iguales"],
+          },
+        },
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En `m[fila][columna]`, ¿qué índice va primero?",
+        options: ["La columna", "La fila", "Da igual el orden"],
+        answer: 1,
+        why: "Siempre fila primero, columna después: m[fila][columna].",
+      },
+      {
+        kind: "fill",
+        q: "Dado `m = [[1,2,3],[4,5,6]]`, escribe la expresión que vale 6.",
+        accept: ["m[1][2]"],
+        hint: "6 está en la segunda fila (índice 1), tercera columna (índice 2).",
+        why: "m[1][2] = fila 1, columna 2 = 6.",
+      },
+      {
+        kind: "choice",
+        q: "Para recorrer TODA una matriz necesitas…",
+        options: ["un solo bucle", "dos bucles anidados", "ningún bucle"],
+        answer: 1,
+        why: "Uno para las filas y, dentro, otro para las columnas.",
+      },
+      {
+        kind: "order",
+        q: "Ordena los pasos para sumar todos los valores de una matriz:",
+        items: [
+          "Crear un acumulador total = 0",
+          "Recorrer cada fila",
+          "Dentro, recorrer cada valor de la fila",
+          "Sumar el valor al total",
+          "Al terminar, devolver total",
+        ],
+        why: "Acumulador fuera; bucle de filas y, dentro, bucle de valores sumando.",
+      },
+    ],
+    activity: {
+      title: "Suma una matriz 3×3",
+      steps: [
+        "Crea una matriz 3×3 con números a tu gusto.",
+        "Con bucles anidados, suma todos sus valores en una variable total.",
+        "Imprime también la suma de cada fila por separado.",
+        "Reto: imprime la matriz 'bonita', una fila por línea.",
+      ],
+    },
+    selfCheck: [
+      "Creo y accedo a datos en una matriz con m[fila][columna].",
+      "Recorro una matriz completa con bucles anidados.",
+      "No confundo filas con columnas.",
+    ],
+    summary: [
+      "Una matriz es una lista de listas (datos en 2D).",
+      "Acceso: m[fila][columna], en ese orden.",
+      "Se recorre con dos bucles anidados: filas y, dentro, columnas.",
+      "Tableros, tablas e imágenes son datos anidados.",
+    ],
+  },
+
+  "prog-ordenacion": {
+    intro:
+      "Ordenar parece trivial hasta que tienes un millón de elementos. Por eso existen muchos algoritmos de ordenación: unos simples y lentos, otros ingeniosos y rápidos. Entenderlos es la mejor puerta de entrada al diseño de algoritmos y a la complejidad.",
+    goal: "entender cómo y por qué se ordena, y comparar el coste de distintas estrategias.",
+    sections: [
+      {
+        h: "Simples (O(n²)) vs. eficientes (O(n log n))",
+        tldr: "Las simples son fáciles de entender; las eficientes escalan.",
+        compare: {
+          left: {
+            title: "Simples — O(n²)",
+            points: ["Inserción, selección, burbuja", "Fáciles de razonar", "Lentas con muchos datos"],
+          },
+          right: {
+            title: "Eficientes — O(n log n)",
+            points: ["Merge sort, quicksort", "Dividen el problema", "Las que usa la práctica"],
+          },
+          note: "Con 1.000.000 de datos, la diferencia entre n² y n·log n es abismal (billones vs. millones de pasos).",
+        },
+      },
+      {
+        h: "Ordenación por inserción (la intuitiva)",
+        tldr: "Como ordenar cartas en la mano: cada nueva carta la insertas en su sitio.",
+        code: "def insercion(a):\n    for i in range(1, len(a)):\n        actual = a[i]\n        j = i - 1\n        while j >= 0 and a[j] > actual:\n            a[j + 1] = a[j]   # corre a la derecha\n            j -= 1\n        a[j + 1] = actual     # coloca en su hueco\n    return a",
+        body: [
+          "Recorres de izquierda a derecha; cada elemento lo 'insertas' donde toca entre los que ya están ordenados a su izquierda.",
+        ],
+      },
+      {
+        h: "En la vida real: usa el sort() del lenguaje",
+        tldr: "Estudia las ordenaciones para aprender; en producción usa la del lenguaje.",
+        code: "nums = [5, 2, 9, 1]\nnums.sort()          # in-place\nordenada = sorted(nums)  # nueva lista",
+        tip: "Reinventar el sort en un proyecto real casi nunca compensa: el del lenguaje es eficiente y está probado. Aprende los algoritmos por lo que ENSEÑAN, no para reimplementarlos.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "El coste típico de las ordenaciones eficientes (merge, quick) es…",
+        options: ["O(n²)", "O(n log n)", "O(1)"],
+        answer: 1,
+        why: "Dividen el problema, logrando O(n log n), muy superior a O(n²) a escala.",
+      },
+      {
+        kind: "order",
+        q: "Ordena los pasos de la ordenación por inserción para un elemento:",
+        items: [
+          "Tomar el elemento actual",
+          "Comparar con los de su izquierda (ya ordenados)",
+          "Correr a la derecha los mayores que él",
+          "Colocar el elemento en el hueco que queda",
+        ],
+        why: "Insertar = abrir hueco corriendo los mayores y dejar el elemento en su sitio.",
+      },
+      {
+        kind: "choice",
+        q: "En un proyecto real, para ordenar una lista lo mejor es…",
+        options: [
+          "implementar tu propio quicksort",
+          "usar el sort()/sorted() del lenguaje",
+          "no ordenar nunca",
+        ],
+        answer: 1,
+        why: "El sort del lenguaje es eficiente y está probado; reinventarlo rara vez compensa.",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada algoritmo con su coste típico:",
+        pairs: [
+          { left: "Inserción", right: "O(n²)" },
+          { left: "Merge sort", right: "O(n log n)" },
+          { left: "Acceso a lista por índice", right: "O(1)" },
+        ],
+        why: "Simples O(n²); eficientes O(n log n); el acceso directo es constante.",
+      },
+    ],
+    activity: {
+      title: "Traza una ordenación a mano",
+      steps: [
+        "Escribe en papel la lista [5, 2, 4, 1].",
+        "Aplica la ordenación por inserción paso a paso, anotando la lista tras cada inserción.",
+        "Cuenta cuántas comparaciones hiciste.",
+        "Reto: repite con [1, 2, 4, 5] (ya casi ordenada) y observa que la inserción hace muchísimas menos comparaciones.",
+      ],
+    },
+    selfCheck: [
+      "Distingo ordenaciones simples (O(n²)) de eficientes (O(n log n)).",
+      "Explico cómo funciona la ordenación por inserción.",
+      "Sé que en producción conviene usar el sort del lenguaje.",
+    ],
+    summary: [
+      "Hay ordenaciones simples (O(n²)) y eficientes (O(n log n)).",
+      "La inserción coloca cada elemento en su sitio, como cartas en la mano.",
+      "El coste importa muchísimo a escala.",
+      "Aprende los algoritmos por lo que enseñan; usa sort() en producción.",
+    ],
+  },
 };

@@ -188,7 +188,7 @@ export async function recordReview(
       data: {
         userId,
         type: "skill_reviewed",
-        payload: { skillId, treeId: skill.treeId, correct, total, box },
+        payload: { skillId, treeId: skill.treeId, correct, total, box, xp },
       },
     });
     if (xp > 0) {
