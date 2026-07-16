@@ -36,6 +36,8 @@ export default async function TreePage({
   const data = await getTreeStrands(userId, treeSlug);
   if (!data) notFound();
   const { tree, strands } = data;
+  // Un árbol no publicado (borrador de una disciplina futura) no es visible.
+  if (tree.status !== "PUBLISHED") notFound();
 
   const enrollment = await getEnrollment(userId, tree.id);
 

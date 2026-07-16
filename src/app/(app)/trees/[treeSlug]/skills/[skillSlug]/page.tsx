@@ -106,6 +106,8 @@ export default async function SkillPage({
   const { treeSlug, skillSlug } = await params;
   const skill = await getSkill(treeSlug, skillSlug);
   if (!skill) notFound();
+  // Habilidades de un árbol no publicado (disciplina en construcción) → 404.
+  if (skill.tree.status !== "PUBLISHED") notFound();
 
   const session = await auth();
   const userId = session!.user.id;

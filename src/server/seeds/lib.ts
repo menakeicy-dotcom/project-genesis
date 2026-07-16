@@ -63,6 +63,13 @@ export interface TreeSpec {
     title: string;
     description: string;
     difficulty: string;
+    /**
+     * Estado de publicación. Por defecto "PUBLISHED". Una disciplina en
+     * construcción se siembra como "DRAFT": queda íntegra en la base de datos
+     * pero NO es visible para el usuario (el catálogo solo muestra PUBLISHED y
+     * las páginas de árbol/habilidad devuelven 404 para no publicadas).
+     */
+    status?: "DRAFT" | "PUBLISHED" | "ARCHIVED";
   };
   /** clave de rama → etiqueta legible. */
   branches: Record<string, string>;
@@ -250,11 +257,26 @@ export function validateTree(spec: TreeSpec): ValidationResult {
   };
 }
 
-/** Siembra (idempotente) el árbol de una disciplina en la base de datos. */
+/**
+ * Siembra (idempotente y NO destructiva) el árbol de una disciplina.
+ *
+ * Actualiza cada habilidad POR SLUG (upsert) en vez de borrar y recrear el
+ * árbol entero. Así los `Skill.id` se conservan entre siembras, y con ellos el
+ * PROGRESO del usuario (UserSkillProgress, inscripciones, eventos de repaso),
+ * que cuelga de esos ids. Actualizar el contenido ya no borra lo aprendido.
+ *
+ * Solo se eliminan las habilidades que dejan de existir en el spec. Los
+ * prerrequisitos y recursos (sin datos de usuario asociados) se regeneran.
+ */
 export async function upsertTree(
   db: PrismaClient,
   spec: TreeSpec,
-): Promise<{ tree: string; skills: number; prerequisites: number }> {
+): Promise<{
+  tree: string;
+  skills: number;
+  prerequisites: number;
+  removed: number;
+}> {
   const check = validateTree(spec);
   if (!check.ok) {
     throw new Error(
@@ -275,75 +297,84 @@ export async function upsertTree(
 
   const branchKeys = Object.keys(spec.branches);
   const laneX = (b: string) => Math.max(0, branchKeys.indexOf(b)) * 160;
+  const status = spec.tree.status ?? "PUBLISHED";
 
-  const existing = await db.tree.findUnique({ where: { slug: spec.tree.slug } });
-  if (existing) await db.skill.deleteMany({ where: { treeId: existing.id } });
-  const tree = existing
-    ? await db.tree.update({
-        where: { id: existing.id },
-        data: {
-          categoryId: category.id,
-          title: spec.tree.title,
-          description: spec.tree.description,
-          difficulty: spec.tree.difficulty,
-          status: "PUBLISHED",
-        },
-      })
-    : await db.tree.create({
-        data: {
-          categoryId: category.id,
-          slug: spec.tree.slug,
-          title: spec.tree.title,
-          description: spec.tree.description,
-          difficulty: spec.tree.difficulty,
-          status: "PUBLISHED",
-        },
-      });
+  const treeData = {
+    categoryId: category.id,
+    title: spec.tree.title,
+    description: spec.tree.description,
+    difficulty: spec.tree.difficulty,
+    status,
+  } as const;
+  const tree = await db.tree.upsert({
+    where: { slug: spec.tree.slug },
+    update: treeData,
+    create: { slug: spec.tree.slug, ...treeData },
+  });
 
+  // Elimina SOLO las habilidades que ya no están en el spec (su progreso se va
+  // con ellas, que es lo correcto: el contenido dejó de existir).
+  const specSlugs = spec.nodes.map((n) => n.s);
+  const removedRes = await db.skill.deleteMany({
+    where: { treeId: tree.id, slug: { notIn: specSlugs } },
+  });
+
+  // Upsert por slug: conserva el id (y el progreso) de las que permanecen.
   const idBySlug: Record<string, string> = {};
   let order = 0;
   for (const n of spec.nodes) {
-    const created = await db.skill.create({
-      data: {
-        treeId: tree.id,
-        slug: n.s,
-        title: n.t,
-        description: n.d,
-        objective: n.o,
-        branch: n.b,
-        difficulty: n.df,
-        tier: n.lv,
-        xpReward: n.xp,
-        estimatedMinutes: n.m,
-        positionX: laneX(n.b),
-        positionY: n.lv * 130,
-        isRoot: !!n.root,
-        order: order++,
-        content: {
-          competency: n.c,
-          rationale: n.w,
-          commonErrors: n.er,
-          masteryCriteria: n.cr,
-          exercises: n.ex,
-          assessments: n.ev,
-          levelLabel: spec.levels[n.lv],
-          branchLabel: spec.branches[n.b],
-          ...(spec.lessons[n.s] ? { lesson: spec.lessons[n.s] } : {}),
-        } as unknown as Prisma.InputJsonValue,
-        resources: {
-          create: n.r.map((res, i) => ({
-            type: res.t,
-            title: res.title,
-            url: res.url,
-            provider: res.p,
-            order: i,
-          })),
-        },
-      },
+    const data = {
+      title: n.t,
+      description: n.d,
+      objective: n.o,
+      branch: n.b,
+      difficulty: n.df,
+      tier: n.lv,
+      xpReward: n.xp,
+      estimatedMinutes: n.m,
+      positionX: laneX(n.b),
+      positionY: n.lv * 130,
+      isRoot: !!n.root,
+      order: order++,
+      content: {
+        competency: n.c,
+        rationale: n.w,
+        commonErrors: n.er,
+        masteryCriteria: n.cr,
+        exercises: n.ex,
+        assessments: n.ev,
+        levelLabel: spec.levels[n.lv],
+        branchLabel: spec.branches[n.b],
+        ...(spec.lessons[n.s] ? { lesson: spec.lessons[n.s] } : {}),
+      } as unknown as Prisma.InputJsonValue,
+    };
+    const skill = await db.skill.upsert({
+      where: { treeId_slug: { treeId: tree.id, slug: n.s } },
+      update: data,
+      create: { treeId: tree.id, slug: n.s, ...data },
     });
-    idBySlug[n.s] = created.id;
+    idBySlug[n.s] = skill.id;
   }
 
+  // Recursos y prerrequisitos no guardan datos de usuario: se regeneran.
+  await db.resource.deleteMany({ where: { skill: { treeId: tree.id } } });
+  for (const n of spec.nodes) {
+    if (n.r.length === 0) continue;
+    await db.resource.createMany({
+      data: n.r.map((res, i) => ({
+        skillId: idBySlug[n.s]!,
+        type: res.t,
+        title: res.title,
+        url: res.url,
+        provider: res.p,
+        order: i,
+      })),
+    });
+  }
+
+  await db.skillPrerequisite.deleteMany({
+    where: { skill: { treeId: tree.id } },
+  });
   let prerequisites = 0;
   for (const n of spec.nodes) {
     for (const pre of n.pre) {
@@ -354,5 +385,10 @@ export async function upsertTree(
     }
   }
 
-  return { tree: tree.slug, skills: spec.nodes.length, prerequisites };
+  return {
+    tree: tree.slug,
+    skills: spec.nodes.length,
+    prerequisites,
+    removed: removedRes.count,
+  };
 }

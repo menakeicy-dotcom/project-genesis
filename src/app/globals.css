@@ -229,6 +229,27 @@ body {
   }
 }
 
+/* Brillo (shimmer) de los skeleton loaders: una banda de luz que recorre. */
+@keyframes stShimmer {
+  0% {
+    background-position: -180% 0;
+  }
+  100% {
+    background-position: 180% 0;
+  }
+}
+.st-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--foreground) 8%, transparent) 50%,
+    transparent 100%
+  );
+  background-size: 180% 100%;
+  background-repeat: no-repeat;
+  animation: stShimmer 1.4s ease-in-out infinite;
+}
+
 /* Caída global de hojas (animación de la interfaz). */
 @keyframes stFall {
   0% {
