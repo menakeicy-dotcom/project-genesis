@@ -457,6 +457,16 @@ export const PROG_LESSONS: Record<string, Lesson> = {
     goal: "mostrar datos con print() y pedirlos con input().",
     sections: [
       {
+        h: "print(): la salida",
+        tldr: "print() muestra información en pantalla; las f-strings la componen con claridad.",
+        body: [
+          "print() escribe en pantalla lo que le pases: texto, números o varias cosas separadas por comas.",
+          "Para insertar valores dentro de un texto, lo más limpio son las f-strings: un texto con f delante y variables entre llaves.",
+        ],
+        code: "print(\"Hola\", \"mundo\")        # Hola mundo\n\nnombre, edad = \"Ana\", 25\nprint(f\"{nombre} tiene {edad} años\")   # Ana tiene 25 años",
+        tip: "Las f-strings (f\"...{variable}...\") son la forma moderna y legible de mezclar texto y valores. Evita concatenar con + y convertir a mano.",
+      },
+      {
         h: "input() siempre devuelve texto",
         tldr: "Lo que teclea el usuario llega como str, aunque sean números.",
         examples: [
@@ -3657,6 +3667,795 @@ export const PROG_LESSONS: Record<string, Lesson> = {
       "La inserción coloca cada elemento en su sitio, como cartas en la mano.",
       "El coste importa muchísimo a escala.",
       "Aprende los algoritmos por lo que enseñan; usa sort() en producción.",
+    ],
+  },
+
+  "prog-listas-enlazadas": {
+    intro:
+      "Un array guarda sus elementos pegados en memoria; una lista enlazada los reparte y los une con 'flechas' (referencias). Entender esto te enseña qué es una referencia —la idea detrás de los punteros— y prepara el terreno para árboles y grafos.",
+    goal: "entender las referencias y recorrer e insertar en una estructura encadenada.",
+    sections: [
+      {
+        h: "Un nodo: un dato y una flecha al siguiente",
+        tldr: "Cada nodo guarda su valor y una referencia al nodo siguiente.",
+        code: "class Nodo:\n    def __init__(self, valor):\n        self.valor = valor\n        self.siguiente = None   # referencia al próximo nodo (o None al final)\n\n# a -> b -> c -> None\na = Nodo('a'); b = Nodo('b'); c = Nodo('c')\na.siguiente = b\nb.siguiente = c",
+        body: [
+          "La lista 'existe' mientras conserves la referencia al primer nodo (la 'cabeza'). Si la pierdes, pierdes toda la lista.",
+        ],
+      },
+      {
+        h: "Array vs. lista enlazada: cada uno gana en algo",
+        tldr: "El array es rápido para acceder por posición; la enlazada, para insertar/borrar.",
+        compare: {
+          left: {
+            title: "Array (lista de Python)",
+            points: ["Acceso por índice O(1)", "Memoria contigua", "Insertar en medio: mover todo O(n)"],
+          },
+          right: {
+            title: "Lista enlazada",
+            points: ["Acceso por posición O(n)", "Insertar/borrar (con el nodo): O(1)", "Crece sin reservar de golpe"],
+          },
+          note: "No hay 'la mejor': eliges según lo que hagas más, acceder o insertar/borrar.",
+        },
+      },
+      {
+        h: "Insertar al inicio",
+        tldr: "El nuevo nodo apunta a la cabeza actual y pasa a ser la nueva cabeza.",
+        code: "def insertar_inicio(cabeza, valor):\n    nuevo = Nodo(valor)\n    nuevo.siguiente = cabeza   # 1) apunta a la lista actual\n    return nuevo               # 2) el nuevo es la nueva cabeza",
+        tip: "El error clásico es reordenar mal las flechas y 'perder' el resto de la lista. Regla: primero enlaza el nodo nuevo, y solo después mueve la cabeza.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué guarda un nodo de una lista enlazada?",
+        options: [
+          "Solo su valor",
+          "Su valor y una referencia al siguiente nodo",
+          "Todos los valores de la lista",
+        ],
+        answer: 1,
+        why: "Un nodo = dato + flecha (referencia) al siguiente.",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada operación con su coste típico:",
+        pairs: [
+          { left: "Acceso por índice en un array", right: "O(1)" },
+          { left: "Acceso por posición en enlazada", right: "O(n)" },
+          { left: "Insertar al inicio de una enlazada", right: "O(1)" },
+        ],
+        why: "El array brilla en acceso; la enlazada, en insertar/borrar.",
+      },
+      {
+        kind: "order",
+        q: "Ordena los pasos para insertar un nodo al inicio:",
+        items: [
+          "Crear el nodo nuevo",
+          "Hacer que el nodo nuevo apunte a la cabeza actual",
+          "Convertir el nodo nuevo en la nueva cabeza",
+        ],
+        why: "Primero enlazas hacia la lista existente; solo después mueves la cabeza.",
+      },
+      {
+        kind: "choice",
+        q: "Si pierdes la referencia a la cabeza de la lista…",
+        options: [
+          "no pasa nada, se recupera sola",
+          "pierdes el acceso a toda la lista",
+          "el array se reordena",
+        ],
+        answer: 1,
+        why: "Sin la cabeza no puedes llegar a ningún nodo: la lista se pierde.",
+      },
+    ],
+    activity: {
+      title: "Dibuja y encadena",
+      steps: [
+        "En papel, dibuja tres nodos con flechas: a → b → c → None.",
+        "Inserta un nodo 'x' al inicio redibujando solo las flechas necesarias.",
+        "Implementa la clase Nodo y una función que recorra e imprima la lista.",
+        "Reto: inserta 'x' entre b y c cambiando solo dos flechas.",
+      ],
+    },
+    selfCheck: [
+      "Explico qué es una referencia usando nodos.",
+      "Recorro una lista enlazada desde la cabeza.",
+      "Inserto al inicio sin perder el resto de la lista.",
+    ],
+    summary: [
+      "Un nodo = valor + referencia al siguiente.",
+      "La lista vive mientras conserves la cabeza.",
+      "Array: acceso O(1). Enlazada: insertar/borrar O(1).",
+      "Al insertar, enlaza antes de mover la cabeza.",
+    ],
+  },
+
+  "prog-hash": {
+    intro:
+      "¿Cómo encuentra un diccionario un valor entre millones de claves casi al instante? El secreto es el hashing: convertir la clave en un número que dice directamente dónde mirar. Es la magia detrás de dict y set, que usas constantemente.",
+    goal: "entender por qué el acceso por clave es tan rápido (y por qué no hay orden).",
+    sections: [
+      {
+        h: "La función hash: de clave a posición",
+        tldr: "Una función convierte la clave en un número que indica el 'cajón' donde guardar.",
+        body: [
+          "En vez de buscar recorriendo (O(n)), el hash calcula la posición directamente a partir de la clave. Por eso el acceso es, en promedio, O(1): constante, no depende de cuántos datos haya.",
+        ],
+        code: "precios = {\"pan\": 1.2, \"leche\": 0.9}\nprecios[\"pan\"]          # no recorre: calcula dónde está -> 1.2\n\"leche\" in precios       # comprobación casi instantánea",
+      },
+      {
+        h: "Colisiones: dos claves, el mismo cajón",
+        tldr: "Cuando dos claves caen en el mismo sitio, la estructura lo resuelve internamente.",
+        body: [
+          "A veces dos claves distintas producen la misma posición: es una colisión. La tabla la gestiona (por ejemplo, guardando varias en el mismo cajón). Por eso el O(1) es 'en promedio', no siempre exacto.",
+        ],
+        more: [
+          "Las claves de un dict/set deben ser inmutables (str, número, tupla): su hash no puede cambiar mientras están dentro.",
+        ],
+      },
+      {
+        h: "Sin orden garantizado",
+        tldr: "La posición la decide el hash, no el orden en que insertaste.",
+        tip: "Nunca dependas del 'orden' de un set. En dicts modernos de Python se conserva el orden de inserción, pero es un detalle del lenguaje, no una propiedad del hashing: no construyas lógica sobre eso.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Por qué buscar por clave en un dict es tan rápido?",
+        options: [
+          "porque recorre todos los elementos muy deprisa",
+          "porque calcula la posición directamente con una función hash",
+          "porque el dict está siempre ordenado",
+        ],
+        answer: 1,
+        why: "El hash calcula dónde mirar: acceso O(1) en promedio, sin recorrer.",
+      },
+      {
+        kind: "choice",
+        q: "Que dos claves caigan en el mismo sitio se llama…",
+        options: ["colisión", "iteración", "recursión"],
+        answer: 0,
+        why: "Una colisión; la tabla la resuelve internamente.",
+      },
+      {
+        kind: "fill",
+        q: "El coste medio del acceso por clave en una tabla hash es O(___).",
+        accept: ["1", "o(1)", "1)"],
+        hint: "Constante: no depende del número de elementos.",
+        why: "O(1) en promedio: la clave lleva directo a su posición.",
+      },
+      {
+        kind: "choice",
+        q: "¿En qué NO debes confiar al usar un set?",
+        options: ["en que no repite elementos", "en el orden de los elementos", "en la búsqueda rápida"],
+        answer: 1,
+        why: "El orden lo decide el hash; no construyas lógica sobre él.",
+      },
+    ],
+    activity: {
+      title: "Contador de palabras",
+      steps: [
+        "Toma un texto y sepáralo en palabras.",
+        "Usa un diccionario para contar cuántas veces aparece cada palabra.",
+        "Observa que, aunque el texto sea enorme, sumar cada palabra es instantáneo (hash).",
+        "Reto: muestra las 3 palabras más frecuentes.",
+      ],
+    },
+    selfCheck: [
+      "Explico qué hace una función hash.",
+      "Sé qué es una colisión a alto nivel.",
+      "Justifico el O(1) medio del acceso por clave.",
+      "No supongo orden en un dict/set.",
+    ],
+    summary: [
+      "El hashing convierte la clave en una posición directa.",
+      "Por eso dict/set acceden en O(1) promedio.",
+      "Las colisiones se gestionan internamente.",
+      "No dependas del orden de un dict/set.",
+    ],
+  },
+
+  "prog-arboles-grafos": {
+    intro:
+      "No todo se ordena en fila. Un sistema de archivos es un árbol; una red social o un mapa de rutas es un grafo. Son estructuras NO lineales, y recorrerlas bien (sin dar vueltas infinitas) es una habilidad clave.",
+    goal: "modelar jerarquías y relaciones con árboles y grafos, y recorrerlos con seguridad.",
+    sections: [
+      {
+        h: "Árbol: una jerarquía",
+        tldr: "Un nodo raíz del que cuelgan hijos, y de ellos otros hijos.",
+        body: [
+          "Cada nodo tiene un padre (salvo la raíz) y cero o más hijos. No hay ciclos: nunca vuelves a un nodo ya visitado siguiendo hacia abajo.",
+        ],
+        examples: [
+          { term: "árbol", text: "Carpetas y archivos", sub: "Una carpeta contiene subcarpetas y archivos: jerarquía pura." },
+          { term: "árbol", text: "Comentarios y respuestas", sub: "Un comentario tiene respuestas, que tienen respuestas…" },
+        ],
+      },
+      {
+        h: "Grafo: una red de relaciones",
+        tldr: "Nodos conectados por aristas, que SÍ pueden formar ciclos.",
+        compare: {
+          left: {
+            title: "Árbol",
+            points: ["Jerárquico (padre → hijos)", "Sin ciclos", "Un solo camino entre dos nodos"],
+          },
+          right: {
+            title: "Grafo",
+            points: ["Red (cualquiera con cualquiera)", "Puede tener ciclos", "Varios caminos posibles"],
+          },
+          note: "Un árbol es, de hecho, un grafo sin ciclos y conexo.",
+        },
+      },
+      {
+        h: "Recorrer sin dar vueltas: marca los visitados",
+        tldr: "En un grafo con ciclos, recuerda por dónde pasaste o entrarás en bucle infinito.",
+        code: "def recorrer(nodo, visitados):\n    if nodo in visitados:\n        return            # ya estuvimos: evita el ciclo\n    visitados.add(nodo)\n    for vecino in nodo.vecinos:\n        recorrer(vecino, visitados)",
+        tip: "En árboles no hace falta marcar visitados (no hay ciclos), pero en grafos es imprescindible. El bug más típico es olvidarlo.",
+      },
+    ],
+    practice: [
+      {
+        kind: "match",
+        q: "Empareja cada caso con la estructura que lo modela mejor:",
+        pairs: [
+          { left: "Carpetas y archivos", right: "Árbol" },
+          { left: "Amistades en una red social", right: "Grafo" },
+          { left: "Rutas entre ciudades", right: "Grafo" },
+        ],
+        why: "Jerarquía → árbol; red de relaciones con posibles ciclos → grafo.",
+      },
+      {
+        kind: "choice",
+        q: "La diferencia clave entre árbol y grafo es que el grafo…",
+        options: [
+          "no puede tener nodos",
+          "puede tener ciclos y varios caminos",
+          "siempre es más pequeño",
+        ],
+        answer: 1,
+        why: "El árbol es jerárquico y sin ciclos; el grafo puede tener ciclos.",
+      },
+      {
+        kind: "choice",
+        q: "Al recorrer un grafo, ¿qué evita los bucles infinitos?",
+        options: [
+          "ordenar los nodos",
+          "marcar los nodos ya visitados",
+          "usar más memoria",
+        ],
+        answer: 1,
+        why: "Marcar visitados impide volver a entrar en un nodo y ciclar.",
+      },
+      {
+        kind: "order",
+        q: "Ordena la lógica de un recorrido seguro de un grafo:",
+        items: [
+          "Si el nodo ya está visitado, salir",
+          "Marcar el nodo como visitado",
+          "Procesar el nodo",
+          "Recorrer cada vecino no visitado",
+        ],
+        why: "Comprobar visitados primero es lo que corta los ciclos.",
+      },
+    ],
+    activity: {
+      title: "Suma los nodos de un árbol",
+      steps: [
+        "Representa un árbol pequeño de números (un nodo con hijos).",
+        "Escribe una función recursiva que devuelva la suma de todos los nodos.",
+        "Pruébala con un árbol de 3 niveles.",
+        "Reto: cuenta cuántos nodos hoja (sin hijos) tiene.",
+      ],
+    },
+    selfCheck: [
+      "Distingo un árbol (jerarquía) de un grafo (red).",
+      "Recorro un árbol con recursión.",
+      "Marco visitados al recorrer un grafo.",
+      "Elijo la estructura adecuada para un caso.",
+    ],
+    summary: [
+      "Árbol: jerarquía sin ciclos (archivos, comentarios).",
+      "Grafo: red que puede tener ciclos (redes, rutas).",
+      "Se recorren con recursión.",
+      "En grafos, marca los visitados para no ciclar.",
+    ],
+  },
+
+  "prog-modelado": {
+    intro:
+      "Guardar todo en una sola tabla gigante lleva al caos: datos repetidos que se contradicen. El modelado relacional reparte la información en tablas conectadas, para que cada dato viva en un solo sitio.",
+    goal: "diseñar un esquema relacional coherente, sin datos duplicados.",
+    sections: [
+      {
+        h: "Una tabla por 'cosa' (entidad)",
+        tldr: "Usuarios en una tabla, pedidos en otra: cada concepto, su tabla.",
+        body: [
+          "Si un usuario hace muchos pedidos y repites su nombre y correo en cada fila de pedido, cualquier cambio (un correo nuevo) te obliga a corregir muchas filas… y alguna se te escapará.",
+        ],
+      },
+      {
+        h: "Clave foránea: la que conecta las tablas",
+        tldr: "El pedido guarda el id del usuario, no todos sus datos.",
+        code: "-- tabla usuarios: cada uno una vez\nusuarios(id, nombre, correo)\n\n-- tabla pedidos: apunta al usuario por su id (clave foránea)\npedidos(id, usuario_id, total, fecha)\n--            └── FK → usuarios.id",
+        body: [
+          "La clave foránea (`usuario_id`) es una referencia: el dato del usuario vive una sola vez en `usuarios`, y los pedidos lo señalan.",
+        ],
+      },
+      {
+        h: "Normalizar = no repetir",
+        tldr: "Cada dato, en un único lugar; lo demás lo referencia.",
+        compare: {
+          left: {
+            title: "Sin modelar (una tabla)",
+            points: ["Nombre y correo repetidos en cada pedido", "Actualizar = tocar muchas filas", "Riesgo de datos contradictorios"],
+          },
+          right: {
+            title: "Modelado (tablas relacionadas)",
+            points: ["Datos del usuario una sola vez", "Actualizar = una fila", "Integridad garantizada por la FK"],
+          },
+        },
+        tip: "Regla práctica: si copias el mismo dato en muchas filas, probablemente falta una tabla y una relación.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué conecta la tabla de pedidos con la de usuarios?",
+        options: [
+          "una copia de todos los datos del usuario",
+          "una clave foránea (el id del usuario)",
+          "el nombre del usuario en cada pedido",
+        ],
+        answer: 1,
+        why: "La clave foránea referencia al usuario por su id; el dato no se copia.",
+      },
+      {
+        kind: "choice",
+        q: "El principal problema de repetir datos en muchas filas es…",
+        options: [
+          "que ocupa un poco más de espacio y ya",
+          "que al actualizar surgen inconsistencias",
+          "que la base de datos no arranca",
+        ],
+        answer: 1,
+        why: "Datos duplicados → al cambiar uno, otros quedan desactualizados y se contradicen.",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada término con su idea:",
+        pairs: [
+          { left: "Entidad", right: "Una 'cosa' que merece su tabla" },
+          { left: "Clave foránea", right: "Referencia a otra tabla por id" },
+          { left: "Normalizar", right: "No repetir el mismo dato" },
+        ],
+        why: "Son las tres ideas base del diseño relacional.",
+      },
+      {
+        kind: "order",
+        q: "Ordena los pasos para modelar 'usuarios y sus pedidos':",
+        items: [
+          "Identificar las entidades (usuario, pedido)",
+          "Crear una tabla por entidad con su id",
+          "Añadir la clave foránea usuario_id en pedidos",
+          "Verificar que ningún dato se repite sin necesidad",
+        ],
+        why: "Entidades → tablas → relaciones → revisar redundancia.",
+      },
+    ],
+    activity: {
+      title: "Modela una tiendita",
+      steps: [
+        "Diseña en papel dos tablas: usuarios y pedidos.",
+        "Marca la clave primaria de cada una y la clave foránea que las conecta.",
+        "Escribe un ejemplo con 2 usuarios y 3 pedidos sin repetir datos de usuario.",
+        "Reto: añade 'productos' y piensa cómo relacionar pedidos con productos.",
+      ],
+    },
+    selfCheck: [
+      "Separo la información en tablas por entidad.",
+      "Uso claves foráneas para relacionar tablas.",
+      "Detecto datos duplicados que piden una relación.",
+    ],
+    summary: [
+      "Una tabla por entidad; cada dato en un solo lugar.",
+      "La clave foránea conecta tablas por id.",
+      "Normalizar evita duplicados e inconsistencias.",
+      "Si copias un dato en muchas filas, falta una tabla.",
+    ],
+  },
+
+  "prog-consumir-api": {
+    intro:
+      "Casi ninguna app vive aislada: el clima, un mapa, un pago o un login vienen de APIs externas. Consumir una API es pedir datos por HTTP a otro servicio y usar su respuesta (normalmente JSON) en tu programa.",
+    goal: "integrar datos de una API externa en tu programa, manejando también los errores.",
+    sections: [
+      {
+        h: "Pedir y recibir",
+        tldr: "Haces una petición a una URL y recibes una respuesta (datos + código de estado).",
+        code: "# Python\nimport requests\nr = requests.get(\"https://api.ejemplo.com/clima?ciudad=Lima\")\ndatos = r.json()      # convierte el JSON en dict\nprint(datos[\"temp\"])",
+        examples: [
+          {
+            term: "JavaScript",
+            text: "La misma idea con fetch",
+            mono: "const r = await fetch(url);\nconst datos = await r.json();\nconsole.log(datos.temp);",
+          },
+        ],
+      },
+      {
+        h: "El código de estado te dice qué pasó",
+        tldr: "200 = bien; 404 = no existe; 500 = error del servidor.",
+        code: "if r.status_code == 200:\n    usar(r.json())\nelse:\n    print(\"Algo falló:\", r.status_code)",
+        more: [
+          "Rango 2xx = éxito; 4xx = error tuyo (URL mal, sin permiso); 5xx = error del servidor.",
+        ],
+      },
+      {
+        h: "Errores: la red no siempre responde",
+        tldr: "Puede no haber internet, tardar demasiado o venir vacío. Prevé el fallo.",
+        code: "try:\n    r = requests.get(url, timeout=5)\n    r.raise_for_status()\n    datos = r.json()\nexcept requests.RequestException:\n    datos = None          # plan B: mensaje claro, no que reviente",
+        tip: "El error más común de principiante es asumir que la API SIEMPRE responde y bien. Un buen programa maneja el fallo con elegancia (mensaje claro, valor por defecto).",
+      },
+    ],
+    practice: [
+      {
+        kind: "match",
+        q: "Empareja cada código de estado con su significado:",
+        pairs: [
+          { left: "200", right: "Todo bien" },
+          { left: "404", right: "No encontrado" },
+          { left: "500", right: "Error del servidor" },
+        ],
+        why: "2xx éxito, 4xx error del cliente, 5xx error del servidor.",
+      },
+      {
+        kind: "choice",
+        q: "Tras recibir la respuesta de una API JSON, normalmente…",
+        options: [
+          "la usas tal cual como texto",
+          "la conviertes a dict/objeto con .json()",
+          "la guardas como imagen",
+        ],
+        answer: 1,
+        why: ".json() convierte el texto JSON en estructuras que tu código puede usar.",
+      },
+      {
+        kind: "order",
+        q: "Ordena los pasos para consumir una API con seguridad:",
+        items: [
+          "Hacer la petición (con timeout)",
+          "Comprobar que la respuesta fue exitosa",
+          "Convertir el JSON en datos usables",
+          "Usar los datos (o mostrar un error si falló)",
+        ],
+        why: "Pedir → verificar → parsear → usar/manejar error.",
+      },
+      {
+        kind: "choice",
+        q: "¿Qué error de principiante evita un buen código?",
+        options: [
+          "usar variables con nombres claros",
+          "suponer que la API siempre responde y sin fallos",
+          "leer la documentación de la API",
+        ],
+        answer: 1,
+        why: "Hay que prever fallos de red, respuestas de error y datos vacíos.",
+      },
+    ],
+    activity: {
+      title: "Muestra datos de una API pública",
+      steps: [
+        "Elige una API pública sin clave (por ejemplo, una de chistes, clima o cotizaciones).",
+        "Haz la petición y muestra un par de campos de la respuesta.",
+        "Añade manejo de error: si falla, muestra un mensaje claro en vez de romperse.",
+        "Reto: si no hay internet, que el programa lo diga con calma.",
+      ],
+    },
+    selfCheck: [
+      "Hago una petición y uso la respuesta JSON.",
+      "Interpreto los códigos de estado (200/404/500).",
+      "Manejo fallos de red y respuestas vacías con elegancia.",
+    ],
+    summary: [
+      "Consumir una API = pedir datos por HTTP y usar la respuesta.",
+      "El JSON se convierte a dict/objeto con .json().",
+      "El código de estado dice si salió bien (2xx) o mal (4xx/5xx).",
+      "Prevé siempre el fallo: red caída, error o datos vacíos.",
+    ],
+  },
+
+  "prog-arquitectura": {
+    intro:
+      "Un programa pequeño cabe en un archivo. Uno grande, si no se organiza, se vuelve un nudo donde tocar algo rompe otra cosa. La arquitectura es cómo repartes el código en piezas con responsabilidades claras para que el proyecto crezca sin volverse ingobernable.",
+    goal: "estructurar una aplicación en capas y decidir con criterio cuándo aplicar un patrón.",
+    sections: [
+      {
+        h: "Separar responsabilidades en capas",
+        tldr: "Presentación, lógica y datos son trabajos distintos: sepáralos.",
+        body: [
+          "Una separación clásica: la capa de presentación (lo que ve el usuario), la de lógica de negocio (las reglas) y la de datos (guardar/leer). Cada una hace su trabajo y habla con la siguiente por una interfaz clara.",
+        ],
+        code: "# mezclado (difícil de mantener):\n# la función pinta en pantalla, calcula el precio y escribe en la BD, todo junto\n\n# en capas:\n#   presentacion/  -> muestra y recoge datos\n#   dominio/       -> reglas: calcular_precio(...)\n#   datos/         -> guardar_pedido(...), leer_pedido(...)",
+      },
+      {
+        h: "Los patrones son soluciones a problemas repetidos",
+        tldr: "Un patrón es una receta probada para un problema común, no una regla obligatoria.",
+        body: [
+          "Nombres como 'repositorio', 'fábrica' o 'observador' describen soluciones que la comunidad repite porque funcionan. Conocerlos te da vocabulario y evita reinventar la rueda.",
+        ],
+        more: [
+          "No memorices patrones para usarlos todos: reconoce el problema y, si un patrón encaja, aplícalo.",
+        ],
+      },
+      {
+        h: "El peligro contrario: sobreingeniería",
+        tldr: "Añadir capas y patrones 'por si acaso' complica sin aportar.",
+        compare: {
+          left: {
+            title: "Arquitectura sana",
+            points: ["Separa lo que cambia por motivos distintos", "Cada pieza se prueba sola", "Fácil de seguir"],
+          },
+          right: {
+            title: "Sobreingeniería",
+            points: ["Capas que nadie necesita", "Abstracciones para un solo caso", "Más difícil, no más fácil"],
+          },
+          note: "YAGNI: 'You Aren't Gonna Need It'. Añade estructura cuando el dolor aparece, no antes.",
+        },
+        tip: "Empieza simple. Refactoriza hacia más estructura cuando el código te lo pida (se repite, cuesta cambiarlo), no por adelantado.",
+      },
+    ],
+    practice: [
+      {
+        kind: "match",
+        q: "Empareja cada capa con su responsabilidad:",
+        pairs: [
+          { left: "Presentación", right: "Mostrar y recoger datos del usuario" },
+          { left: "Lógica / dominio", right: "Aplicar las reglas del negocio" },
+          { left: "Datos", right: "Guardar y leer de la base de datos" },
+        ],
+        why: "Cada capa un trabajo; se comunican por interfaces claras.",
+      },
+      {
+        kind: "choice",
+        q: "Un patrón de diseño es…",
+        options: [
+          "una regla que hay que aplicar siempre",
+          "una solución probada a un problema que se repite",
+          "un lenguaje de programación",
+        ],
+        answer: 1,
+        why: "Es una receta reutilizable para un problema común, no una obligación.",
+      },
+      {
+        kind: "choice",
+        q: "Aplicar patrones y capas 'por si acaso' se llama…",
+        options: ["refactorización", "sobreingeniería", "depuración"],
+        answer: 1,
+        why: "Sobreingeniería: complejidad que no responde a una necesidad real.",
+      },
+      {
+        kind: "fill",
+        q: "El principio que dice 'no lo añadas hasta que lo necesites' se abrevia ___.",
+        accept: ["yagni"],
+        hint: "You Aren't Gonna Need It.",
+        why: "YAGNI: evita construir para un futuro que quizá no llegue.",
+      },
+    ],
+    activity: {
+      title: "Separa en capas",
+      steps: [
+        "Toma un programa que mezcle pantalla, reglas y datos en un solo sitio.",
+        "Divídelo en tres partes: presentación, lógica y datos.",
+        "Haz que la lógica no sepa nada de cómo se muestra ni de dónde se guarda.",
+        "Reto: cambia la forma de guardar (de archivo a lista en memoria) sin tocar la lógica.",
+      ],
+    },
+    selfCheck: [
+      "Divido una app en capas con responsabilidades claras.",
+      "Entiendo qué es un patrón y cuándo (no) usarlo.",
+      "Reconozco y evito la sobreingeniería.",
+    ],
+    summary: [
+      "Arquitectura = repartir el código en piezas con responsabilidad clara.",
+      "Separa presentación, lógica y datos.",
+      "Los patrones son recetas para problemas repetidos.",
+      "Empieza simple; añade estructura cuando el código lo pida (YAGNI).",
+    ],
+  },
+
+  "prog-proyecto": {
+    intro:
+      "Aprender a programar se demuestra construyendo algo que funciona de principio a fin. Este es tu proyecto integrador: eliges una idea pequeña pero completa, la defines, la construyes por partes, la versionas con Git y la compartes. Es donde todo lo aprendido se junta.",
+    goal: "planificar, construir y publicar un proyecto propio completo.",
+    sections: [
+      {
+        h: "Primero el alcance: define un MVP",
+        tldr: "Decide la versión más pequeña que ya sea útil. Nada de 'todo'.",
+        body: [
+          "El error número uno es empezar a teclear sin saber qué construyes. Escribe en una frase qué hará tu app y lista solo lo IMPRESCINDIBLE (el MVP: producto mínimo viable). Lo demás son 'ideas para después'.",
+        ],
+        examples: [
+          { text: "To-do", sub: "Añadir tarea, marcarla hecha, verlas. (Nada de recordatorios ni etiquetas… todavía.)" },
+          { text: "Quiz", sub: "Mostrar preguntas, corregir, dar puntuación." },
+          { text: "Gestor de gastos", sub: "Registrar un gasto, listarlos, ver el total." },
+        ],
+      },
+      {
+        h: "Divide en tareas y versiona desde el minuto uno",
+        tldr: "Trocea el MVP en pasos pequeños y haz commits al terminar cada uno.",
+        code: "git init\n# ...construyes la primera parte...\ngit add .\ngit commit -m \"Añadir tarea a la lista\"\n# cada pieza terminada = un commit con mensaje claro",
+        more: [
+          "Cada commit pequeño es un punto de guardado al que puedes volver. Commits claros = historia legible de tu proyecto.",
+        ],
+      },
+      {
+        h: "Termina, prueba y comparte",
+        tldr: "Un proyecto 'terminado' funciona, está probado y publicado.",
+        tip: "No busques la perfección: busca 'terminado y funcionando'. Prueba los caminos principales, escribe un README breve (qué es y cómo se ejecuta) y súbelo a GitHub. Un proyecto compartido vale más que diez a medias.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Por dónde se empieza un proyecto?",
+        options: [
+          "escribiendo código cuanto antes",
+          "definiendo el alcance (qué hará el MVP)",
+          "eligiendo el color de los botones",
+        ],
+        answer: 1,
+        why: "Primero el alcance: sin saber qué construyes, te pierdes.",
+      },
+      {
+        kind: "choice",
+        q: "Un MVP es…",
+        options: [
+          "la versión con TODAS las funciones posibles",
+          "la versión más pequeña que ya resulta útil",
+          "el proyecto sin terminar",
+        ],
+        answer: 1,
+        why: "Producto mínimo viable: lo imprescindible para que sirva.",
+      },
+      {
+        kind: "order",
+        q: "Ordena las fases de tu proyecto integrador:",
+        items: [
+          "Definir el alcance (MVP)",
+          "Dividirlo en tareas pequeñas",
+          "Construir cada tarea versionando con Git",
+          "Probar los caminos principales",
+          "Escribir el README y publicarlo",
+        ],
+        why: "Alcance → tareas → construir+versionar → probar → publicar.",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuándo empiezas a usar Git en el proyecto?",
+        options: ["al final, cuando ya está todo", "desde el inicio, con commits pequeños", "solo si algo falla"],
+        answer: 1,
+        why: "Versionar desde el minuto uno te da puntos de guardado e historia clara.",
+      },
+    ],
+    activity: {
+      title: "Construye y publica tu proyecto",
+      steps: [
+        "Elige UNA idea pequeña (to-do, quiz o gestor de gastos) y escribe su MVP en una frase.",
+        "Lista las 3–5 tareas imprescindibles.",
+        "Crea el repositorio con git init y ve haciendo commits al terminar cada tarea.",
+        "Prueba los caminos principales y corrige lo que falle.",
+        "Escribe un README (qué es y cómo se ejecuta) y súbelo a GitHub.",
+      ],
+    },
+    selfCheck: [
+      "Defino el alcance (MVP) antes de programar.",
+      "Divido el trabajo en tareas pequeñas.",
+      "Versiono con Git usando commits claros.",
+      "Entrego un proyecto funcional y publicado.",
+    ],
+    summary: [
+      "Primero el alcance: define un MVP en una frase.",
+      "Divide en tareas y versiona con Git desde el inicio.",
+      "Prueba, escribe un README y publícalo.",
+      "Terminado y compartido vale más que perfecto a medias.",
+    ],
+  },
+
+  "hito-prog-profesional": {
+    intro:
+      "Has llegado al cierre. La diferencia entre 'sé programar' y 'programo como profesional' no es saber más sintaxis: es que tu código, además de funcionar, es mantenible, está probado y se puede trabajar en equipo. Este hito confirma esas prácticas.",
+    goal: "confirmar prácticas de ingeniería de nivel profesional sobre tu propio proyecto.",
+    sections: [
+      {
+        h: "Qué separa a un profesional",
+        tldr: "Que funcione es el mínimo. Mantenible, probado y colaborativo es el estándar.",
+        body: [
+          "Un aficionado busca que 'funcione hoy'. Un profesional busca que siga funcionando dentro de seis meses, que otra persona pueda entenderlo y cambiarlo, y que un cambio no rompa lo demás sin avisar.",
+        ],
+      },
+      {
+        h: "El checklist profesional",
+        tldr: "Código legible, pruebas, control de versiones y un README.",
+        bullets: [
+          "Nombres claros y funciones con una sola responsabilidad (código limpio).",
+          "Pruebas que cubren los caminos principales (si algo se rompe, te enteras).",
+          "Historial Git con commits pequeños y mensajes claros.",
+          "Un README que explique qué es el proyecto y cómo ejecutarlo.",
+        ],
+      },
+      {
+        h: "Aprender no termina aquí",
+        tldr: "La ingeniería es un oficio que se mejora toda la vida.",
+        tip: "Nadie 'termina' de aprender a programar. Los roadmaps (backend, frontend) te muestran el camino, pero el hábito más profesional es este: construir, recibir feedback, y volver a construir mejor.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué distingue el código profesional del que 'solo funciona'?",
+        options: [
+          "que usa el lenguaje más moderno",
+          "que es mantenible, está probado y es colaborativo",
+          "que es lo más corto posible",
+        ],
+        answer: 1,
+        why: "Funcionar es el mínimo; el estándar es mantenible + probado + colaborativo.",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada práctica con lo que te aporta:",
+        pairs: [
+          { left: "Pruebas", right: "Te avisan si un cambio rompe algo" },
+          { left: "Control de versiones", right: "Historial y puntos de guardado" },
+          { left: "Código limpio", right: "Otra persona lo entiende y lo cambia" },
+        ],
+        why: "Cada práctica profesional resuelve un problema real de mantenimiento.",
+      },
+      {
+        kind: "choice",
+        q: "Entregar un proyecto SIN pruebas ni control de versiones es…",
+        options: [
+          "lo normal y recomendable",
+          "una mala práctica: frágil y difícil de mantener",
+          "más rápido y por eso mejor",
+        ],
+        answer: 1,
+        why: "Sin pruebas ni versiones, cualquier cambio es un riesgo a ciegas.",
+      },
+      {
+        kind: "order",
+        q: "Ordena un cierre profesional de tu proyecto:",
+        items: [
+          "Revisar que el código sea legible (nombres, funciones cortas)",
+          "Añadir pruebas de los caminos principales",
+          "Asegurar historial Git con mensajes claros",
+          "Escribir/actualizar el README",
+        ],
+        why: "Legibilidad → pruebas → versiones → documentación: el checklist profesional.",
+      },
+    ],
+    activity: {
+      title: "Deja tu proyecto a nivel profesional",
+      steps: [
+        "Vuelve a tu proyecto integrador y repasa el checklist profesional.",
+        "Añade al menos 2 pruebas de los caminos principales.",
+        "Escribe o mejora el README (qué es, cómo se instala y se ejecuta).",
+        "Revisa tu historial de commits: ¿se entiende qué hiciste en cada uno?",
+        "Reto: pide a alguien que clone tu repo y lo ejecute solo con el README.",
+      ],
+    },
+    selfCheck: [
+      "Mi proyecto tiene pruebas de los caminos principales.",
+      "Tengo un historial Git con mensajes claros.",
+      "Mi código es legible para otra persona.",
+      "Tengo un README que explica cómo usarlo.",
+    ],
+    summary: [
+      "Profesional = mantenible + probado + colaborativo (no solo que funcione).",
+      "Checklist: código limpio, pruebas, Git y README.",
+      "Un cambio no debería romper lo demás sin avisar (pruebas).",
+      "La ingeniería se mejora toda la vida: construye, recibe feedback, repite.",
     ],
   },
 };
