@@ -6,6 +6,7 @@ import { INGLES_SPEC } from "@/server/seeds/ingles";
 import { lintTree, upsertTree, type TreeSpec } from "@/server/seeds/lib";
 import { PROGRAMACION_SPEC } from "@/server/seeds/programacion";
 import { MATEMATICAS_SPEC } from "@/server/seeds/matematicas";
+import { MUSICA_SPEC } from "@/server/seeds/musica";
 
 /** Resumen de calidad de una disciplina según el estándar SkillTree. */
 function quality(spec: TreeSpec) {
@@ -43,8 +44,9 @@ export async function GET(request: Request) {
   // MISMO motor genérico de sembrado (validación de DAG incluida).
   const english = await upsertTree(db, INGLES_SPEC);
   const programacion = await upsertTree(db, PROGRAMACION_SPEC);
-  // Matemáticas se siembra en DRAFT: queda íntegra pero NO visible todavía.
+  // Matemáticas y Música se siembran en DRAFT: íntegras pero NO visibles.
   const matematicas = await upsertTree(db, MATEMATICAS_SPEC);
+  const musica = await upsertTree(db, MUSICA_SPEC);
 
   return NextResponse.json({
     ok: true,
@@ -52,10 +54,12 @@ export async function GET(request: Request) {
     english,
     programacion,
     matematicas,
+    musica,
     quality: {
       english: quality(INGLES_SPEC),
       programacion: quality(PROGRAMACION_SPEC),
       matematicas: quality(MATEMATICAS_SPEC),
+      musica: quality(MUSICA_SPEC),
     },
   });
 }
