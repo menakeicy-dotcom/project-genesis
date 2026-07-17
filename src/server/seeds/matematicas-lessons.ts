@@ -952,4 +952,982 @@ export const MAT_LESSONS: Record<string, Lesson> = {
       "Listo para fracciones avanzadas y el salto al álgebra.",
     ],
   },
+
+  // ─────────────────────── Álgebra y ecuaciones ───────────────────────
+  "mat-variables": {
+    intro:
+      "Imagina que quieres decir una regla que valga para CUALQUIER número: 'el doble de un número, más 3'. En vez de repetirla para el 5, el 10, el 100… usas una letra que representa 'cualquier número'. Eso es una variable, y es el salto de la aritmética al álgebra: pasar de números concretos a ideas generales.",
+    goal: "escribir y evaluar expresiones con variables.",
+    sections: [
+      {
+        h: "Una letra que guarda un hueco",
+        tldr: "La variable no es un número secreto: es un hueco donde cabe cualquier número.",
+        body: [
+          "Cuando escribes 2x + 3, la x es un hueco. Si la llenas con 5, la expresión vale 2·5 + 3 = 13. Si la llenas con 10, vale 23. La misma expresión describe infinitos casos de golpe.",
+          "Por eso una variable no 'tiene un valor fijo escondido': representa a todos los valores posibles a la vez.",
+        ],
+        examples: [
+          {
+            text: "'El doble de un número, más 3'",
+            mono: "2x + 3",
+            sub: "x es ese número; la expresión sirva cual sea.",
+          },
+        ],
+      },
+      {
+        h: "Evaluar = llenar el hueco",
+        tldr: "Sustituye la letra por el número y calcula con la jerarquía de siempre.",
+        code: "f = 2x + 3\nx = 5  →  2·(5) + 3 = 13\nx = 0  →  2·(0) + 3 = 3\nx = -1 →  2·(-1) + 3 = 1",
+        tip: "Pon SIEMPRE el número entre paréntesis al sustituir, sobre todo si es negativo. 2·(-1) es claro; 2·-1 invita a errores.",
+      },
+    ],
+    practice: [
+      {
+        kind: "fill",
+        q: "Escribe como expresión: 'el doble de un número x, más 3' (sin espacios).",
+        accept: ["2x+3", "2*x+3", "3+2x"],
+        hint: "Doble = por 2.",
+        why: "El doble de x es 2x; más 3 → 2x + 3.",
+      },
+      {
+        kind: "fill",
+        q: "Evalúa 2x + 3 cuando x = 5.",
+        accept: ["13"],
+        hint: "2·5 + 3.",
+        why: "2·(5) + 3 = 10 + 3 = 13.",
+      },
+      {
+        kind: "choice",
+        q: "¿Qué es una variable como x?",
+        options: [
+          "un número fijo que hay que adivinar",
+          "un hueco que puede tomar cualquier valor",
+          "siempre el número 1",
+        ],
+        answer: 1,
+        why: "La variable representa cualquier valor posible, no uno oculto.",
+      },
+      {
+        kind: "fill",
+        q: "Evalúa 2x + 3 cuando x = -1.",
+        accept: ["1"],
+        hint: "Sustituye con paréntesis: 2·(-1) + 3.",
+        why: "2·(-1) + 3 = -2 + 3 = 1.",
+      },
+    ],
+    activity: {
+      title: "Tu propia fórmula",
+      steps: [
+        "Inventa una regla cotidiana con un número que cambia (p. ej. 'el precio son 2 € por kg más 1 € de envío').",
+        "Escríbela como expresión con una variable.",
+        "Evalúala para tres valores distintos y comprueba que tiene sentido.",
+      ],
+    },
+    selfCheck: [
+      "Traduzco un enunciado a una expresión con variable.",
+      "Evalúo una expresión sustituyendo con paréntesis.",
+      "Entiendo que la variable representa cualquier valor.",
+    ],
+    summary: [
+      "Una variable es un hueco para cualquier número.",
+      "Una expresión describe infinitos casos a la vez.",
+      "Evaluar = sustituir (con paréntesis) y calcular.",
+    ],
+  },
+
+  "mat-ecuaciones": {
+    intro:
+      "Una ecuación es una balanza en equilibrio: lo que hay a la izquierda del '=' pesa lo mismo que lo de la derecha. Resolverla es descubrir el valor de x que mantiene la balanza equilibrada. Y la regla de oro es una sola: lo que le hagas a un lado, hazlo también al otro.",
+    goal: "resolver ecuaciones lineales con una incógnita y comprobar la solución.",
+    sections: [
+      {
+        h: "La balanza",
+        tldr: "Para no romper el equilibrio, aplica la MISMA operación a ambos lados.",
+        code: "2x + 3 = 11\n2x + 3 − 3 = 11 − 3      (resto 3 en los dos lados)\n2x = 8\n2x ÷ 2 = 8 ÷ 2          (divido por 2 en los dos lados)\nx = 4",
+        body: [
+          "El objetivo es dejar la x sola. Vas 'deshaciendo' lo que la acompaña, siempre haciendo lo mismo a los dos lados.",
+        ],
+      },
+      {
+        h: "Comprobar es gratis (y obligatorio)",
+        tldr: "Sustituye tu solución en la ecuación original: debe cumplirse.",
+        code: "x = 4  →  2·(4) + 3 = 8 + 3 = 11 ✔",
+        tip: "El truco de 'pasar al otro lado cambiando el signo' es solo un atajo de esta idea. Si te lías con los signos, vuelve a la balanza: sumar/restar/dividir a ambos lados nunca falla.",
+      },
+    ],
+    practice: [
+      {
+        kind: "fill",
+        q: "Resuelve 2x + 3 = 11. x = ___",
+        accept: ["4"],
+        hint: "Resta 3 a ambos lados, luego divide entre 2.",
+        why: "2x = 8 → x = 4.",
+      },
+      {
+        kind: "fill",
+        q: "Resuelve 3x − 5 = 10. x = ___",
+        accept: ["5"],
+        hint: "Suma 5 a ambos lados, luego divide entre 3.",
+        why: "3x = 15 → x = 5.",
+      },
+      {
+        kind: "order",
+        q: "Ordena los pasos para resolver 2x + 3 = 11:",
+        items: [
+          "Restar 3 a ambos lados → 2x = 8",
+          "Dividir ambos lados entre 2 → x = 4",
+          "Comprobar: 2·4 + 3 = 11 ✔",
+        ],
+        why: "Aísla la x deshaciendo operaciones a ambos lados, y comprueba.",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuál es la regla de oro al resolver una ecuación?",
+        options: [
+          "hacer lo que sea con tal de despejar la x",
+          "aplicar la misma operación a ambos lados",
+          "mover números de lado libremente",
+        ],
+        answer: 1,
+        why: "Solo así se mantiene el equilibrio de la balanza.",
+      },
+    ],
+    activity: {
+      title: "De problema a ecuación",
+      steps: [
+        "Piensa un problema tipo 'pienso un número, lo multiplico por 3, le quito 5 y obtengo 10'.",
+        "Escríbelo como ecuación (3x − 5 = 10).",
+        "Resuélvelo con la balanza y comprueba el resultado en el enunciado original.",
+      ],
+    },
+    selfCheck: [
+      "Aíslo la x aplicando la misma operación a ambos lados.",
+      "Resuelvo ecuaciones lineales sencillas.",
+      "Compruebo mi solución en la ecuación original.",
+    ],
+    summary: [
+      "Una ecuación es una balanza en equilibrio.",
+      "Regla de oro: la misma operación a ambos lados.",
+      "Comprobar sustituyendo es rápido y obligatorio.",
+    ],
+  },
+
+  "mat-sistemas": {
+    intro:
+      "A veces un problema tiene dos incógnitas y una sola ecuación no basta. Si tienes DOS pistas (dos ecuaciones), puedes descubrir ambos valores. Geométricamente, buscas el único punto donde dos rectas se cruzan.",
+    goal: "resolver un sistema lineal 2×2 por sustitución.",
+    sections: [
+      {
+        h: "Dos pistas, dos incógnitas",
+        tldr: "Cada ecuación es una condición; juntas fijan un único par (x, y).",
+        code: "x + y = 10\nx − y = 2",
+        body: [
+          "Por separado, cada ecuación tiene infinitas soluciones. Juntas, normalmente solo hay UN par que cumple las dos a la vez.",
+        ],
+      },
+      {
+        h: "Método de sustitución",
+        tldr: "Despeja una variable en una ecuación y métela en la otra.",
+        code: "De la 1ª:  x = 10 − y\nEn la 2ª:  (10 − y) − y = 2\n           10 − 2y = 2  →  2y = 8  →  y = 4\nVuelvo:    x = 10 − 4 = 6\nSolución:  x = 6, y = 4",
+        tip: "El error más común es resolver una ecuación y olvidar la otra. Un sistema no está resuelto hasta que tienes AMBOS valores y compruebas que cumplen las DOS ecuaciones.",
+      },
+    ],
+    practice: [
+      {
+        kind: "fill",
+        q: "En el sistema x+y=10, x−y=2, ¿cuánto vale x?",
+        accept: ["6"],
+        hint: "Suma las dos ecuaciones: 2x = 12.",
+        why: "x = 6 (y = 4).",
+      },
+      {
+        kind: "fill",
+        q: "En el mismo sistema, ¿cuánto vale y?",
+        accept: ["4"],
+        hint: "y = 10 − x.",
+        why: "y = 4.",
+      },
+      {
+        kind: "choice",
+        q: "Geométricamente, la solución de un sistema 2×2 es…",
+        options: [
+          "el punto donde se cruzan las dos rectas",
+          "cualquier punto de una recta",
+          "el origen (0,0) siempre",
+        ],
+        answer: 0,
+        why: "Cada ecuación es una recta; la solución es su intersección.",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuándo está resuelto un sistema?",
+        options: [
+          "cuando encuentras una de las dos incógnitas",
+          "cuando tienes ambas y cumplen las dos ecuaciones",
+          "cuando despejas una ecuación",
+        ],
+        answer: 1,
+        why: "Hacen falta ambos valores y que satisfagan las dos ecuaciones.",
+      },
+    ],
+    activity: {
+      title: "El problema de las dos pistas",
+      steps: [
+        "Piensa: 'entre dos números suman 10 y se diferencian en 2'.",
+        "Escríbelo como sistema y resuélvelo por sustitución.",
+        "Comprueba que tu par (x, y) cumple LAS DOS ecuaciones.",
+      ],
+    },
+    selfCheck: [
+      "Planteo un sistema 2×2 desde un problema.",
+      "Lo resuelvo por sustitución.",
+      "Compruebo ambos valores en las dos ecuaciones.",
+    ],
+    summary: [
+      "Dos incógnitas necesitan dos ecuaciones (dos pistas).",
+      "Sustitución: despeja en una, mete en la otra.",
+      "La solución es el cruce de dos rectas.",
+    ],
+  },
+
+  "mat-cuadraticas": {
+    intro:
+      "Cuando aparece una x² (una pelota que sube y baja, el área de un terreno que crece con el lado), ya no basta el álgebra lineal. Las ecuaciones cuadráticas suelen tener DOS soluciones, y eso tiene una razón visual preciosa: una parábola cruza el eje en dos puntos.",
+    goal: "resolver ecuaciones de segundo grado y entender por qué hay (a menudo) dos soluciones.",
+    sections: [
+      {
+        h: "Factorizar: buscar dos números",
+        tldr: "x² − 5x + 6 = 0 se rompe en (x − 2)(x − 3) = 0.",
+        code: "x² − 5x + 6 = 0\nBusco dos números que SUMEN 5 y MULTIPLIQUEN 6 → 2 y 3\n(x − 2)(x − 3) = 0\nUn producto es 0 si un factor es 0:\nx = 2   o   x = 3",
+        body: [
+          "La clave es que si dos cosas multiplicadas dan 0, al menos una es 0. Por eso de (x−2)(x−3)=0 salen dos soluciones.",
+        ],
+      },
+      {
+        h: "La fórmula general (cuando no factoriza fácil)",
+        tldr: "Siempre funciona: el ± es el que da las dos soluciones.",
+        code: "ax² + bx + c = 0\nx = ( −b ± √(b² − 4ac) ) / (2a)\n\nEl ± (más y menos) produce las DOS soluciones.",
+        tip: "El olvido más típico es quedarse con UNA solución. El ± no es decorativo: casi siempre hay dos. Visualmente, son los dos puntos donde la parábola corta el eje x.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Cuáles son las soluciones de x² − 5x + 6 = 0?",
+        options: ["x = 2 y x = 3", "x = 5 y x = 6", "x = 1 y x = 6"],
+        answer: 0,
+        why: "Factoriza como (x−2)(x−3)=0; 2 y 3 suman 5 y multiplican 6.",
+      },
+      {
+        kind: "fill",
+        q: "Dos números suman 5 y multiplican 6. Escribe el menor.",
+        accept: ["2"],
+        hint: "2 y 3.",
+        why: "2 y 3: 2+3=5, 2·3=6.",
+      },
+      {
+        kind: "choice",
+        q: "¿Por qué una cuadrática suele tener dos soluciones?",
+        options: [
+          "por error de cálculo",
+          "porque una parábola corta el eje x en dos puntos",
+          "porque x² siempre es positivo",
+        ],
+        answer: 1,
+        why: "Las soluciones son los cortes de la parábola con el eje x.",
+      },
+      {
+        kind: "choice",
+        q: "En la fórmula general, ¿qué produce las dos soluciones?",
+        options: ["el signo ±", "el 2a del denominador", "el cuadrado de b"],
+        answer: 0,
+        why: "El ± genera una solución con + y otra con −.",
+      },
+    ],
+    activity: {
+      title: "Caza de raíces",
+      steps: [
+        "Toma x² − 7x + 10 = 0 y factorízala buscando dos números que sumen 7 y multipliquen 10.",
+        "Escribe las dos soluciones.",
+        "Reto: en Desmos, grafica y = x² − 7x + 10 y comprueba que corta el eje x justo en tus soluciones.",
+      ],
+    },
+    selfCheck: [
+      "Resuelvo cuadráticas sencillas por factorización.",
+      "Sé que el ± da las dos soluciones.",
+      "Relaciono las soluciones con los cortes de la parábola.",
+    ],
+    summary: [
+      "Con x² aparecen (casi siempre) DOS soluciones.",
+      "Factorizar: dos números que sumen b y multipliquen c.",
+      "Un producto es 0 si un factor es 0.",
+      "Las soluciones son donde la parábola corta el eje x.",
+    ],
+  },
+
+  // ─────────────────────── Geometría y medida ───────────────────────
+  "mat-figuras": {
+    intro:
+      "La geometría empezó midiendo la tierra (geo = tierra, metría = medida). Antes de medir, hay que nombrar: puntos, rectas, ángulos y figuras. Este vocabulario es la base para todo lo demás, desde el área hasta la trigonometría.",
+    goal: "reconocer y clasificar ángulos y figuras planas básicas.",
+    sections: [
+      {
+        h: "Ángulos: cuánto giras",
+        tldr: "Un ángulo mide la abertura entre dos rectas, en grados.",
+        code: "Recto  = 90°   (esquina de un folio)\nAgudo  < 90°   (puntiagudo)\nObtuso > 90°   (abierto)\nLlano  = 180°  (línea recta)",
+        body: [
+          "Piensa el ángulo como un giro: 90° es un cuarto de vuelta; 180°, media vuelta; 360°, la vuelta completa.",
+        ],
+      },
+      {
+        h: "Triángulos: por lados y por ángulos",
+        tldr: "Se clasifican de dos formas complementarias.",
+        compare: {
+          left: {
+            title: "Por sus lados",
+            points: ["Equilátero: 3 lados iguales", "Isósceles: 2 iguales", "Escaleno: los 3 distintos"],
+          },
+          right: {
+            title: "Por sus ángulos",
+            points: ["Rectángulo: uno de 90°", "Acutángulo: los 3 agudos", "Obtusángulo: uno obtuso"],
+          },
+          note: "Dato clave: los tres ángulos de cualquier triángulo suman siempre 180°.",
+        },
+        tip: "Los ángulos de un triángulo SIEMPRE suman 180°. Si conoces dos, el tercero sale restando: 180 − (a + b).",
+      },
+    ],
+    practice: [
+      {
+        kind: "match",
+        q: "Empareja cada ángulo con su tipo:",
+        pairs: [
+          { left: "90°", right: "Recto" },
+          { left: "45°", right: "Agudo" },
+          { left: "120°", right: "Obtuso" },
+        ],
+        why: "Recto = 90°, agudo < 90°, obtuso > 90°.",
+      },
+      {
+        kind: "fill",
+        q: "Dos ángulos de un triángulo miden 60° y 70°. ¿Cuánto mide el tercero?",
+        accept: ["50", "50°"],
+        hint: "Suman 180°.",
+        why: "180 − (60 + 70) = 50°.",
+      },
+      {
+        kind: "choice",
+        q: "Un triángulo con los tres lados iguales es…",
+        options: ["escaleno", "isósceles", "equilátero"],
+        answer: 2,
+        why: "Equilátero = tres lados (y tres ángulos) iguales.",
+      },
+    ],
+    activity: {
+      title: "Caza de ángulos",
+      steps: [
+        "Busca en tu habitación 3 ángulos: uno recto, uno agudo y uno obtuso.",
+        "Dibuja un triángulo, mide dos ángulos y predice el tercero antes de medirlo.",
+        "Clasifica ese triángulo por sus lados y por sus ángulos.",
+      ],
+    },
+    selfCheck: [
+      "Clasifico ángulos en recto, agudo y obtuso.",
+      "Uso que los ángulos de un triángulo suman 180°.",
+      "Clasifico triángulos por lados y por ángulos.",
+    ],
+    summary: [
+      "Un ángulo mide un giro, en grados.",
+      "Recto 90°, agudo <90°, obtuso >90°.",
+      "Los ángulos de todo triángulo suman 180°.",
+    ],
+  },
+
+  "mat-perimetro-area": {
+    intro:
+      "Dos preguntas distintas confunden a mucha gente: ¿cuánto mide el borde? (perímetro) y ¿cuánto espacio ocupa la superficie? (área). Vallar un terreno usa perímetro; sembrarlo usa área. Distinguirlas es la mitad del trabajo.",
+    goal: "calcular perímetros y áreas de figuras básicas, sin confundir ambos conceptos.",
+    sections: [
+      {
+        h: "Perímetro vs. área",
+        tldr: "Perímetro = contorno (se mide en cm). Área = superficie (en cm²).",
+        compare: {
+          left: {
+            title: "Perímetro",
+            points: ["Suma de los lados", "Longitud del borde", "Unidad: cm, m…"],
+          },
+          right: {
+            title: "Área",
+            points: ["Cuántos cuadraditos caben", "Superficie interior", "Unidad: cm², m² (¡al cuadrado!)"],
+          },
+          note: "Pista para no confundir: el área se mide en unidades AL CUADRADO (cm²) porque cubre dos dimensiones.",
+        },
+      },
+      {
+        h: "Las fórmulas, con intuición",
+        tldr: "El área del rectángulo es contar filas × columnas de cuadraditos.",
+        code: "Rectángulo:  área = base × altura   perímetro = 2·(base + altura)\nTriángulo:   área = base × altura / 2   (medio rectángulo)",
+        tip: "El área del triángulo es la mitad de la del rectángulo que lo contiene: por eso se divide entre 2. No la memorices suelta; visualiza el rectángulo.",
+      },
+    ],
+    practice: [
+      {
+        kind: "fill",
+        q: "Área de un rectángulo de base 4 y altura 3 (en unidades²).",
+        accept: ["12"],
+        hint: "base × altura.",
+        why: "4 × 3 = 12: caben 12 cuadraditos.",
+      },
+      {
+        kind: "fill",
+        q: "Perímetro de ese mismo rectángulo (base 4, altura 3).",
+        accept: ["14"],
+        hint: "2·(4 + 3).",
+        why: "2·(4+3) = 14: la longitud del borde.",
+      },
+      {
+        kind: "choice",
+        q: "Para saber cuánta valla necesitas para un jardín, calculas…",
+        options: ["el área", "el perímetro", "la diagonal"],
+        answer: 1,
+        why: "La valla rodea el borde: es el perímetro.",
+      },
+      {
+        kind: "fill",
+        q: "Área de un triángulo de base 6 y altura 4.",
+        accept: ["12"],
+        hint: "base × altura / 2.",
+        why: "6 × 4 / 2 = 12 (medio rectángulo).",
+      },
+    ],
+    activity: {
+      title: "Mide tu habitación",
+      steps: [
+        "Mide el largo y el ancho de una mesa o habitación.",
+        "Calcula su área (para saber cuánto suelo/mantel cubre) y su perímetro (para un zócalo o borde).",
+        "Comprueba que usas cm² para el área y cm para el perímetro.",
+      ],
+    },
+    selfCheck: [
+      "Distingo perímetro (borde) de área (superficie).",
+      "Calculo área y perímetro de rectángulos y triángulos.",
+      "Uso unidades al cuadrado para el área.",
+    ],
+    summary: [
+      "Perímetro = contorno (cm). Área = superficie (cm²).",
+      "Rectángulo: área = base × altura.",
+      "Triángulo: medio rectángulo → base × altura / 2.",
+    ],
+  },
+
+  "mat-pitagoras": {
+    intro:
+      "Uno de los teoremas más famosos y útiles de la historia. En cualquier triángulo rectángulo, los tres lados están atados por una relación exacta: a² + b² = c². Con él calculas distancias que no puedes medir directamente, desde una escalera apoyada en la pared hasta la diagonal de una pantalla.",
+    goal: "aplicar el teorema de Pitágoras para hallar un lado desconocido.",
+    sections: [
+      {
+        h: "La relación mágica",
+        tldr: "El cuadrado de la hipotenusa = suma de los cuadrados de los catetos.",
+        code: "Solo en triángulos RECTÁNGULOS (uno de 90°):\n a² + b² = c²\n a, b = catetos (los que forman el ángulo recto)\n c    = hipotenusa (el lado más largo, frente al ángulo recto)",
+        body: [
+          "La hipotenusa es siempre el lado más largo y está enfrente del ángulo de 90°. Los catetos son los dos que forman esa esquina.",
+        ],
+      },
+      {
+        h: "El ejemplo clásico 3-4-5",
+        tldr: "Catetos 3 y 4 → hipotenusa 5.",
+        code: "c² = 3² + 4² = 9 + 16 = 25\nc = √25 = 5",
+        tip: "Solo funciona en triángulos rectángulos. Aplicarlo en uno que no lo es es el error más frecuente: primero comprueba que hay un ángulo de 90°.",
+      },
+    ],
+    practice: [
+      {
+        kind: "fill",
+        q: "Catetos 3 y 4. ¿Cuánto mide la hipotenusa?",
+        accept: ["5"],
+        hint: "√(3² + 4²).",
+        why: "√(9+16) = √25 = 5.",
+      },
+      {
+        kind: "choice",
+        q: "¿En qué triángulos se puede aplicar Pitágoras?",
+        options: ["en todos", "solo en los rectángulos (uno de 90°)", "solo en los equiláteros"],
+        answer: 1,
+        why: "El teorema exige un ángulo recto.",
+      },
+      {
+        kind: "choice",
+        q: "La hipotenusa es…",
+        options: [
+          "el lado más corto",
+          "el lado más largo, frente al ángulo recto",
+          "cualquiera de los catetos",
+        ],
+        answer: 1,
+        why: "Es el lado más largo y está enfrente del ángulo de 90°.",
+      },
+      {
+        kind: "fill",
+        q: "Catetos 6 y 8. ¿Hipotenusa?",
+        accept: ["10"],
+        hint: "√(36 + 64).",
+        why: "√100 = 10 (es un 3-4-5 escalado por 2).",
+      },
+    ],
+    activity: {
+      title: "La escalera",
+      steps: [
+        "Una escalera de 5 m se apoya con la base a 3 m de la pared. ¿A qué altura llega? (usa Pitágoras).",
+        "Mide la diagonal de una hoja o pantalla y verifica con Pitágoras usando sus lados.",
+        "Reto: comprueba si un triángulo de lados 5, 6, 7 es rectángulo (¿se cumple a²+b²=c²?).",
+      ],
+    },
+    selfCheck: [
+      "Identifico catetos e hipotenusa.",
+      "Hallo la hipotenusa con a² + b² = c².",
+      "Sé que solo aplica en triángulos rectángulos.",
+    ],
+    summary: [
+      "En triángulos rectángulos: a² + b² = c².",
+      "La hipotenusa es el lado más largo (frente al ángulo recto).",
+      "Sirve para medir distancias imposibles de medir directamente.",
+    ],
+  },
+
+  // ─────────────────────── Funciones y gráficas ───────────────────────
+  "mat-plano": {
+    intro:
+      "¿Cómo unir el álgebra (números y letras) con la geometría (figuras)? Con una idea genial de Descartes: dar a cada punto del papel una 'dirección' con dos números, (x, y). El plano cartesiano es el mapa donde las ecuaciones se vuelven dibujos.",
+    goal: "representar y leer puntos en el plano usando coordenadas.",
+    sections: [
+      {
+        h: "Dos números, una dirección",
+        tldr: "(x, y): primero cuánto a la derecha, luego cuánto hacia arriba.",
+        code: "(3, 2)  →  3 a la derecha, 2 arriba\n(-2, 1) →  2 a la izquierda, 1 arriba\n(0, 0)  →  el origen (centro)",
+        body: [
+          "El primer número (x) es horizontal; el segundo (y), vertical. El orden importa: (3, 2) y (2, 3) son puntos distintos.",
+        ],
+      },
+      {
+        h: "Cuatro cuadrantes",
+        tldr: "Los ejes dividen el plano en cuatro zonas según los signos.",
+        examples: [
+          { text: "(3, 2)", mono: "x>0, y>0", sub: "Arriba a la derecha (cuadrante I)." },
+          { text: "(-2, -1)", mono: "x<0, y<0", sub: "Abajo a la izquierda (cuadrante III)." },
+        ],
+        tip: "El error casi universal es invertir el orden. Repite el mantra: 'primero camino (x), luego subo (y)'. Como leer: de izquierda a derecha, luego de abajo arriba.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En el punto (3, -2), ¿qué significa el 3?",
+        options: ["3 hacia arriba", "3 a la derecha", "3 hacia abajo"],
+        answer: 1,
+        why: "El primer número (x) es el movimiento horizontal: 3 a la derecha.",
+      },
+      {
+        kind: "choice",
+        q: "¿Son (3, 2) y (2, 3) el mismo punto?",
+        options: ["sí", "no, el orden importa", "solo si son positivos"],
+        answer: 1,
+        why: "(x, y) es ordenado: (3,2) ≠ (2,3).",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada punto con su posición:",
+        pairs: [
+          { left: "(0, 0)", right: "El origen" },
+          { left: "(4, 0)", right: "Sobre el eje horizontal" },
+          { left: "(0, 3)", right: "Sobre el eje vertical" },
+        ],
+        why: "Si y=0 estás en el eje x; si x=0, en el eje y; (0,0) es el origen.",
+      },
+    ],
+    activity: {
+      title: "Batalla naval",
+      steps: [
+        "Dibuja unos ejes y marca 5 puntos que te dicte alguien en formato (x, y).",
+        "Ahora tú dicta 5 puntos y que los marque otra persona.",
+        "Comparad: los errores casi siempre son por invertir x e y.",
+      ],
+    },
+    selfCheck: [
+      "Sitúo un punto dado por sus coordenadas.",
+      "Leo las coordenadas de un punto del plano.",
+      "No invierto el orden (x, y).",
+    ],
+    summary: [
+      "Cada punto tiene una dirección: (x, y).",
+      "x = horizontal, y = vertical; el orden importa.",
+      "El plano une álgebra y geometría.",
+    ],
+  },
+
+  "mat-funciones-intro": {
+    intro:
+      "La función es la idea más importante de las matemáticas modernas. Piénsala como una MÁQUINA: metes un número, y sale exactamente uno. Mete 3 en la máquina 'x2', sale 6. La única regla sagrada: una misma entrada no puede dar dos salidas distintas.",
+    goal: "entender el concepto de función y reconocer cuándo una relación lo es.",
+    sections: [
+      {
+        h: "Una máquina: entrada → salida",
+        tldr: "A cada entrada le corresponde UNA única salida.",
+        code: "f(x) = 2x + 1\nf(0) = 1     (metes 0, sale 1)\nf(3) = 7     (metes 3, sale 7)\nf(-1) = -1   (metes -1, sale -1)",
+        body: [
+          "f(x) se lee 'f de x'. Es el nombre de la máquina (f) aplicada a la entrada (x). El resultado es la salida.",
+        ],
+      },
+      {
+        h: "La regla sagrada y cómo verla",
+        tldr: "Una entrada, una salida. En la gráfica: la prueba de la recta vertical.",
+        body: [
+          "Si dibujas la relación y una recta vertical la corta en dos puntos, NO es función: esa entrada tendría dos salidas.",
+        ],
+        tip: "Ejemplo cotidiano: 'a cada persona le corresponde una única fecha de nacimiento' es una función. 'A cada fecha, las personas nacidas ese día' NO lo es (una entrada, muchas salidas).",
+      },
+    ],
+    practice: [
+      {
+        kind: "fill",
+        q: "Si f(x) = 2x + 1, ¿cuánto vale f(3)?",
+        accept: ["7"],
+        hint: "2·3 + 1.",
+        why: "f(3) = 2·3 + 1 = 7.",
+      },
+      {
+        kind: "choice",
+        q: "¿Cuál es la regla que define a una función?",
+        options: [
+          "a cada entrada le corresponde una única salida",
+          "todas las salidas son distintas",
+          "solo admite números positivos",
+        ],
+        answer: 0,
+        why: "Una entrada → exactamente una salida.",
+      },
+      {
+        kind: "choice",
+        q: "En una gráfica, una relación NO es función si…",
+        options: [
+          "una recta horizontal la corta dos veces",
+          "una recta vertical la corta dos veces",
+          "pasa por el origen",
+        ],
+        answer: 1,
+        why: "La prueba de la recta vertical: dos cortes = una entrada con dos salidas.",
+      },
+      {
+        kind: "fill",
+        q: "Con f(x) = 2x + 1, ¿cuánto vale f(0)?",
+        accept: ["1"],
+        hint: "2·0 + 1.",
+        why: "f(0) = 1.",
+      },
+    ],
+    activity: {
+      title: "¿Función o no?",
+      steps: [
+        "Escribe la máquina f(x) = 3x − 2 y evalúala en x = 0, 1, 2, -1.",
+        "Piensa dos relaciones de tu vida: una que sea función (cada alumno → su nota final) y una que no.",
+        "Reto: en Desmos grafica f(x) = 3x − 2 y comprueba que ninguna vertical la corta dos veces.",
+      ],
+    },
+    selfCheck: [
+      "Evalúo f(x) en varios valores.",
+      "Enuncio la regla 'una entrada, una salida'.",
+      "Aplico la prueba de la recta vertical.",
+    ],
+    summary: [
+      "Una función es una máquina: entrada → una única salida.",
+      "f(x) se lee 'f de x'.",
+      "Prueba de la recta vertical: si corta dos veces, no es función.",
+    ],
+  },
+
+  "mat-lineales": {
+    intro:
+      "La función lineal modela todo lo que cambia a ritmo constante: una tarifa de taxi, la conversión de monedas, la distancia a velocidad fija. Su gráfica es una recta, y solo necesitas entender dos números para dominarla: dónde empieza y cuánto sube.",
+    goal: "interpretar y graficar funciones lineales (y = mx + b).",
+    sections: [
+      {
+        h: "Los dos números que lo dicen todo",
+        tldr: "b = dónde empieza (corte con el eje y). m = cuánto sube por paso (pendiente).",
+        code: "y = m·x + b\n         │    └── b: valor cuando x = 0 (punto de partida)\n         └── m: pendiente (cuánto cambia y por cada +1 en x)",
+        examples: [
+          { text: "Taxi: 3 € de bajada + 2 €/km", mono: "y = 2x + 3", sub: "b = 3 (bajada), m = 2 (por km)." },
+        ],
+      },
+      {
+        h: "La pendiente es el ritmo de cambio",
+        tldr: "m grande = recta empinada; m negativa = baja.",
+        code: "y = 2x + 1\nx: 0  1  2  3\ny: 1  3  5  7   ← sube 2 cada paso (pendiente 2)",
+        tip: "No confundas m con b. Truco: b es el 'sueldo base' (lo que hay en x=0) y m es 'cuánto ganas por hora' (lo que se suma por cada paso).",
+      },
+    ],
+    practice: [
+      {
+        kind: "match",
+        q: "En y = 2x + 3, empareja cada número con su significado:",
+        pairs: [
+          { left: "2 (m)", right: "Pendiente: cuánto sube por paso" },
+          { left: "3 (b)", right: "Punto de partida (x = 0)" },
+        ],
+        why: "m = pendiente, b = corte con el eje y.",
+      },
+      {
+        kind: "fill",
+        q: "En y = 2x + 3, ¿cuánto vale y cuando x = 0?",
+        accept: ["3"],
+        hint: "Ese es el término independiente b.",
+        why: "y = 2·0 + 3 = 3 (el corte con el eje y).",
+      },
+      {
+        kind: "choice",
+        q: "Una recta que BAJA de izquierda a derecha tiene pendiente…",
+        options: ["positiva", "negativa", "cero"],
+        answer: 1,
+        why: "Pendiente negativa = y disminuye al aumentar x.",
+      },
+      {
+        kind: "fill",
+        q: "Taxi: 3 € de bajada + 2 €/km. ¿Cuánto cuesta un viaje de 5 km? (en €)",
+        accept: ["13"],
+        hint: "y = 2·5 + 3.",
+        why: "2·5 + 3 = 13 €.",
+      },
+    ],
+    activity: {
+      title: "Modela una tarifa",
+      steps: [
+        "Piensa una tarifa real (móvil, taxi, gimnasio) con una parte fija y una por uso.",
+        "Escríbela como y = mx + b e identifica m y b.",
+        "Reto: en Desmos grafica dos tarifas y encuentra a partir de cuántos usos una es más barata que la otra.",
+      ],
+    },
+    selfCheck: [
+      "Identifico pendiente (m) e intersección (b).",
+      "Evalúo y grafico una recta.",
+      "Interpreto la pendiente como ritmo de cambio.",
+    ],
+    summary: [
+      "Función lineal: y = mx + b (una recta).",
+      "b = punto de partida; m = pendiente (ritmo de cambio).",
+      "Modela todo cambio a ritmo constante.",
+    ],
+  },
+
+  // ─────────────────── Estadística y probabilidad ───────────────────
+  "mat-estadistica": {
+    intro:
+      "Vivimos rodeados de datos: notas, precios, encuestas. La estadística descriptiva los resume en pocos números que capturan 'lo típico'. Pero cuidado: un mal resumen puede mentir. Entender media, mediana y moda es alfabetización básica del siglo XXI.",
+    goal: "calcular e interpretar media, mediana y moda, y elegir la más representativa.",
+    sections: [
+      {
+        h: "Tres formas de decir 'lo típico'",
+        tldr: "Media = promedio; mediana = el del medio; moda = el que más se repite.",
+        code: "Datos: 2, 4, 6, 8, 10\nMedia   = (2+4+6+8+10) / 5 = 6\nMediana = 6   (el valor central al ordenar)\nModa    = ninguna se repite",
+        body: [
+          "Para la mediana, primero ORDENA los datos y toma el del centro. Si hay dos centrales, promédialos.",
+        ],
+      },
+      {
+        h: "Cuándo la media engaña",
+        tldr: "Un valor extremo (outlier) dispara la media; la mediana resiste.",
+        code: "Sueldos: 1000, 1100, 1200, 1300, 20000\nMedia   = 4920  (¡nadie cobra eso!)\nMediana = 1200  (mucho más representativa)",
+        tip: "Ante valores extremos (una casa carísima en un barrio, un sueldo de un jefe), la mediana describe mejor 'lo normal' que la media. Por eso se habla de sueldo MEDIANO.",
+      },
+    ],
+    practice: [
+      {
+        kind: "fill",
+        q: "Media de 4, 8, 6, 10, 2.",
+        accept: ["6"],
+        hint: "Suma y divide entre 5.",
+        why: "(4+8+6+10+2)/5 = 30/5 = 6.",
+      },
+      {
+        kind: "fill",
+        q: "Mediana de 3, 1, 4, 1, 5 (ordénalos primero).",
+        accept: ["3"],
+        hint: "Ordenados: 1,1,3,4,5. El del centro.",
+        why: "Ordenados, el central es 3.",
+      },
+      {
+        kind: "choice",
+        q: "Con un valor extremo muy alto, ¿qué medida representa mejor 'lo típico'?",
+        options: ["la media", "la mediana", "la moda"],
+        answer: 1,
+        why: "La mediana resiste a los valores extremos; la media se dispara.",
+      },
+      {
+        kind: "choice",
+        q: "La moda es…",
+        options: ["el promedio", "el valor que más se repite", "el valor central"],
+        answer: 1,
+        why: "Moda = el dato más frecuente.",
+      },
+    ],
+    activity: {
+      title: "Tus datos",
+      steps: [
+        "Reúne 8 datos reales (tus notas, horas de sueño de una semana, precios).",
+        "Calcula media, mediana y moda.",
+        "¿Hay algún valor extremo? Decide qué medida describe mejor tu conjunto y explica por qué.",
+      ],
+    },
+    selfCheck: [
+      "Calculo media, mediana y moda.",
+      "Ordeno antes de hallar la mediana.",
+      "Elijo la medida más representativa según los datos.",
+    ],
+    summary: [
+      "Media = promedio; mediana = central; moda = más frecuente.",
+      "Para la mediana, ordena primero.",
+      "Con valores extremos, la mediana es más honesta que la media.",
+    ],
+  },
+
+  "mat-probabilidad": {
+    intro:
+      "La probabilidad pone número a la incertidumbre: mide cuán posible es algo, de 0 (imposible) a 1 (seguro). Es la base para decidir con riesgo: seguros, juegos, medicina, IA. Y esconde trampas para la intuición que conviene desactivar pronto.",
+    goal: "calcular la probabilidad de sucesos simples y evitar la falacia del jugador.",
+    sections: [
+      {
+        h: "Casos favorables entre posibles",
+        tldr: "P = favorables / posibles (cuando todos son igual de probables).",
+        code: "Dado de 6 caras, sacar par (2, 4, 6):\nP = 3 favorables / 6 posibles = 3/6 = 1/2 = 0,5",
+        body: [
+          "La probabilidad va de 0 a 1. También se expresa en % (0,5 = 50%). 0 = imposible; 1 = seguro.",
+        ],
+      },
+      {
+        h: "La trampa del jugador",
+        tldr: "Una moneda no 'debe' cara tras 5 cruces: no tiene memoria.",
+        tip: "Cada lanzamiento independiente vuelve a empezar: la probabilidad de cara sigue siendo 1/2, hayan salido 5 cruces o 50. Creer que 'ya toca' es la falacia del jugador, y arruina a mucha gente.",
+      },
+    ],
+    practice: [
+      {
+        kind: "fill",
+        q: "Probabilidad de sacar par en un dado de 6 caras (como fracción a/b).",
+        accept: ["3/6", "1/2"],
+        hint: "Pares: 2, 4, 6.",
+        why: "3 favorables / 6 posibles = 1/2.",
+      },
+      {
+        kind: "choice",
+        q: "Una probabilidad de 0 significa…",
+        options: ["seguro", "imposible", "50%"],
+        answer: 1,
+        why: "0 = imposible; 1 = seguro.",
+      },
+      {
+        kind: "choice",
+        q: "Han salido 5 cruces seguidas. ¿Qué probabilidad hay de cara ahora?",
+        options: ["mayor, 'ya toca'", "sigue siendo 1/2", "menor"],
+        answer: 1,
+        why: "Los lanzamientos son independientes: la moneda no tiene memoria.",
+      },
+      {
+        kind: "fill",
+        q: "Probabilidad de sacar un 3 en un dado (como fracción).",
+        accept: ["1/6"],
+        hint: "Un caso favorable de seis.",
+        why: "1 favorable / 6 posibles = 1/6.",
+      },
+    ],
+    activity: {
+      title: "Experimenta el azar",
+      steps: [
+        "Lanza una moneda 20 veces y anota caras y cruces.",
+        "Calcula la proporción de caras: ¿se acerca a 0,5? (cuantas más tiradas, más se acerca).",
+        "Reto: calcula la probabilidad de sacar suma 7 con dos dados (cuenta los casos favorables sobre 36).",
+      ],
+    },
+    selfCheck: [
+      "Calculo P = favorables / posibles.",
+      "Sé que la probabilidad va de 0 a 1.",
+      "No caigo en la falacia del jugador.",
+    ],
+    summary: [
+      "Probabilidad = favorables / posibles (de 0 a 1).",
+      "0 imposible, 1 seguro.",
+      "Los sucesos independientes no tienen memoria.",
+    ],
+  },
+
+  // ─────────────────────────────── Hito ───────────────────────────────
+  "hito-mat-intermedio": {
+    intro:
+      "Has dado el gran salto: de calcular con números concretos a generalizar con variables, y de la aritmética a medir el mundo. Este hito confirma que dominas fracciones/porcentajes, el lenguaje algebraico y la medida antes de entrar en funciones, cuadráticas y más allá.",
+    goal: "confirmar la transición de la aritmética al álgebra y la geometría.",
+    sections: [
+      {
+        h: "Lo que ya integras",
+        tldr: "Porcentajes, variables/ecuaciones y área/perímetro.",
+        bullets: [
+          "Resuelves porcentajes y proporciones en contextos reales.",
+          "Traduces problemas a expresiones y ecuaciones, y las resuelves con la balanza.",
+          "Mides figuras distinguiendo perímetro de área.",
+        ],
+      },
+      {
+        h: "Un problema que junta piezas",
+        tldr: "Los problemas reales mezclan varias competencias.",
+        code: "Una mesa rectangular mide 2 m × 1 m. Un mantel cuesta 8 €/m².\n1) Área: 2 × 1 = 2 m²\n2) Coste: 2 × 8 = 16 €\n3) Con 10% de descuento: 16 − 1,6 = 14,40 €",
+        tip: "Cuando un problema mezcla geometría, dinero y porcentajes, resuélvelo por pasos nombrados (como en Pólya). Así cada competencia hace su parte sin que te pierdas.",
+      },
+    ],
+    practice: [
+      {
+        kind: "fill",
+        q: "Un mantel para una mesa de 2 m × 1 m a 8 €/m². ¿Cuánto cuesta? (en €)",
+        accept: ["16"],
+        hint: "Área × precio por m².",
+        why: "Área 2 m² × 8 €/m² = 16 €.",
+      },
+      {
+        kind: "fill",
+        q: "Aplica un 10% de descuento a 16 €. Precio final (en €).",
+        accept: ["14,40", "14.40", "14,4", "14.4"],
+        hint: "16 − 1,6.",
+        why: "10% de 16 = 1,6; 16 − 1,6 = 14,40 €.",
+      },
+      {
+        kind: "fill",
+        q: "Resuelve 3x − 5 = 10. x = ___",
+        accept: ["5"],
+        hint: "Suma 5, divide entre 3.",
+        why: "3x = 15 → x = 5.",
+      },
+      {
+        kind: "order",
+        q: "Ordena para resolver el problema del mantel con descuento:",
+        items: [
+          "Calcular el área de la mesa",
+          "Multiplicar por el precio por m²",
+          "Aplicar el descuento del 10%",
+          "Revisar que el resultado tiene sentido",
+        ],
+        why: "Geometría → dinero → porcentaje → revisar (Pólya).",
+      },
+    ],
+    activity: {
+      title: "Reto intermedio",
+      steps: [
+        "Inventa un problema real que combine área, precio por unidad y un porcentaje (descuento o impuesto).",
+        "Resuélvelo por pasos nombrados.",
+        "Comprueba con una estimación rápida que el resultado es razonable.",
+      ],
+    },
+    selfCheck: [
+      "Combino geometría, porcentajes y álgebra en un problema.",
+      "Resuelvo ecuaciones lineales con soltura.",
+      "Trabajo por pasos nombrados y reviso el resultado.",
+    ],
+    summary: [
+      "Transición lograda: de la aritmética al álgebra y la medida.",
+      "Los problemas reales mezclan competencias: resuélvelos por pasos.",
+      "Listo para funciones, cuadráticas y geometría avanzada.",
+    ],
+  },
 };
