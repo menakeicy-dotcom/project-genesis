@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import { ArrowDown, ArrowUp, Check, Lightbulb, PartyPopper, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { RichText } from "./rich-text";
 import type { PracticeItem } from "./types";
 
 export function normalizeAnswer(s: string): string {
@@ -65,7 +66,11 @@ function Feedback({ correct, why, extra }: { correct: boolean; why?: string; ext
         )}
       </p>
       {extra && <p className="text-muted-foreground mt-1">{extra}</p>}
-      {why && <p className="text-muted-foreground mt-1">{why}</p>}
+      {why && (
+        <p className="text-muted-foreground mt-1">
+          <RichText text={why} />
+        </p>
+      )}
     </motion.div>
   );
 }
@@ -87,7 +92,9 @@ export function Exercise({
 
   return (
     <div className="space-y-4">
-      <p className="text-base font-medium">{item.q}</p>
+      <p className="text-base font-medium">
+        <RichText text={item.q} />
+      </p>
       {item.kind === "choice" && <ChoiceUI item={item} onGrade={grade} />}
       {item.kind === "fill" && <FillUI item={item} onGrade={grade} />}
       {item.kind === "order" && <OrderUI item={item} onGrade={grade} />}

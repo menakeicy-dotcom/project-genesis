@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { completeSkillAction } from "@/modules/progress/actions";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { viewExample } from "./types";
+import { RichText } from "./rich-text";
 import type { Lesson, LessonCompare, LessonExample, LessonSection, PracticeItem } from "./types";
 
 /** Baraja determinista y estable (rota una posición): evita depender de random. */
@@ -388,18 +389,20 @@ function LearnStep({ section }: { section: LessonSection }) {
       <h3 className="text-lg font-semibold">{section.h}</h3>
       {section.tldr && (
         <p className="border-primary/40 text-foreground border-l-2 pl-3 text-sm font-medium">
-          {section.tldr}
+          <RichText text={section.tldr} />
         </p>
       )}
       {section.body?.map((p, i) => (
         <p key={i} className="text-muted-foreground text-sm leading-relaxed">
-          {p}
+          <RichText text={p} />
         </p>
       ))}
       {section.bullets && section.bullets.length > 0 && (
         <ul className="text-muted-foreground list-disc space-y-1 pl-5 text-sm">
           {section.bullets.map((b, i) => (
-            <li key={i}>{b}</li>
+            <li key={i}>
+              <RichText text={b} />
+            </li>
           ))}
         </ul>
       )}
@@ -432,7 +435,9 @@ function LearnStep({ section }: { section: LessonSection }) {
       {section.tip && (
         <p className="flex gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-700 dark:text-amber-300">
           <Lightbulb className="mt-0.5 size-4 shrink-0" />
-          <span>{section.tip}</span>
+          <span>
+            <RichText text={section.tip} />
+          </span>
         </p>
       )}
     </div>
@@ -479,7 +484,9 @@ function ExerciseStep({
       <div className="text-muted-foreground flex items-center gap-2 text-xs font-semibold tracking-wide uppercase">
         <Target className="size-4" /> {KIND_LABEL[item.kind]}
       </div>
-      <p className="text-base font-medium">{item.q}</p>
+      <p className="text-base font-medium">
+        <RichText text={item.q} />
+      </p>
 
       {item.kind === "choice" && (
         <ChoiceUI item={item} ex={ex} pick={pick} setPick={setPick} onCorrect={onCorrect} />
@@ -854,7 +861,11 @@ function Feedback({
         )}
       </p>
       {extra && <p className="text-muted-foreground mt-1">{extra}</p>}
-      {why && <p className="text-muted-foreground mt-1">{why}</p>}
+      {why && (
+        <p className="text-muted-foreground mt-1">
+          <RichText text={why} />
+        </p>
+      )}
     </motion.div>
   );
 }
