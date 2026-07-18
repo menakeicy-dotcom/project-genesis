@@ -1930,4 +1930,386 @@ export const MAT_LESSONS: Record<string, Lesson> = {
       "Listo para funciones, cuadráticas y geometría avanzada.",
     ],
   },
+
+  // ─────────────────── Trigonometría y exponenciales ───────────────────
+  "mat-trigonometria": {
+    intro:
+      "¿Cómo se mide la altura de una montaña sin escalarla, o la distancia a una estrella? Con trigonometría. La idea es sorprendente: en un triángulo rectángulo, la relación entre sus lados solo depende de sus ángulos. Esas relaciones —seno, coseno y tangente— son la llave para medir lo inalcanzable.",
+    goal: "usar las razones trigonométricas para hallar lados y ángulos.",
+    sections: [
+      {
+        h: "Tres razones, un triángulo rectángulo",
+        tldr: "Seno, coseno y tangente son cocientes entre dos lados.",
+        code: "Respecto a un ángulo agudo θ:\nseno(θ)     = opuesto / hipotenusa\ncoseno(θ)   = adyacente / hipotenusa\ntangente(θ) = opuesto / adyacente",
+        body: [
+          "El lado OPUESTO está enfrente del ángulo θ; el ADYACENTE lo forma (junto a la hipotenusa). La hipotenusa es siempre el lado mayor.",
+        ],
+      },
+      {
+        h: "El truco 'SOH-CAH-TOA'",
+        tldr: "Un recordatorio: Seno-Opuesto-Hipotenusa, Coseno-Adyacente-Hipotenusa, Tangente-Opuesto-Adyacente.",
+        tip: "El error clásico es confundir opuesto y adyacente. Sitúate SIEMPRE desde el ángulo: el opuesto está 'enfrente', el adyacente 'te toca'. Marca el ángulo antes de escribir la razón.",
+      },
+    ],
+    practice: [
+      {
+        kind: "match",
+        q: "Empareja cada razón con su definición:",
+        pairs: [
+          { left: "seno", right: "opuesto / hipotenusa" },
+          { left: "coseno", right: "adyacente / hipotenusa" },
+          { left: "tangente", right: "opuesto / adyacente" },
+        ],
+        why: "SOH-CAH-TOA: la regla mnemotécnica clásica.",
+      },
+      {
+        kind: "choice",
+        q: "El lado 'opuesto' a un ángulo es el que está…",
+        options: ["enfrente del ángulo", "pegado al ángulo", "siempre abajo"],
+        answer: 0,
+        why: "El opuesto está enfrente; el adyacente forma el ángulo.",
+      },
+      {
+        kind: "fill",
+        q: "Si opuesto=3 e hipotenusa=5, ¿cuánto vale el seno? (fracción a/b)",
+        accept: ["3/5"],
+        hint: "seno = opuesto / hipotenusa.",
+        why: "seno = 3/5.",
+      },
+      {
+        kind: "choice",
+        q: "La trigonometría permite, por ejemplo…",
+        options: [
+          "medir una altura sin subir, usando un ángulo y una distancia",
+          "sumar fracciones",
+          "ordenar números",
+        ],
+        answer: 0,
+        why: "Con un ángulo y un lado, halla los demás: mide lo inalcanzable.",
+      },
+    ],
+    activity: {
+      title: "Mide sin medir",
+      steps: [
+        "Dibuja un triángulo rectángulo y marca un ángulo agudo θ.",
+        "Etiqueta opuesto, adyacente e hipotenusa RESPECTO a θ.",
+        "Reto: con una app o calculadora, si θ=30° y la hipotenusa=10, halla el opuesto (seno 30°=0,5).",
+      ],
+    },
+    selfCheck: [
+      "Identifico opuesto, adyacente e hipotenusa respecto a un ángulo.",
+      "Escribo seno, coseno y tangente (SOH-CAH-TOA).",
+      "Hallo un lado con una razón trigonométrica.",
+    ],
+    summary: [
+      "En un triángulo rectángulo, los lados se relacionan por el ángulo.",
+      "seno=O/H, coseno=A/H, tangente=O/A (SOH-CAH-TOA).",
+      "Sirve para medir alturas y distancias inalcanzables.",
+    ],
+  },
+
+  "mat-exponenciales": {
+    intro:
+      "Dobla un papel 42 veces y llegarías a la Luna. Suena imposible, pero es el poder del crecimiento exponencial: cuando algo se multiplica en vez de sumar, se dispara. Entenderlo explica el interés compuesto, las epidemias y por qué nuestra intuición (lineal) nos engaña.",
+    goal: "entender el crecimiento exponencial y el logaritmo como su inverso.",
+    sections: [
+      {
+        h: "Sumar vs. multiplicar",
+        tldr: "Lineal: sumas lo mismo cada paso. Exponencial: multiplicas cada paso.",
+        code: "Lineal (+3):      2 → 5 → 8 → 11 → 14\nExponencial (×3): 2 → 6 → 18 → 54 → 162  (¡se dispara!)",
+        body: [
+          "En lo exponencial, cuanto más grande es la cantidad, más rápido crece: cada paso multiplica al anterior. Por eso al principio parece lento y luego explota.",
+        ],
+      },
+      {
+        h: "El logaritmo deshace la potencia",
+        tldr: "log pregunta: ¿a qué exponente elevo la base para obtener este número?",
+        code: "2³ = 8     ↔     log₂(8) = 3\n(exponencial)      (logaritmo: su inversa)",
+        tip: "El error clásico es confundir crecimiento lineal con exponencial ('crece un poco cada año' NO es lo mismo que 'crece un 5% cada año'). El logaritmo es la herramienta para 'domar' esos números que explotan (escalas como el pH o los decibelios son logarítmicas).",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "La secuencia 2, 6, 18, 54… crece de forma…",
+        options: ["lineal (suma)", "exponencial (multiplica)", "constante"],
+        answer: 1,
+        why: "Cada término es el anterior ×3: crecimiento exponencial.",
+      },
+      {
+        kind: "fill",
+        q: "Como 2³ = 8, ¿cuánto vale log₂(8)?",
+        accept: ["3"],
+        hint: "El log pregunta a qué exponente elevas 2 para llegar a 8.",
+        why: "2³ = 8, así que log₂(8) = 3.",
+      },
+      {
+        kind: "choice",
+        q: "El logaritmo es la operación inversa de…",
+        options: ["la suma", "la potencia (exponencial)", "la raíz cuadrada, solo"],
+        answer: 1,
+        why: "El log 'deshace' la exponencial, como la resta deshace la suma.",
+      },
+      {
+        kind: "choice",
+        q: "El interés compuesto de un ahorro crece de forma…",
+        options: ["lineal", "exponencial", "no crece"],
+        answer: 1,
+        why: "Los intereses generan intereses: crecimiento exponencial.",
+      },
+    ],
+    activity: {
+      title: "El poder de doblar",
+      steps: [
+        "Empieza con 1 y ve doblando: 1, 2, 4, 8… hasta 10 pasos. ¿Cuánto llegas a tener?",
+        "Compáralo con sumar 2 cada vez desde 1 durante 10 pasos.",
+        "Reto: si 100 € crecen 10% al año (×1,1), ¿cuánto hay a los 3 años?",
+      ],
+    },
+    selfCheck: [
+      "Distingo crecimiento lineal de exponencial.",
+      "Entiendo el logaritmo como inverso de la potencia.",
+      "Reconozco ejemplos exponenciales (interés, epidemias).",
+    ],
+    summary: [
+      "Exponencial = multiplicar cada paso; se dispara.",
+      "El logaritmo deshace la potencia (log₂ 8 = 3).",
+      "Interés compuesto, epidemias y pH: exponenciales/logarítmicos.",
+    ],
+  },
+
+  // ─────────────────────────────── Cálculo ───────────────────────────────
+  "mat-limites": {
+    intro:
+      "El cálculo, la matemática del cambio y el movimiento, se apoya en una sola idea genial: el límite. Consiste en preguntar '¿a qué valor se ACERCA algo?' aunque nunca llegue del todo. Con esta idea, Newton y Leibniz pudieron medir lo instantáneo. Es más intuitiva de lo que parece.",
+    goal: "comprender intuitivamente qué es un límite.",
+    sections: [
+      {
+        h: "Acercarse sin (necesariamente) llegar",
+        tldr: "El límite es el valor al que tiende una función cuando la entrada se acerca a un punto.",
+        code: "f(x) = (x² − 1) / (x − 1)\nEn x = 1 da 0/0 (indefinido). Pero acércate:\nx=0,9 → 1,9   x=0,99 → 1,99   x=1,01 → 2,01\nSe ACERCA a 2. El límite es 2.",
+        body: [
+          "Aunque en x=1 la función 'no existe', al acercarnos por ambos lados el resultado tiende a 2. Ese valor de acercamiento es el límite.",
+        ],
+      },
+      {
+        h: "El límite no es el valor en el punto",
+        tldr: "Importa a dónde te DIRIGES, no dónde (o si) aterrizas.",
+        tip: "El error conceptual típico es confundir el límite con 'el valor en ese punto'. El límite describe la tendencia al acercarse; la función puede no estar definida ahí y aun así tener límite.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Un límite describe…",
+        options: [
+          "el valor exacto en un punto",
+          "el valor al que se ACERCA la función",
+          "el valor más grande de la función",
+        ],
+        answer: 1,
+        why: "El límite es la tendencia al acercarse, aunque no se llegue.",
+      },
+      {
+        kind: "fill",
+        q: "Si f(x) da 1,99 en x=0,99 y 2,01 en x=1,01, ¿a qué valor tiende en x=1?",
+        accept: ["2"],
+        hint: "Mira a qué número se acercan los resultados.",
+        why: "Se acerca a 2 por ambos lados: el límite es 2.",
+      },
+      {
+        kind: "choice",
+        q: "¿Puede una función tener límite en un punto donde NO está definida?",
+        options: ["sí, el límite es la tendencia", "no, nunca", "solo si es lineal"],
+        answer: 0,
+        why: "El límite mira el acercamiento, no el valor exacto en el punto.",
+      },
+      {
+        kind: "choice",
+        q: "El límite es la idea que funda…",
+        options: ["la aritmética", "el cálculo (derivadas e integrales)", "la geometría"],
+        answer: 1,
+        why: "Derivadas e integrales se definen mediante límites.",
+      },
+    ],
+    activity: {
+      title: "Acércate al límite",
+      steps: [
+        "Toma f(x) = (x²−1)/(x−1) y calcula f para x = 0,9; 0,99; 1,01; 1,1.",
+        "Observa a qué número se acercan los resultados.",
+        "Reto: simplifica la expresión (pista: x²−1 = (x−1)(x+1)) y comprueba el límite.",
+      ],
+    },
+    selfCheck: [
+      "Explico el límite como 'valor al que se acerca'.",
+      "Estimo un límite con una tabla de acercamiento.",
+      "Sé que el límite no es el valor en el punto.",
+    ],
+    summary: [
+      "El límite es el valor al que tiende una función al acercarse.",
+      "Puede existir aunque la función no esté definida ahí.",
+      "Es la idea que funda todo el cálculo.",
+    ],
+  },
+
+  "mat-derivadas": {
+    intro:
+      "¿Cómo de rápido cambia algo en un instante EXACTO? El velocímetro de un coche responde a eso: no la velocidad media del viaje, sino la de este segundo. Esa 'velocidad instantánea de cambio' es la derivada, una de las ideas más poderosas de la ciencia.",
+    goal: "interpretar la derivada como razón de cambio (pendiente instantánea).",
+    sections: [
+      {
+        h: "De pendiente media a instantánea",
+        tldr: "La derivada es la pendiente de la recta que 'toca' la curva en un punto.",
+        code: "Pendiente media = cambio en y / cambio en x  (entre dos puntos)\nDerivada        = esa pendiente cuando los dos puntos\n                  se acercan hasta tocarse (¡un límite!)",
+        body: [
+          "Si acercas dos puntos de una curva hasta que casi se tocan, la recta que los une se convierte en la tangente: su pendiente es la derivada en ese punto.",
+        ],
+      },
+      {
+        h: "Qué significa en el mundo real",
+        tldr: "La derivada es la RAPIDEZ del cambio: velocidad, aceleración, crecimiento.",
+        code: "posición → (derivada) → velocidad → (derivada) → aceleración",
+        tip: "No la veas como una regla mecánica sin sentido. La derivada responde '¿a qué ritmo cambia esto AHORA?'. Si la derivada es 0, el cambio se detiene un instante: por eso sirve para encontrar máximos y mínimos (la cima de una montaña tiene pendiente 0).",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "La derivada en un punto es…",
+        options: [
+          "el valor de la función ahí",
+          "la pendiente de la tangente (razón de cambio instantánea)",
+          "el área bajo la curva",
+        ],
+        answer: 1,
+        why: "Es la pendiente instantánea: cuán rápido cambia la función.",
+      },
+      {
+        kind: "choice",
+        q: "La derivada de la posición respecto al tiempo es la…",
+        options: ["aceleración", "velocidad", "distancia total"],
+        answer: 1,
+        why: "El ritmo de cambio de la posición es la velocidad.",
+      },
+      {
+        kind: "choice",
+        q: "Si la derivada en un punto es 0, significa que…",
+        options: [
+          "la función vale 0 ahí",
+          "el cambio se detiene un instante (posible máximo o mínimo)",
+          "hay un error",
+        ],
+        answer: 1,
+        why: "Pendiente 0 = ni sube ni baja: cima o valle de la curva.",
+      },
+      {
+        kind: "choice",
+        q: "La derivada se define usando la idea de…",
+        options: ["límite (acercar dos puntos)", "fracción", "porcentaje"],
+        answer: 0,
+        why: "Es el límite de la pendiente media cuando los puntos se acercan.",
+      },
+    ],
+    activity: {
+      title: "El velocímetro",
+      steps: [
+        "Piensa en un viaje: velocidad media (distancia/tiempo total) vs. lo que marca el velocímetro en un instante.",
+        "Dibuja una curva y traza la recta que la 'toca' en un punto: esa pendiente es la derivada.",
+        "Reto: en la cima de una parábola, convéncete de que la pendiente (derivada) es 0.",
+      ],
+    },
+    selfCheck: [
+      "Interpreto la derivada como pendiente/velocidad instantánea.",
+      "Relaciono posición, velocidad y aceleración.",
+      "Sé que derivada 0 indica un máximo o mínimo.",
+    ],
+    summary: [
+      "La derivada es la razón de cambio instantánea (pendiente de la tangente).",
+      "Se define como un límite (acercar dos puntos).",
+      "Derivada 0 = cima o valle: sirve para optimizar.",
+    ],
+  },
+
+  // ─────────────────────────────── Hito ───────────────────────────────
+  "hito-mat-avanzado": {
+    intro:
+      "Cierre del árbol. Manejas funciones, resuelves ecuaciones de segundo grado y dominas la geometría métrica. Ya no calculas: MODELAS el mundo con matemáticas y estás preparado para el precálculo y el cálculo. Este hito lo confirma.",
+    goal: "confirmar la preparación para precálculo y cálculo.",
+    sections: [
+      {
+        h: "Lo que ya dominas",
+        tldr: "Funciones, ecuaciones cuadráticas y geometría métrica (Pitágoras).",
+        bullets: [
+          "Entiendes una función como máquina entrada→salida y su gráfica.",
+          "Resuelves cuadráticas y las relacionas con los cortes de la parábola.",
+          "Aplicas Pitágoras para medir distancias.",
+        ],
+      },
+      {
+        h: "De calcular a modelar",
+        tldr: "Las matemáticas avanzadas describen el cambio y la forma del mundo.",
+        code: "función  →  representa una relación (p. ej. tiempo → distancia)\ncuadrática → describe trayectorias y áreas\nPitágoras → mide distancias en el plano",
+        tip: "La señal de madurez es que ya no ves fórmulas sueltas, sino herramientas para modelar situaciones. Con esta base, el cálculo (límites y derivadas) es el siguiente paso natural.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Una función es, en esencia…",
+        options: [
+          "una máquina que da una salida única por entrada",
+          "una lista de números",
+          "un tipo de ángulo",
+        ],
+        answer: 0,
+        why: "A cada entrada, una única salida.",
+      },
+      {
+        kind: "choice",
+        q: "Las soluciones de una cuadrática corresponden a…",
+        options: [
+          "los cortes de la parábola con el eje x",
+          "el punto más alto",
+          "la pendiente",
+        ],
+        answer: 0,
+        why: "Donde la parábola cruza el eje x (y=0).",
+      },
+      {
+        kind: "fill",
+        q: "Catetos 3 y 4: ¿hipotenusa? (Pitágoras)",
+        accept: ["5"],
+        hint: "√(3²+4²).",
+        why: "√25 = 5.",
+      },
+      {
+        kind: "order",
+        q: "Ordena la progresión hacia el cálculo:",
+        items: [
+          "Funciones (relaciones)",
+          "Límites (acercarse a un valor)",
+          "Derivadas (razón de cambio)",
+        ],
+        why: "El cálculo se construye: funciones → límites → derivadas.",
+      },
+    ],
+    activity: {
+      title: "Reto avanzado",
+      steps: [
+        "Modela una situación real con una función (p. ej. coste = 2·unidades + 5).",
+        "Plantea y resuelve una cuadrática sencilla y relaciona sus soluciones con una parábola.",
+        "Reto: explica con tus palabras qué medirías con una derivada en tu modelo.",
+      ],
+    },
+    selfCheck: [
+      "Entiendo funciones, cuadráticas y Pitágoras como herramientas.",
+      "Modelo situaciones reales con matemáticas.",
+      "Estoy listo para límites y derivadas.",
+    ],
+    summary: [
+      "Dominas funciones, cuadráticas y geometría métrica.",
+      "Pasas de calcular a MODELAR el mundo.",
+      "Preparado para precálculo y cálculo.",
+    ],
+  },
 };
