@@ -1542,4 +1542,1315 @@ export const CIE_LESSONS: Record<string, Lesson> = {
       "Listo para los grandes dominios de la ciencia.",
     ],
   },
+
+  // ─────────────────────────── Química: átomos y reacciones ───────────────────────────
+  "cie-tabla": {
+    intro:
+      "La tabla periódica parece una lista intimidante de símbolos, pero es todo lo contrario: es uno de los mayores triunfos del pensamiento científico. Mendeléiev la ordenó tan bien que pudo PREDECIR elementos que aún no se habían descubierto. Su orden no es casual: la posición de un elemento cuenta su historia.",
+    goal: "leer la tabla periódica y entender la lógica de su organización.",
+    sections: [
+      {
+        h: "Un mapa, no una lista",
+        tldr: "Los elementos se ordenan por número atómico y se agrupan por propiedades parecidas.",
+        code: "Cada casilla:  símbolo (O, Fe, Na), nombre y número atómico.\nColumnas (grupos):  elementos con comportamiento parecido.\nFilas (periodos):   número atómico creciente.",
+        body: [
+          "Los elementos de una misma columna reaccionan de forma parecida (por eso el sodio y el potasio 'explotan' con el agua). El orden revela patrones, no es alfabético ni al azar.",
+        ],
+      },
+      {
+        h: "La posición predice el comportamiento",
+        tldr: "Saber dónde está un elemento te dice cómo tiende a comportarse.",
+        tip: "El error es verla como una lista que hay que memorizar. No lo es: es una herramienta para PREDECIR. Mendeléiev dejó huecos para elementos no descubiertos y acertó sus propiedades. Aprende a leerla, no a recitarla.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Los elementos de una misma COLUMNA (grupo) de la tabla…",
+        options: [
+          "no tienen nada en común",
+          "se comportan de forma parecida",
+          "pesan exactamente igual",
+        ],
+        answer: 1,
+        why: "El grupo agrupa elementos con propiedades químicas parecidas.",
+      },
+      {
+        kind: "choice",
+        q: "La tabla periódica está ordenada por…",
+        options: ["orden alfabético", "número atómico y propiedades", "tamaño del átomo, solo"],
+        answer: 1,
+        why: "Por número atómico creciente, agrupando propiedades parecidas.",
+      },
+      {
+        kind: "fill",
+        q: "El símbolo químico del oxígeno es la letra ___.",
+        accept: ["o"],
+        hint: "Está en 'H₂O'.",
+        why: "El oxígeno es O.",
+      },
+      {
+        kind: "choice",
+        q: "Que Mendeléiev predijera elementos no descubiertos demuestra que la tabla…",
+        options: [
+          "fue suerte",
+          "revela patrones reales (predice, no solo lista)",
+          "estaba incompleta y era inútil",
+        ],
+        answer: 1,
+        why: "Su orden captura regularidades reales de la materia.",
+      },
+    ],
+    activity: {
+      title: "Explora la tabla",
+      steps: [
+        "Localiza en una tabla periódica el oxígeno (O), el hierro (Fe) y el sodio (Na).",
+        "Anota su símbolo y su número atómico.",
+        "Reto: busca por qué el sodio y el potasio (misma columna) reaccionan parecido con el agua.",
+      ],
+    },
+    selfCheck: [
+      "Localizo un elemento y leo su símbolo y número.",
+      "Entiendo que las columnas agrupan propiedades parecidas.",
+      "Veo la tabla como herramienta de predicción, no como lista.",
+    ],
+    summary: [
+      "La tabla ordena los elementos por número atómico y propiedades.",
+      "Las columnas (grupos) comparten comportamiento.",
+      "Su orden PREDICE: es un mapa, no una lista que memorizar.",
+    ],
+  },
+
+  "cie-enlaces": {
+    intro:
+      "¿Cómo pueden apenas 100 elementos formar los millones de sustancias del universo? Combinándose. Los átomos se unen mediante enlaces para formar moléculas y compuestos, y no lo hacen 'porque sí': buscan una configuración más estable. Entender el enlace explica por qué existe tanta variedad.",
+    goal: "entender por qué y cómo se enlazan los átomos.",
+    sections: [
+      {
+        h: "Unirse para ser más estables",
+        tldr: "Los átomos se enlazan compartiendo o intercambiando electrones para estabilizarse.",
+        body: [
+          "Los electrones exteriores son los protagonistas: al compartirlos (enlace covalente) o cederlos/ganarlos (enlace iónico), los átomos alcanzan una configuración más estable. Esa es la 'razón' del enlace.",
+        ],
+      },
+      {
+        h: "De átomos a compuestos",
+        tldr: "Un compuesto es la unión de elementos distintos con propiedades NUEVAS.",
+        code: "Sodio (Na, metal peligroso) + Cloro (Cl, gas tóxico)\n     → Cloruro de sodio (NaCl) = ¡sal de mesa!",
+        tip: "La gran idea: un compuesto NO conserva las propiedades de sus elementos. El sodio explota con el agua y el cloro es venenoso, pero juntos forman sal comestible. Enlazar transforma.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Los átomos se enlazan porque…",
+        options: [
+          "porque sí, sin motivo",
+          "alcanzan una configuración más estable",
+          "para pesar más",
+        ],
+        answer: 1,
+        why: "El enlace busca mayor estabilidad (compartiendo o cediendo electrones).",
+      },
+      {
+        kind: "choice",
+        q: "Las partículas protagonistas del enlace son los…",
+        options: ["electrones exteriores", "núcleos", "protones del centro"],
+        answer: 0,
+        why: "Los electrones externos se comparten o intercambian.",
+      },
+      {
+        kind: "choice",
+        q: "El cloruro de sodio (sal) demuestra que un compuesto…",
+        options: [
+          "conserva las propiedades de sus elementos",
+          "tiene propiedades NUEVAS, distintas de sus elementos",
+          "es una mezcla",
+        ],
+        answer: 1,
+        why: "Na (explosivo) + Cl (tóxico) → sal comestible: propiedades nuevas.",
+      },
+    ],
+    activity: {
+      title: "De elementos a compuestos",
+      steps: [
+        "Busca las propiedades del sodio y del cloro por separado.",
+        "Compáralas con las de la sal (NaCl) que forman juntos.",
+        "Reto: explica por qué un compuesto no es una mezcla de sus elementos.",
+      ],
+    },
+    selfCheck: [
+      "Explico por qué se enlazan los átomos (estabilidad).",
+      "Sé que los electrones externos protagonizan el enlace.",
+      "Entiendo que un compuesto tiene propiedades nuevas.",
+    ],
+    summary: [
+      "Los átomos se enlazan para ser más estables (electrones externos).",
+      "Compartir = covalente; ceder/ganar = iónico.",
+      "Un compuesto tiene propiedades NUEVAS (Na + Cl = sal).",
+    ],
+  },
+
+  "cie-reacciones": {
+    intro:
+      "Una vela que arde, la comida que digieres, el hierro que se oxida: todo son reacciones químicas, donde los átomos se REORGANIZAN para formar sustancias nuevas. Y sobre todas ellas reina una ley que Lavoisier descubrió pesando con cuidado: en una reacción, la masa total no cambia.",
+    goal: "entender una reacción como reorganización de átomos que conserva la masa.",
+    sections: [
+      {
+        h: "Los átomos se reorganizan (no se crean)",
+        tldr: "En una reacción, los mismos átomos se recombinan en sustancias nuevas.",
+        code: "Reactivos → Productos\nmetano + oxígeno → dióxido de carbono + agua\n(los mismos átomos, reordenados)",
+        body: [
+          "Ningún átomo aparece ni desaparece: solo cambian de pareja. Por eso las sustancias nuevas tienen propiedades distintas, pero los átomos son los mismos.",
+        ],
+      },
+      {
+        h: "Conservación de la masa (Lavoisier)",
+        tldr: "La masa de los reactivos = masa de los productos. Nada se pierde.",
+        tip: "El error clásico: creer que al arder una vela 'se pierde' materia (parece que desaparece). No: se transforma en gases (CO₂ y vapor de agua) que se van al aire. Si pesaras todo, incluidos los gases, la masa total sería idéntica. 'Nada se crea, nada se destruye, todo se transforma.'",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En una reacción química, los átomos…",
+        options: [
+          "se crean y se destruyen",
+          "se reorganizan en sustancias nuevas",
+          "desaparecen",
+        ],
+        answer: 1,
+        why: "Los mismos átomos se recombinan; no se crean ni destruyen.",
+      },
+      {
+        kind: "choice",
+        q: "Al arder una vela, la materia que 'parece perderse'…",
+        options: [
+          "se destruye de verdad",
+          "se transforma en gases que van al aire",
+          "se convierte en energía pura",
+        ],
+        answer: 1,
+        why: "Se convierte en CO₂ y vapor de agua: la masa total se conserva.",
+      },
+      {
+        kind: "choice",
+        q: "La ley de conservación de la masa dice que en una reacción…",
+        options: [
+          "la masa aumenta",
+          "la masa total no cambia",
+          "la masa siempre disminuye",
+        ],
+        answer: 1,
+        why: "Masa de reactivos = masa de productos (Lavoisier).",
+      },
+      {
+        kind: "order",
+        q: "Ordena el razonamiento sobre una vela que arde:",
+        items: [
+          "La cera y el oxígeno reaccionan",
+          "Los átomos se reorganizan",
+          "Se forman gases (CO₂ y vapor)",
+          "La masa total (con los gases) se conserva",
+        ],
+        why: "Reorganización de átomos con conservación de la masa.",
+      },
+    ],
+    activity: {
+      title: "Sigue los átomos",
+      steps: [
+        "Piensa en el hierro que se oxida: ¿de dónde vienen los átomos del óxido?",
+        "Explica por qué un clavo oxidado pesa MÁS que uno limpio (gana oxígeno del aire).",
+        "Reto: justifica por qué la masa se conserva aunque una vela parezca 'consumirse'.",
+      ],
+    },
+    selfCheck: [
+      "Entiendo una reacción como reorganización de átomos.",
+      "Explico la conservación de la masa.",
+      "Sé que la materia 'que desaparece' suele irse como gas.",
+    ],
+    summary: [
+      "Una reacción reorganiza los mismos átomos en sustancias nuevas.",
+      "La masa total se conserva (Lavoisier).",
+      "Lo que 'desaparece' al arder son gases que van al aire.",
+    ],
+  },
+
+  "cie-acidos": {
+    intro:
+      "El limón pica, el jabón resbala, el estómago disuelve la comida: detrás de todo hay ácidos y bases. El pH es la escala que mide cuán ácida o básica es una sustancia, y aparece en la cocina, tu cuerpo, el suelo y hasta los océanos. Tiene una trampa: la escala no es lineal.",
+    goal: "interpretar la escala de pH y clasificar sustancias comunes.",
+    sections: [
+      {
+        h: "La escala de pH (0 a 14)",
+        tldr: "Menor que 7 = ácido; 7 = neutro; mayor que 7 = básico (alcalino).",
+        code: "0 ────── 7 ────── 14\nácido   neutro   básico\nlimón(2)  agua(7)  jabón(10)  lejía(13)",
+        body: [
+          "El agua pura es neutra (pH 7). Cuanto más lejos del 7, más fuerte es el ácido o la base.",
+        ],
+      },
+      {
+        h: "Ni todos los ácidos son peligrosos, ni la escala es lineal",
+        tldr: "El limón y el vinagre son ácidos comestibles; cada paso de pH es ×10.",
+        tip: "Dos errores: creer que 'ácido' = peligroso (¡te comes limones!) y leer la escala como lineal. Es LOGARÍTMICA: un pH 4 es diez veces más ácido que un pH 5, y cien veces más que un pH 6. Un pequeño cambio de número es un cambio enorme de acidez.",
+      },
+    ],
+    practice: [
+      {
+        kind: "match",
+        q: "Clasifica cada sustancia por su pH:",
+        pairs: [
+          { left: "Limón (pH 2)", right: "Ácido" },
+          { left: "Agua pura (pH 7)", right: "Neutro" },
+          { left: "Jabón (pH 10)", right: "Básico" },
+        ],
+        why: "<7 ácido, 7 neutro, >7 básico.",
+      },
+      {
+        kind: "choice",
+        q: "'Todos los ácidos son peligrosos' es…",
+        options: [
+          "cierto",
+          "falso: el limón y el vinagre son ácidos comestibles",
+          "cierto solo en la cocina",
+        ],
+        answer: 1,
+        why: "Muchos ácidos cotidianos son inofensivos.",
+      },
+      {
+        kind: "choice",
+        q: "Un pH 4 comparado con un pH 6 es…",
+        options: [
+          "un poco más ácido",
+          "100 veces más ácido (la escala es logarítmica)",
+          "menos ácido",
+        ],
+        answer: 1,
+        why: "Cada unidad es ×10; dos unidades = ×100.",
+      },
+    ],
+    activity: {
+      title: "Mide el pH en casa",
+      steps: [
+        "Consigue papel indicador (o col lombarda como indicador casero).",
+        "Mide el pH de limón, agua y agua con jabón, y ordénalos.",
+        "Reto: explica por qué un pH 3 es mucho más ácido que un pH 5, no 'un poco'.",
+      ],
+    },
+    selfCheck: [
+      "Sitúo sustancias comunes en la escala de pH.",
+      "Sé que no todos los ácidos son peligrosos.",
+      "Entiendo que la escala de pH es logarítmica.",
+    ],
+    summary: [
+      "pH: <7 ácido, 7 neutro, >7 básico (0 a 14).",
+      "Muchos ácidos son inofensivos (limón, vinagre).",
+      "La escala es logarítmica: cada paso es ×10.",
+    ],
+  },
+
+  // ─────────────────────────── Genética y evolución ───────────────────────────
+  "cie-adn": {
+    intro:
+      "¿Por qué te pareces a tu familia? Porque heredaste su ADN: una molécula que funciona como un manual de instrucciones para construir y hacer funcionar un ser vivo. Está en cada una de tus células y se transmite de padres a hijos. Es, literalmente, el código de la vida.",
+    goal: "entender el ADN como información hereditaria.",
+    sections: [
+      {
+        h: "Un manual de instrucciones",
+        tldr: "El ADN guarda, en forma de código, las instrucciones para el organismo.",
+        body: [
+          "El ADN se copia y se reparte cuando las células se dividen, y se transmite a los descendientes. Por eso los rasgos (color de ojos, forma de la cara) pasan de generación en generación.",
+        ],
+      },
+      {
+        h: "Solo se hereda lo que está en el ADN",
+        tldr: "Los rasgos que adquieres en vida NO se heredan.",
+        tip: "La gran idea errónea (la de Lamarck): creer que si desarrollas músculos en el gimnasio, tus hijos nacerán musculosos. No: solo se hereda lo que está escrito en el ADN de las células reproductoras. Lo que le pasa a tu cuerpo en vida no reescribe ese manual.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "El ADN es, sobre todo…",
+        options: [
+          "una fuente de energía",
+          "un manual de instrucciones heredable",
+          "un tipo de célula",
+        ],
+        answer: 1,
+        why: "Guarda las instrucciones para construir y hacer funcionar el organismo.",
+      },
+      {
+        kind: "choice",
+        q: "Si alguien se broncea y hace mucho ejercicio, sus hijos…",
+        options: [
+          "nacerán bronceados y musculosos",
+          "NO heredan esos rasgos adquiridos en vida",
+          "heredan solo el bronceado",
+        ],
+        answer: 1,
+        why: "Solo se hereda lo que está en el ADN, no los rasgos adquiridos.",
+      },
+      {
+        kind: "choice",
+        q: "Los rasgos pasan de padres a hijos porque…",
+        options: [
+          "los hijos imitan a los padres",
+          "el ADN se transmite a la descendencia",
+          "comen lo mismo",
+        ],
+        answer: 1,
+        why: "La herencia ocurre por transmisión del ADN.",
+      },
+    ],
+    activity: {
+      title: "Rastrea un rasgo",
+      steps: [
+        "Elige un rasgo de tu familia (color de ojos, hoyuelos, forma de la oreja).",
+        "Anota quién lo tiene a lo largo de dos generaciones.",
+        "Reto: clasifica tres rasgos tuyos como heredados o adquiridos.",
+      ],
+    },
+    selfCheck: [
+      "Explico el ADN como información hereditaria.",
+      "Sé que se transmite de padres a hijos.",
+      "Distingo un rasgo heredado de uno adquirido.",
+    ],
+    summary: [
+      "El ADN es el manual de instrucciones de la vida.",
+      "Se hereda de padres a hijos.",
+      "Los rasgos adquiridos en vida NO se heredan.",
+    ],
+  },
+
+  "cie-evolucion": {
+    intro:
+      "La evolución es la gran idea que unifica toda la biología: explica por qué hay tantas especies, por qué encajan tan bien en su ambiente y por qué compartimos ADN con una lombriz. También es una de las ideas peor entendidas. La clave es sencilla: variación + selección + tiempo.",
+    goal: "explicar la selección natural con un ejemplo, evitando ideas erróneas.",
+    sections: [
+      {
+        h: "Variación + selección + tiempo",
+        tldr: "Los individuos varían; los más adaptados dejan más descendencia; a lo largo de generaciones, la población cambia.",
+        code: "1) En una población hay VARIACIÓN (no todos iguales).\n2) El ambiente SELECCIONA: sobreviven/reproducen mejor unos.\n3) Con el TIEMPO, esos rasgos se vuelven comunes.",
+        body: [
+          "Ejemplo clásico: polillas claras y oscuras. Cuando la contaminación oscureció los árboles, las polillas oscuras se camuflaban mejor, sobrevivían más y se hicieron mayoría. Nadie 'decidió' cambiar.",
+        ],
+      },
+      {
+        h: "Evolucionan las POBLACIONES, no los individuos",
+        tldr: "Un individuo no evoluciona en su vida; y la evolución no 'busca' un objetivo.",
+        tip: "Dos errores enormes: (1) creer que un individuo evoluciona (una jirafa no estira su cuello y lo hereda; evoluciona la población a lo largo de generaciones) y (2) pensar que la evolución 'quiere' mejorar o tiene un plan. No: es un proceso sin dirección, guiado por qué sobrevive y se reproduce en cada ambiente.",
+      },
+    ],
+    practice: [
+      {
+        kind: "order",
+        q: "Ordena los ingredientes de la selección natural:",
+        items: [
+          "Hay variación entre los individuos",
+          "El ambiente selecciona a los más aptos",
+          "Esos sobreviven y se reproducen más",
+          "Con el tiempo, sus rasgos se vuelven comunes",
+        ],
+        why: "Variación → selección → reproducción diferencial → cambio en la población.",
+      },
+      {
+        kind: "choice",
+        q: "¿Qué evoluciona?",
+        options: [
+          "un individuo a lo largo de su vida",
+          "la población a lo largo de generaciones",
+          "una sola célula",
+        ],
+        answer: 1,
+        why: "La evolución ocurre en poblaciones, no en individuos.",
+      },
+      {
+        kind: "choice",
+        q: "'La evolución busca mejorar las especies hacia un objetivo' es…",
+        options: [
+          "correcto",
+          "un error: la evolución no tiene plan ni dirección",
+          "correcto solo en animales",
+        ],
+        answer: 1,
+        why: "No hay meta: solo sobrevive y se reproduce lo que encaja en cada ambiente.",
+      },
+      {
+        kind: "choice",
+        q: "En el caso de las polillas, las oscuras se hicieron mayoría porque…",
+        options: [
+          "decidieron cambiar de color",
+          "se camuflaban mejor y sobrevivían más",
+          "eran más grandes",
+        ],
+        answer: 1,
+        why: "Mayor supervivencia → más descendencia → rasgo más común.",
+      },
+    ],
+    activity: {
+      title: "Selección en acción",
+      steps: [
+        "Imagina un ave que come insectos verdes y marrones en un prado verde.",
+        "Predice qué color de insecto sobrevivirá más y por qué.",
+        "Reto: explica por qué NO es que los insectos 'decidan' camuflarse.",
+      ],
+    },
+    selfCheck: [
+      "Explico la selección natural (variación, selección, tiempo).",
+      "Sé que evolucionan las poblaciones, no los individuos.",
+      "Rechazo la idea de que la evolución 'busca' un objetivo.",
+    ],
+    summary: [
+      "Evolución = variación + selección + tiempo.",
+      "Evolucionan las poblaciones a lo largo de generaciones.",
+      "No tiene plan ni dirección: sobrevive lo que encaja.",
+    ],
+  },
+
+  // ─────────────────────────── Ciencias de la Tierra ───────────────────────────
+  "cie-tierra": {
+    intro:
+      "Vivimos sobre una fina corteza de un planeta cuyo interior es tremendamente activo. Bajo tus pies hay capas de roca a miles de grados, y las rocas que ves no son eternas: nacen, se transforman y se reciclan en un ciclo que dura millones de años. Conocer la Tierra es entender el suelo que pisamos.",
+    goal: "describir las capas de la Tierra y de dónde vienen las rocas.",
+    sections: [
+      {
+        h: "Las capas de la Tierra",
+        tldr: "Corteza (fina y sólida), manto (roca que fluye lentamente) y núcleo (metal, muy caliente).",
+        code: "Corteza  → donde vivimos (fina)\nManto    → roca caliente que fluye muy despacio\nNúcleo   → hierro y níquel; el más caliente",
+        body: [
+          "El interior NO está hueco ni inmóvil: el calor interno mantiene el manto en lento movimiento, y eso mueve los continentes (lo verás en tectónica).",
+        ],
+      },
+      {
+        h: "El ciclo de las rocas",
+        tldr: "Las rocas se clasifican por cómo se formaron: ígneas, sedimentarias y metamórficas.",
+        code: "Ígnea:        de magma que se enfría (basalto)\nSedimentaria: de capas comprimidas (arenisca)\nMetamórfica:  transformada por calor/presión (mármol)",
+        tip: "Idea errónea común: imaginar el interior de la Tierra como hueco o quieto. Está lleno de roca densa y caliente en movimiento. Y las rocas no son 'para siempre': se reciclan en un ciclo lentísimo.",
+      },
+    ],
+    practice: [
+      {
+        kind: "order",
+        q: "Ordena las capas de la Tierra, de fuera hacia dentro:",
+        items: ["Corteza", "Manto", "Núcleo"],
+        why: "Corteza (fuera) → manto → núcleo (centro).",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada roca con su origen:",
+        pairs: [
+          { left: "Ígnea", right: "Magma que se enfría" },
+          { left: "Sedimentaria", right: "Capas comprimidas" },
+          { left: "Metamórfica", right: "Transformada por calor/presión" },
+        ],
+        why: "Las rocas se clasifican por cómo se formaron.",
+      },
+      {
+        kind: "choice",
+        q: "El interior de la Tierra es…",
+        options: [
+          "hueco",
+          "roca densa y caliente, en lento movimiento",
+          "totalmente sólido e inmóvil",
+        ],
+        answer: 1,
+        why: "El manto fluye lentamente por el calor interno.",
+      },
+    ],
+    activity: {
+      title: "Corta la Tierra",
+      steps: [
+        "Dibuja la Tierra en corte mostrando corteza, manto y núcleo.",
+        "Clasifica tres rocas que encuentres (o fotos) por su probable origen.",
+        "Reto: explica por qué la corteza es la capa más fina pese a ser 'nuestro mundo'.",
+      ],
+    },
+    selfCheck: [
+      "Nombro las capas de la Tierra en orden.",
+      "Clasifico rocas por su origen.",
+      "Sé que el interior es caliente y activo, no hueco.",
+    ],
+    summary: [
+      "Capas: corteza (fina), manto (fluye), núcleo (metal caliente).",
+      "Rocas: ígneas, sedimentarias y metamórficas, según cómo se formaron.",
+      "El interior es denso, caliente y está en movimiento.",
+    ],
+  },
+
+  "cie-tectonica": {
+    intro:
+      "Hace un siglo, decir que los continentes se mueven era una locura. Hoy la tectónica de placas es la teoría que unifica la geología: explica terremotos, volcanes, montañas y por qué las costas de África y Sudamérica encajan como un puzle. La corteza está partida en placas que se mueven, muy despacio, sobre el manto.",
+    goal: "explicar fenómenos geológicos con el movimiento de las placas.",
+    sections: [
+      {
+        h: "Placas que se mueven",
+        tldr: "La corteza está rota en grandes placas que flotan y se desplazan sobre el manto.",
+        body: [
+          "Se mueven unos pocos centímetros al año (como crecen tus uñas), pero en millones de años eso mueve continentes enteros. En sus bordes (donde chocan, se separan o rozan) pasa casi toda la 'acción' geológica.",
+        ],
+      },
+      {
+        h: "Los bordes de placa lo explican",
+        tldr: "Terremotos, volcanes y montañas se concentran en los límites entre placas.",
+        code: "Chocan     → montañas (Himalaya) y terremotos\nSe separan  → nuevo suelo oceánico, volcanes\nSe rozan    → grandes terremotos (falla de San Andrés)",
+        tip: "Idea errónea: creer que los continentes están fijos. Se mueven. La prueba visual clásica: África y Sudamérica encajan como piezas de un puzle porque estuvieron unidas.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "La tectónica de placas dice que la corteza…",
+        options: [
+          "es una capa fija y entera",
+          "está partida en placas que se mueven",
+          "no existe",
+        ],
+        answer: 1,
+        why: "Está fragmentada en placas que se desplazan sobre el manto.",
+      },
+      {
+        kind: "choice",
+        q: "Los terremotos y volcanes se concentran sobre todo…",
+        options: [
+          "al azar por todo el planeta",
+          "en los bordes de las placas",
+          "en el centro de los continentes",
+        ],
+        answer: 1,
+        why: "La actividad geológica se da en los límites de placa.",
+      },
+      {
+        kind: "choice",
+        q: "Que las costas de África y Sudamérica 'encajen' sugiere que…",
+        options: [
+          "es casualidad",
+          "estuvieron unidas y las placas se separaron",
+          "alguien las cortó",
+        ],
+        answer: 1,
+        why: "Es una de las evidencias clásicas de la deriva continental.",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada borde de placa con su efecto:",
+        pairs: [
+          { left: "Placas que chocan", right: "Montañas y terremotos" },
+          { left: "Placas que se separan", right: "Nuevo suelo y volcanes" },
+          { left: "Placas que se rozan", right: "Grandes terremotos" },
+        ],
+        why: "El tipo de borde determina el fenómeno geológico.",
+      },
+    ],
+    activity: {
+      title: "Arma el puzle",
+      steps: [
+        "Mira un mapa e intenta encajar la costa este de Sudamérica con la oeste de África.",
+        "Localiza el 'Cinturón de Fuego' del Pacífico y relaciónalo con bordes de placa.",
+        "Reto: explica por qué el Himalaya sigue creciendo.",
+      ],
+    },
+    selfCheck: [
+      "Explico que la corteza está en placas móviles.",
+      "Relaciono terremotos/volcanes con bordes de placa.",
+      "Sé que los continentes se mueven.",
+    ],
+    summary: [
+      "La corteza está partida en placas que se mueven sobre el manto.",
+      "Terremotos, volcanes y montañas se dan en los bordes.",
+      "Los continentes se desplazan (África y Sudamérica encajan).",
+    ],
+  },
+
+  "cie-clima": {
+    intro:
+      "El Sol calienta, el agua circula y la atmósfera se mueve: de esa maquinaria surge el clima. Antes de entender el cambio climático, hay que dominar una distinción que se confunde a diario en las noticias: el TIEMPO (lo de hoy) no es lo mismo que el CLIMA (el patrón de muchos años).",
+    goal: "distinguir tiempo de clima y explicar el ciclo del agua.",
+    sections: [
+      {
+        h: "Tiempo vs. clima",
+        tldr: "Tiempo = lo que hace hoy/ahora. Clima = el patrón medio a lo largo de décadas.",
+        code: "Tiempo: 'hoy llueve en Madrid'\nClima:  'Madrid tiene veranos secos y calurosos'\n(El tiempo es un día; el clima, el promedio de muchos años.)",
+        body: [
+          "Un día frío no dice nada sobre el clima, igual que un mal día no define tu estado de ánimo general. El clima es la tendencia a largo plazo.",
+        ],
+      },
+      {
+        h: "El ciclo del agua",
+        tldr: "El agua se evapora, forma nubes, precipita y vuelve: un ciclo sin fin movido por el Sol.",
+        code: "Evaporación (Sol) → Condensación (nubes) →\nPrecipitación (lluvia/nieve) → vuelve al mar/río → ...",
+        tip: "El error clásico: usar el tiempo de un día para negar o afirmar el clima ('hace frío hoy, luego no hay calentamiento'). Confundir tiempo con clima es el malentendido nº1 al hablar del cambio climático.",
+      },
+    ],
+    practice: [
+      {
+        kind: "match",
+        q: "Clasifica cada frase como tiempo o clima:",
+        pairs: [
+          { left: "Hoy hay tormenta", right: "Tiempo" },
+          { left: "Esta región es árida", right: "Clima" },
+          { left: "Mañana bajarán 5 grados", right: "Tiempo" },
+        ],
+        why: "Tiempo = hoy/ahora; clima = patrón a largo plazo.",
+      },
+      {
+        kind: "order",
+        q: "Ordena el ciclo del agua:",
+        items: ["Evaporación (el Sol calienta el agua)", "Condensación (se forman nubes)", "Precipitación (lluvia o nieve)", "Vuelve a ríos y mares"],
+        why: "Evaporación → condensación → precipitación → retorno.",
+      },
+      {
+        kind: "choice",
+        q: "'Hoy hace mucho frío, así que el calentamiento global es falso'. Ese razonamiento…",
+        options: [
+          "es correcto",
+          "confunde tiempo (un día) con clima (largo plazo)",
+          "prueba el clima",
+        ],
+        answer: 1,
+        why: "Un día no define el clima: es el error tiempo-clima.",
+      },
+    ],
+    activity: {
+      title: "Sigue una gota",
+      steps: [
+        "Traza el viaje de una gota de agua por el ciclo, desde el mar hasta la lluvia y vuelta.",
+        "Clasifica 5 titulares del tiempo como 'tiempo' o 'clima'.",
+        "Reto: explica por qué un invierno frío no contradice el calentamiento global.",
+      ],
+    },
+    selfCheck: [
+      "Distingo tiempo de clima.",
+      "Describo el ciclo del agua.",
+      "No uso el tiempo de un día para juzgar el clima.",
+    ],
+    summary: [
+      "Tiempo = hoy; clima = patrón a lo largo de décadas.",
+      "El ciclo del agua lo mueve el Sol: evapora, condensa, precipita.",
+      "Confundir tiempo con clima es el error nº1 sobre el clima.",
+    ],
+  },
+
+  // ─────────────────────────── Astronomía y el universo ───────────────────────────
+  "cie-sistema-solar": {
+    intro:
+      "Nuestro vecindario cósmico: el Sol y todo lo que gira a su alrededor, incluida la Tierra. Conocerlo ordena el cielo y desmonta una intuición muy fuerte: en las imágenes los planetas parecen apretados, pero el espacio real está sobre todo… vacío. Las distancias son inimaginablemente grandes.",
+    goal: "describir el sistema solar y los movimientos básicos.",
+    sections: [
+      {
+        h: "El Sol manda; los planetas orbitan",
+        tldr: "8 planetas giran alrededor del Sol por su gravedad; la Tierra es el tercero.",
+        code: "Mercurio · Venus · Tierra · Marte · Júpiter · Saturno · Urano · Neptuno\n(rocosos cercanos ── gigantes gaseosos lejanos)",
+        body: [
+          "El Sol concentra casi toda la masa del sistema; su gravedad mantiene a los planetas en órbita, como una honda invisible.",
+        ],
+      },
+      {
+        h: "Rotación vs. traslación (y las escalas engañan)",
+        tldr: "Rotación = girar sobre sí mismo (día); traslación = orbitar el Sol (año).",
+        tip: "Idea errónea: creer que los planetas están 'cerca' unos de otros como en los dibujos. Están lejísimos: si la Tierra fuera una canica, el planeta siguiente estaría a decenas de metros. Los esquemas del libro NO están a escala.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Qué mantiene a los planetas orbitando el Sol?",
+        options: ["el viento solar", "la gravedad del Sol", "el magnetismo de la Tierra"],
+        answer: 1,
+        why: "La enorme gravedad del Sol los retiene en órbita.",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada movimiento con lo que produce:",
+        pairs: [
+          { left: "Rotación", right: "El día y la noche" },
+          { left: "Traslación", right: "El año" },
+        ],
+        why: "Rotación = girar sobre sí mismo; traslación = orbitar el Sol.",
+      },
+      {
+        kind: "choice",
+        q: "En los dibujos los planetas parecen juntos, pero en realidad…",
+        options: [
+          "están muy cerca",
+          "están separados por distancias enormes (los dibujos no son a escala)",
+          "se tocan",
+        ],
+        answer: 1,
+        why: "El espacio real está casi vacío; las escalas engañan.",
+      },
+    ],
+    activity: {
+      title: "Sistema solar a escala",
+      steps: [
+        "Ordena los 8 planetas del Sol hacia fuera.",
+        "Con una app o papel, intenta un modelo A ESCALA (verás que casi no cabe).",
+        "Reto: distingue en tu vida diaria un efecto de la rotación y otro de la traslación.",
+      ],
+    },
+    selfCheck: [
+      "Ordeno los planetas y explico la órbita.",
+      "Distingo rotación de traslación.",
+      "Sé que las distancias reales son enormes.",
+    ],
+    summary: [
+      "El Sol retiene los planetas con su gravedad; la Tierra es el 3º.",
+      "Rotación → día; traslación → año.",
+      "Los planetas están lejísimos: los dibujos no van a escala.",
+    ],
+  },
+
+  "cie-estaciones": {
+    intro:
+      "Aquí desmontamos una de las ideas erróneas más famosas de toda la ciencia. Si preguntas por qué hace calor en verano, mucha gente (¡incluidos universitarios!) responde: 'porque la Tierra está más cerca del Sol'. Es falso. La causa real es la inclinación del eje de la Tierra.",
+    goal: "explicar correctamente el origen del día, la noche y las estaciones.",
+    sections: [
+      {
+        h: "Día y noche: la rotación",
+        tldr: "La Tierra gira sobre su eje cada 24 h; es de día en la cara iluminada.",
+        body: [
+          "No es que el Sol 'salga y se ponga': somos nosotros los que giramos. La rotación explica el día y la noche.",
+        ],
+      },
+      {
+        h: "Estaciones: la inclinación del eje",
+        tldr: "El eje inclinado hace que los rayos lleguen más directos (verano) o más oblicuos (invierno).",
+        code: "Verano: rayos MÁS directos → más energía por m² → calor\nInvierno: rayos MÁS oblicuos → energía repartida → frío\n(La distancia al Sol casi no cambia; el ángulo, sí.)",
+        tip: "La prueba definitiva contra 'estaciones por distancia': cuando en el hemisferio norte es verano, en el sur es invierno AL MISMO TIEMPO. Si fuera por distancia, harían la misma estación a la vez. La causa es la inclinación, no la cercanía.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "¿Por qué hace más calor en verano?",
+        options: [
+          "porque la Tierra está más cerca del Sol",
+          "porque los rayos llegan más directos (eje inclinado)",
+          "porque el Sol quema más",
+        ],
+        answer: 1,
+        why: "La inclinación del eje hace los rayos más directos: más energía por m².",
+      },
+      {
+        kind: "choice",
+        q: "Cuando en España es verano, en Argentina es…",
+        options: ["verano también", "invierno (a la vez)", "otoño siempre"],
+        answer: 1,
+        why: "Los hemisferios tienen estaciones opuestas: prueba de que NO es por distancia.",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada fenómeno con su causa:",
+        pairs: [
+          { left: "Día y noche", right: "Rotación de la Tierra" },
+          { left: "Las estaciones", right: "Inclinación del eje" },
+        ],
+        why: "Rotación → día/noche; inclinación → estaciones.",
+      },
+      {
+        kind: "choice",
+        q: "El argumento clave contra 'estaciones por distancia' es que…",
+        options: [
+          "la Tierra no se mueve",
+          "los dos hemisferios tienen estaciones opuestas a la vez",
+          "el Sol no cambia",
+        ],
+        answer: 1,
+        why: "Si fuera por distancia, ambos hemisferios tendrían la misma estación.",
+      },
+    ],
+    activity: {
+      title: "Estaciones con una linterna",
+      steps: [
+        "Con una linterna (Sol) y una pelota inclinada (Tierra), ilumina de frente y en ángulo.",
+        "Observa que en ángulo la luz se reparte en más superficie (menos calor).",
+        "Reto: convence a alguien de por qué NO es por la distancia al Sol.",
+      ],
+    },
+    selfCheck: [
+      "Explico el día/noche por la rotación.",
+      "Explico las estaciones por la inclinación del eje.",
+      "Refuto la idea de 'estaciones por distancia'.",
+    ],
+    summary: [
+      "Rotación → día y noche.",
+      "Inclinación del eje → estaciones (rayos directos vs. oblicuos).",
+      "NO es por distancia: los hemisferios tienen estaciones opuestas a la vez.",
+    ],
+  },
+
+  "cie-estrellas": {
+    intro:
+      "Levantas la vista y ves puntitos de luz. Cada uno es un Sol —muchos, gigantescos— a distancias que rompen la imaginación. Y todos están en galaxias, y hay miles de millones de galaxias. Entender la escala del universo es, quizá, la lección de humildad y asombro más grande de la ciencia.",
+    goal: "comprender la escala del universo y qué es una estrella.",
+    sections: [
+      {
+        h: "Una estrella es un Sol",
+        tldr: "Las estrellas son enormes esferas de gas que brillan por reacciones en su núcleo.",
+        body: [
+          "Nuestro Sol es una estrella corriente. Las demás parecen puntitos solo porque están lejísimos. Muchas son mucho mayores que el Sol.",
+        ],
+      },
+      {
+        h: "La escala: planeta → estrella → galaxia → universo",
+        tldr: "Cada nivel es inmensamente mayor que el anterior.",
+        code: "Planeta  <  Estrella  <  Sistema solar\n  <  Galaxia (miles de millones de estrellas)\n  <  Universo (miles de millones de galaxias)",
+        tip: "Dos errores: creer que las estrellas son pequeñas o 'están pegadas al cielo' (están a años-luz, a distancias distintas), y confundir estrella con planeta. Truco: las estrellas titilan (parpadean) y los planetas suelen brillar fijos.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "Una estrella es…",
+        options: [
+          "un punto de luz pegado al cielo",
+          "una enorme esfera de gas que brilla (como el Sol)",
+          "un planeta lejano",
+        ],
+        answer: 1,
+        why: "Las estrellas son soles; parecen puntitos por la distancia.",
+      },
+      {
+        kind: "order",
+        q: "Ordena de MENOR a MAYOR escala:",
+        items: ["Planeta", "Estrella", "Galaxia", "Universo"],
+        why: "Cada nivel es enormemente mayor que el anterior.",
+      },
+      {
+        kind: "choice",
+        q: "¿Qué es una galaxia?",
+        options: [
+          "un planeta grande",
+          "un enorme conjunto de miles de millones de estrellas",
+          "otra palabra para universo",
+        ],
+        answer: 1,
+        why: "Una galaxia agrupa miles de millones de estrellas; hay miles de millones de galaxias.",
+      },
+      {
+        kind: "choice",
+        q: "Las estrellas parecen puntitos porque…",
+        options: [
+          "son diminutas",
+          "están a distancias enormes",
+          "están pegadas a una cúpula",
+        ],
+        answer: 1,
+        why: "Son gigantescas, pero lejísimas.",
+      },
+    ],
+    activity: {
+      title: "Siente la escala",
+      steps: [
+        "Busca cuántas veces cabe la Tierra dentro del Sol (más de un millón).",
+        "Averigua cuánto tarda la luz del Sol en llegar (unos 8 minutos) y la de la estrella más cercana (años).",
+        "Reto: ordena por tamaño Tierra, Sol, Vía Láctea y universo observable.",
+      ],
+    },
+    selfCheck: [
+      "Explico qué es una estrella y una galaxia.",
+      "Ordeno la escala del universo.",
+      "Distingo estrella de planeta.",
+    ],
+    summary: [
+      "Una estrella es un sol enorme; parece un punto por la distancia.",
+      "Escala: planeta < estrella < galaxia < universo.",
+      "Las estrellas no son pequeñas ni están 'pegadas' al cielo.",
+    ],
+  },
+
+  // ─────────────────────────── Ecología y medio ambiente ───────────────────────────
+  "cie-ecosistemas": {
+    intro:
+      "Ningún ser vivo vive solo: forma parte de una red de relaciones con otros seres y con su entorno. Eso es un ecosistema. Y a través de esa red fluye la energía, casi siempre desde el Sol, pasando de unos organismos a otros. Entenderlo revela que la naturaleza es un sistema conectado, no piezas sueltas.",
+    goal: "explicar un ecosistema y el flujo de energía en una cadena trófica.",
+    sections: [
+      {
+        h: "Quién come a quién",
+        tldr: "La cadena trófica muestra cómo pasa la energía de un ser vivo a otro.",
+        code: "Sol → planta (productor) → conejo (herbívoro)\n     → zorro (carnívoro)\nLas flechas apuntan HACIA quien recibe la energía (quien come).",
+        body: [
+          "Los productores (plantas) captan la energía del Sol; los consumidores la obtienen comiendo. La energía fluye en un sentido y se va perdiendo (como calor) en cada paso.",
+        ],
+      },
+      {
+        h: "Un cambio afecta a toda la red",
+        tldr: "Quitar un eslabón altera todo el ecosistema.",
+        tip: "El error típico es dibujar las flechas de la cadena al revés. La flecha va DESDE lo que se come HACIA quien lo come (sentido del flujo de energía): planta → conejo, no conejo → planta.",
+      },
+    ],
+    practice: [
+      {
+        kind: "order",
+        q: "Ordena una cadena trófica según el flujo de energía:",
+        items: ["Sol", "Planta (productor)", "Conejo (herbívoro)", "Zorro (carnívoro)"],
+        why: "La energía fluye del Sol a los productores y luego a los consumidores.",
+      },
+      {
+        kind: "choice",
+        q: "En 'planta → conejo', la flecha significa que…",
+        options: [
+          "la planta se come al conejo",
+          "la energía va de la planta al conejo (el conejo come planta)",
+          "no significa nada",
+        ],
+        answer: 1,
+        why: "La flecha apunta hacia quien recibe la energía (quien come).",
+      },
+      {
+        kind: "choice",
+        q: "Si desaparecieran los zorros de un ecosistema…",
+        options: [
+          "no cambiaría nada",
+          "se alteraría toda la red (p. ej. más conejos)",
+          "solo afectaría a los zorros",
+        ],
+        answer: 1,
+        why: "Todo está conectado: quitar un eslabón afecta a los demás.",
+      },
+      {
+        kind: "choice",
+        q: "Los que captan la energía del Sol para el ecosistema son…",
+        options: ["los carnívoros", "las plantas (productores)", "los descomponedores solo"],
+        answer: 1,
+        why: "Los productores inician el flujo de energía.",
+      },
+    ],
+    activity: {
+      title: "Teje una red trófica",
+      steps: [
+        "Elige un entorno (un prado, un estanque) y lista 4-5 seres vivos.",
+        "Dibuja las flechas del flujo de energía (de lo comido a quien come).",
+        "Reto: predice qué pasaría si eliminas un eslabón.",
+      ],
+    },
+    selfCheck: [
+      "Construyo una cadena trófica con las flechas correctas.",
+      "Sé que las plantas son los productores.",
+      "Entiendo que quitar un eslabón afecta a toda la red.",
+    ],
+    summary: [
+      "Un ecosistema es una red de seres vivos y su entorno.",
+      "La energía fluye del Sol a productores y consumidores.",
+      "Las flechas van hacia quien come; todo está conectado.",
+    ],
+  },
+
+  "cie-ciclos": {
+    intro:
+      "La energía fluye y se pierde, pero la MATERIA es distinta: se recicla. Los mismos átomos de carbono, agua o nitrógeno se usan una y otra vez, circulando entre el aire, el suelo, los seres vivos y los océanos. Un átomo de carbono de tu cuerpo pudo estar en un dinosaurio. La Tierra sostiene la vida reutilizándolo todo.",
+    goal: "entender que la materia se recicla en ciclos naturales.",
+    sections: [
+      {
+        h: "La materia no se acaba: circula",
+        tldr: "A diferencia de la energía, los átomos se reutilizan en ciclos cerrados.",
+        code: "Ciclo del carbono (simplificado):\nCO₂ del aire → (fotosíntesis) → plantas →\nanimales → (respiración/descomposición) → CO₂ del aire → ...",
+        body: [
+          "El carbono pasa del aire a las plantas, de estas a los animales, y vuelve al aire al respirar o descomponerse. Nunca 'se gasta': cambia de lugar.",
+        ],
+      },
+      {
+        h: "Energía fluye, materia se recicla",
+        tldr: "La energía entra (Sol) y sale (calor); la materia da vueltas dentro del sistema.",
+        tip: "Idea errónea: creer que la materia 'se acaba' o desaparece. No: se recicla. Distínguelo bien: la energía se degrada y hay que reponerla (el Sol); la materia (carbono, agua) circula en bucle.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "A diferencia de la energía, la materia en la naturaleza…",
+        options: [
+          "se gasta y desaparece",
+          "se recicla y circula en ciclos",
+          "no se mueve",
+        ],
+        answer: 1,
+        why: "Los átomos se reutilizan una y otra vez.",
+      },
+      {
+        kind: "choice",
+        q: "En el ciclo del carbono, las plantas toman carbono del aire mediante…",
+        options: ["la respiración", "la fotosíntesis (CO₂)", "la lluvia"],
+        answer: 1,
+        why: "La fotosíntesis capta CO₂ del aire.",
+      },
+      {
+        kind: "choice",
+        q: "'La energía fluye, la materia…'",
+        options: ["también se agota igual", "se recicla en bucle", "no interviene"],
+        answer: 1,
+        why: "Energía: entra y sale; materia: circula dentro del sistema.",
+      },
+      {
+        kind: "order",
+        q: "Ordena el viaje de un átomo de carbono:",
+        items: [
+          "Está como CO₂ en el aire",
+          "Una planta lo capta por fotosíntesis",
+          "Un animal se come la planta",
+          "Vuelve al aire al respirar o descomponerse",
+        ],
+        why: "El carbono circula en un ciclo cerrado.",
+      },
+    ],
+    activity: {
+      title: "Sigue un átomo de carbono",
+      steps: [
+        "Elige un átomo de carbono en el aire y narra su viaje por un ecosistema.",
+        "Marca en qué paso entra en un ser vivo y en cuál vuelve al aire.",
+        "Reto: explica la diferencia entre cómo se comporta la energía y cómo la materia.",
+      ],
+    },
+    selfCheck: [
+      "Sé que la materia se recicla (no se acaba).",
+      "Describo el ciclo del carbono a grandes rasgos.",
+      "Distingo el flujo de energía del ciclo de la materia.",
+    ],
+    summary: [
+      "La materia se recicla en ciclos (carbono, agua, nitrógeno).",
+      "El carbono viaja: aire → plantas → animales → aire.",
+      "La energía fluye y se repone; la materia circula en bucle.",
+    ],
+  },
+
+  "cie-impacto": {
+    intro:
+      "Ahora aplicamos TODO el pensamiento científico al mayor reto de nuestro tiempo. La actividad humana altera los ciclos naturales y el clima, y esto no es opinión: es una conclusión respaldada por evidencia abrumadora y consenso científico mundial. Entender el mecanismo —el efecto invernadero— te permite razonar con datos, no con ruido.",
+    goal: "explicar el cambio climático con evidencia científica.",
+    sections: [
+      {
+        h: "El efecto invernadero",
+        tldr: "Ciertos gases (CO₂) atrapan calor; más CO₂ → más calor retenido.",
+        code: "Sol calienta la Tierra → la Tierra emite calor →\ngases (CO₂) retienen parte de ese calor (como una manta).\nMás CO₂ (quema de combustibles) → manta más gruesa → más calor.",
+        body: [
+          "El efecto invernadero es natural y necesario (sin él, la Tierra sería un congelador). El problema es que hemos aumentado mucho el CO₂ quemando combustibles fósiles, intensificándolo.",
+        ],
+      },
+      {
+        h: "Evidencia, no opinión",
+        tldr: "El aumento de CO₂ y de temperatura está medido; el consenso científico es abrumador.",
+        tip: "Dos errores: (1) confundir tiempo con clima ('hoy nieva, luego no hay calentamiento') y (2) tratar el consenso científico como una 'opinión más'. Aplica lo aprendido: mira la EVIDENCIA (curvas de CO₂ y temperatura a largo plazo) y distingue fuentes fiables de ruido.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "El efecto invernadero consiste en que ciertos gases…",
+        options: [
+          "enfrían la Tierra",
+          "retienen parte del calor (como una manta)",
+          "bloquean toda la luz del Sol",
+        ],
+        answer: 1,
+        why: "Gases como el CO₂ atrapan calor; más CO₂ retiene más.",
+      },
+      {
+        kind: "choice",
+        q: "El aumento actual de CO₂ se debe sobre todo a…",
+        options: [
+          "los volcanes, solo",
+          "quemar combustibles fósiles",
+          "la respiración de los animales",
+        ],
+        answer: 1,
+        why: "La quema de combustibles fósiles añade CO₂ al aire.",
+      },
+      {
+        kind: "choice",
+        q: "'Hoy hace frío, así que el cambio climático es mentira' es un error porque…",
+        options: [
+          "hace frío de verdad",
+          "confunde el tiempo de un día con el clima a largo plazo",
+          "el CO₂ no importa",
+        ],
+        answer: 1,
+        why: "Es el error tiempo-clima aplicado al debate climático.",
+      },
+      {
+        kind: "choice",
+        q: "Ante el cambio climático, un pensador científico se basa en…",
+        options: [
+          "su sensación personal",
+          "la evidencia (datos a largo plazo) y fuentes fiables",
+          "lo que dice cualquiera en redes",
+        ],
+        answer: 1,
+        why: "Evidencia y consenso científico, no opiniones sueltas.",
+      },
+    ],
+    activity: {
+      title: "Lee el clima con evidencia",
+      steps: [
+        "Busca la 'curva de Keeling' (CO₂ a lo largo de los años) y descríbela leyendo los ejes.",
+        "Relaciónala con la tendencia de temperatura global.",
+        "Reto: compara una fuente científica (NASA) con un post viral y juzga cuál es fiable y por qué.",
+      ],
+    },
+    selfCheck: [
+      "Explico el efecto invernadero y el papel del CO₂.",
+      "Distingo tiempo de clima en el debate climático.",
+      "Baso mi opinión en evidencia y fuentes fiables.",
+    ],
+    summary: [
+      "El efecto invernadero retiene calor; más CO₂ lo intensifica.",
+      "El aumento de CO₂ viene de quemar combustibles fósiles.",
+      "Es evidencia y consenso, no opinión: no confundas tiempo con clima.",
+    ],
+  },
+
+  // ─────────────────────────────── Hitos ───────────────────────────────
+  "hito-cie-intermedio": {
+    intro:
+      "Has dado un salto clave: del pensamiento científico general a las UNIDADES básicas de cada dominio. Dominas el método para investigar, el átomo como unidad de la materia y la célula como unidad de la vida. Con estas tres 'piezas mínimas' puedes construir casi toda la ciencia.",
+    goal: "confirmar la transición al trabajo científico por dominios.",
+    sections: [
+      {
+        h: "Tres unidades, tres dominios",
+        tldr: "Método (cómo investigar), átomo (unidad de materia), célula (unidad de vida).",
+        bullets: [
+          "Diseñas experimentos controlados (variable independiente, dependiente y control).",
+          "Entiendes que toda la materia son átomos de unos pocos elementos.",
+          "Sabes que toda la vida está hecha de células.",
+        ],
+      },
+      {
+        h: "La ciencia conectada",
+        tldr: "Método, materia y vida no son islas: se apoyan mutuamente.",
+        code: "La misma energía del Sol → fotosíntesis (célula) → alimento →\ntú. Y todo, materia hecha de átomos, estudiado con el método.",
+        tip: "La madurez intermedia es ver que los dominios se conectan: la biología usa química (átomos), y toda ciencia usa el método. No son asignaturas separadas.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En un experimento controlado, la variable que CAMBIAS a propósito es la…",
+        options: ["dependiente", "independiente", "de control"],
+        answer: 1,
+        why: "La independiente es la que manipulas; mides su efecto en la dependiente.",
+      },
+      {
+        kind: "choice",
+        q: "La unidad básica de la materia y la de la vida son, respectivamente…",
+        options: [
+          "la molécula y el órgano",
+          "el átomo y la célula",
+          "el elemento y el tejido",
+        ],
+        answer: 1,
+        why: "Átomo (materia) y célula (vida): las unidades base.",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada unidad con su dominio:",
+        pairs: [
+          { left: "Método científico", right: "Cómo investigar" },
+          { left: "Átomo", right: "Unidad de la materia" },
+          { left: "Célula", right: "Unidad de la vida" },
+        ],
+        why: "Las tres piezas mínimas del nivel intermedio.",
+      },
+      {
+        kind: "choice",
+        q: "Que la biología use química demuestra que los dominios…",
+        options: ["están aislados", "se conectan entre sí", "se contradicen"],
+        answer: 1,
+        why: "La ciencia es una red conectada, no compartimentos.",
+      },
+    ],
+    activity: {
+      title: "Reto intermedio",
+      steps: [
+        "Diseña un experimento controlado para una pregunta a tu elección.",
+        "Explica de qué átomos está hecha una sustancia cotidiana y de qué células un ser vivo.",
+        "Reto: encuentra una conexión entre dos dominios (p. ej. energía y vida).",
+      ],
+    },
+    selfCheck: [
+      "Diseño un experimento controlado.",
+      "Entiendo el átomo y la célula como unidades base.",
+      "Veo la ciencia como dominios conectados.",
+    ],
+    summary: [
+      "Tres unidades: método, átomo y célula.",
+      "Con ellas se construye casi toda la ciencia.",
+      "Los dominios se conectan: no son asignaturas aisladas.",
+    ],
+  },
+
+  "hito-cie-avanzado": {
+    intro:
+      "Cierre del recorrido. Ya no ves la ciencia como química, biología y geología por separado: las entiendes como una red de ideas conectadas por unos pocos principios profundos —energía, materia, evidencia, cambio a lo largo del tiempo—. Piensas como un científico que comprende el mundo de forma integrada.",
+    goal: "confirmar una comprensión conectada de los grandes dominios.",
+    sections: [
+      {
+        h: "Grandes ideas que cruzan la ciencia",
+        tldr: "Conservación (materia y energía), cambio con el tiempo (reacciones, evolución, geología) y evidencia.",
+        bullets: [
+          "Química: los átomos se reorganizan y la masa se conserva.",
+          "Evolución: las poblaciones cambian por variación + selección + tiempo.",
+          "Geología: la Tierra cambia por el movimiento de placas, muy despacio.",
+        ],
+      },
+      {
+        h: "Todo conectado por el tiempo y la evidencia",
+        tldr: "Reacciones, evolución y tectónica comparten la idea de cambio gradual y evidencia.",
+        tip: "La señal de madurez científica es ver los patrones comunes: la conservación de la materia aparece en química Y en los ciclos ecológicos; la idea de 'cambio lento a lo largo de enormes periodos' une la evolución y la tectónica. La ciencia es una red, no una lista de temas.",
+      },
+    ],
+    practice: [
+      {
+        kind: "choice",
+        q: "En una reacción química, la masa total…",
+        options: ["aumenta", "se conserva", "desaparece"],
+        answer: 1,
+        why: "Conservación de la masa: los átomos se reorganizan.",
+      },
+      {
+        kind: "choice",
+        q: "La evolución de una especie ocurre en…",
+        options: ["un individuo", "una población a lo largo de generaciones", "un día"],
+        answer: 1,
+        why: "Evolucionan las poblaciones con el tiempo, no los individuos.",
+      },
+      {
+        kind: "match",
+        q: "Empareja cada dominio con su idea de 'cambio':",
+        pairs: [
+          { left: "Química", right: "Los átomos se reorganizan" },
+          { left: "Evolución", right: "Las poblaciones cambian con el tiempo" },
+          { left: "Tectónica", right: "Las placas mueven los continentes" },
+        ],
+        why: "Distintos dominios, la idea común de cambio (a menudo gradual).",
+      },
+      {
+        kind: "choice",
+        q: "El hilo común entre evolución y tectónica es…",
+        options: [
+          "que son iguales",
+          "el cambio gradual a lo largo de enormes periodos de tiempo",
+          "que no se pueden estudiar",
+        ],
+        answer: 1,
+        why: "Ambas describen cambios lentos en escalas de tiempo inmensas.",
+      },
+    ],
+    activity: {
+      title: "Reto avanzado",
+      steps: [
+        "Elige un fenómeno (una erupción, una especie que se adapta) y explícalo conectando dos dominios.",
+        "Señala qué gran idea aparece (conservación, cambio con el tiempo, evidencia).",
+        "Reto: argumenta por qué la ciencia es 'una red' y no 'asignaturas sueltas'.",
+      ],
+    },
+    selfCheck: [
+      "Aplico la conservación de la masa en química.",
+      "Explico la evolución sin ideas erróneas.",
+      "Conecto química, evolución y geología por ideas comunes.",
+    ],
+    summary: [
+      "Grandes ideas: conservación, cambio con el tiempo y evidencia.",
+      "Química, evolución y geología comparten patrones profundos.",
+      "La ciencia es una red conectada, no temas aislados.",
+    ],
+  },
 };
