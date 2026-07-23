@@ -44,22 +44,23 @@ export async function GET(request: Request) {
   // MISMO motor genérico de sembrado (validación de DAG incluida). Cada spec
   // crea/actualiza su propia categoría por slug, así que no hace falta ningún
   // sembrado previo de catálogo.
-  const english = await upsertTree(db, INGLES_SPEC);
+  const ingles = await upsertTree(db, INGLES_SPEC);
   const programacion = await upsertTree(db, PROGRAMACION_SPEC);
-  // Matemáticas y Música se siembran en DRAFT: íntegras pero NO visibles.
+  // Matemáticas, Música y Ciencia se siembran en DRAFT (status en cada spec):
+  // íntegras en la base de datos pero NO visibles hasta publicarlas.
   const matematicas = await upsertTree(db, MATEMATICAS_SPEC);
   const musica = await upsertTree(db, MUSICA_SPEC);
   const ciencia = await upsertTree(db, CIENCIA_SPEC);
 
   return NextResponse.json({
     ok: true,
-    english,
+    ingles,
     programacion,
     matematicas,
     musica,
     ciencia,
     quality: {
-      english: quality(INGLES_SPEC),
+      ingles: quality(INGLES_SPEC),
       programacion: quality(PROGRAMACION_SPEC),
       matematicas: quality(MATEMATICAS_SPEC),
       musica: quality(MUSICA_SPEC),

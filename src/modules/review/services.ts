@@ -167,9 +167,13 @@ export async function recordReview(
 ): Promise<{ xp: number; passed: boolean; box: number }> {
   const skill = await db.skill.findUnique({
     where: { id: skillId },
-    select: { treeId: true, xpReward: true },
+    select: { treeId: true, xpReward: true, tree: { select: { status: true } } },
   });
   if (!skill) throw new Error("Habilidad no encontrada.");
+  // Solo se repasa contenido publicado (coherente con el mazo de repaso).
+  if (skill.tree.status !== "PUBLISHED") {
+    throw new Error("Esta habilidad no está disponible.");
+  }
 
   // Solo cuentan como repasables las ya completadas (no se puede repasar lo no aprendido).
   const progress = await db.userSkillProgress.findUnique({

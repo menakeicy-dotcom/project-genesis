@@ -2,7 +2,6 @@ import "server-only";
 
 import { db } from "@/server/db";
 import {
-  computeNodeStates,
   computeStrandStates,
   isUnlockedByStrand,
   type NodeState,
@@ -27,22 +26,6 @@ async function completedSkillIds(
 /** IDs de habilidades completadas por el usuario en un árbol (público). */
 export function getCompletedSkillIds(userId: string, treeId: string) {
   return completedSkillIds(userId, treeId);
-}
-
-/** Estado por nodo de un árbol para un usuario (o vacío si no hay sesión). */
-export async function getTreeNodeStates(
-  userId: string | undefined,
-  treeId: string,
-  skills: {
-    id: string;
-    isRoot: boolean;
-    prerequisites: { prerequisiteId: string; group: string | null }[];
-  }[],
-): Promise<Map<string, NodeState>> {
-  const completed = userId
-    ? await completedSkillIds(userId, treeId)
-    : new Set<string>();
-  return computeNodeStates(skills, completed);
 }
 
 /** Inscripción del usuario en un árbol, si existe. */
@@ -78,8 +61,9 @@ export interface StrandSummary {
  * Cada una con su progreso. Reutilizable por cualquier disciplina.
  */
 export async function getTreeStrands(userId: string, treeSlug: string) {
-  const tree = await db.tree.findUnique({
-    where: { slug: treeSlug },
+  // Solo árboles PUBLICADOS: los borradores no son visibles en ninguna página.
+  const tree = await db.tree.findFirst({
+    where: { slug: treeSlug, status: "PUBLISHED" },
     include: { category: true, skills: { orderBy: { order: "asc" } } },
   });
   if (!tree) return null;
@@ -138,8 +122,9 @@ export async function getStrand(
   treeSlug: string,
   branch: string,
 ) {
-  const tree = await db.tree.findUnique({
-    where: { slug: treeSlug },
+  // Solo árboles PUBLICADOS (cierra el acceso a ramas de borradores por URL).
+  const tree = await db.tree.findFirst({
+    where: { slug: treeSlug, status: "PUBLISHED" },
     include: {
       category: true,
       skills: { orderBy: [{ tier: "asc" }, { order: "asc" }] },
@@ -224,8 +209,16 @@ export async function enrollInTree(userId: string, treeId: string) {
  * Todo en una transacción.
  */
 export async function completeSkill(userId: string, skillId: string) {
-  const skill = await db.skill.findUnique({ where: { id: skillId } });
+  const skill = await db.skill.findUnique({
+    where: { id: skillId },
+    include: { tree: { select: { status: true } } },
+  });
   if (!skill) throw new Error("Habilidad no encontrada.");
+  // No se puede progresar en contenido no publicado (aunque no sea alcanzable
+  // por la UI, el server action no debe confiar en ello).
+  if (skill.tree.status !== "PUBLISHED") {
+    throw new Error("Esta habilidad no está disponible.");
+  }
 
   const completed = await completedSkillIds(userId, skill.treeId);
   if (completed.has(skillId)) return; // ya completada

@@ -104,10 +104,9 @@ export default async function SkillPage({
   params: Promise<{ treeSlug: string; skillSlug: string }>;
 }) {
   const { treeSlug, skillSlug } = await params;
+  // getSkill solo resuelve habilidades de árboles PUBLICADOS; si no, → 404.
   const skill = await getSkill(treeSlug, skillSlug);
   if (!skill) notFound();
-  // Habilidades de un árbol no publicado (disciplina en construcción) → 404.
-  if (skill.tree.status !== "PUBLISHED") notFound();
 
   const session = await auth();
   const userId = session!.user.id;

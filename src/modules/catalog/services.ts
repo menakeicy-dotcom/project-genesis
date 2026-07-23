@@ -32,10 +32,14 @@ export async function getCategoryBySlug(slug: string) {
   });
 }
 
-/** Árbol por slug, con habilidades, prerrequisitos y recursos. */
+/**
+ * Árbol PUBLICADO por slug, con habilidades, prerrequisitos y recursos.
+ * Los árboles en DRAFT/ARCHIVED no se devuelven: la capa de datos es la única
+ * frontera de publicación, así ninguna página puede olvidar el guard.
+ */
 export async function getTreeBySlug(slug: string) {
-  return db.tree.findUnique({
-    where: { slug },
+  return db.tree.findFirst({
+    where: { slug, status: "PUBLISHED" },
     include: {
       category: true,
       skills: {
@@ -49,9 +53,14 @@ export async function getTreeBySlug(slug: string) {
   });
 }
 
-/** Una habilidad concreta dentro de un árbol (para la pantalla de detalle). */
+/**
+ * Una habilidad concreta de un árbol PUBLICADO (pantalla de detalle).
+ * Si el árbol no está publicado, no existe para el usuario (devuelve null).
+ */
 export async function getSkill(treeSlug: string, skillSlug: string) {
-  const tree = await db.tree.findUnique({ where: { slug: treeSlug } });
+  const tree = await db.tree.findFirst({
+    where: { slug: treeSlug, status: "PUBLISHED" },
+  });
   if (!tree) return null;
 
   return db.skill.findUnique({
