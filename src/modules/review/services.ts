@@ -78,7 +78,10 @@ async function reviewStateBySkill(
  */
 async function reviewableSkills(userId: string) {
   const done = await db.userSkillProgress.findMany({
-    where: { userId, status: "COMPLETED" },
+    // Solo se repasa contenido PUBLICADO: si un árbol se despublica (pasa a
+    // DRAFT/ARCHIVED), sus habilidades dejan de servirse en el repaso, igual
+    // que dejan de verse en el catálogo y en las páginas de habilidad.
+    where: { userId, status: "COMPLETED", skill: { tree: { status: "PUBLISHED" } } },
     select: {
       completedAt: true,
       skill: {

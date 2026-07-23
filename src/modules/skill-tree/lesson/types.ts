@@ -6,7 +6,7 @@
  * práctica autocorregible, una actividad, autoevaluación y un resumen.
  *
  * Se guarda dentro de `Skill.content.lesson` (JSON) — no requiere cambios de
- * esquema— y la renderiza <SkillLesson/>. Es el mismo tipo que consumen el
+ * esquema— y la renderiza el `LessonPlayer`. Es el mismo tipo que consumen el
  * seed (al sembrar) y la interfaz (al mostrar), para no divergir.
  *
  * Diseño de la experiencia (no un PDF en HTML): tarjetas pequeñas, mucho aire,

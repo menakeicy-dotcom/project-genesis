@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
 import { db } from "@/server/db";
-import { seedIfEmpty } from "@/server/seed";
 import { INGLES_SPEC } from "@/server/seeds/ingles";
 import { lintTree, upsertTree, type TreeSpec } from "@/server/seeds/lib";
 import { PROGRAMACION_SPEC } from "@/server/seeds/programacion";
@@ -21,8 +20,9 @@ function quality(spec: TreeSpec) {
 }
 
 /**
- * Siembra el contenido de demostración. Protegida por SEED_SECRET y segura de
- * reejecutar (solo siembra si el catálogo está vacío).
+ * Siembra el catálogo real de SkillTree con el motor genérico de sembrado.
+ * Protegida por SEED_SECRET e idempotente: cada disciplina se inserta/actualiza
+ * por slug (upsertTree), preservando ids y progreso entre reejecuciones.
  *
  * Uso:  GET /api/seed?key=TU_SEED_SECRET
  */
@@ -40,9 +40,10 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "No autorizado." }, { status: 401 });
   }
 
-  const result = await seedIfEmpty(db);
   // Todas las disciplinas se insertan/actualizan de forma idempotente con el
-  // MISMO motor genérico de sembrado (validación de DAG incluida).
+  // MISMO motor genérico de sembrado (validación de DAG incluida). Cada spec
+  // crea/actualiza su propia categoría por slug, así que no hace falta ningún
+  // sembrado previo de catálogo.
   const english = await upsertTree(db, INGLES_SPEC);
   const programacion = await upsertTree(db, PROGRAMACION_SPEC);
   // Matemáticas y Música se siembran en DRAFT: íntegras pero NO visibles.
@@ -52,7 +53,6 @@ export async function GET(request: Request) {
 
   return NextResponse.json({
     ok: true,
-    demo: result.seeded ? "Contenido de demostración cargado." : "Ya existía.",
     english,
     programacion,
     matematicas,
