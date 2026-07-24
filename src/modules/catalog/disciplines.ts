@@ -64,8 +64,8 @@ export const DISCIPLINES: Discipline[] = [
     icon: "🎵",
     name: "Música",
     description:
-      "Teoría, oído, ritmo e instrumento: toca y comprende la música desde cero.",
-    status: "soon",
+      "Oído, ritmo, lectura, armonía e improvisación: aprende a escuchar y a crear con cualquier instrumento o tu voz.",
+    status: "available",
     accent: { from: "#a855f7", to: "#ec4899" },
     tagline: "Suena a ti",
   },
@@ -104,8 +104,8 @@ export const DISCIPLINES: Discipline[] = [
     icon: "🧮",
     name: "Matemáticas",
     description:
-      "De la aritmética al cálculo: entender el porqué, no solo el cómo.",
-    status: "soon",
+      "De la aritmética al cálculo: entender el porqué, no solo el cómo. Razona, no memorices.",
+    status: "available",
     accent: { from: "#8b5cf6", to: "#6366f1" },
     tagline: "Piensa con lógica",
   },
@@ -114,8 +114,8 @@ export const DISCIPLINES: Discipline[] = [
     icon: "🧪",
     name: "Ciencia",
     description:
-      "Física, química y biología con pensamiento científico y curiosidad.",
-    status: "soon",
+      "Física, química, biología, la Tierra y el cosmos con pensamiento científico y evidencia.",
+    status: "available",
     accent: { from: "#06b6d4", to: "#3b82f6" },
     tagline: "Entiende el universo",
   },
@@ -140,3 +140,11 @@ export const DISCIPLINES: Discipline[] = [
     tagline: "Captura la historia",
   },
 ];
+
+/** Disciplinas ya disponibles (con contenido publicado y navegable). */
+export const AVAILABLE_DISCIPLINES = DISCIPLINES.filter(
+  (d) => d.status === "available",
+);
+
+/** Total de disciplinas disponibles (para textos tipo "3 de 5"). */
+export const AVAILABLE_COUNT = AVAILABLE_DISCIPLINES.length;

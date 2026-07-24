@@ -29,6 +29,7 @@ import { getDailyGoal, getUserDashboard } from "@/modules/progress/services";
 import { getReviewSummary } from "@/modules/review/services";
 import { hasSeenWelcome } from "@/modules/onboarding/services";
 import { WelcomeGate } from "@/modules/onboarding/welcome";
+import { AVAILABLE_DISCIPLINES } from "@/modules/catalog/disciplines";
 
 export const metadata: Metadata = { title: "Panel" };
 
@@ -51,6 +52,16 @@ export default async function DashboardPage() {
     getReviewSummary(userId),
     getDailyGoal(userId),
   ]);
+
+  // Descubrimiento entre disciplinas: las disponibles que el usuario aún no ha
+  // empezado. Convierte el panel en una puerta a todo el ecosistema, no solo a
+  // lo ya iniciado.
+  const startedSlugs = new Set(
+    data.enrollments.map((e) => e.tree.category.slug),
+  );
+  const toDiscover = AVAILABLE_DISCIPLINES.filter(
+    (d) => !startedSlugs.has(d.slug),
+  );
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10">
@@ -268,6 +279,61 @@ export default async function DashboardPage() {
             );
           })}
         </RevealGroup>
+      )}
+
+      {/* Descubre más disciplinas: puerta al resto del ecosistema. */}
+      {toDiscover.length > 0 && (
+        <>
+          <div className="mt-8 flex items-center justify-between">
+            <h2 className="text-lg font-semibold">Descubre más disciplinas</h2>
+            <Link
+              href="/explore"
+              className={buttonVariants({ variant: "ghost", size: "sm" })}
+            >
+              Ver todas
+            </Link>
+          </div>
+          <RevealGroup className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {toDiscover.map((d) => (
+              <RevealItem key={d.slug}>
+                <Link
+                  href={`/explore/${d.slug}`}
+                  className="block"
+                  aria-label={`Explorar ${d.name}`}
+                >
+                  <Card className="st-interactive hover:border-primary h-full overflow-hidden">
+                    <div
+                      className="h-1 w-full"
+                      style={{
+                        background: `linear-gradient(90deg, ${d.accent.from}, ${d.accent.to})`,
+                      }}
+                      aria-hidden
+                    />
+                    <CardContent className="flex items-center gap-3 py-4">
+                      <span
+                        className="flex size-10 items-center justify-center rounded-xl text-xl shadow-sm"
+                        style={{
+                          background: `linear-gradient(135deg, ${d.accent.from}, ${d.accent.to})`,
+                        }}
+                        aria-hidden
+                      >
+                        {d.icon}
+                      </span>
+                      <div className="min-w-0">
+                        <div className="truncate text-sm font-semibold">
+                          {d.name}
+                        </div>
+                        <div className="text-muted-foreground truncate text-xs">
+                          {d.tagline}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </>
       )}
     </div>
   );

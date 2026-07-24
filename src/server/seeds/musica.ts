@@ -79,7 +79,7 @@ export const MUSICA_SPEC: TreeSpec = {
     description:
       "Desarrolla oído, ritmo, lectura, armonía e improvisación como competencias que crecen. Aprende a escuchar y a crear, no a memorizar. Un árbol para hacerte músico, con cualquier instrumento o con tu voz.",
     difficulty: "beginner",
-    status: "DRAFT", // en construcción: no visible todavía
+    status: "PUBLISHED",
   },
   branches: {
     escucha: "Escucha y oído",

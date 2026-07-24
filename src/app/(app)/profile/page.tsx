@@ -12,6 +12,7 @@ import { CountUp } from "@/components/experience/count-up";
 import { RevealGroup, RevealItem } from "@/components/experience/reveal";
 import { getUserProfile } from "@/modules/progress/services";
 import { HowItWorks } from "@/modules/onboarding/how-it-works";
+import { AVAILABLE_COUNT } from "@/modules/catalog/disciplines";
 
 export const metadata: Metadata = { title: "Perfil" };
 
@@ -55,8 +56,7 @@ export default async function ProfilePage() {
             <span className="font-medium">Progreso global</span>
             <span className="text-muted-foreground">
               {profile.completedSkills} habilidades ·{" "}
-              {profile.disciplinesStarted}{" "}
-              {profile.disciplinesStarted === 1 ? "disciplina" : "disciplinas"}
+              {profile.disciplinesStarted} de {AVAILABLE_COUNT} disciplinas
             </span>
           </div>
           <ProgressBar

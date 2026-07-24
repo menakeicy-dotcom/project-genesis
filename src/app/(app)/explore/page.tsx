@@ -11,7 +11,11 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { RevealGroup, RevealItem } from "@/components/experience/reveal";
 import { getCategories } from "@/modules/catalog/services";
-import { DISCIPLINES, STATUS_META } from "@/modules/catalog/disciplines";
+import {
+  AVAILABLE_COUNT,
+  DISCIPLINES,
+  STATUS_META,
+} from "@/modules/catalog/disciplines";
 
 export const metadata: Metadata = { title: "Explorar" };
 
@@ -20,6 +24,13 @@ export default async function ExplorePage() {
   const categories = await getCategories();
   const treeCount = new Map(categories.map((c) => [c.slug, c._count.trees]));
 
+  // Las disponibles se muestran primero (descubrimiento): lo que ya se puede
+  // empezar encabeza la cuadrícula; el resto forma la hoja de ruta.
+  const ordered = [...DISCIPLINES].sort(
+    (a, b) =>
+      (a.status === "available" ? 0 : 1) - (b.status === "available" ? 0 : 1),
+  );
+
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10">
       <h1 className="text-2xl font-bold tracking-tight">
@@ -27,15 +38,18 @@ export default async function ExplorePage() {
       </h1>
       <p className="text-muted-foreground mt-1 max-w-2xl">
         SkillTree es un ecosistema de conocimiento en crecimiento. Cada
-        disciplina es un bosque de habilidades por descubrir. Empezamos por
-        Idiomas; las demás están en camino.
+        disciplina es un bosque de habilidades por descubrir: elige la que te
+        mueva la curiosidad y empieza hoy.
+      </p>
+      <p className="text-primary mt-2 text-sm font-medium">
+        {AVAILABLE_COUNT} disciplinas disponibles · más en camino
       </p>
 
       <RevealGroup
         className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
         stagger={0.05}
       >
-        {DISCIPLINES.map((d) => {
+        {ordered.map((d) => {
           const meta = STATUS_META[d.status];
           const available = d.status === "available";
           const trees = treeCount.get(d.slug) ?? 0;
