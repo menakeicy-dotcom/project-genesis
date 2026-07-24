@@ -1,8 +1,18 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+
 import { cn } from "@/lib/utils";
+import { SPRING_SOFT } from "@/lib/motion";
 
 /**
  * Barra de progreso. El "crecimiento" (verde) se reserva para completado; el
- * avance parcial usa el azul principal.
+ * avance parcial usa el verde principal.
+ *
+ * La barra CRECE desde cero al aparecer (muelle suave): el progreso se siente
+ * como algo que avanza, no como un dato estático. Respeta
+ * `prefers-reduced-motion` (aparece ya en su valor) y conserva la semántica
+ * accesible en el contenedor.
  */
 export function ProgressBar({
   value,
@@ -13,6 +23,7 @@ export function ProgressBar({
   className?: string;
   tone?: "primary" | "growth";
 }) {
+  const reduce = useReducedMotion();
   const pct = Math.max(0, Math.min(100, value));
   return (
     <div
@@ -25,12 +36,14 @@ export function ProgressBar({
       aria-valuemin={0}
       aria-valuemax={100}
     >
-      <div
+      <motion.div
         className={cn(
-          "h-full rounded-full transition-all",
+          "h-full rounded-full",
           tone === "growth" ? "bg-growth" : "bg-primary",
         )}
-        style={{ width: `${pct}%` }}
+        initial={{ width: reduce ? `${pct}%` : 0 }}
+        animate={{ width: `${pct}%` }}
+        transition={reduce ? { duration: 0 } : SPRING_SOFT}
       />
     </div>
   );

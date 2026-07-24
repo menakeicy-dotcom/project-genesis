@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { RevealGroup, RevealItem } from "@/components/experience/reveal";
 import { getCategories } from "@/modules/catalog/services";
 import { DISCIPLINES, STATUS_META } from "@/modules/catalog/disciplines";
 
@@ -30,7 +31,10 @@ export default async function ExplorePage() {
         Idiomas; las demás están en camino.
       </p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <RevealGroup
+        className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        stagger={0.05}
+      >
         {DISCIPLINES.map((d) => {
           const meta = STATUS_META[d.status];
           const available = d.status === "available";
@@ -64,7 +68,12 @@ export default async function ExplorePage() {
               <CardHeader>
                 <div className="mb-2 flex items-start justify-between">
                   <span
-                    className="flex size-12 items-center justify-center rounded-2xl text-2xl shadow-sm"
+                    className={
+                      "flex size-12 items-center justify-center rounded-2xl text-2xl shadow-sm" +
+                      // La "semilla" de una disciplina disponible respira sutilmente:
+                      // atrae la mirada hacia lo que se puede empezar ahora.
+                      (available ? " st-float" : "")
+                    }
                     style={{
                       background: `linear-gradient(135deg, ${d.accent.from}, ${d.accent.to})`,
                     }}
@@ -97,26 +106,28 @@ export default async function ExplorePage() {
           );
 
           return available ? (
-            <Link
-              key={d.slug}
-              href={`/explore/${d.slug}`}
-              className="block"
-              aria-label={`${d.name} · disponible`}
-            >
-              {inner}
-            </Link>
+            <RevealItem key={d.slug}>
+              <Link
+                href={`/explore/${d.slug}`}
+                className="block"
+                aria-label={`${d.name} · disponible`}
+              >
+                {inner}
+              </Link>
+            </RevealItem>
           ) : (
-            <div
-              key={d.slug}
-              className="cursor-default"
-              aria-label={`${d.name} · ${meta.label}`}
-              title={`${d.name} · ${meta.label}`}
-            >
-              {inner}
-            </div>
+            <RevealItem key={d.slug}>
+              <div
+                className="cursor-default"
+                aria-label={`${d.name} · ${meta.label}`}
+                title={`${d.name} · ${meta.label}`}
+              >
+                {inner}
+              </div>
+            </RevealItem>
           );
         })}
-      </div>
+      </RevealGroup>
     </div>
   );
 }

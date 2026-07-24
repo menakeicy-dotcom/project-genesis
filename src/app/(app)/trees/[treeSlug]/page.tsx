@@ -86,7 +86,7 @@ export default async function TreePage({
           <Link
             key={b.key}
             href={`/trees/${tree.slug}/rama/${b.key}`}
-            className="border-border hover:border-primary block rounded-xl border p-4 transition-colors"
+            className="border-border hover:border-primary st-interactive block rounded-xl border p-4"
           >
             <div className="flex items-center justify-between">
               <span className="font-semibold">{b.label}</span>

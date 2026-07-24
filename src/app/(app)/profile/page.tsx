@@ -2,23 +2,29 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Flame, Sparkles, Trophy } from "lucide-react";
 
+import type { ReactNode } from "react";
+
 import { auth } from "@/auth";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProgressBar } from "@/components/ui/progress-bar";
+import { CountUp } from "@/components/experience/count-up";
+import { RevealGroup, RevealItem } from "@/components/experience/reveal";
 import { getUserProfile } from "@/modules/progress/services";
 import { HowItWorks } from "@/modules/onboarding/how-it-works";
 
 export const metadata: Metadata = { title: "Perfil" };
 
-function Stat({ label, value }: { label: string; value: string | number }) {
+function Stat({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <Card>
-      <CardContent className="py-4 text-center">
-        <div className="text-2xl font-bold">{value}</div>
-        <div className="text-muted-foreground text-xs">{label}</div>
-      </CardContent>
-    </Card>
+    <RevealItem>
+      <Card className="h-full">
+        <CardContent className="py-4 text-center">
+          <div className="text-2xl font-bold">{value}</div>
+          <div className="text-muted-foreground text-xs">{label}</div>
+        </CardContent>
+      </Card>
+    </RevealItem>
   );
 }
 
@@ -61,12 +67,15 @@ export default async function ProfilePage() {
       </Card>
 
       {/* Estadísticas */}
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Stat label="Nivel" value={profile.level} />
-        <Stat label="XP total" value={profile.totalXp} />
-        <Stat label="Racha (días)" value={profile.streak} />
-        <Stat label="Habilidades" value={profile.completedSkills} />
-      </div>
+      <RevealGroup className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <Stat label="Nivel" value={<CountUp value={profile.level} />} />
+        <Stat label="XP total" value={<CountUp value={profile.totalXp} />} />
+        <Stat label="Racha (días)" value={<CountUp value={profile.streak} />} />
+        <Stat
+          label="Habilidades"
+          value={<CountUp value={profile.completedSkills} />}
+        />
+      </RevealGroup>
 
       {/* Ramas (categorías) */}
       <h2 className="mt-10 flex items-center gap-2 text-lg font-semibold">
@@ -119,19 +128,26 @@ export default async function ProfilePage() {
       <h2 className="mt-10 flex items-center gap-2 text-lg font-semibold">
         <Trophy className="text-primary size-5" /> Logros
       </h2>
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <RevealGroup className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         {profile.achievements.map((a) => (
-          <Card
-            key={a.key}
-            className={a.unlocked ? "" : "opacity-40 grayscale"}
-          >
-            <CardContent className="py-4 text-center">
-              <div className="text-3xl">{a.icon}</div>
-              <div className="mt-1 text-xs font-medium">{a.label}</div>
-            </CardContent>
-          </Card>
+          <RevealItem key={a.key}>
+            <Card
+              className={
+                a.unlocked
+                  ? "st-sheen border-growth/30"
+                  : "opacity-40 grayscale"
+              }
+            >
+              <CardContent className="py-4 text-center">
+                <div className={a.unlocked ? "st-float text-3xl" : "text-3xl"}>
+                  {a.icon}
+                </div>
+                <div className="mt-1 text-xs font-medium">{a.label}</div>
+              </CardContent>
+            </Card>
+          </RevealItem>
         ))}
-      </div>
+      </RevealGroup>
     </div>
   );
 }

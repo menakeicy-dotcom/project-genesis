@@ -1,4 +1,7 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useEffect, useState, type ReactNode } from "react";
+import { useReducedMotion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 
@@ -8,6 +11,9 @@ import { cn } from "@/lib/utils";
  * Sirve para cualquier progreso 0–100 (meta diaria, nivel, avance de un árbol o
  * de una rama). No depende de ninguna disciplina. Expone semántica
  * `role="progressbar"` para lectores de pantalla y respeta el tema.
+ *
+ * El arco se DIBUJA desde vacío al aparecer (el trazo "crece" hasta su valor).
+ * Con `prefers-reduced-motion` aparece directamente completo.
  */
 export function ProgressRing({
   value,
@@ -29,11 +35,20 @@ export function ProgressRing({
   /** Contenido centrado (número, icono…). */
   children?: ReactNode;
 }) {
+  const reduce = useReducedMotion();
   const pct = Math.max(0, Math.min(100, Math.round(value)));
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
-  const offset = c - (pct / 100) * c;
+  const target = c - (pct / 100) * c;
   const color = tone === "growth" ? "var(--growth)" : "var(--primary)";
+
+  // Empieza "vacío" (offset = c) y crece hasta su valor tras montar; la
+  // transición CSS de strokeDashoffset hace el resto.
+  const [offset, setOffset] = useState(reduce ? target : c);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setOffset(target));
+    return () => cancelAnimationFrame(id);
+  }, [target]);
 
   return (
     <div

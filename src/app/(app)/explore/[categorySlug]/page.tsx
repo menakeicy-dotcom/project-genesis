@@ -56,7 +56,7 @@ export default async function CategoryPage({
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {category.trees.map((tree) => (
             <Link key={tree.id} href={`/trees/${tree.slug}`} className="block">
-              <Card className="hover:border-primary h-full transition-colors">
+              <Card className="st-interactive hover:border-primary h-full">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-base">{tree.title}</CardTitle>

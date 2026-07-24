@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { CountUp } from "@/components/experience/count-up";
 import { completeSkillAction } from "@/modules/progress/actions";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { viewExample } from "./types";
@@ -936,6 +937,12 @@ function FinishStep({
   return (
     <div className="flex flex-col items-center py-4 text-center">
       <div className="relative">
+        {!reduce && (
+          <span
+            aria-hidden
+            className="st-bloom border-growth/50 absolute left-1/2 top-1/2 size-20 -translate-x-1/2 -translate-y-1/2 rounded-full border-2"
+          />
+        )}
         {!reduce &&
           [0, 1, 2, 3, 4, 5].map((n) => (
             <motion.span
@@ -966,7 +973,7 @@ function FinishStep({
         Has completado esta habilidad y tu árbol ha crecido.
       </p>
       <div className="text-primary mt-3 inline-flex items-center gap-1.5 text-lg font-bold">
-        <Sparkles className="size-5" /> +{xp} XP
+        <Sparkles className="size-5" /> +<CountUp value={xp} /> XP
       </div>
       {next && (
         <p className="text-muted-foreground mt-4 text-sm">

@@ -85,10 +85,10 @@ export default async function StrandPage({
                     key={s.slug}
                     href={`/trees/${treeSlug}/skills/${s.slug}`}
                     className={
-                      "border-border flex items-center justify-between gap-3 rounded-xl border p-4 transition-colors " +
+                      "border-border flex items-center justify-between gap-3 rounded-xl border p-4 " +
                       (locked
-                        ? "opacity-70 hover:border-border"
-                        : "hover:border-primary")
+                        ? "opacity-70 transition-colors hover:border-border"
+                        : "st-interactive hover:border-primary")
                     }
                   >
                     <div className="flex items-center gap-3">

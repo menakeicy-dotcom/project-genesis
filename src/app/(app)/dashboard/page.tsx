@@ -23,6 +23,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { ProgressRing } from "@/components/ui/progress-ring";
+import { CountUp } from "@/components/experience/count-up";
+import { RevealGroup, RevealItem } from "@/components/experience/reveal";
 import { getDailyGoal, getUserDashboard } from "@/modules/progress/services";
 import { getReviewSummary } from "@/modules/review/services";
 import { hasSeenWelcome } from "@/modules/onboarding/services";
@@ -67,7 +69,10 @@ export default async function DashboardPage() {
             <Sparkles className="size-3.5" /> Nivel {data.level}
           </Badge>
           <Badge variant="growth">
-            <Flame className="size-3.5" /> {data.streak} días
+            <Flame
+              className={data.streak > 0 ? "st-float size-3.5" : "size-3.5"}
+            />{" "}
+            {data.streak} días
           </Badge>
         </div>
       </div>
@@ -79,7 +84,8 @@ export default async function DashboardPage() {
             <div className="mb-2 flex items-center justify-between text-sm">
               <span className="font-medium">Nivel {data.level}</span>
               <span className="text-muted-foreground">
-                {data.current}/{data.needed} XP · {data.totalXp} XP totales
+                {data.current}/{data.needed} XP ·{" "}
+                <CountUp value={data.totalXp} /> XP totales
               </span>
             </div>
             <ProgressBar value={data.pct} />
@@ -107,17 +113,17 @@ export default async function DashboardPage() {
       </Card>
 
       {/* Estadísticas rápidas */}
-      <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <RevealGroup className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
           {
             icon: <Sparkles className="size-4" />,
             label: "XP total",
-            value: data.totalXp,
+            value: <CountUp value={data.totalXp} />,
           },
           {
             icon: <GraduationCap className="size-4" />,
             label: "Habilidades",
-            value: data.completedSkills,
+            value: <CountUp value={data.completedSkills} />,
           },
           {
             icon: <Clock className="size-4" />,
@@ -127,25 +133,31 @@ export default async function DashboardPage() {
           {
             icon: <Flame className="size-4" />,
             label: "Racha",
-            value: `${data.streak} d`,
+            value: (
+              <>
+                <CountUp value={data.streak} /> d
+              </>
+            ),
           },
         ].map((s) => (
-          <Card key={s.label}>
-            <CardContent className="py-4">
-              <div className="text-muted-foreground flex items-center gap-1.5 text-xs">
-                {s.icon}
-                {s.label}
-              </div>
-              <div className="mt-1 text-xl font-bold">{s.value}</div>
-            </CardContent>
-          </Card>
+          <RevealItem key={s.label}>
+            <Card className="h-full">
+              <CardContent className="py-4">
+                <div className="text-muted-foreground flex items-center gap-1.5 text-xs">
+                  {s.icon}
+                  {s.label}
+                </div>
+                <div className="mt-1 text-xl font-bold">{s.value}</div>
+              </CardContent>
+            </Card>
+          </RevealItem>
         ))}
-      </div>
+      </RevealGroup>
 
       {/* Próximo objetivo recomendado */}
       {data.nextObjective && (
         <Link href={data.nextObjective.href} className="mt-4 block">
-          <Card className="hover:border-primary border-primary/30 bg-primary/5 transition-colors">
+          <Card className="st-interactive hover:border-primary border-primary/30 bg-primary/5">
             <CardContent className="flex items-center justify-between gap-3 py-4">
               <div className="flex items-center gap-3">
                 <span className="bg-primary/15 text-primary flex size-10 items-center justify-center rounded-xl">
@@ -169,7 +181,7 @@ export default async function DashboardPage() {
       {/* Repaso inteligente: solo si hay algo que repasar */}
       {review.total > 0 && (
         <Link href="/repaso" className="mt-4 block">
-          <Card className="hover:border-primary transition-colors">
+          <Card className="st-interactive hover:border-primary">
             <CardContent className="flex items-center justify-between gap-3 py-4">
               <div className="flex items-center gap-3">
                 <span className="bg-primary/15 text-primary flex size-10 items-center justify-center rounded-xl">
@@ -221,15 +233,16 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <RevealGroup className="mt-4 grid gap-4 sm:grid-cols-2">
           {data.enrollments.map((e) => {
             const pct =
               e.totalSkills > 0
                 ? Math.round((e.completedSkills / e.totalSkills) * 100)
                 : 0;
             return (
-              <Link key={e.id} href={`/trees/${e.tree.slug}`} className="block">
-                <Card className="hover:border-primary h-full transition-colors">
+              <RevealItem key={e.id}>
+              <Link href={`/trees/${e.tree.slug}`} className="block">
+                <Card className="st-interactive hover:border-primary h-full">
                   <CardHeader>
                     <div className="text-muted-foreground flex items-center gap-2 text-sm">
                       <span>{e.tree.category.icon}</span>
@@ -251,9 +264,10 @@ export default async function DashboardPage() {
                   </CardContent>
                 </Card>
               </Link>
+              </RevealItem>
             );
           })}
-        </div>
+        </RevealGroup>
       )}
     </div>
   );
