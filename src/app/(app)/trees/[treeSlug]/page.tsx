@@ -8,6 +8,7 @@ import { ProgressBar } from "@/components/ui/progress-bar";
 import { getTreeBySlug } from "@/modules/catalog/services";
 import { getEnrollment, getTreeStrands } from "@/modules/progress/services";
 import { EnrollButton } from "@/modules/progress/components/enroll-button";
+import { MilestoneCelebration } from "@/modules/progress/components/milestone-celebration";
 import { OrganicTree } from "@/modules/skill-tree/organic-tree";
 
 export async function generateMetadata({
@@ -25,10 +26,10 @@ export default async function TreePage({
   searchParams,
 }: {
   params: Promise<{ treeSlug: string }>;
-  searchParams: Promise<{ grew?: string }>;
+  searchParams: Promise<{ grew?: string; lvl?: string; rama?: string }>;
 }) {
   const { treeSlug } = await params;
-  const { grew } = await searchParams;
+  const { grew, lvl, rama } = await searchParams;
 
   const session = await auth();
   const userId = session!.user.id;
@@ -44,8 +45,16 @@ export default async function TreePage({
   const completed = strands.reduce((s, b) => s + b.completed, 0);
   const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
 
+  // Momento de hito tras completar una habilidad (solo si el reproductor lo
+  // señaló por query param): subir de nivel o completar una rama.
+  const levelReached = lvl && /^\d+$/.test(lvl) ? Number(lvl) : undefined;
+  const ramaLabel = rama
+    ? strands.find((s) => s.key === rama)?.label
+    : undefined;
+
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10">
+      <MilestoneCelebration level={levelReached} strandLabel={ramaLabel} />
       <Link
         href={`/explore/${tree.category.slug}`}
         className="text-muted-foreground text-sm hover:underline"

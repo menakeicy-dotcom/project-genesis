@@ -130,9 +130,23 @@ export function LessonPlayer({
 
   const finish = (toTree: boolean) => {
     startTransition(async () => {
-      if (!alreadyCompleted) await completeSkillAction(skillId);
-      const treeHref = `/trees/${treeSlug}?grew=${strandKey}`;
-      router.push(toTree ? treeHref : (next?.href ?? treeHref));
+      let m: {
+        leveledUp?: boolean;
+        level?: number;
+        strandCompleted?: string | null;
+      } = {};
+      if (!alreadyCompleted) {
+        const res = await completeSkillAction(skillId);
+        if (res && !("error" in res)) m = res;
+      }
+      const params = new URLSearchParams({ grew: strandKey });
+      if (m.leveledUp && m.level) params.set("lvl", String(m.level));
+      if (m.strandCompleted) params.set("rama", m.strandCompleted);
+      const treeHref = `/trees/${treeSlug}?${params.toString()}`;
+      // Un hito (subir de nivel o completar una rama) SIEMPRE lleva al árbol,
+      // para no perderse el momento; si no, se respeta el botón elegido.
+      const milestone = !!(m.leveledUp || m.strandCompleted);
+      router.push(milestone || toTree ? treeHref : (next?.href ?? treeHref));
       router.refresh();
     });
   };

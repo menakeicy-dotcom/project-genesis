@@ -25,8 +25,13 @@ export async function completeSkillAction(skillId: string) {
   const session = await auth();
   if (!session?.user) return { error: "Necesitas iniciar sesión." };
 
+  let milestone: {
+    leveledUp: boolean;
+    level: number;
+    strandCompleted: string | null;
+  };
   try {
-    await completeSkillService(session.user.id, skillId);
+    milestone = await completeSkillService(session.user.id, skillId);
   } catch (e) {
     return { error: e instanceof Error ? e.message : "No se pudo completar." };
   }
@@ -45,5 +50,5 @@ export async function completeSkillAction(skillId: string) {
   revalidatePath("/dashboard");
   revalidatePath("/profile");
   revalidatePath("/repaso");
-  return { success: true };
+  return { success: true, ...milestone };
 }

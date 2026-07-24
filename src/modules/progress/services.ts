@@ -208,7 +208,14 @@ export async function enrollInTree(userId: string, treeId: string) {
  * actualiza el rollup e inscribe automáticamente en el árbol si hiciera falta.
  * Todo en una transacción.
  */
-export async function completeSkill(userId: string, skillId: string) {
+export async function completeSkill(
+  userId: string,
+  skillId: string,
+): Promise<{
+  leveledUp: boolean;
+  level: number;
+  strandCompleted: string | null;
+}> {
   const skill = await db.skill.findUnique({
     where: { id: skillId },
     include: { tree: { select: { status: true } } },
@@ -221,7 +228,8 @@ export async function completeSkill(userId: string, skillId: string) {
   }
 
   const completed = await completedSkillIds(userId, skill.treeId);
-  if (completed.has(skillId)) return; // ya completada
+  if (completed.has(skillId))
+    return { leveledUp: false, level: 0, strandCompleted: null }; // ya completada
 
   // Desbloqueo por progresión intra-hebra (no confiar en el cliente):
   // debe estar completo el nivel anterior de la MISMA rama.
@@ -231,6 +239,26 @@ export async function completeSkill(userId: string, skillId: string) {
   });
   if (!isUnlockedByStrand(skill, treeSkills, completed)) {
     throw new Error("Antes debes completar el nivel anterior de esta rama.");
+  }
+
+  // HITO DE NIVEL: XP total (de todas las disciplinas) antes y después. Se
+  // deriva, no se almacena: el nivel es función de la XP acumulada.
+  const enrollments = await db.userTreeEnrollment.findMany({
+    where: { userId },
+    select: { earnedXp: true },
+  });
+  const oldTotalXp = enrollments.reduce((s, e) => s + e.earnedXp, 0);
+  const level = levelForXp(oldTotalXp + skill.xpReward);
+  const leveledUp = level > levelForXp(oldTotalXp);
+
+  // HITO DE RAMA: ¿esta habilidad completa su hebra (rama) por primera vez?
+  let strandCompleted: string | null = null;
+  if (skill.branch) {
+    const inBranch = treeSkills.filter((s) => s.branch === skill.branch);
+    const allDone = inBranch.every(
+      (s) => s.id === skillId || completed.has(s.id),
+    );
+    if (inBranch.length > 0 && allDone) strandCompleted = skill.branch;
   }
 
   const totalSkills = await db.skill.count({ where: { treeId: skill.treeId } });
@@ -272,6 +300,8 @@ export async function completeSkill(userId: string, skillId: string) {
       },
     });
   });
+
+  return { leveledUp, level, strandCompleted };
 }
 
 /** Datos del panel principal del usuario. */
