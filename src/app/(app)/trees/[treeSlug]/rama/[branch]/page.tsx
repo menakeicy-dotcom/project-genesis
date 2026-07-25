@@ -6,6 +6,7 @@ import { Check, Clock, Lock, Sparkles } from "lucide-react";
 import { auth } from "@/auth";
 import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/ui/progress-bar";
+import { DisciplineIcon } from "@/components/discipline-icon";
 import { getStrand } from "@/modules/progress/services";
 
 export async function generateMetadata({
@@ -33,9 +34,10 @@ export default async function StrandPage({
     <div className="mx-auto w-full max-w-2xl px-4 py-10">
       <Link
         href={`/trees/${treeSlug}`}
-        className="text-muted-foreground text-sm hover:underline"
+        className="text-muted-foreground inline-flex items-center gap-1.5 text-sm hover:underline"
       >
-        ← {data.categoryIcon} {data.treeTitle}
+        ← <DisciplineIcon slug={data.categorySlug} className="size-4" />{" "}
+        {data.treeTitle}
       </Link>
 
       <h1 className="mt-4 text-2xl font-bold tracking-tight">{data.label}</h1>

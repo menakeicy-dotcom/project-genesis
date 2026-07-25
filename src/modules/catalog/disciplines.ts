@@ -1,25 +1,27 @@
 /**
  * Catálogo de DISCIPLINAS de SkillTree (la visión del ecosistema).
  *
- * Fuente única y declarativa de las grandes áreas de conocimiento que tendrá la
- * plataforma. La pantalla "Explorar" se genera a partir de esta lista: añadir
- * una disciplina nueva es añadir una entrada aquí —sin tocar la página—.
+ * Fuente única y declarativa de las grandes áreas de conocimiento. La pantalla
+ * "Explorar" se genera a partir de esta lista.
  *
- * `slug` enlaza con una Category real de la base de datos cuando la disciplina
- * está disponible (p. ej. "idiomas"). Mientras una disciplina no esté lista, se
- * muestra con su estado pero no navega. Cuando se construya, basta con cambiar
- * su `status` a "available".
+ * IDENTIDAD: sin emojis de colores. El icono de cada disciplina es un contorno
+ * (ver `DisciplineIcon`, resuelto por `slug`) y el acento es SIEMPRE un verde
+ * —variaciones muy sutiles— para que todo pertenezca al mismo árbol.
+ *
+ * DISPONIBILIDAD: no se declara aquí. Se DERIVA del estado de publicación del
+ * árbol en la base de datos y del rol del visitante (el fundador ve borradores
+ * "En revisión"). `status` solo es la etiqueta pública por defecto de una
+ * disciplina que el visitante aún no puede ver (hoja de ruta).
  */
 
 export type DisciplineStatus = "available" | "development" | "soon";
 
 export interface Discipline {
   slug: string;
-  icon: string;
   name: string;
   description: string;
   status: DisciplineStatus;
-  /** Identidad visual: degradado propio (from → to) y una frase que la define. */
+  /** Acento verde (from → to). Variaciones sutiles: todo es el mismo bosque. */
   accent: { from: string; to: string };
   tagline: string;
 }
@@ -35,116 +37,98 @@ export const STATUS_META: Record<
 };
 
 /**
- * Orden pensado para la cuadrícula. Idiomas va primero por ser la disciplina
- * disponible; el resto forma la hoja de ruta del ecosistema.
+ * Orden pensado para la cuadrícula. Las cinco con contenido van primero; el
+ * resto forma la hoja de ruta del ecosistema. Todos los acentos son verdes.
  */
 export const DISCIPLINES: Discipline[] = [
   {
     slug: "idiomas",
-    icon: "🌍",
     name: "Idiomas",
     description:
-      "Aprende idiomas como se adquieren de verdad: por competencias que crecen. Inglés de A1 a C2 ya disponible.",
-    status: "available",
-    accent: { from: "#0ea5e9", to: "#14b8a6" },
+      "Aprende idiomas como se adquieren de verdad: por competencias que crecen. Inglés de A1 a C2.",
+    status: "soon",
+    accent: { from: "#34a06a", to: "#1f7d4a" },
     tagline: "Habla con el mundo",
   },
   {
     slug: "programacion",
-    icon: "💻",
     name: "Programación",
     description:
       "Del primer «Hello, world» a construir software real: lógica, lenguajes y buenas prácticas.",
-    status: "available",
-    accent: { from: "#6366f1", to: "#8b5cf6" },
+    status: "soon",
+    accent: { from: "#3fa96f", to: "#24864f" },
     tagline: "Crea con código",
   },
   {
     slug: "musica",
-    icon: "🎵",
     name: "Música",
     description:
       "Oído, ritmo, lectura, armonía e improvisación: aprende a escuchar y a crear con cualquier instrumento o tu voz.",
-    status: "available",
-    accent: { from: "#a855f7", to: "#ec4899" },
+    status: "soon",
+    accent: { from: "#58b57e", to: "#2f8f57" },
     tagline: "Suena a ti",
   },
   {
-    slug: "arte-diseno",
-    icon: "🎨",
-    name: "Arte y Diseño",
-    description:
-      "Dibujo, color, composición y diseño digital para crear con intención.",
-    status: "soon",
-    accent: { from: "#ec4899", to: "#f97316" },
-    tagline: "Da forma a tus ideas",
-  },
-  {
-    slug: "cocina",
-    icon: "🍳",
-    name: "Cocina",
-    description:
-      "Técnicas, sabores y recetas: de lo básico a platos que impresionan.",
-    status: "soon",
-    accent: { from: "#f97316", to: "#ef4444" },
-    tagline: "Cocina como un chef",
-  },
-  {
-    slug: "negocios",
-    icon: "📈",
-    name: "Negocios y Emprendimiento",
-    description:
-      "Modelos de negocio, finanzas y estrategia para lanzar y hacer crecer ideas.",
-    status: "soon",
-    accent: { from: "#10b981", to: "#059669" },
-    tagline: "Convierte ideas en negocio",
-  },
-  {
     slug: "matematicas",
-    icon: "🧮",
     name: "Matemáticas",
     description:
       "De la aritmética al cálculo: entender el porqué, no solo el cómo. Razona, no memorices.",
-    status: "available",
-    accent: { from: "#8b5cf6", to: "#6366f1" },
+    status: "soon",
+    accent: { from: "#2f9d63", to: "#1c7a45" },
     tagline: "Piensa con lógica",
   },
   {
     slug: "ciencia",
-    icon: "🧪",
     name: "Ciencia",
     description:
       "Física, química, biología, la Tierra y el cosmos con pensamiento científico y evidencia.",
-    status: "available",
-    accent: { from: "#06b6d4", to: "#3b82f6" },
+    status: "soon",
+    accent: { from: "#46ad76", to: "#2a8f58" },
     tagline: "Entiende el universo",
   },
   {
+    slug: "arte-diseno",
+    name: "Arte y Diseño",
+    description:
+      "Dibujo, color, composición y diseño digital para crear con intención.",
+    status: "soon",
+    accent: { from: "#63b884", to: "#3c9a64" },
+    tagline: "Da forma a tus ideas",
+  },
+  {
+    slug: "cocina",
+    name: "Cocina",
+    description:
+      "Técnicas, sabores y recetas: de lo básico a platos que impresionan.",
+    status: "soon",
+    accent: { from: "#3aa668", to: "#21824a" },
+    tagline: "Cocina como un chef",
+  },
+  {
+    slug: "negocios",
+    name: "Negocios y Emprendimiento",
+    description:
+      "Modelos de negocio, finanzas y estrategia para lanzar y hacer crecer ideas.",
+    status: "soon",
+    accent: { from: "#4fb079", to: "#2d8c55" },
+    tagline: "Convierte ideas en negocio",
+  },
+  {
     slug: "salud-fitness",
-    icon: "🏋️",
     name: "Salud y Fitness",
     description:
       "Entrenamiento, nutrición y hábitos para un cuerpo y una mente fuertes.",
     status: "soon",
-    accent: { from: "#f43f5e", to: "#f97316" },
+    accent: { from: "#5cb782", to: "#369560" },
     tagline: "Cuerpo y mente fuertes",
   },
   {
     slug: "fotografia-video",
-    icon: "📷",
     name: "Fotografía y Video",
     description:
       "Luz, encuadre y edición para contar historias con imágenes.",
     status: "soon",
-    accent: { from: "#f59e0b", to: "#eab308" },
+    accent: { from: "#42a870", to: "#268a52" },
     tagline: "Captura la historia",
   },
 ];
-
-/** Disciplinas ya disponibles (con contenido publicado y navegable). */
-export const AVAILABLE_DISCIPLINES = DISCIPLINES.filter(
-  (d) => d.status === "available",
-);
-
-/** Total de disciplinas disponibles (para textos tipo "3 de 5"). */
-export const AVAILABLE_COUNT = AVAILABLE_DISCIPLINES.length;

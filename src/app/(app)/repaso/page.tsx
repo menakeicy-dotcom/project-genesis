@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Brain, Sparkles } from "lucide-react";
+import { Brain, Sprout, Sparkles } from "lucide-react";
 
 import { auth } from "@/auth";
 import { buttonVariants } from "@/components/ui/button";
@@ -37,7 +37,9 @@ export default async function RepasoPage() {
       {cards.length === 0 ? (
         <Card className="mt-8">
           <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
-            <span className="text-4xl">🌱</span>
+            <span className="bg-primary/10 text-primary flex size-14 items-center justify-center rounded-full">
+              <Sprout className="size-7" strokeWidth={1.75} />
+            </span>
             <p className="text-base font-medium">Aún no hay nada que repasar</p>
             <p className="text-muted-foreground max-w-sm text-sm">
               Completa habilidades en tus árboles y volverán aquí para que las

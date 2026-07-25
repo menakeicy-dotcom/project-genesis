@@ -1,8 +1,19 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Flame, Sparkles, Trophy } from "lucide-react";
-
 import type { ReactNode } from "react";
+import Link from "next/link";
+import {
+  Award,
+  Flame,
+  Leaf,
+  Sparkles,
+  Sprout,
+  Star,
+  TreeDeciduous,
+  Trees,
+  Trophy,
+  Zap,
+  type LucideIcon,
+} from "lucide-react";
 
 import { auth } from "@/auth";
 import { buttonVariants } from "@/components/ui/button";
@@ -10,11 +21,26 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { CountUp } from "@/components/experience/count-up";
 import { RevealGroup, RevealItem } from "@/components/experience/reveal";
+import { DisciplineIcon } from "@/components/discipline-icon";
 import { getUserProfile } from "@/modules/progress/services";
+import { getCategoryTreeCounts } from "@/modules/catalog/services";
+import { getViewer } from "@/server/access";
 import { HowItWorks } from "@/modules/onboarding/how-it-works";
-import { AVAILABLE_COUNT } from "@/modules/catalog/disciplines";
+import { DISCIPLINES } from "@/modules/catalog/disciplines";
 
 export const metadata: Metadata = { title: "Perfil" };
+
+/** Icono (contorno) de cada logro, coherente con la identidad de bosque. */
+const ACHIEVEMENT_ICON: Record<string, LucideIcon> = {
+  "first-skill": Sprout,
+  "ten-skills": Leaf,
+  "first-tree": TreeDeciduous,
+  "level-5": Star,
+  "streak-3": Flame,
+  "twenty-five-skills": Trees,
+  "level-10": Award,
+  "streak-7": Zap,
+};
 
 function Stat({ label, value }: { label: string; value: ReactNode }) {
   return (
@@ -32,7 +58,17 @@ function Stat({ label, value }: { label: string; value: ReactNode }) {
 export default async function ProfilePage() {
   const session = await auth();
   const name = session?.user?.name ?? session?.user?.email ?? "Tú";
-  const profile = await getUserProfile(session!.user.id);
+  const [profile, counts, viewer] = await Promise.all([
+    getUserProfile(session!.user.id),
+    getCategoryTreeCounts(),
+    getViewer(),
+  ]);
+  // Nº de disciplinas que este visitante puede ver (publicadas; el fundador
+  // también borradores). Da contexto al "X de N".
+  const viewableCount = DISCIPLINES.filter((d) => {
+    const c = counts.get(d.slug);
+    return (c?.published ?? 0) > 0 || (viewer.isAdmin && (c?.draft ?? 0) > 0);
+  }).length;
 
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-10">
@@ -56,7 +92,7 @@ export default async function ProfilePage() {
             <span className="font-medium">Progreso global</span>
             <span className="text-muted-foreground">
               {profile.completedSkills} habilidades ·{" "}
-              {profile.disciplinesStarted} de {AVAILABLE_COUNT} disciplinas
+              {profile.disciplinesStarted} de {viewableCount} disciplinas
             </span>
           </div>
           <ProgressBar
@@ -99,7 +135,10 @@ export default async function ProfilePage() {
             <Card key={b.name}>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-base">
-                  <span className="text-xl">{b.icon}</span> {b.name}
+                  <span className="bg-primary/10 text-primary flex size-8 items-center justify-center rounded-lg">
+                    <DisciplineIcon slug={b.slug} className="size-4" />
+                  </span>{" "}
+                  {b.name}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -129,24 +168,32 @@ export default async function ProfilePage() {
         <Trophy className="text-primary size-5" /> Logros
       </h2>
       <RevealGroup className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        {profile.achievements.map((a) => (
-          <RevealItem key={a.key}>
-            <Card
-              className={
-                a.unlocked
-                  ? "st-sheen border-growth/30"
-                  : "opacity-40 grayscale"
-              }
-            >
-              <CardContent className="py-4 text-center">
-                <div className={a.unlocked ? "st-float text-3xl" : "text-3xl"}>
-                  {a.icon}
-                </div>
-                <div className="mt-1 text-xs font-medium">{a.label}</div>
-              </CardContent>
-            </Card>
-          </RevealItem>
-        ))}
+        {profile.achievements.map((a) => {
+          const Icon = ACHIEVEMENT_ICON[a.key] ?? Sprout;
+          return (
+            <RevealItem key={a.key}>
+              <Card
+                className={
+                  a.unlocked ? "st-sheen border-growth/30" : "opacity-50"
+                }
+              >
+                <CardContent className="flex flex-col items-center py-4 text-center">
+                  <span
+                    className={
+                      "flex size-11 items-center justify-center rounded-full " +
+                      (a.unlocked
+                        ? "st-float bg-growth/10 text-growth"
+                        : "bg-muted text-muted-foreground")
+                    }
+                  >
+                    <Icon className="size-5" strokeWidth={1.75} aria-hidden />
+                  </span>
+                  <div className="mt-2 text-xs font-medium">{a.label}</div>
+                </CardContent>
+              </Card>
+            </RevealItem>
+          );
+        })}
       </RevealGroup>
     </div>
   );

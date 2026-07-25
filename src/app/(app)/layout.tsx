@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Eye } from "lucide-react";
 
 import { auth } from "@/auth";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { logout } from "@/modules/auth/actions";
+import { isAdminEmail, isAdminRole } from "@/server/access";
 
 const NAV = [
   { href: "/dashboard", label: "Panel" },
@@ -26,6 +29,8 @@ export default async function AppLayout({
 }) {
   const session = await auth();
   if (!session?.user) redirect("/login");
+  const isFounder =
+    isAdminRole(session.user.role) || isAdminEmail(session.user.email);
 
   return (
     <div className="flex min-h-dvh flex-col">
@@ -49,6 +54,11 @@ export default async function AppLayout({
             </nav>
           </div>
           <div className="flex items-center gap-2">
+            {isFounder && (
+              <Badge variant="primary" title="Ves también el contenido en revisión">
+                <Eye className="size-3" /> Modo fundador
+              </Badge>
+            )}
             <span className="text-muted-foreground hidden text-sm md:inline">
               {session.user.name ?? session.user.email}
             </span>

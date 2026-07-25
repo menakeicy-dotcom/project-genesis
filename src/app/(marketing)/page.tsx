@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <section className="mx-auto flex w-full max-w-3xl flex-col items-center px-4 py-24 text-center sm:py-32">
       <span className="border-border bg-muted text-muted-foreground mb-4 rounded-full border px-3 py-1 text-sm">
-        Aprender debe sentirse como hacer crecer un árbol 🌳
+        Aprender debe sentirse como hacer crecer un árbol
       </span>
 
       <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">

@@ -2,7 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { HelpCircle, X } from "lucide-react";
+import {
+  HelpCircle,
+  Leaf,
+  Lock,
+  Map,
+  Sparkles,
+  Sprout,
+  TreeDeciduous,
+  X,
+  type LucideIcon,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -15,34 +25,34 @@ import { cn } from "@/lib/utils";
  * - Respeta prefers-reduced-motion.
  */
 
-const SLIDES = [
+const SLIDES: { Icon: LucideIcon; title: string; text: string }[] = [
   {
-    emoji: "🌳",
+    Icon: TreeDeciduous,
     title: "Bienvenido a SkillTree",
     text: "Aprende cualquier habilidad como un árbol que crece contigo. Nada de listas aburridas: un camino vivo.",
   },
   {
-    emoji: "🗺️",
+    Icon: Map,
     title: "El árbol es tu mapa",
     text: "Cada árbol es una disciplina. El tronco son los cimientos y las ramas, las áreas que dominarás.",
   },
   {
-    emoji: "🍃",
+    Icon: Leaf,
     title: "Las hojas son habilidades",
     text: "Toca una hoja para abrir su lección interactiva y empezar a aprender, paso a paso.",
   },
   {
-    emoji: "🔒",
+    Icon: Lock,
     title: "Desbloquea tu camino",
     text: "Completa una habilidad para abrir las siguientes. Si una está bloqueada, verás justo qué te falta.",
   },
   {
-    emoji: "✨",
+    Icon: Sparkles,
     title: "Gana XP y sube de nivel",
     text: "Cada habilidad completada te da XP. Acumúlala para subir de nivel y ver crecer tu progreso.",
   },
   {
-    emoji: "🌱",
+    Icon: Sprout,
     title: "Haz crecer tu árbol",
     text: "Sigue la hoja que brilla —es tu próxima habilidad disponible— y observa cómo brota una hoja nueva. ¡Empecemos!",
   },
@@ -131,8 +141,8 @@ export function HowItWorks({ autoOpen = false }: { autoOpen?: boolean }) {
                     exit={reduce ? { opacity: 0 } : { opacity: 0, x: -30 }}
                     transition={{ duration: 0.22 }}
                   >
-                    <div className="mx-auto mb-4 flex size-20 items-center justify-center rounded-3xl bg-gradient-to-br from-sky-500/15 to-emerald-500/15 text-5xl">
-                      {slide.emoji}
+                    <div className="bg-primary/10 text-primary mx-auto mb-4 flex size-20 items-center justify-center rounded-3xl">
+                      <slide.Icon className="size-9" strokeWidth={1.5} />
                     </div>
                     <h2 className="text-xl font-bold tracking-tight">
                       {slide.title}

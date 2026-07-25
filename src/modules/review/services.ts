@@ -1,6 +1,7 @@
 import "server-only";
 
 import { db } from "@/server/db";
+import { canSeeDrafts, visibleTreeStatuses } from "@/server/access";
 import type { PracticeItem } from "@/modules/skill-tree/lesson";
 
 /**
@@ -78,10 +79,14 @@ async function reviewStateBySkill(
  */
 async function reviewableSkills(userId: string) {
   const done = await db.userSkillProgress.findMany({
-    // Solo se repasa contenido PUBLICADO: si un árbol se despublica (pasa a
-    // DRAFT/ARCHIVED), sus habilidades dejan de servirse en el repaso, igual
-    // que dejan de verse en el catálogo y en las páginas de habilidad.
-    where: { userId, status: "COMPLETED", skill: { tree: { status: "PUBLISHED" } } },
+    // Solo se repasa contenido VISIBLE para el visitante (publicado; el fundador
+    // ve también borradores en revisión). Si un árbol deja de ser visible, sus
+    // habilidades dejan de servirse en el repaso, igual que en el catálogo.
+    where: {
+      userId,
+      status: "COMPLETED",
+      skill: { tree: { status: { in: await visibleTreeStatuses() } } },
+    },
     select: {
       completedAt: true,
       skill: {
@@ -170,8 +175,9 @@ export async function recordReview(
     select: { treeId: true, xpReward: true, tree: { select: { status: true } } },
   });
   if (!skill) throw new Error("Habilidad no encontrada.");
-  // Solo se repasa contenido publicado (coherente con el mazo de repaso).
-  if (skill.tree.status !== "PUBLISHED") {
+  // Coherente con el mazo: solo contenido visible (el fundador puede repasar
+  // borradores durante la revisión).
+  if (skill.tree.status !== "PUBLISHED" && !(await canSeeDrafts())) {
     throw new Error("Esta habilidad no está disponible.");
   }
 

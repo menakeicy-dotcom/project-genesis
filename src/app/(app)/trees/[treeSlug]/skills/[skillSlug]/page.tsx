@@ -20,6 +20,7 @@ import { getCompletedSkillIds } from "@/modules/progress/services";
 import { isUnlockedByStrand } from "@/modules/skill-tree/state";
 import { CompleteSkillButton } from "@/modules/progress/components/complete-skill-button";
 import { LessonPlayer, type Lesson } from "@/modules/skill-tree/lesson";
+import { DisciplineIcon } from "@/components/discipline-icon";
 
 export async function generateMetadata({
   params,
@@ -205,7 +206,7 @@ export default async function SkillPage({
       </Link>
 
       <div className="text-muted-foreground mt-4 flex items-center gap-2 text-sm">
-        <span>{skill.tree.category.icon}</span>
+        <DisciplineIcon slug={skill.tree.category.slug} className="size-4" />
         <span>{skill.tree.category.name}</span>
       </div>
       <h1 className="mt-1 text-2xl font-bold tracking-tight">{skill.title}</h1>

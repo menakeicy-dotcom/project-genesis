@@ -189,7 +189,7 @@ export function OnboardingScreen() {
                   onClick={finish}
                   className="inline-flex h-11 items-center justify-center rounded-md bg-[#15803d] px-6 text-base font-medium text-white shadow-sm transition-colors hover:bg-[#166534] focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none"
                 >
-                  🌱 Comenzar mi viaje
+                  Comenzar mi viaje
                 </button>
                 <button
                   type="button"

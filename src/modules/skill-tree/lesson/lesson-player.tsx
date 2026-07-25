@@ -8,6 +8,7 @@ import {
   ArrowRight,
   Check,
   ChevronRight,
+  Leaf,
   Lightbulb,
   PartyPopper,
   Sparkles,
@@ -281,7 +282,7 @@ export function LessonPlayer({
               disabled={isPending}
               className="text-primary hover:bg-primary/10 rounded-lg px-3 py-2 text-sm font-medium disabled:opacity-60"
             >
-              Ver mi árbol 🌿
+              Ver mi árbol
             </button>
             <button
               type="button"
@@ -975,9 +976,9 @@ function FinishStep({
           initial={reduce ? undefined : { scale: 0, rotate: -30 }}
           animate={reduce ? undefined : { scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 200, damping: 12 }}
-          className="bg-growth/15 text-growth flex size-20 items-center justify-center rounded-full text-4xl"
+          className="bg-growth/15 text-growth flex size-20 items-center justify-center rounded-full"
         >
-          🌿
+          <Leaf className="size-9" strokeWidth={1.75} />
         </motion.div>
       </div>
       <h3 className="mt-4 text-xl font-bold">

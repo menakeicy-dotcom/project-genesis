@@ -4,6 +4,7 @@ import { AuthError } from "next-auth";
 
 import { signIn, signOut } from "@/auth";
 import { db } from "@/server/db";
+import { roleForNewUser } from "@/server/access";
 import { APP_URL } from "@/lib/env";
 import {
   forgotPasswordSchema,
@@ -49,7 +50,10 @@ export async function registerUser(
   }
 
   const passwordHash = await hashPassword(password);
-  await db.user.create({ data: { name, email, passwordHash } });
+  // El rol se asigna según la lista de administradores (arranque del fundador).
+  await db.user.create({
+    data: { name, email, passwordHash, role: roleForNewUser(email) },
+  });
 
   return { success: true };
 }

@@ -70,7 +70,8 @@ export const MATEMATICAS_SPEC: TreeSpec = {
     description:
       "Aprende matemáticas como se entienden de verdad: razonando, no memorizando. Un árbol de competencias —números, aritmética, álgebra, geometría, funciones, datos y cálculo— con libertad para elegir por dónde empezar.",
     difficulty: "beginner",
-    status: "PUBLISHED",
+    // Revisión del fundador antes del lanzamiento público (solo ADMIN la ve).
+    status: "DRAFT",
   },
   branches: {
     razonamiento: "Razonamiento y resolución de problemas",

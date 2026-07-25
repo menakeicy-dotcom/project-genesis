@@ -46,7 +46,8 @@ export async function GET(request: Request) {
   // sembrado previo de catálogo.
   const ingles = await upsertTree(db, INGLES_SPEC);
   const programacion = await upsertTree(db, PROGRAMACION_SPEC);
-  // Las cinco disciplinas están PUBLICADAS (status en cada spec).
+  // Las cinco disciplinas se siembran en DRAFT (revisión del fundador previa al
+  // lanzamiento): solo ADMIN las ve. Publicar = cambiar status en su spec.
   const matematicas = await upsertTree(db, MATEMATICAS_SPEC);
   const musica = await upsertTree(db, MUSICA_SPEC);
   const ciencia = await upsertTree(db, CIENCIA_SPEC);

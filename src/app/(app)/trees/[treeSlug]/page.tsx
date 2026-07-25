@@ -10,6 +10,7 @@ import { getEnrollment, getTreeStrands } from "@/modules/progress/services";
 import { EnrollButton } from "@/modules/progress/components/enroll-button";
 import { MilestoneCelebration } from "@/modules/progress/components/milestone-celebration";
 import { OrganicTree } from "@/modules/skill-tree/organic-tree";
+import { DisciplineIcon } from "@/components/discipline-icon";
 
 export async function generateMetadata({
   params,
@@ -57,9 +58,10 @@ export default async function TreePage({
       <MilestoneCelebration level={levelReached} strandLabel={ramaLabel} />
       <Link
         href={`/explore/${tree.category.slug}`}
-        className="text-muted-foreground text-sm hover:underline"
+        className="text-muted-foreground inline-flex items-center gap-1.5 text-sm hover:underline"
       >
-        ← {tree.category.icon} {tree.category.name}
+        ← <DisciplineIcon slug={tree.category.slug} className="size-4" />{" "}
+        {tree.category.name}
       </Link>
 
       <div className="mt-4 flex flex-wrap items-start justify-between gap-4">

@@ -29,7 +29,10 @@ import { getDailyGoal, getUserDashboard } from "@/modules/progress/services";
 import { getReviewSummary } from "@/modules/review/services";
 import { hasSeenWelcome } from "@/modules/onboarding/services";
 import { WelcomeGate } from "@/modules/onboarding/welcome";
-import { AVAILABLE_DISCIPLINES } from "@/modules/catalog/disciplines";
+import { DISCIPLINES } from "@/modules/catalog/disciplines";
+import { getCategoryTreeCounts } from "@/modules/catalog/services";
+import { DisciplineIcon } from "@/components/discipline-icon";
+import { getViewer } from "@/server/access";
 
 export const metadata: Metadata = { title: "Panel" };
 
@@ -46,22 +49,27 @@ export default async function DashboardPage() {
   const session = await auth();
   const userId = session!.user.id;
   const name = session?.user?.name ?? "de nuevo";
-  const [data, seenWelcome, review, daily] = await Promise.all([
+  const [data, seenWelcome, review, daily, counts, viewer] = await Promise.all([
     getUserDashboard(userId),
     hasSeenWelcome(userId),
     getReviewSummary(userId),
     getDailyGoal(userId),
+    getCategoryTreeCounts(),
+    getViewer(),
   ]);
 
-  // Descubrimiento entre disciplinas: las disponibles que el usuario aún no ha
-  // empezado. Convierte el panel en una puerta a todo el ecosistema, no solo a
-  // lo ya iniciado.
+  // Descubrimiento entre disciplinas: las que el visitante PUEDE ver (publicadas;
+  // el fundador también borradores) y aún no ha empezado. Convierte el panel en
+  // una puerta a todo el ecosistema, no solo a lo ya iniciado.
   const startedSlugs = new Set(
     data.enrollments.map((e) => e.tree.category.slug),
   );
-  const toDiscover = AVAILABLE_DISCIPLINES.filter(
-    (d) => !startedSlugs.has(d.slug),
-  );
+  const toDiscover = DISCIPLINES.filter((d) => {
+    const c = counts.get(d.slug);
+    const viewable =
+      (c?.published ?? 0) > 0 || (viewer.isAdmin && (c?.draft ?? 0) > 0);
+    return viewable && !startedSlugs.has(d.slug);
+  });
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10">
@@ -69,7 +77,7 @@ export default async function DashboardPage() {
 
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Hola, {name} 👋</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Hola, {name}</h1>
           <p className="text-muted-foreground mt-1">
             Sigue haciendo crecer tu árbol de aprendizaje.
           </p>
@@ -113,7 +121,7 @@ export default async function DashboardPage() {
               <div className="font-semibold">Meta diaria</div>
               <div className="text-muted-foreground">
                 {daily.met ? (
-                  <span className="text-growth font-medium">¡Cumplida! 🎉</span>
+                  <span className="text-growth font-medium">¡Cumplida!</span>
                 ) : (
                   `${daily.earned}/${daily.goal} XP hoy`
                 )}
@@ -256,7 +264,10 @@ export default async function DashboardPage() {
                 <Card className="st-interactive hover:border-primary h-full">
                   <CardHeader>
                     <div className="text-muted-foreground flex items-center gap-2 text-sm">
-                      <span>{e.tree.category.icon}</span>
+                      <DisciplineIcon
+                        slug={e.tree.category.slug}
+                        className="size-4"
+                      />
                       <span>{e.tree.category.name}</span>
                     </div>
                     <CardTitle className="text-base">{e.tree.title}</CardTitle>
@@ -311,13 +322,10 @@ export default async function DashboardPage() {
                     />
                     <CardContent className="flex items-center gap-3 py-4">
                       <span
-                        className="flex size-10 items-center justify-center rounded-xl text-xl shadow-sm"
-                        style={{
-                          background: `linear-gradient(135deg, ${d.accent.from}, ${d.accent.to})`,
-                        }}
+                        className="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-xl"
                         aria-hidden
                       >
-                        {d.icon}
+                        <DisciplineIcon slug={d.slug} className="size-5" />
                       </span>
                       <div className="min-w-0">
                         <div className="truncate text-sm font-semibold">

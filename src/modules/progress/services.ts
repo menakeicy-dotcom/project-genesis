@@ -7,6 +7,7 @@ import {
   type NodeState,
 } from "@/modules/skill-tree/state";
 import { levelForXp, levelProgress } from "@/modules/progress/xp";
+import { canSeeDrafts, visibleTreeStatuses } from "@/server/access";
 
 /** Estado de una hebra en el árbol principal (todas abiertas). */
 export type StrandState = "completed" | "progress" | "open";
@@ -61,9 +62,9 @@ export interface StrandSummary {
  * Cada una con su progreso. Reutilizable por cualquier disciplina.
  */
 export async function getTreeStrands(userId: string, treeSlug: string) {
-  // Solo árboles PUBLICADOS: los borradores no son visibles en ninguna página.
+  // Árboles visibles para el visitante (el fundador ve también borradores).
   const tree = await db.tree.findFirst({
-    where: { slug: treeSlug, status: "PUBLISHED" },
+    where: { slug: treeSlug, status: { in: await visibleTreeStatuses() } },
     include: { category: true, skills: { orderBy: { order: "asc" } } },
   });
   if (!tree) return null;
@@ -122,9 +123,10 @@ export async function getStrand(
   treeSlug: string,
   branch: string,
 ) {
-  // Solo árboles PUBLICADOS (cierra el acceso a ramas de borradores por URL).
+  // Árboles visibles para el visitante (cierra el acceso a borradores por URL a
+  // los usuarios normales; el fundador sí puede recorrerlos en revisión).
   const tree = await db.tree.findFirst({
-    where: { slug: treeSlug, status: "PUBLISHED" },
+    where: { slug: treeSlug, status: { in: await visibleTreeStatuses() } },
     include: {
       category: true,
       skills: { orderBy: [{ tier: "asc" }, { order: "asc" }] },
@@ -184,6 +186,7 @@ export async function getStrand(
     treeSlug,
     treeTitle: tree.title,
     categoryIcon: tree.category.icon,
+    categorySlug: tree.category.slug,
     branch,
     label: branchLabelOf(skills[0]!.content, branch),
     levels,
@@ -221,9 +224,10 @@ export async function completeSkill(
     include: { tree: { select: { status: true } } },
   });
   if (!skill) throw new Error("Habilidad no encontrada.");
-  // No se puede progresar en contenido no publicado (aunque no sea alcanzable
-  // por la UI, el server action no debe confiar en ello).
-  if (skill.tree.status !== "PUBLISHED") {
+  // No se puede progresar en contenido no publicado (el server action no confía
+  // en que la UI sea inalcanzable). Excepción: el fundador puede completar
+  // borradores para probar el flujo durante la revisión.
+  if (skill.tree.status !== "PUBLISHED" && !(await canSeeDrafts())) {
     throw new Error("Esta habilidad no está disponible.");
   }
 
@@ -405,6 +409,7 @@ export async function getUserProfile(userId: string) {
     string,
     {
       name: string;
+      slug: string;
       icon: string | null;
       xp: number;
       skills: number;
@@ -416,6 +421,7 @@ export async function getUserProfile(userId: string) {
     const cat = e.tree.category;
     const branch = branchesMap.get(cat.id) ?? {
       name: cat.name,
+      slug: cat.slug,
       icon: cat.icon,
       xp: 0,
       skills: 0,

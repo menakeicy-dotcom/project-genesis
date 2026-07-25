@@ -76,7 +76,8 @@ export const CIENCIA_SPEC: TreeSpec = {
     description:
       "Desde el pensamiento científico hasta la materia, la energía, la vida, la Tierra y el cosmos. Aprende a razonar con evidencia y a desmontar ideas erróneas, no a memorizar. Un árbol de competencias con libertad para elegir por dónde empezar.",
     difficulty: "beginner",
-    status: "PUBLISHED",
+    // Revisión del fundador antes del lanzamiento público (solo ADMIN la ve).
+    status: "DRAFT",
   },
   branches: {
     pensamiento: "Pensamiento científico",

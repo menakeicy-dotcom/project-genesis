@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Sprout } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
 
@@ -12,8 +13,8 @@ export const metadata = { title: "Página no encontrada" };
 export default function NotFound() {
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col items-center justify-center px-4 py-16 text-center">
-      <div className="bg-primary/10 text-primary flex size-20 items-center justify-center rounded-3xl text-5xl">
-        🌱
+      <div className="bg-primary/10 text-primary flex size-20 items-center justify-center rounded-3xl">
+        <Sprout className="size-10" strokeWidth={1.5} />
       </div>
       <h1 className="mt-6 text-2xl font-bold tracking-tight">
         Aquí todavía no crece nada

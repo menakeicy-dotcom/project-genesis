@@ -95,6 +95,8 @@ export const PROGRAMACION_SPEC: TreeSpec = {
     description:
       "Aprende a programar como se aprende de verdad: pensando soluciones y construyendo. Un árbol de competencias —fundamentos, funciones, POO, algoritmos, estructuras de datos, web, bases de datos, APIs e ingeniería— con libertad para elegir por dónde empezar.",
     difficulty: "beginner",
+    // Revisión del fundador antes del lanzamiento público (solo ADMIN la ve).
+    status: "DRAFT",
   },
   branches: {
     pensamiento: "Pensamiento computacional",

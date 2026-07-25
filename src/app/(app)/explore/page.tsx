@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Lock } from "lucide-react";
+import { Eye, Lock } from "lucide-react";
 
 import {
   Card,
@@ -9,27 +9,36 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { DisciplineIcon } from "@/components/discipline-icon";
 import { RevealGroup, RevealItem } from "@/components/experience/reveal";
-import { getCategories } from "@/modules/catalog/services";
-import {
-  AVAILABLE_COUNT,
-  DISCIPLINES,
-  STATUS_META,
-} from "@/modules/catalog/disciplines";
+import { getCategoryTreeCounts } from "@/modules/catalog/services";
+import { getViewer } from "@/server/access";
+import { DISCIPLINES, STATUS_META } from "@/modules/catalog/disciplines";
 
 export const metadata: Metadata = { title: "Explorar" };
 
 export default async function ExplorePage() {
-  // Cuenta de árboles publicados por categoría real (para las disponibles).
-  const categories = await getCategories();
-  const treeCount = new Map(categories.map((c) => [c.slug, c._count.trees]));
+  const [counts, viewer] = await Promise.all([
+    getCategoryTreeCounts(),
+    getViewer(),
+  ]);
+  const isAdmin = viewer.isAdmin;
 
-  // Las disponibles se muestran primero (descubrimiento): lo que ya se puede
-  // empezar encabeza la cuadrícula; el resto forma la hoja de ruta.
-  const ordered = [...DISCIPLINES].sort(
-    (a, b) =>
-      (a.status === "available" ? 0 : 1) - (b.status === "available" ? 0 : 1),
-  );
+  // Estado de cada disciplina para ESTE visitante. La disponibilidad se deriva
+  // del estado de publicación + rol: el fundador ve los borradores "En revisión".
+  const view = DISCIPLINES.map((d) => {
+    const c = counts.get(d.slug);
+    const published = c?.published ?? 0;
+    const draft = c?.draft ?? 0;
+    const viewable = published > 0 || (isAdmin && draft > 0);
+    const underReview = viewable && published === 0; // borrador visible al admin
+    return { d, published, draft, viewable, underReview };
+  });
+  // Viewable primero (descubrimiento).
+  view.sort((a, b) => (a.viewable ? 0 : 1) - (b.viewable ? 0 : 1));
+
+  const publishedCount = view.filter((v) => v.published > 0).length;
+  const reviewCount = view.filter((v) => v.underReview).length;
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10">
@@ -38,32 +47,42 @@ export default async function ExplorePage() {
       </h1>
       <p className="text-muted-foreground mt-1 max-w-2xl">
         SkillTree es un ecosistema de conocimiento en crecimiento. Cada
-        disciplina es un bosque de habilidades por descubrir: elige la que te
-        mueva la curiosidad y empieza hoy.
+        disciplina es un bosque de habilidades por descubrir.
       </p>
-      <p className="text-primary mt-2 text-sm font-medium">
-        {AVAILABLE_COUNT} disciplinas disponibles · más en camino
-      </p>
+      {isAdmin ? (
+        <p className="text-primary mt-2 inline-flex items-center gap-1.5 text-sm font-medium">
+          <Eye className="size-4" /> Modo fundador · {reviewCount} en revisión
+          (aún no públicas)
+        </p>
+      ) : publishedCount > 0 ? (
+        <p className="text-primary mt-2 text-sm font-medium">
+          {publishedCount} disciplinas disponibles · más en camino
+        </p>
+      ) : (
+        <p className="text-muted-foreground mt-2 text-sm">
+          Estamos afinando las primeras disciplinas. Muy pronto.
+        </p>
+      )}
 
       <RevealGroup
         className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
         stagger={0.05}
       >
-        {ordered.map((d) => {
-          const meta = STATUS_META[d.status];
-          const available = d.status === "available";
-          const trees = treeCount.get(d.slug) ?? 0;
+        {view.map(({ d, published, viewable, underReview }) => {
+          const badge = viewable
+            ? underReview
+              ? { label: "En revisión", tone: "primary" as const }
+              : { label: "Disponible", tone: "growth" as const }
+            : STATUS_META[d.status];
 
           const inner = (
             <Card
               className={
-                "group relative h-full overflow-hidden transition-all " +
-                (available
-                  ? "hover:-translate-y-0.5 hover:shadow-lg"
-                  : "opacity-80")
+                "group relative h-full overflow-hidden " +
+                (viewable ? "st-interactive hover:border-primary" : "opacity-80")
               }
             >
-              {/* Acento de identidad: franja superior con el degradado propio. */}
+              {/* Acento de identidad: franja superior con un verde sutil. */}
               <div
                 className="h-1.5 w-full"
                 style={{
@@ -71,73 +90,60 @@ export default async function ExplorePage() {
                 }}
                 aria-hidden
               />
-              {/* Halo sutil del color al pasar el ratón. */}
-              <div
-                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                style={{
-                  background: `radial-gradient(120% 80% at 15% 0%, ${d.accent.from}22, transparent 60%)`,
-                }}
-                aria-hidden
-              />
               <CardHeader>
                 <div className="mb-2 flex items-start justify-between">
                   <span
                     className={
-                      "flex size-12 items-center justify-center rounded-2xl text-2xl shadow-sm" +
-                      // La "semilla" de una disciplina disponible respira sutilmente:
-                      // atrae la mirada hacia lo que se puede empezar ahora.
-                      (available ? " st-float" : "")
+                      "bg-primary/10 text-primary flex size-11 items-center justify-center rounded-2xl" +
+                      (viewable ? " st-float" : "")
                     }
-                    style={{
-                      background: `linear-gradient(135deg, ${d.accent.from}, ${d.accent.to})`,
-                    }}
                     aria-hidden
                   >
-                    {d.icon}
+                    <DisciplineIcon slug={d.slug} className="size-5" />
                   </span>
-                  <Badge variant={meta.tone}>
-                    {!available && <Lock className="size-3" />}
-                    {meta.label}
+                  <Badge variant={badge.tone}>
+                    {!viewable && <Lock className="size-3" />}
+                    {underReview && <Eye className="size-3" />}
+                    {badge.label}
                   </Badge>
                 </div>
                 <CardTitle className="text-lg">{d.name}</CardTitle>
-                <p
-                  className="text-xs font-semibold tracking-wide uppercase"
-                  style={{ color: d.accent.to }}
-                >
+                <p className="text-primary text-xs font-semibold tracking-wide uppercase">
                   {d.tagline}
                 </p>
                 <CardDescription className="mt-1">
                   {d.description}
                 </CardDescription>
-                {available && trees > 0 && (
+                {viewable && (
                   <p className="text-foreground mt-2 text-xs font-medium">
-                    {trees} {trees === 1 ? "árbol" : "árboles"} · empieza ahora →
+                    {underReview
+                      ? "Ábrela para revisarla →"
+                      : `${published} ${published === 1 ? "árbol" : "árboles"} · empieza ahora →`}
                   </p>
                 )}
               </CardHeader>
             </Card>
           );
 
-          return available ? (
+          return (
             <RevealItem key={d.slug}>
-              <Link
-                href={`/explore/${d.slug}`}
-                className="block"
-                aria-label={`${d.name} · disponible`}
-              >
-                {inner}
-              </Link>
-            </RevealItem>
-          ) : (
-            <RevealItem key={d.slug}>
-              <div
-                className="cursor-default"
-                aria-label={`${d.name} · ${meta.label}`}
-                title={`${d.name} · ${meta.label}`}
-              >
-                {inner}
-              </div>
+              {viewable ? (
+                <Link
+                  href={`/explore/${d.slug}`}
+                  className="block"
+                  aria-label={`${d.name} · ${badge.label}`}
+                >
+                  {inner}
+                </Link>
+              ) : (
+                <div
+                  className="cursor-default"
+                  aria-label={`${d.name} · ${badge.label}`}
+                  title={`${d.name} · ${badge.label}`}
+                >
+                  {inner}
+                </div>
+              )}
             </RevealItem>
           );
         })}
