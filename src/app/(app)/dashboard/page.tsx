@@ -29,10 +29,9 @@ import { getDailyGoal, getUserDashboard } from "@/modules/progress/services";
 import { getReviewSummary } from "@/modules/review/services";
 import { hasSeenWelcome } from "@/modules/onboarding/services";
 import { WelcomeGate } from "@/modules/onboarding/welcome";
-import { DISCIPLINES } from "@/modules/catalog/disciplines";
-import { getCategoryTreeCounts } from "@/modules/catalog/services";
+import { getDisciplineViews } from "@/modules/catalog/discipline-view";
+import { DisciplineCard } from "@/components/discipline-card";
 import { DisciplineIcon } from "@/components/discipline-icon";
-import { getViewer } from "@/server/access";
 
 export const metadata: Metadata = { title: "Panel" };
 
@@ -49,27 +48,26 @@ export default async function DashboardPage() {
   const session = await auth();
   const userId = session!.user.id;
   const name = session?.user?.name ?? "de nuevo";
-  const [data, seenWelcome, review, daily, counts, viewer] = await Promise.all([
-    getUserDashboard(userId),
-    hasSeenWelcome(userId),
-    getReviewSummary(userId),
-    getDailyGoal(userId),
-    getCategoryTreeCounts(),
-    getViewer(),
-  ]);
+  const [data, seenWelcome, review, daily, disciplineViews] = await Promise.all(
+    [
+      getUserDashboard(userId),
+      hasSeenWelcome(userId),
+      getReviewSummary(userId),
+      getDailyGoal(userId),
+      getDisciplineViews(),
+    ],
+  );
 
-  // Descubrimiento entre disciplinas: las que el visitante PUEDE ver (publicadas;
-  // el fundador también borradores) y aún no ha empezado. Convierte el panel en
-  // una puerta a todo el ecosistema, no solo a lo ya iniciado.
+  // Descubrimiento: MISMA fuente de verdad que Explorar. Las disciplinas que el
+  // visitante puede ver y aún no ha empezado; capado para no saturar el panel
+  // (el resto vive en Explorar). Convierte el panel en una puerta al ecosistema.
   const startedSlugs = new Set(
     data.enrollments.map((e) => e.tree.category.slug),
   );
-  const toDiscover = DISCIPLINES.filter((d) => {
-    const c = counts.get(d.slug);
-    const viewable =
-      (c?.published ?? 0) > 0 || (viewer.isAdmin && (c?.draft ?? 0) > 0);
-    return viewable && !startedSlugs.has(d.slug);
-  });
+  const DISCOVER_LIMIT = 3;
+  const toDiscover = disciplineViews
+    .filter((v) => v.viewable && !startedSlugs.has(v.discipline.slug))
+    .slice(0, DISCOVER_LIMIT);
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10">
@@ -305,39 +303,9 @@ export default async function DashboardPage() {
             </Link>
           </div>
           <RevealGroup className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {toDiscover.map((d) => (
-              <RevealItem key={d.slug}>
-                <Link
-                  href={`/explore/${d.slug}`}
-                  className="block"
-                  aria-label={`Explorar ${d.name}`}
-                >
-                  <Card className="st-interactive hover:border-primary h-full overflow-hidden">
-                    <div
-                      className="h-1 w-full"
-                      style={{
-                        background: `linear-gradient(90deg, ${d.accent.from}, ${d.accent.to})`,
-                      }}
-                      aria-hidden
-                    />
-                    <CardContent className="flex items-center gap-3 py-4">
-                      <span
-                        className="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-xl"
-                        aria-hidden
-                      >
-                        <DisciplineIcon slug={d.slug} className="size-5" />
-                      </span>
-                      <div className="min-w-0">
-                        <div className="truncate text-sm font-semibold">
-                          {d.name}
-                        </div>
-                        <div className="text-muted-foreground truncate text-xs">
-                          {d.tagline}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
+            {toDiscover.map((v) => (
+              <RevealItem key={v.discipline.slug}>
+                <DisciplineCard view={v} variant="compact" />
               </RevealItem>
             ))}
           </RevealGroup>

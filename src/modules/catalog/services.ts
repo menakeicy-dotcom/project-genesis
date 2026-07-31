@@ -12,34 +12,30 @@ import { visibleTreeStatuses } from "@/server/access";
  * visibles a `@/server/access`, así ninguna pantalla decide por su cuenta.
  */
 
-/** Todas las categorías, con el número de árboles publicados. */
-export async function getCategories() {
-  const categories = await db.category.findMany({
-    orderBy: { order: "asc" },
-    include: {
-      _count: { select: { trees: true } },
-    },
-  });
-  return categories;
-}
-
 /**
- * Conteo de árboles por categoría separando publicados y borradores. Permite
- * decidir la disponibilidad de una disciplina según el rol (el fundador ve los
- * borradores como "En revisión"; el usuario normal no los ve).
+ * Conteo de árboles por categoría separando publicados y borradores. Base de la
+ * disponibilidad de cada disciplina (ver `getDisciplineViews`).
+ *
+ * Escalable: agrega en la base de datos con `groupBy` (categoría × estado) en
+ * lugar de traer todas las filas de árboles. Sigue siendo O(categorías×estados)
+ * aunque existan miles de árboles.
  */
 export async function getCategoryTreeCounts(): Promise<
   Map<string, { published: number; draft: number }>
 > {
-  const cats = await db.category.findMany({
-    select: { slug: true, trees: { select: { status: true } } },
-  });
+  const [cats, groups] = await Promise.all([
+    db.category.findMany({ select: { id: true, slug: true } }),
+    db.tree.groupBy({ by: ["categoryId", "status"], _count: { _all: true } }),
+  ]);
+  const slugById = new Map(cats.map((c) => [c.id, c.slug]));
   const map = new Map<string, { published: number; draft: number }>();
-  for (const c of cats) {
-    map.set(c.slug, {
-      published: c.trees.filter((t) => t.status === "PUBLISHED").length,
-      draft: c.trees.filter((t) => t.status === "DRAFT").length,
-    });
+  for (const c of cats) map.set(c.slug, { published: 0, draft: 0 });
+  for (const g of groups) {
+    const slug = slugById.get(g.categoryId);
+    if (!slug) continue;
+    const entry = map.get(slug)!;
+    if (g.status === "PUBLISHED") entry.published += g._count._all;
+    else if (g.status === "DRAFT") entry.draft += g._count._all;
   }
   return map;
 }

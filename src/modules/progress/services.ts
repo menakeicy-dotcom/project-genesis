@@ -185,7 +185,6 @@ export async function getStrand(
   return {
     treeSlug,
     treeTitle: tree.title,
-    categoryIcon: tree.category.icon,
     categorySlug: tree.category.slug,
     branch,
     label: branchLabelOf(skills[0]!.content, branch),
@@ -410,7 +409,6 @@ export async function getUserProfile(userId: string) {
     {
       name: string;
       slug: string;
-      icon: string | null;
       xp: number;
       skills: number;
       total: number;
@@ -422,7 +420,6 @@ export async function getUserProfile(userId: string) {
     const branch = branchesMap.get(cat.id) ?? {
       name: cat.name,
       slug: cat.slug,
-      icon: cat.icon,
       xp: 0,
       skills: 0,
       total: 0,

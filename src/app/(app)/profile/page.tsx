@@ -23,10 +23,8 @@ import { CountUp } from "@/components/experience/count-up";
 import { RevealGroup, RevealItem } from "@/components/experience/reveal";
 import { DisciplineIcon } from "@/components/discipline-icon";
 import { getUserProfile } from "@/modules/progress/services";
-import { getCategoryTreeCounts } from "@/modules/catalog/services";
-import { getViewer } from "@/server/access";
+import { getDisciplineViews } from "@/modules/catalog/discipline-view";
 import { HowItWorks } from "@/modules/onboarding/how-it-works";
-import { DISCIPLINES } from "@/modules/catalog/disciplines";
 
 export const metadata: Metadata = { title: "Perfil" };
 
@@ -58,17 +56,13 @@ function Stat({ label, value }: { label: string; value: ReactNode }) {
 export default async function ProfilePage() {
   const session = await auth();
   const name = session?.user?.name ?? session?.user?.email ?? "Tú";
-  const [profile, counts, viewer] = await Promise.all([
+  const [profile, disciplineViews] = await Promise.all([
     getUserProfile(session!.user.id),
-    getCategoryTreeCounts(),
-    getViewer(),
+    getDisciplineViews(),
   ]);
-  // Nº de disciplinas que este visitante puede ver (publicadas; el fundador
-  // también borradores). Da contexto al "X de N".
-  const viewableCount = DISCIPLINES.filter((d) => {
-    const c = counts.get(d.slug);
-    return (c?.published ?? 0) > 0 || (viewer.isAdmin && (c?.draft ?? 0) > 0);
-  }).length;
+  // MISMA fuente de verdad que Explorar/Panel: nº de disciplinas que este
+  // visitante puede ver. Da contexto al "X de N".
+  const viewableCount = disciplineViews.filter((v) => v.viewable).length;
 
   return (
     <div className="mx-auto w-full max-w-4xl px-4 py-10">
