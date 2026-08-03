@@ -3,48 +3,29 @@ import "server-only";
 import type { Role } from "@prisma/client";
 
 import { auth } from "@/auth";
+import { isAdminEmail, isAdminRole } from "@/server/admin-emails";
 
 /**
  * CONTROL DE ACCESO Y VISIBILIDAD — base de un sistema de roles.
  *
  * SkillTree distingue quién puede ver contenido NO publicado (borradores). Hoy
  * solo el/los fundador(es) —modo revisión previo al lanzamiento— pero está
- * pensado para crecer a un sistema de roles completo (USER / CREATOR / ADMIN)
- * sin cambiar los sitios de llamada: las consultas piden `visibleTreeStatuses()`
- * y esta capa decide, no cada pantalla.
+ * pensado para crecer a un sistema de roles completo sin cambiar los sitios de
+ * llamada: las consultas piden `visibleTreeStatuses()` y esta capa decide.
  *
- * El fundador se identifica por DOS vías (cinturón y tirantes), ninguna es un
- * hack: (1) su `role` en la base de datos es ADMIN, y (2) su correo está en una
- * lista blanca configurable (`ADMIN_EMAILS`). La lista blanca permite arrancar
- * el primer administrador sin tocar la base de datos a mano.
+ * El fundador se reconoce de forma ROBUSTA: por su rol ADMIN en la sesión (que
+ * el JWT fuerza a partir de la lista blanca de correos) o directamente por su
+ * correo. Así el acceso de revisión no depende del estado de la base de datos.
  */
 
-/** Lista blanca por defecto (fundador). Se puede sobrescribir con ADMIN_EMAILS. */
-const DEFAULT_ADMIN_EMAILS = ["keicymenapalacios@gmail.com"];
-
-/** Correos con permiso de administrador (normalizados a minúsculas). */
-export function adminEmails(): string[] {
-  const fromEnv = (process.env.ADMIN_EMAILS ?? "")
-    .split(",")
-    .map((s) => s.trim().toLowerCase())
-    .filter(Boolean);
-  return (fromEnv.length ? fromEnv : DEFAULT_ADMIN_EMAILS).map((e) =>
-    e.toLowerCase(),
-  );
-}
-
-export function isAdminEmail(email?: string | null): boolean {
-  return !!email && adminEmails().includes(email.toLowerCase());
-}
-
-export function isAdminRole(role?: Role | null): boolean {
-  return role === "ADMIN";
-}
-
-/** ¿El correo debe recibir rol ADMIN al registrarse? (arranque del fundador). */
-export function roleForNewUser(email: string): Role {
-  return isAdminEmail(email) ? "ADMIN" : "USER";
-}
+// Reexport de utilidades puras para no cambiar los sitios de importación.
+export {
+  adminEmails,
+  effectiveRole,
+  isAdminEmail,
+  isAdminRole,
+  roleForNewUser,
+} from "@/server/admin-emails";
 
 /** Contexto del visitante actual (sesión + si es administrador/fundador). */
 export async function getViewer(): Promise<{
@@ -60,6 +41,7 @@ export async function getViewer(): Promise<{
     userId: session?.user?.id ?? null,
     email,
     role,
+    // Rol o correo: cualquiera de los dos basta para el modo fundador.
     isAdmin: isAdminRole(role) || isAdminEmail(email),
   };
 }

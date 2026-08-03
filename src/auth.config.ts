@@ -1,6 +1,8 @@
 import type { NextAuthConfig } from "next-auth";
 import type { Role } from "@prisma/client";
 
+import { isAdminEmail } from "@/server/admin-emails";
+
 /**
  * Configuración base de Auth.js, SIN proveedores ni acceso a base de datos.
  *
@@ -51,13 +53,20 @@ export const authConfig = {
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        if (user.email) token.email = user.email;
       }
+      // El fundador (lista blanca de correos) es ADMIN aunque su rol en la base
+      // de datos no lo sea. Se reevalúa en CADA token, así las sesiones ya
+      // iniciadas también se actualizan sin volver a entrar y sin depender de
+      // migraciones (que ya no corren dentro del build).
+      if (isAdminEmail(token.email)) token.role = "ADMIN";
       return token;
     },
     session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as Role;
+        if (token.email) session.user.email = token.email;
       }
       return session;
     },
