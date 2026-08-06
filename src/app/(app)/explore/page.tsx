@@ -3,11 +3,16 @@ import { Eye } from "lucide-react";
 
 import { getDisciplineViews } from "@/modules/catalog/discipline-view";
 import { ExploreCatalog } from "@/modules/catalog/explore-catalog";
+import { PublishCatalogButton } from "@/modules/catalog/publish-catalog-button";
+import { getViewer } from "@/server/access";
 
 export const metadata: Metadata = { title: "Explorar" };
 
 export default async function ExplorePage() {
-  const views = await getDisciplineViews();
+  const [views, viewer] = await Promise.all([
+    getDisciplineViews(),
+    getViewer(),
+  ]);
   const availableCount = views.filter((v) => v.availability === "available").length;
   const reviewCount = views.filter((v) => v.availability === "review").length;
 
@@ -36,6 +41,10 @@ export default async function ExplorePage() {
           Estamos afinando las primeras disciplinas. Muy pronto.
         </p>
       )}
+
+      {/* Solo la fundadora, y solo mientras no haya nada publicado: publica el
+          catálogo con un clic (sin URLs, claves ni variables de entorno). */}
+      {viewer.isAdmin && availableCount === 0 && <PublishCatalogButton />}
 
       <ExploreCatalog views={views} />
     </div>
