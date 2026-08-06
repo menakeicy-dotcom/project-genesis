@@ -21,23 +21,33 @@ function quality(spec: TreeSpec) {
 
 /**
  * Siembra el catálogo real de SkillTree con el motor genérico de sembrado.
- * Protegida por SEED_SECRET e idempotente: cada disciplina se inserta/actualiza
- * por slug (upsertTree), preservando ids y progreso entre reejecuciones.
+ * Idempotente: cada disciplina se inserta/actualiza por slug (upsertTree),
+ * preservando ids y progreso entre reejecuciones.
  *
- * Uso:  GET /api/seed?key=TU_SEED_SECRET
+ * ARRANQUE (bootstrap): si el catálogo está VACÍO (0 árboles), la siembra se
+ * permite SIN clave —es una operación única, idempotente y con contenido fijo—,
+ * para poder cargar el contenido en un entorno nuevo con una sola visita. En
+ * cuanto existe contenido, se exige `SEED_SECRET` para volver a sembrar.
+ *
+ * Uso:  GET /api/seed            (solo si la base está vacía)
+ *       GET /api/seed?key=SECRET (para re-sembrar cuando ya hay contenido)
  */
 export async function GET(request: Request) {
-  const secret = process.env.SEED_SECRET;
-  if (!secret) {
-    return NextResponse.json(
-      { error: "SEED_SECRET no está configurado." },
-      { status: 500 },
-    );
-  }
+  const existing = await db.tree.count();
+  const isBootstrap = existing === 0;
 
-  const key = new URL(request.url).searchParams.get("key");
-  if (key !== secret) {
-    return NextResponse.json({ error: "No autorizado." }, { status: 401 });
+  if (!isBootstrap) {
+    const secret = process.env.SEED_SECRET;
+    if (!secret) {
+      return NextResponse.json(
+        { error: "SEED_SECRET no está configurado." },
+        { status: 500 },
+      );
+    }
+    const key = new URL(request.url).searchParams.get("key");
+    if (key !== secret) {
+      return NextResponse.json({ error: "No autorizado." }, { status: 401 });
+    }
   }
 
   // Todas las disciplinas se insertan/actualizan de forma idempotente con el
@@ -46,14 +56,13 @@ export async function GET(request: Request) {
   // sembrado previo de catálogo.
   const ingles = await upsertTree(db, INGLES_SPEC);
   const programacion = await upsertTree(db, PROGRAMACION_SPEC);
-  // Las cinco disciplinas se siembran en DRAFT (revisión del fundador previa al
-  // lanzamiento): solo ADMIN las ve. Publicar = cambiar status en su spec.
   const matematicas = await upsertTree(db, MATEMATICAS_SPEC);
   const musica = await upsertTree(db, MUSICA_SPEC);
   const ciencia = await upsertTree(db, CIENCIA_SPEC);
 
   return NextResponse.json({
     ok: true,
+    bootstrap: isBootstrap,
     ingles,
     programacion,
     matematicas,

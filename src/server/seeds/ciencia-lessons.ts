@@ -1,5 +1,5 @@
 /**
- * Lecciones interactivas de **Ciencia** (disciplina en construcción, DRAFT).
+ * Lecciones interactivas de **Ciencia** (disciplina publicada).
  *
  * Mismo modelo `Lesson` y mismo estándar que las demás disciplinas: intro →
  * aprende → practica (choice/fill/order/match) → actividad → autoevaluación →

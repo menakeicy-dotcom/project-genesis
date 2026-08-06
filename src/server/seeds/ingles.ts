@@ -1611,8 +1611,8 @@ export const INGLES_SPEC: TreeSpec = {
     description:
       "Aprende inglés desde cero hasta un nivel avanzado siguiendo cómo se adquiere realmente una lengua: por competencias que evolucionan (escucha, habla, lectura, escritura, vocabulario, gramática, pronunciación, cultura, estrategias y fluidez).",
     difficulty: "beginner",
-    // Revisión del fundador antes del lanzamiento público (solo ADMIN la ve).
-    status: "DRAFT",
+    // Publicada: visible para todos los usuarios.
+    status: "PUBLISHED",
   },
   branches: EN_BRANCHES,
   levels: EN_LEVELS,

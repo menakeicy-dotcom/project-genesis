@@ -1,7 +1,6 @@
 /**
- * Árbol de habilidades: **Matemáticas** — tercera disciplina de SkillTree,
- * sembrada en construcción (DRAFT): íntegra en la base de datos pero AÚN NO
- * visible para el usuario.
+ * Árbol de habilidades: **Matemáticas** — tercera disciplina de SkillTree.
+ * Publicada: visible para todos los usuarios.
  *
  * No es un temario: es un DAG de competencias diseñado a partir de currículos
  * reconocidos —Khan Academy (scope & sequence), OpenStax (Prealgebra/Algebra/
@@ -70,8 +69,8 @@ export const MATEMATICAS_SPEC: TreeSpec = {
     description:
       "Aprende matemáticas como se entienden de verdad: razonando, no memorizando. Un árbol de competencias —números, aritmética, álgebra, geometría, funciones, datos y cálculo— con libertad para elegir por dónde empezar.",
     difficulty: "beginner",
-    // Revisión del fundador antes del lanzamiento público (solo ADMIN la ve).
-    status: "DRAFT",
+    // Publicada: visible para todos los usuarios.
+    status: "PUBLISHED",
   },
   branches: {
     razonamiento: "Razonamiento y resolución de problemas",

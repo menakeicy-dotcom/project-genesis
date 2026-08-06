@@ -1,5 +1,5 @@
 /**
- * Lecciones interactivas de **Matemáticas** (disciplina en construcción, DRAFT).
+ * Lecciones interactivas de **Matemáticas** (disciplina publicada).
  *
  * Mismo modelo `Lesson` y mismo estándar pedagógico que Inglés y Programación:
  * intro → aprende (secciones) → practica (choice/fill/order/match) → actividad

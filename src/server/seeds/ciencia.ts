@@ -1,6 +1,6 @@
 /**
- * Árbol de habilidades: **Ciencia** — quinta disciplina de SkillTree, sembrada
- * en construcción (DRAFT): íntegra en la base de datos pero AÚN NO visible.
+ * Árbol de habilidades: **Ciencia** — quinta disciplina de SkillTree.
+ * Publicada: visible para todos los usuarios.
  *
  * No es un temario: es un DAG de competencias diseñado a partir de patrones
  * comunes a referencias reconocidas —NGSS (prácticas científicas + conceptos
@@ -76,8 +76,8 @@ export const CIENCIA_SPEC: TreeSpec = {
     description:
       "Desde el pensamiento científico hasta la materia, la energía, la vida, la Tierra y el cosmos. Aprende a razonar con evidencia y a desmontar ideas erróneas, no a memorizar. Un árbol de competencias con libertad para elegir por dónde empezar.",
     difficulty: "beginner",
-    // Revisión del fundador antes del lanzamiento público (solo ADMIN la ve).
-    status: "DRAFT",
+    // Publicada: visible para todos los usuarios.
+    status: "PUBLISHED",
   },
   branches: {
     pensamiento: "Pensamiento científico",

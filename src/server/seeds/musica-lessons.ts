@@ -1,5 +1,5 @@
 /**
- * Lecciones interactivas de **Música** (disciplina en construcción, DRAFT).
+ * Lecciones interactivas de **Música** (disciplina publicada).
  *
  * Mismo modelo `Lesson` y mismo estándar que Inglés, Programación y Matemáticas:
  * intro → aprende → practica (choice/fill/order/match) → actividad →

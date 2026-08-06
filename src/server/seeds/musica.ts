@@ -1,6 +1,6 @@
 /**
- * Árbol de habilidades: **Música** — cuarta disciplina de SkillTree, sembrada
- * en construcción (DRAFT): íntegra en la base de datos pero AÚN NO visible.
+ * Árbol de habilidades: **Música** — cuarta disciplina de SkillTree.
+ * Publicada: visible para todos los usuarios.
  *
  * No es un temario por capítulos: es un DAG de competencias que evolucionan,
  * diseñado a partir de patrones comunes a referencias reconocidas —Berklee
@@ -79,8 +79,8 @@ export const MUSICA_SPEC: TreeSpec = {
     description:
       "Desarrolla oído, ritmo, lectura, armonía e improvisación como competencias que crecen. Aprende a escuchar y a crear, no a memorizar. Un árbol para hacerte músico, con cualquier instrumento o con tu voz.",
     difficulty: "beginner",
-    // Revisión del fundador antes del lanzamiento público (solo ADMIN la ve).
-    status: "DRAFT",
+    // Publicada: visible para todos los usuarios.
+    status: "PUBLISHED",
   },
   branches: {
     escucha: "Escucha y oído",
