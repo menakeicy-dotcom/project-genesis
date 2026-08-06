@@ -24,17 +24,20 @@ function quality(spec: TreeSpec) {
  * Idempotente: cada disciplina se inserta/actualiza por slug (upsertTree),
  * preservando ids y progreso entre reejecuciones.
  *
- * ARRANQUE (bootstrap): si el catálogo está VACÍO (0 árboles), la siembra se
- * permite SIN clave —es una operación única, idempotente y con contenido fijo—,
- * para poder cargar el contenido en un entorno nuevo con una sola visita. En
- * cuanto existe contenido, se exige `SEED_SECRET` para volver a sembrar.
+ * ARRANQUE (bootstrap): si NO hay ningún árbol PUBLICADO todavía, la siembra se
+ * permite SIN clave —es una operación única, idempotente y con contenido fijo—.
+ * Esto cubre tanto una base vacía como una base con árboles antiguos en DRAFT:
+ * en ambos casos, una sola visita publica el catálogo. En cuanto existe
+ * contenido publicado, se exige `SEED_SECRET` para volver a sembrar.
  *
- * Uso:  GET /api/seed            (solo si la base está vacía)
- *       GET /api/seed?key=SECRET (para re-sembrar cuando ya hay contenido)
+ * Uso:  GET /api/seed            (si aún no hay contenido publicado)
+ *       GET /api/seed?key=SECRET (para re-sembrar cuando ya hay publicado)
  */
 export async function GET(request: Request) {
-  const existing = await db.tree.count();
-  const isBootstrap = existing === 0;
+  const publishedCount = await db.tree.count({
+    where: { status: "PUBLISHED" },
+  });
+  const isBootstrap = publishedCount === 0;
 
   if (!isBootstrap) {
     const secret = process.env.SEED_SECRET;
