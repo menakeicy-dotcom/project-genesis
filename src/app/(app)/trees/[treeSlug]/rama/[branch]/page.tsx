@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { DisciplineIcon } from "@/components/discipline-icon";
 import { getStrand } from "@/modules/progress/services";
+import { GrowingTree } from "@/modules/skill-tree/growing-tree";
 
 export async function generateMetadata({
   params,
@@ -29,6 +30,15 @@ export default async function StrandPage({
   const session = await auth();
   const data = await getStrand(session!.user.id, treeSlug, branch);
   if (!data) notFound();
+
+  // Habilidades en orden (nivel, luego orden) = tareas del árbol.
+  const treeSkills = data.levels.flatMap((level) =>
+    level.skills.map((s) => ({
+      slug: s.slug,
+      title: s.title,
+      state: s.state,
+    })),
+  );
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-10">
@@ -56,6 +66,21 @@ export default async function StrandPage({
           value={data.pct}
           tone={data.pct === 100 ? "growth" : "primary"}
         />
+      </div>
+
+      {/* El árbol de esta gran habilidad: crece con las tareas completadas. */}
+      <div className="mt-6">
+        <GrowingTree
+          skills={treeSkills}
+          treeSlug={treeSlug}
+          branch={branch}
+          completed={data.completed}
+          total={data.total}
+        />
+        <p className="text-muted-foreground mt-1 text-center text-xs">
+          Cada hoja con nombre es una tarea. Tócala para abrirla; el árbol crece
+          conforme avanzas.
+        </p>
       </div>
 
       <div className="mt-8 space-y-8">
